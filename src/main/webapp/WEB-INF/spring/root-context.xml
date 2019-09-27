@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	<bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+
+	<!-- 커넥션풀(hikariconfig)로 DataSource 설정하기 -->
+	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property>
+		<property name="jdbcUrl" value="jdbc:oracle:thin:@project-hwarang.cemyeatzib04.us-east-2.rds.amazonaws.com:1521:HWARANG"></property>
+		<property name="username" value="hwarang_zigi"></property>
+		<property name="password" value="ckddud90"></property>
+	</bean>
+
+	<!-- DataSource 선언 -->
+	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+		<constructor-arg ref="hikariConfig" />
+	</bean>
+
+	<!-- sql세션팩토리 선언 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+
+	<!-- 마이바티스 스캔 설정 -->
+	<mybatis-spring:scan base-package="hwarang.artg.mapper" />
+	<context:component-scan base-package="hwarang.artg.exhibition.service"/>	
+	<!-- 관리자 -->
+	<context:component-scan base-package="hwarang.artg.manager.service"/>
+	<!-- 결제 -->
+	<context:component-scan base-package="hwarang.artg.funding.service"/>
+	
+	<context:component-scan base-package="hwarang.artg.member.service"/>
+	<context:component-scan base-package="hwarang.artg.rrboard.service"/>
+	<!-- 커뮤니티 -->
+	<context:component-scan base-package="hwarang.artg.community.service"/>
+
+	<!-- 트랜잭션 설정 -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+
+	<!--gmail -->
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+	    <property name="host" value="smtp.gmail.com" />
+	    <property name="port" value="587" />
+	    <!-- gmail 아이디 비밀번호 넣어서 사용할것 -->
+	    <property name="username" value="@gmail.com" />
+	    <property name="password" value="" />
+	    <property name="javaMailProperties">
+	    	<props>
+	      		<prop key="mail.smtp.auth">true</prop>
+	      		<prop key="mail.smtp.starttls.enable">true</prop>
+	    	</props>
+	   	</property>
+	</bean>
+	<!--naver email -->
+	<bean class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.naver.com"/>
+		<property name="port" value="465"/>
+		<property name="defaultEncoding" value="UTF-8"/>
+		<!-- naver 아이디 비밀번호 넣어서 사용할것 -->
+		<property name="username" value=""/>
+		<property name="password" value=""/>
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.transport.protocol">smtp</prop>
+				<prop key="mail.smtps.ssl.checkserveridentity">true</prop>
+				<prop key="mail.smtps.ssl.trust">*</prop>
+				<prop key="mail.smtp.socketFactory.class">javax.net.ssl.SSLSocketFactory</prop>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.debug">true</prop>
+			</props>
+		</property>	
+	</bean>
+	 <!-- Daum mail -->
+	<bean class="org.springframework.mail.javamail.JavaMailSenderImpl">
+	   	<property name="host"  value="smtp.daum.net"></property>
+	    <property name="port" value="465"></property>
+	    <!-- daum 아이디 비밀번호 넣어서 사용할것 -->
+	    <property name="username" value="@hanmail.net"></property>
+	    <property name="password" value=""></property>
+	    <property name="defaultEncoding" value="UTF-8"/>
+	    <property name="javaMailProperties">
+	    <props>
+	      <prop key="mail.smtp.starttls.enable">true</prop>
+	      <prop key="mail.smtp.auth">true</prop>
+	      <prop key="mail.smtps.ssl.checkserveridentity">true</prop>
+	      <prop key="mail.smtps.ssl.trust">*</prop>
+	      <prop key="mail.debug">true</prop>
+	      <prop key="mail.smtp.socketFactory.class">javax.net.ssl.SSLSocketFactory</prop>
+	      </props>
+	    </property>
+	</bean>
+	<bean id="email" class="hwarang.artg.common.model.EmailDTO"></bean>
+	<bean id="emailSender" class="hwarang.artg.common.model.EmailSender"></bean>
+
+	<tx:annotation-driven />
+</beans>

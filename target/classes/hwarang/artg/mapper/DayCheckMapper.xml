@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hwarang.artg.mapper.DayCheckMapper">
+<insert id="insertCheck" parameterType="hwarang.artg.community.model.DayCheckVO">
+insert into daycheck
+	(member_id)
+	values(#{userid})
+</insert>
+<select id="selectOne" parameterType="String" resultMap="daycheckMap">
+select * from daycheck where member_id = #{userid}
+</select>
+<select id="selectAll" resultMap="daycheckMap">
+select * from daycheck order by dayCheck_date desc
+</select>
+<resultMap id="daycheckMap" type="hwarang.artg.community.model.DayCheckVO">
+<result column="daycheck_date" property="daycheckdate"/>
+<result column="member_id" property="userid"/>
+</resultMap>
+</mapper>

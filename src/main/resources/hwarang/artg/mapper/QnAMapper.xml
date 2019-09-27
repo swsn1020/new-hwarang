@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hwarang.artg.mapper.QnAMapper">
+	<insert id="insertQnA" parameterType="hwarang.artg.manager.model.QnAVO">
+		<selectKey order="BEFORE" keyProperty="num" resultType="int">
+			select seq_qna.nextval from dual
+		</selectKey>
+		INSERT INTO QNA (QNA_NUM, MEMBER_ID, QNA_TITLE, QNA_CONTENT, QNA_CATEGORY)
+		VALUES (#{num}, #{memId}, #{title}, #{content}, #{category})
+	</insert>
+	<update id="updateQnA" parameterType="hwarang.artg.manager.model.QnAVO">
+		UPDATE QNA SET QNA_TITLE = #{title}, QNA_CONTENT = #{content}, QNA_CATEGORY = #{category}
+		WHERE QNA_NUM = #{num}
+	</update>
+	<!-- 답변등록 -->
+	<update id="updateReply">
+		UPDATE QNA SET QNA_REPLY = #{reply}
+		WHERE QNA_NUM = #{num}
+	</update>
+	
+	<delete id="deleteQnA" parameterType="int">
+		DELETE FROM QNA WHERE QNA_NUM = #{num}
+	</delete>
+	<select id="selectQnA" parameterType="int" resultMap="qMap">
+<!-- 		SELECT *  -->
+<!-- 		  FROM QNA q, QNA_IMG i -->
+<!-- 		 WHERE q.NUM = i.QNA_NUM(+) -->
+<!-- 		   AND q.NUM = #{num} -->
+		SELECT * FROM QNA WHERE QNA_NUM = #{num}
+	</select>
+	<select id="selectAllQnAs" resultMap="qMap">
+		SELECT * FROM QNA order by QNA_NUM desc
+	</select>
+	
+	<select id="getListWithPaging" resultMap="qMap">
+		<![CDATA[
+ 			SELECT QNA_NUM, MEMBER_ID, QNA_TITLE, QNA_CONTENT, QNA_REG_DATE, QNA_CATEGORY, QNA_REPLY
+ 			  FROM (SELECT /*+INDEX_DESC(QNA pk_qna_num) */ rownum as rNum, QNA_NUM, MEMBER_ID, QNA_TITLE, QNA_CONTENT, QNA_REG_DATE, QNA_CATEGORY, QNA_REPLY 
+ 					  FROM QNA 
+ 					 WHERE rownum <= #{pageNum} * #{amount})
+ 			 WHERE rNum > (#{pageNum} - 1) * #{amount}
+ 		]]>
+	</select>
+	<!-- 총 페이지 구하기 -->
+	<select id="getTotalCount" resultType="int">
+		SELECT count(*) FROM QNA
+	</select>
+	
+	<select id="getPagingListById" resultMap="qMap">
+		<![CDATA[
+ 			SELECT QNA_NUM, MEMBER_ID, QNA_TITLE, QNA_CONTENT, QNA_REG_DATE, QNA_CATEGORY, QNA_REPLY
+ 			  FROM (SELECT /*+INDEX_DESC(QNA pk_qna_num) */ rownum as rNum, QNA_NUM, MEMBER_ID, QNA_TITLE, QNA_CONTENT, QNA_REG_DATE, QNA_CATEGORY, QNA_REPLY 
+ 					  FROM QNA 
+ 					 WHERE rownum <= #{cri.pageNum} * #{cri.amount} AND MEMBER_ID = #{memId}
+ 					 ORDER BY QNA_NUM DESC)
+ 			 WHERE rNum > (#{cri.pageNum} - 1) * #{cri.amount}
+ 		]]>
+	</select>
+	<select id="getTotalCountById" resultType="int">
+		SELECT count(*) FROM QNA WHERE MEMBER_ID = #{memId}
+	</select>
+	
+	<!-- 최근 등록된 게시글 5개 불러오기 -->
+	<select id="getListByRegDate" resultMap="qMap">
+		SELECT *
+		  FROM (
+			        SELECT qna_num, member_id, qna_title, qna_content, qna_reg_date, qna_category, qna_reply, ROW_NUMBER() OVER(ORDER BY qna_reg_date desc) rnum
+			        FROM QNA
+			   )
+		 WHERE rnum BETWEEN 1 AND 5
+	</select>
+	
+	
+	<resultMap type="hwarang.artg.manager.model.QnAVO" id="qMap">
+		<result column="QNA_NUM" property="num"/>
+		<result column="MEMBER_ID" property="memId"/>
+		<result column="QNA_TITLE" property="title"/>
+		<result column="QNA_CONTENT" property="content"/>
+		<result column="QNA_REG_DATE" property="regDate"/>
+		<result column="QNA_CATEGORY" property="category"/>
+		<result column="QNA_REPLY" property="reply"/>
+	</resultMap>
+</mapper>

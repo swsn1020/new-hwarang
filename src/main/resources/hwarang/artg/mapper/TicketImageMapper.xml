@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hwarang.artg.mapper.TicketImageMapper">
+<insert id="insertImg" parameterType="hwarang.artg.community.model.TicketImageVO">
+	insert into ticket_img
+			(ticket_uuid,ticket_num,ticket_uploadpath,ticket_filename)
+		values(#{ticketuuid},#{ticketnum},#{uploadpath},#{filename})
+
+</insert>
+<update id="updateImg" parameterType="hwarang.artg.community.model.TicketImageVO">
+	update ticket_img
+		set ticket_uuid = #{ticketuuid}
+			ticket_uploadpath = #{uploadpath}
+			ticket_filename = #{filename}
+		where ticket_num = #{ticketnum}
+</update>
+
+<delete id="deleteImg" parameterType="String">
+delete from ticket_img where ticket_uuid = #{ticketuuid}
+</delete>
+
+<select id="selectOne" parameterType="String" resultMap="ticketimgMap">
+select * from ticket_img where ticket_uuid = #{ticketuuid}
+</select>
+
+<select id="selectAll" resultMap="ticketimgMap">
+select * from ticket_img 
+</select>
+<resultMap id="ticketimgMap" type="hwarang.artg.community.model.TicketImageVO">
+<result column="ticket_uuid" property="ticketuuid"/>
+<result column="ticket_num" property="ticketnum"/>
+<result column="ticket_uploadpath" property="uploadpath"/>
+<result column="ticket_filename" property="filename"/>
+
+</resultMap>
+
+
+</mapper>

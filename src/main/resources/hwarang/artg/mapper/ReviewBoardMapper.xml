@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper    	
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hwarang.artg.mapper.ReviewBoardMapper">
+	<insert id="insertReview_Board"
+		parameterType="hwarang.artg.rrboard.model.ReviewBoardVO">
+		<selectKey order="BEFORE" keyProperty="review_num"
+			resultType="int">
+			select seq_review_board.nextval from dual
+		</selectKey>
+		insert into
+		review_board(review_num,member_id,review_title,review_exh_name,review_content)
+		values(#{review_num},#{member_id},#{review_title},#{review_exh_name},#{review_content})
+	</insert>
+	<update id="updateReview_Board"
+		parameterType="hwarang.artg.rrboard.model.ReviewBoardVO">
+		update review_board
+		set review_title = #{review_title},
+		review_content = #{review_content}
+		where review_num = #{review_num}
+	</update>
+	<update id="updateReview_count" parameterType="int">
+		update review_board
+		set review_read_count = review_read_count + 1
+		where review_num = #{review_num}
+	</update>
+	<delete id="deleteReview_Board" parameterType="int">
+		delete from review_board where review_num = #{review_num}
+	</delete>
+	<select id="selectReview_Board" parameterType="int"
+		resultType="hwarang.artg.rrboard.model.ReviewBoardVO">
+		select *from review_board where review_num = #{review_num}
+	</select>
+	<select id="selectReview_Board_Id" parameterType="String"
+		resultType="hwarang.artg.rrboard.model.ReviewBoardVO">
+		select *from review_board where member_id = #{member_id}
+	</select>
+	<select id="selectAllReview_Board"
+		resultType="hwarang.artg.rrboard.model.ReviewBoardVO">
+		select review_num,member_id, review_title, review_exh_name, review_content ,review_reg_date,review_modi_date,review_read_count,review_recomm_count,review_disrecomm_count,
+				(select count(*) from review_reply where review_reply_num = r.review_num) as reply_count
+		from review_board r order by review_num desc
+	</select>
+	<!-- paging -->
+	<select id="getListWithPaging"
+		resultType="hwarang.artg.rrboard.model.ReviewBoardVO">
+		  <![CDATA[
+			  select 
+				review_num, member_id, review_title, review_exh_name, review_content ,review_reg_date,review_modi_date,review_read_count,review_recomm_count,review_disrecomm_count
+			  from 
+			      (select /*+INDEX_DESC(review_board pk_review_num) */
+			        rownum as rn, review_num, member_id, review_title, review_exh_name, review_content ,review_reg_date,review_modi_date,review_read_count,review_recomm_count,review_disrecomm_count
+			      from review_board
+			      where rownum <= #{pageNum} * #{amount})
+			  where rn > (#{pageNum} -1) * #{amount}   
+		  ]]>
+	</select>
+	
+	<select id="getTotalCount" resultType="int">
+		select count(*) from review_board
+	</select>
+	
+	<!-- search -->
+	<select id="selectTotalBoardCount" parameterType="map"
+		resultType="int">
+		select count(*) as total_count from review_board
+		where 1=0
+		<if test="review_content != null">
+			or content like ('%${review_content}%')
+		</if>
+		<if test="review_title != null">
+			or title like ('%${review_title}%')
+		</if>
+		<if test="member_id != null">
+			or name like ('%${member_id}%')
+		</if>
+		<if test="type == 0"> <!-- 검색어가 포함되지 않고 전체목록을 본다. -->
+			or 1=1 <!-- 참으로 모든로그를 볼 수 있다. -->
+		</if>
+	</select>
+	<!-- 검색어를 포함한,페이지 게시글 목록 조회 -->
+	<select id="searchBoardList" parameterType="map"
+		resultType="hwarang.artg.rrboard.model.ReviewBoardVO">
+		select *
+		from (select rownum rnum,review_num,member_id,review_title,review_exh_name,review_content
+		from review_board
+		where 1=0
+		<if test="review_content != null">
+			or review_content like ('%${review_content}%')
+		</if>
+		<if test="review_title != null">
+			or review_title like ('%${review_title}%')
+		</if>
+		<if test="member_id != null">
+			or member_id like ('%${member_id}%')
+		</if>
+		<if test="type == 0"> <!-- 검색어가 포함되지 않고 전체목록을 본다. -->
+			or 1=1 <!-- 참으로 모든로그를 볼 수 있다. -->
+		</if>
+		order by review_num desc)
+		where rnum between #{firstRow} and #{endRow}
+	</select>
+</mapper>

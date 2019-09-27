@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper    	
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<mapper namespace="hwarang.artg.mapper.PointMapper">
+		<insert id="insertGetPoint" parameterType="hwarang.artg.member.model.PointVO">
+			insert into point(point_num,member_id,point_memo,point_get_amount,point_use_date,point_use_amount)
+			values(seq_point.nextval,#{member_id},'포인트 적립',#{point_get_amount},null,null)
+		</insert>
+		<insert id="insertUsePoint" parameterType="hwarang.artg.member.model.PointVO">
+			insert into point(point_num,member_id,point_memo,point_use_amount,point_get_amount,point_get_date)
+			values(seq_point.nextval,#{member_id},'포인트 사용',#{point_use_amount},null,null)
+		</insert>
+		<update id="updatePoint" parameterType="hwarang.artg.member.model.PointVO">
+			update point
+			set point_memo = #{point_memo}	
+			where point_num = #{point_num}
+		</update>
+		<delete id="deletePoint" parameterType="int">
+			delete from point where point_num = #{point_num}
+		</delete>
+		<select id="selectPoint" parameterType="String" resultType="hwarang.artg.member.model.PointVO">
+			select *from point where member_id = #{member_id}
+			order by point_num desc
+		</select>
+		<select id="selectAllPoint" resultType="hwarang.artg.member.model.PointVO">
+			select *from point
+		</select>
+		
+	</mapper>
