@@ -79,20 +79,20 @@
                         </div>
                         <!-- /. Search-Bar -->
                         <!-- Pagination -->
-                        <div class="pull-right">
-                            <ul class="pagination">
+                        <div class="container">
+                            <ul class="pagination justify-content-center">
                                 <c:if test="${pageMaker.prev}">
-                                    <li class="paginate_button previous">
+                                    <li class="page-link">
                                         <a href="${pageMaker.startPage - 1}">Previous</a>
                                     </li>
                                 </c:if>
                                 <c:forEach var="funding_num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
-                                    <li class="paginate_button ${pageMaker.cri.pageNum == funding_num ? 'active':''}">
+                                    <li class="page-link ${pageMaker.cri.pageNum == funding_num ? 'active':''}">
                                         <a href="${funding_num}">${funding_num}</a>
                                     </li>
                                 </c:forEach>
                                 <c:if test="${pageMaker.next}">
-                                    <li class="paginate_button next">
+                                    <li class="page-link">
                                         <a href="${pageMaker.endPage + 1 }">Next</a>
                                     </li>
                                 </c:if>
@@ -135,8 +135,8 @@
 	    <input type="hidden" name="amount" value="${pageMaker.cri.amount}">
 	    <input type="hidden" name="type" value="<c:out value='${pageMaker.cri.type}'/>">
 	    <input type="hidden" name="keyword" value="<c:out value='${pageMaker.cri.keyword}'/>"> 
-</form>
-		<script type="text/javascript">
+		</form>
+	<script type="text/javascript">
     $(document).ready(function () {
         var result = '<c:out value="${result}" />';
         checkModal(result);
@@ -183,4 +183,6 @@
         });
     });
 </script>
+
+
 	<%@include file="../layout/bottom.jsp"%>

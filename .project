@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
 <<<<<<< HEAD
+<<<<<<< HEAD
 	<name>new-hwarang</name>
 =======
 <<<<<<< HEAD
+=======
+>>>>>>> refs/remotes/origin/jm
 	<name>new-hwarang</name>
 	<comment></comment>
 	<projects>
@@ -20,6 +23,7 @@
 			</arguments>
 		</buildCommand>
 		<buildCommand>
+<<<<<<< HEAD
 <<<<<<< HEAD
 			<name>org.eclipse.wst.validation.validationbuilder</name>
 			<arguments>
@@ -79,6 +83,9 @@
 		</buildCommand>
 		<buildCommand>
 			<name>org.eclipse.jdt.core.javabuilder</name>
+=======
+			<name>org.eclipse.m2e.core.maven2Builder</name>
+>>>>>>> refs/remotes/origin/jm
 			<arguments>
 			</arguments>
 		</buildCommand>
@@ -97,11 +104,6 @@
 			<arguments>
 			</arguments>
 		</buildCommand>
-		<buildCommand>
-			<name>org.eclipse.m2e.core.maven2Builder</name>
-			<arguments>
-			</arguments>
-		</buildCommand>
 	</buildSpec>
 	<natures>
 		<nature>org.springframework.ide.eclipse.core.springnature</nature>
@@ -110,9 +112,12 @@
 		<nature>org.eclipse.wst.common.project.facet.core.nature</nature>
 		<nature>org.eclipse.wst.common.modulecore.ModuleCoreNature</nature>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		<nature>org.eclipse.wst.jsdt.core.jsNature</nature>
 >>>>>>> refs/remotes/origin/master
 >>>>>>> refs/remotes/origin/master
+=======
+>>>>>>> refs/remotes/origin/jm
 	</natures>
 </projectDescription>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"    
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="hwarang.artg.mapper.FundingAttachMapper">
+  
+  	<insert id="insert">
+  	insert into funding_attach(uuid, uploadpath, filename, filetype, funding_num)	
+  	values (#{uuid},#{uploadpath},#{filename},#{filetype},#{funding_num})	
+  	</insert>
+  	
+  	<delete id="delete">
+  		delete from funding_attach 
+  		where uuid =#{uuid}
+  	</delete>
+  	
+  	<select id="findByNum">
+  		select * from funding_attach 
+  		where funding_num = #{funding_num}
+  	</select>
+  </mapper>
