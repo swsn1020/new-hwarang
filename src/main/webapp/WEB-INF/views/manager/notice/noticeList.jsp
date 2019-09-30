@@ -54,7 +54,6 @@
 					</form>
 			</div>
 	</div>
-	
 	<div class="buttondiv">
 		<button type="button" class="btn btn-outline-secondary" onclick="location.href='noticeWrite'">글 쓰기</button>
 	</div>
