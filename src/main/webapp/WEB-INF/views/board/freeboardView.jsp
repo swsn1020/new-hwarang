@@ -1,25 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ include file="../layout/left.jsp"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-<%
-	String contextPath = request.getContextPath();
-	request.setAttribute("contextPath", contextPath);
-%>
-<script src="https://code.jquery.com/jquery-3.4.1.js"
-	integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
-	crossorigin="anonymous"></script>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<title>자유게시판 상세보기</title>
+<%@ include file="../layout/left.jsp" %>
 <script type="text/javascript">
 $(function() {	//문서가 로딩되면 실행할 함수
 		/*댓글 목록 그리기 */
@@ -220,14 +201,13 @@ function replyList(){
 	});
 }
 </script>
-</head>
-<body>
-	<div>
-		<h1>게시글 상세보기</h1>
-		<table>
+	<div class="container">
+		<div class="table-responsive">
+		<table class="table">
 			<tr>
 				<th>작성자</th>
 				<td>${fboard.userid}</td>
+			</tr>	
 				<th>조회수</th>
 				<td>${fboard.readCount}</td>
 				<th>추천</th>
@@ -270,6 +250,7 @@ function replyList(){
 				</td>
 			</tr>
 		</table>
+		</div>
 	</div>
 	<div>
 		<table id="replyTable">
@@ -305,5 +286,3 @@ function replyList(){
 		<input type="hidden" name="replyNum" value="">
 	</form>
 <%@include file="../layout/bottom.jsp"%>		
-</body>
-</html>
