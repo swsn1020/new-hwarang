@@ -50,9 +50,10 @@ $(function(){ //전체선택 체크박스 클릭
 					</td>
 					<td><a href="/exhibition/view?seq=${r.exh_seq}"><img src="${r.exh_imgurl}" style="height: 280px;"></a></td>
 					<td>
-						<ul class="nav ">
-							<li class="nav-item col-sm-12" id="side_item">
+						<ul class="nav ">							
+							<li class="nav-item col-sm-12" id="side_item" style="text-align: center">
 								<h5><a class="nav-link" href="/exhibition/view?seq=${r.exh_seq}">${r.exh_title}<span class="badge badge-primary">${r.exh_realmName}</span></a></h5></li>
+							<li class="nav-item col-sm-12" id="side_item" style="font-weight : bold; ">&nbsp;본 일시 ${r.recently_date}</li>
 							<li class="nav-item col-sm-12" id="side_item">${r.exh_place}</li>
 							<li class="nav-item col-sm-12" id="side_item">${r.exh_price}</li>
 							<li class="nav-item col-sm-12" id="side_item">${fn:substring(r.exh_startDate, 0, 10)} ~ ${fn:substring(r.exh_endDate, 0, 10)}</li>

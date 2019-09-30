@@ -2,11 +2,14 @@
 <projectDescription>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 	<name>new-hwarang</name>
 =======
 <<<<<<< HEAD
 =======
 >>>>>>> refs/remotes/origin/jm
+=======
+>>>>>>> branch 'master' of https://github.com/swsn1020/new-hwarang.git
 	<name>new-hwarang</name>
 	<comment></comment>
 	<projects>
@@ -23,6 +26,7 @@
 			</arguments>
 		</buildCommand>
 		<buildCommand>
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 			<name>org.eclipse.wst.validation.validationbuilder</name>
@@ -86,6 +90,9 @@
 =======
 			<name>org.eclipse.m2e.core.maven2Builder</name>
 >>>>>>> refs/remotes/origin/jm
+=======
+			<name>org.eclipse.m2e.core.maven2Builder</name>
+>>>>>>> branch 'master' of https://github.com/swsn1020/new-hwarang.git
 			<arguments>
 			</arguments>
 		</buildCommand>
@@ -113,11 +120,14 @@
 		<nature>org.eclipse.wst.common.modulecore.ModuleCoreNature</nature>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		<nature>org.eclipse.wst.jsdt.core.jsNature</nature>
 >>>>>>> refs/remotes/origin/master
 >>>>>>> refs/remotes/origin/master
 =======
 >>>>>>> refs/remotes/origin/jm
+=======
+>>>>>>> branch 'master' of https://github.com/swsn1020/new-hwarang.git
 	</natures>
 </projectDescription>

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,9 +13,6 @@
 <script	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script type="text/javascript">
 $(function(){
-	
-	
-	
 	$("#blockForm").on("submit", function(e){
 		e.preventDefault();
 		var txt = $("#txt-content").val();
@@ -57,12 +55,13 @@ $(function(){
 	<h3>신고하기</h3>
 	<div class="form-group" style="padding: 5px;">
 	<form id="blockForm" name="blockForm" method="post">
-		<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
 		<input type="hidden" name="category" value="${category }">
 		<input type="hidden" name="boardNum" value="${boardNum }"> 
 		<input type="hidden" name="blockMemId" value="${blockMemId }">
 				<!-- 로그인한 아이디로 자동으로 들어가기 -->
-					<p style="font-weight: bold;">작성ID <input type="text" class="form-control" name="memId" value="haddie" readonly="readonly"></p>
+					<p style="font-weight: bold;">신고자ID 
+						<input type="text" name="memId" class="form-control" value="<sec:authentication property="principal.Username"/>" readonly="readonly">
+					</p>
 					<fieldset>
 						<legend style="font-weight: bold; font-size: medium;">신고 내용</legend>
 						<div class="form-check">
