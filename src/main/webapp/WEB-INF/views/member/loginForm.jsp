@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -89,20 +90,26 @@ function goLogin(){
 </head>
 <body>
 	<div class="container">
+
 		<div class="jumbotron text-center ">
 			<h1>HWARANG</h1>
 			<p>Your own exhibition</p>
 		</div>
+		<%-- ${sessionScope } --%>
 		<div class="" style="margin: 0 auto; width: 720px; overflow: hidden;">
 			<div class="form-group" style="float: left; width: 350px;">
 				<h3  align="center">HWARANG Login</h3>
 				<fieldset>
 					<form name="loginForm" id="loginForm">
 						<input type="text" name="username" id="member_id" class="form-control" placeholder="아이디"><br>
-						<input type="password" name="member_password" id="member_password" class="form-control" placeholder="비밀번호"><br>
+						<input type="password" name="password" id="member_password" class="form-control" placeholder="비밀번호"><br>
 						<button type="button" id="checkLogin" onclick="javascript:goLogin();" class="btn btn-primary" style="height: 50px; width: 350px; ">Login</button><br><br>
 					</form>
 				</fieldset>
+				<div class="checkbox">
+					<label><input type="checkbox" name="remember-me">자동 로그인</label>
+				</div>
+
 				<div style="margin: 20px auto 0; overflow: hidden; width: 280px;">
 					<ul>
 						<li style="float: left;"><a href="/member/findidForm">아이디 찾기</a>&nbsp;&nbsp;|</li>
@@ -113,6 +120,8 @@ function goLogin(){
 					</ul>
 				</div>
 			</div>
+
+
 			<div class="" style=" width: 300px; height: 400px; float: left; padding-left: 60px; margin-left: 65px;">
 				<h3  align="center">SNS Simple Login</h3>
 				<ul style="align-content: center;">

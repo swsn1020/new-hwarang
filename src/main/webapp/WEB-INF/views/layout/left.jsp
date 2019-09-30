@@ -3,7 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <sec:authentication property="principal" var="pinfo" />
 <!DOCTYPE html>
 <html lang="en">
@@ -13,41 +12,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="author" content="">
-<!-- <link href="/resources/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"> -->
-<!-- <!-- MetisMenu CSS --> 
-<!-- <link href="/resources/vendor/metisMenu/metisMenu.min.css" rel="stylesheet"> -->
-<!-- <!-- DataTables CSS -->
-<!-- <link href="/resources/vendor/datatables-plugins/dataTables.bootstrap.css" rel="stylesheet"> -->
-<!-- <!-- DataTables Responsive CSS -->
-<!-- <link href="/resources/vendor/datatables-responsive/dataTables.responsive.css" rel="stylesheet"> -->
-<!-- <!-- Custom CSS -->
-<!-- <link href="/resources/css/sb-admin-2.css" rel="stylesheet"> -->
-<!-- <link href="/resources/css/sb-admin-2.min.css" rel="stylesheet"> -->
-<!-- <!-- Custom Fonts --> 
-<!-- <link href="/resources/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
-
-
-<!-- <!-- Bootstrap core JavaScript--> 
-<!-- <script src="/resources/vendor/jquery/jquery.min.js"></script> -->
-<!-- <script src="/resources/vendor/bootstrap/js/bootstrap.bundle.min.js"></script> -->
-<!-- <!-- Core plugin JavaScript--> 
-<!-- <script src="/resources/vendor/jquery-easing/jquery.easing.min.js"></script> -->
-<!-- <!-- Custom scripts for all pages--> 
-<!-- <script src="/resources/js/sb-admin-2.min.js"></script> -->
-<!-- <!-- Page level plugins --> 
-<!-- <script src="/resources/vendor/datatables/jquery.dataTables.min.js"></script> -->
-<!-- <script src="/resources/vendor/datatables/dataTables.bootstrap4.min.js"></script> -->
-<!-- <!-- Page level custom scripts --> 
-<!-- <script src="/resources/js/demo/datatables-demo.js"></script> -->
-
+<!-- Bootstrap import -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-<script src="/resources/js/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<!-- 추가 import -->
 <script src="https://kit.fontawesome.com/1e1a69f988.js"></script>
-<script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 <script type="text/javascript" src="/resources/js/reply2.js"></script>
 <script type="text/javascript" src="/resources/js/favorite.js"></script>
@@ -105,7 +78,7 @@
                             <a href="/faq/faqList">FAQ</a>
                         </li>
                         <li>
-                            <a href="/qna/qnaList">Q&amp;A</a>
+                            <a href="/qna/qnaListForUser?memId=haddie">Q&amp;A</a>
                         </li>
                         <li>
                             <a href="/report/reportList">신고게시판</a>

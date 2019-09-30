@@ -20,5 +20,9 @@ public class MainController {
 		model.addAttribute("eList", service.mainList(cri,"id"));
 		return "/main/main";
 	}
+	
+	@GetMapping("/main/error")
+	public void errorPage(Model model){
+	}
 
 }

@@ -18,7 +18,7 @@
 		<security:intercept-url pattern="/admin/**/*" access="hasAnyRole('ROLE_ADMIN')" />
 		<security:intercept-url pattern="/exhibition/**/*" access="hasAnyRole('ROLE_USER')" />
 		<security:form-login login-page="/member/loginForm" />
-		<security:logout logout-url="/logout" invalidate-session="true" delete-cookies="remember-me,JSESSION_ID" logout-success-url="" />
+		<security:logout logout-url="/logout" invalidate-session="true" delete-cookies="remember-me,JSESSION_ID" logout-success-url="/" />
 		<security:access-denied-handler ref="customAccessDenied" />
 		<security:remember-me data-source-ref="dataSource" token-validity-seconds="604800" />
 		<security:csrf disabled="true"/>

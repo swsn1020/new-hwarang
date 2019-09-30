@@ -4,6 +4,14 @@ public class MemberAuthVO {
 	private String member_id;
 	private String member_auth;
 	
+	public MemberAuthVO() {
+	}
+	
+	public MemberAuthVO(String member_id, String member_auth) {
+		super();
+		this.member_id = member_id;
+		this.member_auth = member_auth;
+	}
 	public String getMember_id() {
 		return member_id;
 	}

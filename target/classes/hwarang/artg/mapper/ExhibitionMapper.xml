@@ -56,7 +56,7 @@
 		update exhibition set exh_value = #{exh_value} where exh_seq = #{exh_seq}
 	</update>
 
-	<delete id="delete">
+	<delete id="dele0te">
 		delete exhibition where exh_seq = #{exh_seq}
 	</delete>
 

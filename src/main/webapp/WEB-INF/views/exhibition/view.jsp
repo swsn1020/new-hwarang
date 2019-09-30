@@ -292,7 +292,8 @@
 		<div class="container">
 			<form action="#" id="replyForm" method="get">
 				<input type="hidden" class="alert alert-secondary" id="replyer"
-					name="member_id" value="id"> <input type="hidden"
+					name="member_id" value="<sec:authentication property="principal.Username"/>">
+					 <input type="hidden"
 					class="alert alert-secondary" id="seq" name="exh_seq"
 					value="${exh.exh_seq}">
 				<div class="form-group">

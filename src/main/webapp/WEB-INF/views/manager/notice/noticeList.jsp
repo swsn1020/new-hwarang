@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <title>화랑-공지사항</title>
-<%@ include file="../../layout/left.jsp" %>
+<%@ include file="../../layout/logoleft2.jsp" %>
 <script type="text/javascript">
 </script>
 	<h3>공지사항</h3>
@@ -73,4 +73,4 @@
 			</li>
 		</ul>
 	</div>
-<%@ include file="../../layout/bottom.jsp"%>
+<%-- <%@ include file="../../layout/bottom.jsp"%> --%>
