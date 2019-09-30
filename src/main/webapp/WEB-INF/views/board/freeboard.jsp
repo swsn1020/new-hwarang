@@ -1,28 +1,13 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ include file="../layout/left.jsp"%>
-<html>
-<head>
-<meta charset="UTF-8">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <title>게시글목록</title>
-<script src="https://code.jquery.com/jquery-3.4.1.js"
-	integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
-	crossorigin="anonymous"></script>
-</head>
-<body>
+<%@ include file="../layout/left.jsp" %>
 	<div class="container">
-		<table>
-			<tr>
-				<td colspan="5">
-					<button onclick="location.href='register'">게시글 등록</button>
-				</td>
-			</tr>
+	<h3>자유게시판</h3>
+	<div id="table-responsive">
+		<div class="buttondiv" style="margin-top: 10px; margin-bottonm: 10px;">
+		<button type ="button" class="btn btn-outline-secondary" onclick="location.href='register'">게시글 등록</button>
+		</div>
+		<table class="table table-hover">
 			<tr>
 				<th>번호</th>
 				<th>제목</th>
@@ -32,22 +17,21 @@
 				<th>추천</th>
 			</tr>
 			<c:forEach items="${freeboard}" var="fboard">
+					<fmt:formatDate value="${fboard.regDate }" var="regDate" pattern="yyyy-MM-dd" />
 				<tr>
 					<td>${fboard.num}</td>
 					<td><a href="freeboardView?num=${fboard.num}">${fboard.title}
-					<span style="color:red">
-					<c:if test="${fboard.replyCount != 0}">[${fboard.replyCount }]</c:if> 
-					</span>
+						<span class="badge bg-teal"><i class="fa fa-comment-o"></i>${fboard.replyCount}</span>
 					</a></td>
 					<td>${fboard.userid}</td>
-					<td>${fboard.regDate}</td>
+					<td>${regDate}</td>
 					<td>${fboard.readCount}</td>
 					<td>${fboard.recommCount}</td>
 				</tr>
 			</c:forEach>
 				<tr>
 					<td colspan="5">
-						<form id= "searchForm" action="/free/board/freeboard" method="get">
+						<form id= "searchForm" action="/board/freeboard" method="get">
 							<select name="type">
 								<option value=""								
 								<c:out value="${pageMaker.cri.type == null?'selected':''}"/>>--</option>
@@ -74,11 +58,12 @@
 					</td>
 				</tr>
 		</table>	
+		</div>
 			<ul class="pagination justify-content-center">
 			<li class='${pageMaker.prev == true ? "page-item ":"page-item disabled"}'><a class="page-link" href="freeboard?pageNum=${pageMaker.startPage -1}&type=${param.type}&keyword=${param.keyword}">이전</a></li>
 			<c:forEach var="num" begin="${pageMaker.startPage}"
 				end="${pageMaker.endPage}">
-				<li class='${pageMaker.cri.pageNum == num ? "page-item":"page-item active"}'>
+				<li class='${pageMaker.cri.pageNum == num ? "page-item active" : "page-item"}'>
 					<a class="page-link" href="freeboard?pageNum=${num}&type=${param.type}&keyword=${param.keyword}">[${num}]</a>
 				</li>
 			</c:forEach>
@@ -87,5 +72,3 @@
 		</ul>
 		</div>
 <%@include file="../layout/bottom.jsp"%>
-</body>
-</html>

@@ -1,23 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-<%
-	String contextPath = request.getContextPath();
-	request.setAttribute("contextPath", contextPath);
-%>
-<script src="https://code.jquery.com/jquery-3.4.1.js"
-	integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
-	crossorigin="anonymous"></script>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<title>자유게시판 상세보기</title>
+<%@ include file="../layout/left.jsp" %>
 <script type="text/javascript">
 $(function() {	//문서가 로딩되면 실행할 함수
 		/*댓글 목록 그리기 */
@@ -34,6 +17,7 @@ $(function() {	//문서가 로딩되면 실행할 함수
 				if(result){
 					//댓글 등록 성공
 					alert("등록 완료");
+					$("#Replyregister")[0].reset();
 					//새로운 댓글 목록 그리기
 					replyList();
 				}else{
@@ -66,16 +50,52 @@ $(function() {	//문서가 로딩되면 실행할 함수
 	});
 });
 
+//댓글 총 수 불러오는 함수
+function getReplyCnt(){
+	var fboardNum = '${fboard.num}';
+	var replyCount;
+	$.ajax({
+		url: "reply/getReplyCnt",
+		data: {"fboardNum" : fboardNum},
+		type: "get",
+		async: false,
+		dataType: "json",
+		success: function(result){
+			replyCount = result;
+			var table = $("#replyTable");
+			table.append($("<tr><th colspan='4'>댓글"+replyCount+"</th></tr>"));
+		},
+		error: function(){
+			alert("댓글 수 불러오기 에러")
+		}
+	});
+	return replyCount;
+}
 
 function replyList(){
 		var table = $("#replyTable");
-		$("#replyTable tr:gt(0)").remove();
+		$("#replyTable tr").remove();
+		getReplyCnt();
 		$.ajax({
 			url : "${contextPath}/reply/all/"+${fboard.num},
 			type : "get",
 			dataType : "json",
 			success : function(data){
 			for(var i in data){
+				//등록일자 얻어오기
+				var upDateDate = new Date(data[i].upDateDate);
+				var year = upDateDate.getFullYear();
+				var month = upDateDate.getMonth()+1;
+				month = month >= 10 ? month: '0'+month;
+				var date = upDateDate.getDate();
+				date = date >= 10 ? date: '0'+ date;
+				var hour = upDateDate.getHours()+9;
+				hour = hour >= 10 ? hour : '0'+hour;
+				var minute = upDateDate.getMinutes();
+				minute = minute >= 10 ? minute : '0'+minute;
+				var finalDate = year+"-"+month+"-"+date+" "+hour+":"+minute;
+				
+				
 				var tr = $("<tr>");
 				var num = data[i].free_reply_num;
 				var userid = data[i].userid;
@@ -104,7 +124,7 @@ function replyList(){
 					.appendTo(tr);
 				$("<td>").append(form2.append(remvText.append(btnSubmit2)))
 					.appendTo(tr);
-				$("<td>").text(data[i].regDate)
+				$("<td>").text(finalDate)
 				.appendTo(tr);
 				$("<td>").append(rbtnModify).append(rbtnRemove)
 				.appendTo(tr);
@@ -181,14 +201,13 @@ function replyList(){
 	});
 }
 </script>
-</head>
-<body>
-	<div>
-		<h1>게시글 상세보기</h1>
-		<table>
+	<div class="container">
+		<div class="table-responsive">
+		<table class="table">
 			<tr>
 				<th>작성자</th>
 				<td>${fboard.userid}</td>
+			</tr>	
 				<th>조회수</th>
 				<td>${fboard.readCount}</td>
 				<th>추천</th>
@@ -231,20 +250,17 @@ function replyList(){
 				</td>
 			</tr>
 		</table>
+		</div>
 	</div>
 	<div>
 		<table id="replyTable">
-			<tr>
-				<th>아이디</th>
-				<th>내용</th>
-				<th>작성일</th>
-			</tr>
 		</table>
 	</div>
 	<div>
 	<!-- 댓글등록 -->
 	</div>
 		<form id="Replyregister">
+			<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
 			<input type="hidden" name="boardNum" value="${fboard.num}">
 			<table>
 				<tr>
@@ -269,7 +285,4 @@ function replyList(){
 		<input type="hidden" name="boardNum" value="${fboard.num }">
 		<input type="hidden" name="replyNum" value="">
 	</form>
-		
-		
-</body>
-</html>
+<%@include file="../layout/bottom.jsp"%>		

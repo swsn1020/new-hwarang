@@ -21,14 +21,18 @@ import hwarang.artg.community.model.FreeBoardVO;
 import hwarang.artg.community.model.FreeImgVO;
 import hwarang.artg.mapper.FreeBoardMapper;
 import hwarang.artg.mapper.FreeImgMapper;
+import hwarang.artg.mapper.FreeReplyMapper;
 
 @Service
 public class FreeBoardService {
 	//파일 저장경로
-	public static final String UPLOAD_PATH = "C:\\IMAGE";
+	public static final String UPLOAD_PATH = "C:\\IMAGE\\free";
 	
 	@Autowired
 	private FreeBoardMapper freeboardMapper;
+	
+	@Autowired
+	private FreeReplyMapper freereplyMapper;
 	
 	@Autowired
 	private FreeImgMapper freeimgMapper;
@@ -111,15 +115,11 @@ public class FreeBoardService {
 	}
 	
 	// 상세보기 조회(조회수 증가)
-	public FreeBoardVO IncreaseReadCnt(int num) {
-		//조회수 증가하는 update 문장이 필요
-		//board조회 하고나서,조회수 update
-		FreeBoardVO freeboard = null;
-		//조회수가 증가 했을 때만, 게시글 정보 반환
+	public boolean IncreaseReadCnt(int num) {
 		if(freeboardMapper.updateReadCount(num)>0) {
-			freeboard = freeboardMapper.selectOne(num);
+			return true;
 		}
-		return freeboard;
+		return false;
 	}
 	
 	public int getTotal(CriteriaDTO cri) {
@@ -162,9 +162,9 @@ public class FreeBoardService {
 		View view = new DownloadView(file);
 		return view;
 	}
-	
-	
-	
+	public int getnReplyCount(int num) {
+		return freereplyMapper.getReplyCnt(num);
+	}
 	/*block 처리 -hj*/
 	//Block 처리하기1(Notice)
 	public boolean doBoardBlock(String block, int num) {
