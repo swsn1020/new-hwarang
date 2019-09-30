@@ -3,7 +3,6 @@
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	<mapper namespace="hwarang.artg.mapper.MemberAuthMapper">
-<<<<<<< HEAD
 
 		<insert id="insertMember_Auth" parameterType="hwarang.artg.member.model.MemberAuthVO">
 			insert into member_auth(member_id,member_auth)
@@ -15,19 +14,6 @@
 		</update>
 		<delete id="deleteMember_Auth" parameterType="String">
 			delete from member_auth where member_id = #{member_id} and member_auth = #{member_auth}
-=======
-		<insert id="insertMember_Auth" parameterType="hwarang.artg.member.model.MemberAuthVO">
-			insert into member_auth(member_id,member_auth)
-			values(#{member_id},#{member_auth})
-		</insert>
-		<update id="updateMember_Auth" parameterType="hwarang.artg.member.model.MemberAuthVO">
-			update member_auth
-			set member_auth = #{member_auth}
-			where member_id = #{member_id}
-		</update>
-		<delete id="deleteMember_Auth" parameterType="String">
-			delete from member_auth where member_id = #{member_id}
->>>>>>> refs/heads/jm
 		</delete>
 		<select id="selectMember_Auth" parameterType="String" resultType="hwarang.artg.member.model.MemberAuthVO">
 			select *from member_auth where member_id = #{member_id}
