@@ -65,11 +65,8 @@ select *
 		FROM free_reply WHERE free_num = #{fboardNum}
 </select>
 
-<<<<<<< HEAD
-=======
 
 
->>>>>>> refs/remotes/origin/geun2
 <!-- 신고처리 -hj- -->
 <update id="updateBlock">
 	UPDATE free_reply SET BLOCK = #{block} WHERE free_reply_num = #{num}
