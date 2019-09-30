@@ -53,9 +53,9 @@ canvas {
 }
 
 @media (max-width: 575px) {
-  .container-fluid {
-    padding: 0 15px;
-  }
+	 .container-fluid {
+	   padding: 0 15px;
+	 }
 }
 
 header.page-header {
@@ -393,7 +393,7 @@ input {
 * ==========================================================
 */
 nav.side-navbar {
-  background: #fff;
+  background: #1e2229;
   min-width: 250px;
   max-width: 250px;
   color: #686a76;
@@ -663,7 +663,7 @@ nav.side-navbar.shrinked .sidebar-header .title {
 * ==========================================================
 */
 nav.navbar {
-  background: #1e2229;
+  background: #ffffff;
   padding-top: 15px;
   padding-bottom: 15px;
   color: #fff;

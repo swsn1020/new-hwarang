@@ -3,7 +3,7 @@
 <%@ include file="../../layout/left.jsp" %>
 <script>
 	$(function(){
-		replyList();
+		replyList(1);
 		$("#replyForm").on("submit", function(){
 			var params = $(this).serialize();
 			console.log(params);
@@ -17,7 +17,7 @@
 						alert("댓글 등록완료");
 						$("#replyForm")[0].reset();
 						//새로운 댓글목록 그리기
-						replyList();
+						replyList('${rPager.totalPage}');
 					}else{
 						//댓글등록 실패
 						alert("댓글 등록실패");
@@ -59,7 +59,7 @@
 			success: function(result){
 				replyCnt = result;
 				var replyTable = $("#replies");
-				replyTable.append($("<tr><th colspan='4'>총 댓글"+replyCnt+"</th></tr>"));
+				replyTable.append($("<tr><th colspan='5'>총 댓글"+replyCnt+"</th></tr>"));
 			},
 			error: function(){
 				alert("댓글 수 불러오기 에러")
@@ -69,21 +69,33 @@
 	}
 	
 	
-	function replyList(){
+	function replyList(num){
 		var replyTable = $("#replies");
 		$("#replies tr").remove();
 		getReplyCnt();
 // 		alert("replyCnt : "+replyCnt);
 		$.ajax({
-			url: "reply/all/${notice.num}",
+			url: "reply/all",
+			data: {"boardNum": '${notice.num}', "curPage": num},
 			type: "get",
 			dataType: "json",
 			success: function(data){
-				
 				//data는 list
-				for(var i in data){
+				var rnum = (Number(num) * 10 ) - 9;
+				var rPager = data.rPager;
+				console.log(rPager);
+				console.log(rPager.curPage);
+				console.log(rPager.totalPage);
+				if(rPager.curPage != 1){
+					$("#left").attr("class", "page-item");
+				}
+				if(rPager.curPage == rPager.totalPage){
+					$("#right").attr("class", "page-item disabled");
+				}
+				
+				for(var i in data.replies){
 					//등록일자 얻어오기
-					var modiDate = new Date(data[i].modiDate);
+					var modiDate = new Date(data.replies[i].modiDate);
 					var year = modiDate.getFullYear();
 					var month = modiDate.getMonth()+1;
 					month = month >= 10 ? month: '0'+month;
@@ -96,13 +108,13 @@
 					var finalDate = year+"-"+month+"-"+date+" "+hour+":"+minute;
 					
 					//멤버 아이디
-					var memId = data[i].memId;
+					var memId = data.replies[i].memId;
 					//내용(Block처리 함께)
-					var blockStatus = data[i].block;
+					var blockStatus = data.replies[i].block;
 					if(blockStatus == 'true'){
 						var content = '관리자에 의해 삭제처리 된 댓글입니다.';
 					}else{
-						var content = data[i].content;
+						var content = data.replies[i].content;
 					}
 					
 					
@@ -110,13 +122,13 @@
 					//수정폼 (수정, 삭제는 본인이 작성한 글만)
 					var modiForm = $("<form></form>");
 					var modiTxt = $("<div id='modi"+i+"' class='collapse'>"+
-							"<input type='hidden' name='num' value='"+data[i].num+"'>"+
+							"<input type='hidden' name='num' value='"+data.replies[i].num+"'>"+
 							"<label for='pw'>password</label><br><input type='password' name='pw' class='form-control'><br>"+
-							"<textarea class='form-control' rows='5' name='content'>"+data[i].content+"</textarea></div>");
+							"<textarea class='form-control' rows='5' name='content'>"+data.replies[i].content+"</textarea></div>");
 					//삭제폼 (수정, 삭제는 본인이 작성한 글만)
 					var delForm = $("<form></form>");
 					var delTxt = $("<div id='del"+i+"' class='collapse'>"+
-							"<input type='hidden' name='num' value='"+data[i].num+"'>"+
+							"<input type='hidden' name='num' value='"+data.replies[i].num+"'>"+
 							"<label for='pw'>password</label><br><input type='password' name='pw' class='form-control'></div>");
 					
 					//'수정'안  확인버튼
@@ -129,8 +141,10 @@
 					delTxt.append(delSubmit);
 					delForm.append(delTxt);
 					
-					
 					var tr = $("<tr>");
+					
+					tr.append($("<td>"+rnum+"</td>"));
+					rnum++;
 					tr.append($("<td><a href='#'>"+memId+"</a><br>"+finalDate+"</td>"));
 					tr.append($("<td>").text(content).append(modiForm));
 					tr.append($("<td>").append(delForm));
@@ -138,7 +152,7 @@
 					var delBtn = $("<button type='button' class='btn btn-link btn-sm' data-toggle='collapse' data-target='#del"+i+"'> 삭제 </a>");
 					//내가 쓴 글일 경우 신고 버튼 없음
 					var blockBtn = $("<button type='button' class='btn btn-link btn-sm' style='color: red;'> 신고 </button>");
-					tr.append($("<td>").append(modiBtn).append(delBtn).append(blockBtn));
+					tr.append($("<td style='width: 200px;''>").append(modiBtn).append(delBtn).append(blockBtn));
 					
 					
 					//disabled 설정하기
@@ -213,10 +227,10 @@
 						blockBtn.on("click", function(){
 						var category = $("#blockForm").find('input[name="category"]');
 						category.val("Notice_Reply");
-						var replyMemId = data[m].memId;
+						var replyMemId = data.replies[m].memId;
 						var blockMemId = $("#blockForm").find('input[name="blockMemId"]');
 						blockMemId.val(replyMemId);
-						var replyNum = data[m].num;
+						var replyNum = data.replies[m].num;
 						var rInput = $("#blockForm").find('input[name="replyNum"]');
 						rInput.val(replyNum);
 // 						alert(rInput.val());
@@ -231,6 +245,8 @@
 					})(i)	// 댓글 해당 인덱스 보내기(클로저 방지)
 					replyTable.append(tr);
 				} //for문
+				
+				
 			},
 			error: function(){
 				alert("replyList 오류");
@@ -279,10 +295,7 @@
 		<hr>
 		
 	</div>
-	<!-- 이전글, 다음글  -->
-	<div class="container">
-		
-	</div>
+	
 	
 	<!-- 로그인한 id의 권한이 관리자인 경우만 수정할수 있는 버튼 보여주기 -->
 	<div class="btnGroup" style="text-align: center;">
@@ -328,8 +341,27 @@
 		</table>
 	</div>
 	
+	<!-- Pagination -->
+	<div class="container">
+		<ul class="pagination justify-content-center">
+			<li id="left" class="page-item disabled">
+				<a class="page-link" href="javascript:replyList(1)">&laquo;</a>
+			</li>
+			<c:forEach var="num" begin="${rPager.blockBegin }" end="${rPager.totalPage}">
+				<li class='${rPager.curPage == num ? "active" : "page-item"}'>
+					<a class="page-link" href="javascript:replyList(${num})">[${num}]</a>
+				</li>
+			</c:forEach>
+			<li id="right" class="page-item">
+				<a class="page-link" href="javascript:replyList(${rPager.totalPage })">&raquo;</a>
+			</li>
+		</ul>
+	</div>
+	
+	
+	<br>
 	<!-- 댓글입력div -->
-	<div class="form-group col-md-9" style="margin-left: 150px;">
+	<div class="container">
 		<form id="replyForm">
 			<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
 			<input type="hidden" name="boardNum" value="${notice.num}">
@@ -337,9 +369,9 @@
 			<table class="table">
 				<tr>
 					<th>댓글쓰기</th>
-					<td><textarea class="form-control" name="content" rows="3" placeholder="댓글을 입력하세요" style="resize: none;"></textarea><td>
-					<td><input type="submit" class="btn btn-outline-primary" value="작성">
-				</td>
+					<td colspan="3"><textarea class="form-control" name="content" rows="3" placeholder="댓글을 입력하세요" style="resize: none;"></textarea></td>
+					<td><input type="submit" class="btn btn-outline-primary btn-sm" value="작성"></td>
+				</tr>
 			</table>
 		</form>
 	</div>

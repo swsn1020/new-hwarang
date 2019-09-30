@@ -22,9 +22,9 @@ public interface NoticeReplyMapper {
 	
 	//댓글 페이징 
 		//-한 페이지 당 표시할 list 수
-//	public List<NoticeReplyVO> getListWithPaging(CriteriaDTO criteria);
+	public List<NoticeReplyVO> getListWithPaging(@Param("boardNum")int boardNum, @Param("start")int start, @Param("end")int end);
 		//-총 list 구하기
-	public int getTotalCount();
+	public int getTotalCountByBNum(int boardNum);
 	
 	//댓글  block 처리
 	public int updateBlock(@Param("block")String block, @Param("num") int num);
