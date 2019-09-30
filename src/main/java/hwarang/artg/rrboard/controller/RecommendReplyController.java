@@ -1,9 +1,11 @@
 package hwarang.artg.rrboard.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -40,13 +42,12 @@ public class RecommendReplyController {
 	@RequestMapping("/rmodify")
 	public boolean showRmodify(int num,String id,String pw,String content) {
 		RecommendReplyVO rr = service.recommendreplyGetOne(num);
-		if(id.equals(rr.getMember_id())) {
-			if(Mservice.memberCheckPw(id, pw)) {
-				rr.setRecomm_reply_content(content);
-				service.recommendreplyModify(rr);
-				return true;
-			}
+		if(Mservice.memberCheckPw(rr.getMember_id(), pw)) {
+			rr.setRecomm_reply_content(content);
+			service.recommendreplyModify(rr);
+			return true;
 		}
+
 		return false;
 	}
 	@ResponseBody

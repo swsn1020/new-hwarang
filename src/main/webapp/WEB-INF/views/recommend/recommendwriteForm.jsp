@@ -29,8 +29,8 @@ $(function(){
 	</div>
 		<div class="form-group">
 		<form action="write" method="post" id="writeForm" enctype="multipart/form-data">
-			<!--  ${member_id} -->
-			<input type="hidden" name="member_id" value="test">
+			<sec:authentication property="principal.username" var="id"/>
+			<input type="hidden" name="username" value="${id}">
 			<table class="table">
 				<tr>
 					<th>Title</th>
@@ -51,8 +51,7 @@ $(function(){
 			<div align="center">
 			<input style="align-content: center;" class='btn btn-link' type="submit" value="Ok"> 
 			<input style="align-content: center;" class='btn btn-link' type="reset" value="Reset">
-			<!-- 목록으로 돌아갈때 member_id 필요 -->
-			<input style="align-content: center;" class='btn btn-link' type="button" onclick="location.href='recommendboard'" value="List">
+			<input style="align-content: center;" class='btn btn-link' type="button" onclick="location.href='/recommend/recommendboard'" value="List">
 			</div>
 		</form>
 		</div>

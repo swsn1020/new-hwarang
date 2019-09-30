@@ -32,6 +32,8 @@ public class RecommendBoardService {
 	private RecommendBoardMapper rbmapper;
 	@Autowired
 	private RecommendImgMapper rimapper;
+	@Autowired
+	private RecommendReplyMapper rrmapper;
 
 	//paging
 	//페이지 리스트
@@ -203,6 +205,7 @@ public class RecommendBoardService {
 	public boolean recommendboardRemove(int num) {
 		if(rbmapper.deleteRecommend_Board(num) > 0) {
 			rimapper.deleteRecomm_Img_num(num);
+			rrmapper.deleteRecommend_Replys(num);
 			return true;
 		}
 		return false;

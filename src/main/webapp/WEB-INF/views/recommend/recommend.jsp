@@ -52,11 +52,12 @@
 		 $("#modalDiv2").hide("slow");
 		 }); */
 	});
-
+	var memberid = ${id};
 	function ReplyView() {
 		var table = $("#replyTable");
 		$("#replyTable tr:gt(0)").remove();
 		var recommNum = ${recomm.recomm_num};
+
 		/* member_id 수정해야됨 */
 		$.ajax({
 					url : "/rreply/replyView?num=" + recommNum,
@@ -65,9 +66,8 @@
 					success : function(data) {
 						for ( var i in data) {
 							var tr = $("<tr>");
-							var modiText = $("<div id='mod"+i+"' class='collapse form-group'><input type='hidden' name='num' value='"+data[i].recomm_reply_num+"'><input type='hidden' name='id' value='"+data[i].member_id+"'> password <input class='form-control' type='text' name='pw'><br><textarea class='form-control' name='content' rows='3' cols='80'>"
-									+ data[i].recomm_reply_content + "</textarea></div>");
-							var remvText = $("<div id='modd"+i+"' class='collapse form-group'><input type='hidden' name='num2' value='"+data[i].recomm_reply_num+"'><input type='hidden' name='id2' value='"+data[i].member_id+"'> password <input class='form-control' type='text' name='pw2'></div>");
+							var modiText = $("<div id='mod"+i+"' class='collapse form-group'> <input type='hidden' name='num' value='"+data[i].recomm_reply_num+"'><input type='hidden' name='id' value='"+data[i].member_id+"'><br><textarea class='form-control' name='content' rows='3' cols='80'>"+data[i].recomm_reply_content+"</textarea></div>");
+							var remvText = $("<div id='modd"+i+"' class='collapse form-group'> <input type='hidden' name='num2' value='"+data[i].recomm_reply_num+"'><input type='hidden' name='id2' value='"+data[i].member_id+"'></div>");
 							
 							var rbtnModify = $("<button type='button' class='btn btn-link' data-toggle='collapse' data-target='#mod"+i+"'>M</button>");
 							var rbtnRemove = $("<button type='button' class='btn btn-link' data-toggle='collapse' data-target='#modd"+i+"'>D</button>");
@@ -75,6 +75,7 @@
 							
 							var form = $("<form action='#'></form>");
 							var form2 = $("<form action='#'></form>");
+
 							var btnSubmit = $("<button type='button' class='btn btn-link'>ok</button>");
 							var btnSubmit2 = $("<button type='button' class='btn btn-link'>ok</button>");
 
@@ -86,8 +87,11 @@
 									.appendTo(tr);
 							$("<td>").text(data[i].recomm_reply_reg_date)
 									.appendTo(tr);
-							$("<td>").append(rbtnModify).append(rbtnRemove)
-									.appendTo(tr);
+							
+							if(memberid.equals(data[i].member_id)){		
+								$("<td>").append(rbtnModify).append(rbtnRemove).appendTo(tr);
+							}
+							
 							$("<td>").append(btnReport).appendTo(tr);
 
 							tr.appendTo(table);
@@ -209,11 +213,11 @@
 				</tr>
 				<tr align="right">
 					<td colspan="4">
-					<input type="button" onclick="location.href='recommendboard'" value="List" class="btn btn-link"> 
-					<sec:authentication property="username" var="id"/>
-					<c:if test="${id.username eq recomm.member_id}">
-						<input type="button" onclick="location.href='checkPw?id=${recomm.member_id}&num=${recomm.recomm_num}&button=modify'" value="Modify" class="btn btn-link"> 
-						<input type="button" onclick="location.href='checkPw?id=${recomm.member_id}&num=${recomm.recomm_num}&button=remove'" value="Remove" class="btn btn-link">					
+					<input type="button" onclick="location.href='/recommend/recommendboard'" value="List" class="btn btn-link"> 
+					<input type="text" value="<sec:authentication property="principal.Username" var="id"/>">
+					<c:if test="${id eq recomm.member_id}">
+						<input type="button" onclick="location.href='/recommend/modify?num=${recomm.recomm_num}'" value="Modify" class="btn btn-link"> 
+						<input type="button" onclick="location.href='/recommend/remove?num=${recomm.recomm_num}'" value="Remove" class="btn btn-link">					
 					</c:if>
 					<input type="button" onclick="location.href='report'" value="Report" class="btn btn-link">
 					</td>
@@ -223,8 +227,7 @@
 		<!-- 리뷰댓글등록 -->
 		<div class="form-group">
 			<form id="rwriteForm">
-				<!-- member_id 고치기 -->
-				<input type="hidden" name="member_id" value="test"> 
+				<input type="hidden" name="member_id" value="${id}"> 
 				<input type="hidden" name="recomm_num" value="${recomm.recomm_num}">
 				<table>
 					<tr>

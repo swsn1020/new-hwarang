@@ -19,7 +19,8 @@
 		<form action="checkPw" method="post">
 			<input type="hidden" name="button" value="${param.button }">
 			<input type="hidden" name="num" value="${param.num}">
-			<input type="hidden" name="id" value="${param.id}">
+			<sec:authentication property="principal.username" var="id"/>
+			<input type="hidden" name="id" value="${id}">
 			<input type="password" name="pw">
 			<input type="submit" value="ok">
 		</form>

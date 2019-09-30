@@ -29,6 +29,9 @@ public class ReviewBoardService {
 	private ReviewBoardMapper rbmapper;
 	@Autowired
 	private ReviewImgMapper rimapper;
+	@Autowired
+	private ReviewReplyMapper rrmapper;
+	
 	
 	//paging
 	
@@ -202,6 +205,7 @@ public class ReviewBoardService {
 	public boolean reviewboardRemove(int num) {
 		if(rbmapper.deleteReview_Board(num) > 0) {
 			rimapper.deleteReview_Img_num(num);
+			rrmapper.deleteReview_Replys(num);
 			return true;
 		}
 		return false;

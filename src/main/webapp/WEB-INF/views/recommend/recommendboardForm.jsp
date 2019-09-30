@@ -17,11 +17,10 @@
 			<h1>추천 게시판</h1>
 		</div>
 		<div class="table-responsive">
-		 	<sec:authentication property="username" var="id"/>
-		 	<c:if test="${id.username eq post.username}">
-			 	<input type="hidden" name="username" id="member_id" value="${id.username}">
-				<button onclick="location.href='write?id=${id.username}'" class="btn btn-link">Write</button>		 	
-		 	</c:if>
+		 	<%-- <sec:authentication property="principal.username" var="id"/> --%>
+			<sec:authorize access="hasRole('ROLE_USER')">			
+				<button onclick="location.href='/recommend/write'" class="btn btn-link">Write</button>		 	
+			</sec:authorize>
 			<table class="table table-hover">
 				<thead>
 					<tr>

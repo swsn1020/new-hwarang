@@ -3,6 +3,7 @@ package hwarang.artg.rrboard.controller;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.OutputStream;
+import java.security.Principal;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -41,25 +42,26 @@ public class RecommendBoardController {
 	private MemberService mservice;
 	
 	@RequestMapping(value = "/recommendboard",method = RequestMethod.GET)
-	public String showRecommendBoardForm(Model model,CriteriaDTO cri) {
+	public String showRecommendBoardForm(Model model,CriteriaDTO cri,Principal principal) {
 		PageDTO page = new PageDTO(cri, rbservice.getTotalCount(cri));
 		model.addAttribute("pageMaker", page);
 		model.addAttribute("recommendList", rbservice.pagingList(cri));
-		
+		model.addAttribute("principal", principal);
 		return "/recommend/recommendboardForm";
 	}
 	@RequestMapping(value = "/write", method = RequestMethod.GET)
-	public String showreviewwrite() {
+	public String showreviewwrite(Principal principal,Model model) {
+		model.addAttribute("principal", principal);
 		return "/recommend/recommendwriteForm";
 	}
 
 	@RequestMapping(value = "/write", method = RequestMethod.POST)
-	public String showrwrite(String member_id, String recomm_title, String recomm_content,
+	public String showrwrite(String username, String recomm_title, String recomm_content,
 			 Model model,MultipartHttpServletRequest request){
 		// exh_name : 결제한 프로그램 명
 		List<MultipartFile> fileList =request.getFiles("file");
 		RecommendBoardVO rb = new RecommendBoardVO();
-		rb.setMember_id(member_id);
+		rb.setMember_id(username);
 		rb.setRecomm_title(recomm_title);
 		rb.setRecomm_content(recomm_content);
 		String msg = "";
@@ -81,42 +83,50 @@ public class RecommendBoardController {
 	}
 	
 	@RequestMapping("/view")
-	public String showreview(Model model, int num) {
+	public String showreview(Model model, int num,Principal principal) {
+		model.addAttribute("principal", principal);
 		model.addAttribute("recomm", rbservice.increasReadCnt(num));
 		model.addAttribute("imgs", riservice.recommendimgGetOne(num));
 		return "/recommend/recommend";
 	}
-	@RequestMapping(value = "/checkPw",method = RequestMethod.GET)
-	public String showcheck() {
-		return "/recommend/recommendPwForm";
+//	@RequestMapping(value = "/checkPw",method = RequestMethod.GET)
+//	public String showcheck(Principal principal,Model model) {
+//		model.addAttribute("principal", principal);
+//		return "/recommend/recommendPwForm";
+//	}
+//
+//	@RequestMapping(value = "/checkPw",method = RequestMethod.POST)
+//	public String showcheckPw(String button, String id, String pw, int num,Model model) {
+//		String msg = "다시 시도해주세요.";
+//		String url = "view?num=" + num;
+//		RecommendBoardVO rb = rbservice.recommendboardGetOne(num);
+//		if (id.equals(rb.getMember_id())) {
+//			MemberVO m = mservice.memberGetOne(id);
+//			if (pw.equals(m.getMember_password())) {
+//				if (button.equals("modify")) {
+//					url = "modify?num=" + num;
+//					msg = "";
+//				} else if (button.equals("remove")) {
+//					rrservice.recommendreplysRemoves(num);
+//					riservice.recommendimgNumRemove(num);
+//					rbservice.recommendboardRemove(num);
+//					
+//					msg = "삭제되었습니다.";
+//					url = "recommendboard";
+//				}
+//			}
+//		}
+//		model.addAttribute("url", url);
+//		model.addAttribute("msg", msg);
+//		return "/recommend/result";
+//	}
+	@RequestMapping("/remove")
+	public String showrecommendRemove(int num,Model model) {
+		rbservice.recommendboardRemove(num);
+		model.addAttribute("msg", "삭제되었습니다.");
+		model.addAttribute("url", "recommendboard");
+		return "/recommend/result";			
 	}
-
-	@RequestMapping(value = "/checkPw",method = RequestMethod.POST)
-	public String showcheckPw(String button, String id, String pw, int num,Model model) {
-		String msg = "다시 시도해주세요.";
-		String url = "view?num=" + num;
-		RecommendBoardVO rb = rbservice.recommendboardGetOne(num);
-		if (id.equals(rb.getMember_id())) {
-			MemberVO m = mservice.memberGetOne(id);
-			if (pw.equals(m.getMember_password())) {
-				if (button.equals("modify")) {
-					url = "modify?num=" + num;
-					msg = "";
-				} else if (button.equals("remove")) {
-					rrservice.recommendreplysRemoves(num);
-					riservice.recommendimgNumRemove(num);
-					rbservice.recommendboardRemove(num);
-					
-					msg = "삭제되었습니다.";
-					url = "recommendboard";
-				}
-			}
-		}
-		model.addAttribute("url", url);
-		model.addAttribute("msg", msg);
-		return "/recommend/result";
-	}
-
 	// 게시글의 글쓴이가 아닌경우 수정버튼 안보이도록 설정
 	@RequestMapping(value = "/modify", method = RequestMethod.GET)
 	public String showreviewmodify(Model model, int num) {

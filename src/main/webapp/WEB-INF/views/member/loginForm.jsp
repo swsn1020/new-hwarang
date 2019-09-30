@@ -83,7 +83,7 @@ function goLogin(){
 			<h1>HWARANG</h1>
 			<p>Your own exhibition</p>
 		</div>
-		${sessionScope }
+		<%-- ${sessionScope } --%>
 		<div class="" style="margin: 0 auto; width: 720px; overflow: hidden;">
 			<div class="form-group" style="float: left; width: 350px;">
 				<h3  align="center">HWARANG Login</h3>
@@ -120,7 +120,7 @@ function goLogin(){
 						<a id="kakao-login-btn"></a>
 					</li>
 				</ul>
-				<h2><c:out value="${param.error}"/>1</h2>
+				<%-- <h2><c:out value="${param.error}"/>1</h2> --%>
 			</div>
 		</div>
 	</div>
