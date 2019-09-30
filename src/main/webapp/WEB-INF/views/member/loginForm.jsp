@@ -90,11 +90,12 @@ function goLogin(){
 </head>
 <body>
 	<div class="container">
+
 		<div class="jumbotron text-center ">
 			<h1>HWARANG</h1>
 			<p>Your own exhibition</p>
 		</div>
-		${sessionScope }
+		<%-- ${sessionScope } --%>
 		<div class="" style="margin: 0 auto; width: 720px; overflow: hidden;">
 			<div class="form-group" style="float: left; width: 350px;">
 				<h3  align="center">HWARANG Login</h3>
@@ -105,6 +106,10 @@ function goLogin(){
 						<button type="button" id="checkLogin" onclick="javascript:goLogin();" class="btn btn-primary" style="height: 50px; width: 350px; ">Login</button><br><br>
 					</form>
 				</fieldset>
+				<div class="checkbox">
+					<label><input type="checkbox" name="remember-me">자동 로그인</label>
+				</div>
+
 				<div style="margin: 20px auto 0; overflow: hidden; width: 280px;">
 					<ul>
 						<li style="float: left;"><a href="/member/findidForm">아이디 찾기</a>&nbsp;&nbsp;|</li>
@@ -115,6 +120,8 @@ function goLogin(){
 					</ul>
 				</div>
 			</div>
+
+
 			<div class="" style=" width: 300px; height: 400px; float: left; padding-left: 60px; margin-left: 65px;">
 				<h3  align="center">SNS Simple Login</h3>
 				<ul style="align-content: center;">
@@ -131,7 +138,6 @@ function goLogin(){
 						<a id="kakao-login-btn"></a>
 					</li>
 				</ul>
-				<h2><c:out value="${param.error}"/>1</h2>
 			</div>
 		</div>
 	</div>

@@ -156,10 +156,11 @@ public class ExhibitionController {
 
 	@PostMapping("/removeFavorite")
 	public String removeFavoriteMark(@RequestParam("seq") String[] seq, Principal principal) {
+		String id = principal.getName();
 		for(int i=0; i<seq.length; i++) {
 			FavoriteMarkVO fav = new FavoriteMarkVO();
 			fav.setExh_seq(Integer.parseInt(seq[i]));
-			fav.setMember_id("id");
+			fav.setMember_id(id);
 			fService.removeFavorite(fav);
 		}
 		return "redirect:/exhibition/favoriteList";
