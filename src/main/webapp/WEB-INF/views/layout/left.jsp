@@ -111,7 +111,7 @@
                             <a href="/report/reportList">신고게시판</a>
                         </li>
                         <li>
-                            <a href="/free/freeboard">자유게시판</a>
+                            <a href="/board/freeboard">자유게시판</a>
                         </li>
                         <li>
                             <a href="#">정보공유</a>

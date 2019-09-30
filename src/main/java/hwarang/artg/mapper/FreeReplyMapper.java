@@ -19,7 +19,8 @@ public interface FreeReplyMapper {
 	public FreeReplyVO selectOne(int num);
 	public List<FreeReplyVO> selectAll();
 	public List<FreeReplyVO> selectListByBnum(int fboardNum);
-	public String replyUserIdCheck(int num);	
+	public String replyUserIdCheck(int num);
+	public int getReplyCnt(int fboardNum);
 	
 	/* 신고처리 */
 	public int updateBlock(@Param("block")String block, @Param("num") int num);
