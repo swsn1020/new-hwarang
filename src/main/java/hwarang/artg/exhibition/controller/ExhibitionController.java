@@ -43,8 +43,6 @@ public class ExhibitionController {
 
 	@GetMapping("")
 	public String exhibitionShow(Model model, CriteriaDTO cri, ExhibitionVO exh) throws Exception {
-		//시큐리티로 유저 권한 확인하는 방법
-		System.out.println(SecurityContextHolder.getContext().getAuthentication().getAuthorities());
 		if(cri.getAmount()==10 || cri.getAmount()==0) {
 			cri.setAmount(12);
 		}
@@ -58,9 +56,8 @@ public class ExhibitionController {
 		model.addAttribute("realmname",service.getExhRealmName());
 		model.addAttribute("area",service.getExhArea());
 		model.addAttribute("pageMaker", page);
-		//로그인하지 않은 상태에서 스프링 시큐리티에서 유저아이디 값 구하는법
+		//Principal을 받지 않은 상태에서 스프링 시큐리티에서 유저아이디 값 구하는법
 		String id = SecurityContextHolder.getContext().getAuthentication().getName();
-		System.out.println(id);
 		if(!id.equals("anonymousUser")) {
 			model.addAttribute("group",fService.getGroup( id));			
 		}
@@ -96,9 +93,10 @@ public class ExhibitionController {
 	}
 
 	@GetMapping("/view")
-	public void exhibitionDetail(Model model, int seq) {
-		rService.addRecentlyView(new RecentlyViewVO(seq, "id"));
-		model.addAttribute("group",fService.getGroup("id"));
+	public void exhibitionDetail(Model model, int seq, Principal principal) {
+		String id = principal.getName();
+		rService.addRecentlyView(new RecentlyViewVO(seq, id));
+		model.addAttribute("group",fService.getGroup(id));
 		model.addAttribute("exh", service.getOne(seq));
 	}
 	
@@ -149,17 +147,18 @@ public class ExhibitionController {
 	@PostMapping(value ="/addFavorite", consumes = "application/json", produces = {MediaType.TEXT_PLAIN_VALUE})
 	@ResponseBody
 	public ResponseEntity<String> addFavoriteMark(@RequestBody FavoriteMarkVO vo) {
-		System.out.println(vo.getExh_seq());
+		vo.setMember_id(SecurityContextHolder.getContext().getAuthentication().getName());
 		return fService.addFavorite(vo) == true ? new ResponseEntity<>("success", HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR); 
 	}
 	
 
 	@PostMapping("/removeFavorite")
 	public String removeFavoriteMark(@RequestParam("seq") String[] seq, Principal principal) {
+		String id = principal.getName();
 		for(int i=0; i<seq.length; i++) {
 			FavoriteMarkVO fav = new FavoriteMarkVO();
 			fav.setExh_seq(Integer.parseInt(seq[i]));
-			fav.setMember_id("id");
+			fav.setMember_id(id);
 			fService.removeFavorite(fav);
 		}
 		return "redirect:/exhibition/favoriteList";
@@ -168,6 +167,7 @@ public class ExhibitionController {
 	@DeleteMapping(value ="/removeFavorite", consumes = "application/json", produces = {MediaType.TEXT_PLAIN_VALUE})
 	@ResponseBody
 	public ResponseEntity<String> removeFav(@RequestBody FavoriteMarkVO vo) {
+		vo.setMember_id(SecurityContextHolder.getContext().getAuthentication().getName());
 		return fService.removeFavorite(vo) == true ? new ResponseEntity<>("success", HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	

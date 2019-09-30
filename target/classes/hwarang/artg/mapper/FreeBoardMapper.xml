@@ -27,7 +27,7 @@ select * from free_board order by free_num desc
 <update id="updateReadCount" parameterType="hwarang.artg.community.model.FreeBoardVO">
 update free_board
 	set free_readcnt = free_readcnt +1
-		where free_num = #{param1}
+		where free_num = #{num}
 		
 </update>
 <sql id="criteriaDTO">
@@ -53,10 +53,11 @@ update free_board
 <select id="getListWithPaging" parameterType="hwarang.artg.community.model.FreeBoardVO" resultMap="freeboardMap">
   <![CDATA[
   select 
-    free_num,member_id,free_title,free_content,free_regdate, free_updatedate,free_readcnt,free_reply_cnt
+    fNum as free_num ,member_id,free_title,free_content,free_regdate, free_updatedate,free_readcnt,
+  	(SELECT count(*) FROM free_reply WHERE free_num = fNum) as free_reply_cnt
   from 
       ( select /*+INDEX_DESC(free_board pk_free_num) */
-        rownum rn,free_num,free_title, free_content, member_id, free_regdate, free_updatedate, free_readcnt, free_reply_cnt 
+        rownum rn,free_num fNum,free_title, free_content, member_id, free_regdate, free_updatedate, free_readcnt, free_reply_cnt 
       from free_board
       where
   ]]>

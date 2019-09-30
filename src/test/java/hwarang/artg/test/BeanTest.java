@@ -65,6 +65,9 @@ public class BeanTest {
 //	private ReviewReplyMapper dao;
 //	private ReviewReplyService s;
 	
+	@Autowired
+	private MemberService ms;
+	
 	@Test
 	public void test() {
 		s.pointGetRegister(1, 100, "포인트사용", "bbb");
@@ -211,5 +214,8 @@ public class BeanTest {
 //		service.memberRegister("test200", "testname200", "1234", "test200@test.com", 1, "010-1234-1234", "강남구 test빌딩");
 //		System.out.println(service.memberGetOne("test199"));
 //		System.out.println(membermapper.selectMember("test199"));
+		
+		ms.memberGetOne("id1");
+		
 	}
 }

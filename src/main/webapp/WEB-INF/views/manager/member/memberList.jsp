@@ -11,37 +11,52 @@
 <script>
 $(function(){
 });
+	function selectFunc() {
+		var state = $("#selBox option:selected").val();
+		if(state == 'I'){
+			$("#search").attr("placeholder", "아이디를 입력하세요.");
+			$("#search").attr("disabled", false);
+		}else {
+			$("#search").val("");
+			$("#search").attr("disabled", true);
+		}
+	}
 </script>
 <div class="content-inner" style="padding-bottom: 59px;">
 	<h2 style="padding-top: 40px;">Member Settings</h2><br>
 	<form id="sortForm" action="memberList" method="get">
-		<select class="form-control col-sm-1" name="type" style="display: inline-block;">
+		<select class="form-control-sm col-sm-1" name="type" id="selBox" onchange="selectFunc();">
 			<option value="" <c:out value="${pageMaker.cri.type eq null ? 'selected' : ''}"/>>TOTAL</option>
 			<option value="W" <c:out value="${pageMaker.cri.type eq 'W' ? 'selected' : ''}"/>>WEEK</option>
 			<option value="M" <c:out value="${pageMaker.cri.type eq 'M' ? 'selected' : ''}"/>>MONTH</option>
 			<option value="Y" <c:out value="${pageMaker.cri.type eq 'Y' ? 'selected' : ''}"/>>YEAR</option>
+			<option value="I" <c:out value="${pageMaker.cri.type eq 'I' ? 'selected' : ''}"/>>ID</option>
 		</select>
+		<input type="text" name="keyword" id="search" disabled="disabled" value="<c:out value="${pageMaker.cri.keyword }"/>">
 		<input type="hidden" name="pageNum" value="<c:out value="${pageMaker.cri.pageNum }"/>">
 		<input type="hidden" name="amount" value="<c:out value="${pageMaker.cri.amount }"/>">
-		<input type="submit" class="btn btn-outline-success" value="보기"/>
+		<input type="submit" class="btn btn-success btn-sm" value="검색"/>
 	</form>
 	<div class="table-responsive">
 		<table class="table table-hover">
 			<thead>
 				<tr>
-					<th>MEMEBER ID</th>
-					<th>MEMEBER NAME</th>
-					<th>MEMEBER EMAIL</th>
-					<th>MEMEBER REGISTER DATE</th>
-					<th>MEMEBER BLOCK COUNT</th>
-					<th>MEMEBER STATUS</th>
-					<th>MEMBER EDIT</th>
+					<th>No</th>
+					<th>ID</th>
+					<th>NAME</th>
+					<th>EMAIL</th>
+					<th>REGISTER DATE</th>
+					<th>BLOCK COUNT</th>
+					<th>STATUS</th>
+					<th>EDIT</th>
 				</tr>
 			</thead>
 			<tbody>
+				<c:set var="rnum" value="${pageMaker.total - ((pageMaker.cri.pageNum-1)*12)}"/>
 				<c:forEach items="${memberList }" var="member" varStatus="vs">
 					<fmt:formatDate value="${member.member_reg_date }" var="regDate" pattern="yyyy-MM-dd"/>
 					<tr>
+						<td>${rnum }</td>
 						<td>${member.member_id }</td>
 						<td>${member.member_name }</td>
 						<td>${member.member_email }</td>
@@ -74,6 +89,7 @@ $(function(){
 						  </div>
 						</td>
 					</tr>
+					<c:set var="rnum" value="${rnum-1 }"></c:set>
 				</c:forEach>
 			</tbody>
 		</table>
@@ -82,15 +98,15 @@ $(function(){
 	<div class="container">
 		<ul class="pagination justify-content-center">
 			<li class='${ pageMaker.prev == true ? "page-item" : "page-item disabled" }'>
-				<a class="page-link" href="memberList?pageNum=${pageMaker.startPage-1 }&type=${param.type}">&laquo;</a>
+				<a class="page-link" href="memberList?pageNum=${pageMaker.startPage-1 }&type=${param.type}&keyword=${param.keyword}">&laquo;</a>
 			</li>
 			<c:forEach var="num" begin="${pageMaker.startPage }" end="${pageMaker.endPage}">
 				<li class='${pageMaker.cri.pageNum == num ? "active" : "page-item"}'>
-					<a class="page-link" href="memberList?pageNum=${num}&type=${param.type}">${num}</a>
+					<a class="page-link" href="memberList?pageNum=${num}&type=${param.type}&keyword=${param.keyword}">${num}</a>
 				</li>
 			</c:forEach>
 			<li class='${pageMaker.next == true ? "page-item" : "page-item disabled" }'>
-				<a class="page-link" href="memberList?pageNum=${pageMaker.endPage+1 }&type=${param.type}">&raquo;</a>
+				<a class="page-link" href="memberList?pageNum=${pageMaker.endPage+1 }&type=${param.type}&keyword=${param.keyword}">&raquo;</a>
 			</li>
 		</ul>
 	</div>

@@ -1,10 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <title>화랑-공지사항</title>
-<%@ include file="../../layout/left.jsp" %>
+<%@ include file="../../layout/logoleft2.jsp" %>
+<style>
+	.container{
+		margin: 10px 0px;
+		padding: 3px 0px;
+	}
+	th {
+		text-align: center;
+	}
+</style>
 <script type="text/javascript">
 </script>
+	<div class="container" style="padding-left: 50px; padding-right: 50px;">
 	<h3>공지사항</h3>
-	<div class="container">
+	<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')">
+	<div class="buttondiv" style="text-align: center; float: right; margin-bottom: 10px;">
+		<button type="button" class="btn btn-outline-secondary btn-sm" onclick="location.href='noticeWrite'">공지작성</button>
+	</div>
+	</sec:authorize>
 	<table class="table table-hover" id="noticeTable">
 		<thead>
 			<tr>
@@ -18,12 +32,12 @@
 			<c:forEach items="${noticeList }" var="notice">
 				<fmt:formatDate value="${notice.regDate }" var="regDate" pattern="yyyy-MM-dd" />
 				<tr>
-					<td>${notice.num }</td>
+					<td style="text-align: center;">${notice.num }</td>
 					<td><a href="noticeView?num=${notice.num }">${notice.title }</a>
 						<span class="badge bg-teal"><i class="fa fa-comment-o"></i>${notice.replyCnt }</span>
 					</td>
-					<td>${regDate }</td>
-					<td>${notice.readCnt }</td>
+					<td style="text-align: center;">${regDate }</td>
+					<td style="text-align: center;">${notice.readCnt }</td>
 				</tr>
 			</c:forEach>
 		</tbody>
@@ -53,10 +67,9 @@
 					<button class="btn btn-primary">검색</button>
 					</form>
 			</div>
+			
 	</div>
-	<div class="buttondiv">
-		<button type="button" class="btn btn-outline-secondary" onclick="location.href='noticeWrite'">글 쓰기</button>
-	</div>
+	<!-- 권한 확인하기 -->
 	<!-- Pagination -->
 	<div class="container">
 		<ul class="pagination justify-content-center">
@@ -73,4 +86,4 @@
 			</li>
 		</ul>
 	</div>
-<%@ include file="../../layout/bottom.jsp"%>
+<%-- <%@ include file="../../layout/bottom.jsp"%> --%>

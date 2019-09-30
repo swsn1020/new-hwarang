@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import hwarang.artg.community.model.FreeReplyVO;
+import hwarang.artg.community.service.FreeBoardService;
 import hwarang.artg.community.service.FreeReplyService;
 
 @RestController
@@ -25,11 +26,11 @@ import hwarang.artg.community.service.FreeReplyService;
 public class ReplyController {
 	@Autowired
 	private FreeReplyService freereplyservice;
-
+	
+	
 	@ResponseBody
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public boolean registerfreeReply(FreeReplyVO freereply) {
-		System.out.println("test2");
 		return freereplyservice.freereplyRegister(freereply);
 	}
 	@ResponseBody

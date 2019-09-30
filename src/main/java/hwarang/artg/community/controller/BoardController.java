@@ -6,6 +6,8 @@ import java.io.OutputStream;
 import java.text.DateFormat;
 import java.util.List;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +32,7 @@ import net.coobird.thumbnailator.Thumbnails;
 @Controller
 @RequestMapping("/board")
 public class BoardController {
-	private static final String UPLOAD_PATH = "C:\\IMAGE";
+	private static final String UPLOAD_PATH = "C:\\IMAGE\\free";
 	@Autowired
 	private FreeBoardService fservice;
 
@@ -48,11 +50,59 @@ public class BoardController {
 	}
 
 	@RequestMapping("/freeboardView")
-	public String showfreeboardView(Model model, int num) {
-		model.addAttribute("fboard", fservice.IncreaseReadCnt(num));
-		System.out.println(imgService.freeImgGetByFNum(num));
-		model.addAttribute("freeImgList",imgService.freeImgGetByFNum(num));
-		return "/board/freeboardView";
+	public String showfreeboardView(Model model, int num,HttpServletRequest request, HttpServletResponse response) {
+		FreeBoardVO free = fservice.freeboardGetone(num);
+		Cookie [] cookies = request.getCookies();
+		Cookie targetCookie = null;
+		
+		String url = "";
+		String msg = "";
+		//상세보기 요청 들어올때마다 쿠키 검사
+		//쿠키가 있는 경우
+		if(cookies != null && cookies.length>0) {
+			System.out.println("cookie 있음");
+			//쿠키 배열검사 (게시글 번호, 아이디)
+			for(int i=0;i<cookies.length;i++) {
+				// Cookie의 name이 cookie + reviewNo와 일치하는 쿠키를 viewCookie에 넣어줌 
+				if(cookies[i].getName().equals("nCookie"+num)) {
+					System.out.println("이미 조회한 게시물,쿠키 생성후 재진입");
+					targetCookie = cookies[i];
+				}
+			}
+		}
+		//해당 번호의 게시글(얻어옴) 있으면 쿠키 생성
+		if(free != null) {
+			//해당번호의 게시물 있음
+			System.out.println("쿠키생성할까요??");
+			if(targetCookie ==null) {
+				//이미 생성된 쿠키 없음 >> 처음클릭
+				System.out.println("생성된 쿠키없음");
+				//쿠키생성(이름,값)
+				Cookie newCookie = new Cookie("nCookie"+num,"|"+num+"|");
+				//쿠키 추가
+				response.addCookie(newCookie);
+				//쿠키추가 후 조회수 올리기
+				if(fservice.IncreaseReadCnt(num)) {
+					System.out.println("조회수 증가");
+				}else {
+					System.out.println("조회수 증가 실패");
+				}
+			}else {
+				//이미 생성된 쿠키 없음 >> 쿠키 값 받아옴
+				String name = targetCookie.getName();
+				String value = targetCookie.getValue();
+				System.out.println("쿠키 이름:"+name);
+				System.out.println("쿠키 값 : "+value);
+			}
+			free = fservice.freeboardGetone(num);
+			model.addAttribute("fboard",free);
+			return "/board/freeboardView";
+			
+		}
+		//선택된 게시물 없음
+		model.addAttribute(msg, "삭제된 게시물 입니다.");
+		model.addAttribute(url, "freeboard");
+		return "board/result";
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
@@ -149,4 +199,12 @@ public class BoardController {
 		System.out.println("파일 삭제 test");
 		return imgService.freeImgRemove(uuid);
 	}
+	
+	//댓글수 가져오는 요청 처리
+	@ResponseBody
+	@RequestMapping("/reply/getReplyCnt")
+	public int getReplyCount(int fboardNum) {
+		System.out.println("replyCount 요청 들어옴");
+		return fservice.getnReplyCount(fboardNum);
+	}	
 }

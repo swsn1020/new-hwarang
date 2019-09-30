@@ -93,12 +93,14 @@
 								MEMBER_REG_DATE >= ADD_MONTHS(sysdate, -12)
 							]]>
 						</when>
+						<when test="type == 'I'.toString()">
+								MEMBER_ID like '%'||#{keyword}||'%'
+						</when>
 					</choose>
 				</trim>
 			</foreach>
 		</trim>
 </sql>
-
 <!-- MemberList 페이징 -->
 <select id="getTotalMemCount" resultType="int">
 	SELECT count(*) FROM MEMBER
@@ -109,13 +111,13 @@
 <select id="getListWithPaging" resultType="hwarang.artg.member.model.MemberVO">
 	<![CDATA[
  			SELECT MEMBER_ID, MEMBER_NAME, MEMBER_PASSWORD, MEMBER_EMAIL, MEMBER_GENDER, MEMBER_PHONENUM, MEMBER_ADDRESS, MEMBER_REG_DATE, MEMBER_REPORT_COUNT, MEMBER_STATUS, MEMBER_POINT
- 			  FROM (SELECT /*+INDEX_DESC(member mem_reg_date) */ rownum as rNum, MEMBER_ID, MEMBER_NAME, MEMBER_PASSWORD, MEMBER_EMAIL, MEMBER_GENDER, MEMBER_PHONENUM, MEMBER_ADDRESS, MEMBER_REG_DATE, MEMBER_REPORT_COUNT, MEMBER_STATUS, MEMBER_POINT
+ 			  FROM (SELECT /*+INDEX_ASC(MEMBER MEM_REG_DATE) */ rownum as rNum, MEMBER_ID, MEMBER_NAME, MEMBER_PASSWORD, MEMBER_EMAIL, MEMBER_GENDER, MEMBER_PHONENUM, MEMBER_ADDRESS, MEMBER_REG_DATE, MEMBER_REPORT_COUNT, MEMBER_STATUS, MEMBER_POINT
  					  FROM MEMBER 
- 					 WHERE
+ 					 WHERE 
  		]]>
  			<include refid="criteriaDTO"></include>
  		<![CDATA[ 
- 			 rownum <= #{pageNum} * #{amount})
+ 			 rownum <= #{pageNum} * #{amount} AND MEMBER_REG_DATE >= '1900/01/01')
  			 WHERE rNum > (#{pageNum} - 1) * #{amount}
  		]]>
 </select>
