@@ -101,7 +101,7 @@ function removeAll(e){
 				</tr>
 			</table>
 			<div>
-				<input type="submit" value="공지 작성" class="btn btn-outline-success">
+				<input type="submit" value="글 작성" class="btn btn-outline-success">
 				<input type="reset" value="초기화" class="btn btn-outline-danger">
 				<input type="button" value="목록보기" onclick="location.href='reportList'" class="btn btn-outline-dark">
 			</div>

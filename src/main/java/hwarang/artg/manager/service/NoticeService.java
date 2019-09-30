@@ -110,13 +110,18 @@ public class NoticeService {
 		return rDao.selectReply(num);
 	}
 	
-	public List<NoticeReplyVO> nRepliesGetByBNum(int boardNum){
-		return rDao.selectRepliesByBNum(boardNum);
+	public List<NoticeReplyVO> nRepliesGetByBNum(int boardNum, int start, int end){
+		return rDao.getListWithPaging(boardNum, start, end);
+	}
+	//페이징
+	public int getTotalReplies(int boardNum) {
+		return rDao.getTotalCountByBNum(boardNum);
 	}
 	
 	public int getnReplyCount(int num) {
 		return rDao.getReplyCnt(num);
 	}
+	
 	
 	//Block 처리하기1(Notice)
 	public boolean doNoticeBlock(String block, int num) {

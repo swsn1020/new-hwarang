@@ -1,6 +1,8 @@
 package hwarang.artg.manager.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -12,10 +14,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import hwarang.artg.common.model.CriteriaDTO;
 import hwarang.artg.common.model.PageDTO;
+import hwarang.artg.common.model.ReplyPager;
 import hwarang.artg.manager.model.NoticeReplyVO;
 import hwarang.artg.manager.model.NoticeVO;
 import hwarang.artg.manager.model.QnAVO;
@@ -71,7 +75,7 @@ public class NoticeController {
 	
 	//조회수 증가
 	@RequestMapping("/noticeView")
-	public String showNoticeView(int num, HttpServletRequest request, HttpServletResponse response, Model model) {
+	public String showNoticeView(int num, HttpServletRequest request, HttpServletResponse response, Model model, @RequestParam(defaultValue = "1")int curPage) {
 		NoticeVO notice = service.noticeGetOne(num);
 		Cookie[] cookies = request.getCookies(); 
 		Cookie targetCookie = null;
@@ -118,11 +122,18 @@ public class NoticeController {
 			}
 			notice = service.noticeGetOne(num);
 			model.addAttribute("notice", notice);
+			int boardNum = num;
+			int count = service.getTotalReplies(boardNum);
+			ReplyPager rPager = new ReplyPager(count, curPage);
+			model.addAttribute("rPager", rPager);
+			System.out.println(curPage);
 			return "manager/notice/noticeView";
 		}
 		//선택된 게시물 없음
 		model.addAttribute(msg, "삭제된 게시물 입니다.");
 		model.addAttribute(url, "noticeList");
+		
+		
 		return "manager/result";
 	}
 	
@@ -194,10 +205,19 @@ public class NoticeController {
 	}
 	
 	@ResponseBody
-	@RequestMapping("/reply/all/{boardNum}")
-	public List<NoticeReplyVO> getAllByBNum(@PathVariable("boardNum")int boardNum){
-		return service.nRepliesGetByBNum(boardNum);
+	@RequestMapping("/reply/all")
+	public Map<String, Object> getAllByBNum(@RequestParam("boardNum")int boardNum, @RequestParam(defaultValue = "1")int curPage, Model model){
+		Map<String, Object> rMap = new HashMap<String, Object>();
+		
+		int count = service.getTotalReplies(boardNum);
+		ReplyPager rPager = new ReplyPager(count, curPage);
+		int start = rPager.getPageBegin();
+		int end = rPager.getPageEnd();
+		rMap.put("rPager", rPager);
+		rMap.put("replies", service.nRepliesGetByBNum(boardNum, start, end));
+		return rMap;
 	}
+	
 	
 	//댓글수 가져오는 요청 처리
 	@ResponseBody
