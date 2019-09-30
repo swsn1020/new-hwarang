@@ -87,140 +87,138 @@ public class MemberController {
 		return "/member/result";			
 	}
 	
-//	@RequestMapping("/naverLogin")
-//	public String showMain(Model model,HttpSession session,HttpServletRequest request) {
-//		
-//		String code = request.getParameter("code");
-//		String state = request.getParameter("state");
-//		Map<String, Object> userInfo = nservice.getUserInfo(code, state);
-//		
-//		System.out.println("userInfo:"+userInfo);
-//		//id는 네이버아이디마다 고유하게 발급되는 값	
-//		String id = "(naver)";
-//		id += (String) userInfo.get("id");
-//
-//		MemberVO member = service.memberGetOne(id);
-//		
-//		if(member == null) {
-//			String name = (String) userInfo.get("name");
-//			//nonull인 pw는 랜덤으로 나온 숫자로 만든다.
-//			String pw = "";
-//			StringBuffer randomPw = new StringBuffer();
-//			Random random = new Random();
-//			for (int i = 0; i < 10; i++) {
-//			    int rIndex = random.nextInt(3);
-//			    switch (rIndex) {
-//			    case 0:
-//			        // a-z
-//			    	randomPw.append((char) ((int) (random.nextInt(26)) + 97));
-//			        break;
-//			    case 1:
-//			        // A-Z
-//			    	randomPw.append((char) ((int) (random.nextInt(26)) + 65));
-//			        break;
-//			    case 2:
-//			        // 0-9
-//			    	randomPw.append((random.nextInt(10)));
-//			        break;
-//			    }
-//			}
-//			pw += randomPw.toString();
-//			
-//			String email = (String) userInfo.get("email");
-//			
-//			String gender2 = (String) userInfo.get("gender");
-//			int gender = 00;
-//			if(gender2 != null) {
-//				if(gender2.equals("F")) {
-//					gender = 1;//여자
-//				}else if(gender2.equals("M")) {
-//					gender = 0;//남자
-//				}else if(gender2.equals("U")) {
-//					gender = 2;//확인불가
-//				}				
-//			}
-//			if(name == null || email == null || gender2 == null) {
-//				model.addAttribute("msg", "로그인을 하기 위해서 정보제공을 동의해주세요.");
-//				model.addAttribute("url", "loginForm");
-//				return "/member/result";
-//			}else {				
-//				//주소,핸드폰 나중에 개인정보수정 및 결제시 필수로 만들기
-//				service.memberRegister(id, name, pw,email, gender, null, null);				
-//			}
-//		} else {
-//			System.out.println("네이버 사용자 있음");
-//		}
-//		session.setAttribute("naverName", userInfo.get("name"));
-//		session.setAttribute("id", id);
-//		return "redirect:/index";
-//	}
-//
-//	@ResponseBody
-//	@RequestMapping("/kakaoLogin")
-//	public boolean showKakaoLogin(@RequestParam Map<String, Object> params,HttpSession session,HttpServletRequest request) {
-////		String password = (String) authentication.getCredentials();
-//		//Rest Api의 토큰 보안을 위한 시큐리티 설정
-////		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken("kakaoLogin", "1234");
-////		token.setDetails(new WebAuthenticationDetails(request));
-////		Authentication authentication = this.authenticationProvider.authenticate(token);
-//////		logger.debug("Logging in with [{}]", authentication.getPrincipal());
-////		SecurityContextHolder.getContext().setAuthentication(authentication);
-//
-//		System.out.println("controller /kakaoLogin :" + params);
-//		String access_token = (String) params.get("access_token");
-//
-//		try {
-//			//이메일과 성별 제공 동의 확인하기
-//			String scope = (String) params.get("scope");
-//			System.out.println("scope:"+scope);
-//					
-//			Map<String, Object> userInfo = kservice.getUserInfo(access_token);
-//			System.out.println("/kakaoLogin : " + userInfo);
-//			
-//			String id = "(kakao)"+(String) userInfo.get("email"); 
-//			MemberVO member = service.memberGetOne(id);
-//			
-//			String name = (String) userInfo.get("name");
-//			String pw = pwencoder.encode((String) userInfo.get("id"));
-//			
-//			if (member == null) {
-//				
-//				
-//				String email = (String) userInfo.get("email");
-//				String gender2 = (String) userInfo.get("gender");
-//				int gender = 00;
-//				if(gender2.equals("male")) {
-//					gender = 0;
-//				}else if(gender2.equals("female")) {
-//					gender = 1;
-//				}else {
-//					gender = 3;//확인불가
-//				}
-//				boolean result = service.memberRegister(id, name, pw, email, gender,null, null);
-//				if(result) {
-//					session.setAttribute("kakaoName", name);
-//					session.setAttribute("id", id);
-//					session.setAttribute("access_token", access_token);
-//					return true;
-//				}
-//				
-//			} else {
-//				System.out.println("카카오톡 사용자 있음");
-//				session.setAttribute("kakaoName", name);
-//				session.setAttribute("id", id);
-//				session.setAttribute("access_token", access_token);
-//				return true;
-//			}
-//			
-//			return false;
-//
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			System.out.println("Kakao Login service: 예외 발생");
-//			return false;
-//		}
-//
-//	}
+	@RequestMapping("/naverLogin")
+	public String showMain(Model model,HttpSession session,HttpServletRequest request) {
+		
+		String code = request.getParameter("code");
+		String state = request.getParameter("state");
+		Map<String, Object> userInfo = nservice.getUserInfo(code, state);
+		
+		System.out.println("userInfo:"+userInfo);
+		//id는 네이버아이디마다 고유하게 발급되는 값	
+		String id = "(naver)";
+		id += (String) userInfo.get("email");
+
+		MemberVO member = service.memberGetOne(id);
+		
+		if(member == null) {
+			MemberVO vo  =new MemberVO();
+			String name = (String) userInfo.get("name");
+			String pw = (String) userInfo.get("id");
+			String email = (String) userInfo.get("email");			
+			String gender2 = (String) userInfo.get("gender");
+			int gender = 00;
+			if(gender2 != null) {
+				if(gender2.equals("F")) {
+					gender = 1;//여자
+				}else if(gender2.equals("M")) {
+					gender = 0;//남자
+				}else if(gender2.equals("U")) {
+					gender = 2;//확인불가
+				}				
+			}
+			if(name == null || email == null || gender2 == null) {
+				model.addAttribute("msg", "로그인을 하기 위해서 정보제공을 동의해주세요.");
+				model.addAttribute("url", "loginForm");
+				return "/member/result";
+			}else {				
+				//주소,핸드폰 나중에 개인정보수정 및 결제시 필수로 만들기
+				List<MemberAuthVO> authList = new ArrayList<MemberAuthVO>();
+				authList.add(new MemberAuthVO(id, "ROLE_USER"));
+				vo.setAuthList(authList);
+				vo.setMember_name(name);
+				vo.setMember_id(id);
+				vo.setMember_password(pw);
+				vo.setMember_email(email);
+				vo.setMember_gender(gender);
+				vo.setMember_phonenum(" ");
+				vo.setMember_address(" ");
+				service.memberRegister(vo);				
+			}
+		} else {
+			System.out.println("네이버 사용자 있음");
+		}
+		session.setAttribute("naverName", userInfo.get("name"));
+		session.setAttribute("id", id);
+		return "redirect:/index";
+	}
+
+	@ResponseBody
+	@RequestMapping("/kakaoLogin")
+	public boolean showKakaoLogin(@RequestParam Map<String, Object> params,HttpSession session,HttpServletRequest request) {
+//		String password = (String) authentication.getCredentials();
+		//Rest Api의 토큰 보안을 위한 시큐리티 설정
+//		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken("kakaoLogin", "1234");
+//		token.setDetails(new WebAuthenticationDetails(request));
+//		Authentication authentication = this.authenticationProvider.authenticate(token);
+//		logger.debug("Logging in with [{}]", authentication.getPrincipal());
+//		SecurityContextHolder.getContext().setAuthentication(authentication);
+
+		System.out.println("controller /kakaoLogin :" + params);
+		String access_token = (String) params.get("access_token");
+
+		try {
+			//이메일과 성별 제공 동의 확인하기
+			String scope = (String) params.get("scope");
+			System.out.println("scope:"+scope);
+					
+			Map<String, Object> userInfo = kservice.getUserInfo(access_token);
+			System.out.println("/kakaoLogin : " + userInfo);
+			
+			String id = "(kakao)"+(String) userInfo.get("email"); 
+			MemberVO member = service.memberGetOne(id);
+			
+			String name = (String) userInfo.get("name");
+			String pw = pwencoder.encode((String) userInfo.get("id"));
+			
+			if (member == null) {
+				
+				MemberVO vo  =new MemberVO();
+				String email = (String) userInfo.get("email");
+				String gender2 = (String) userInfo.get("gender");
+				int gender = 00;
+				if(gender2.equals("male")) {
+					gender = 0;
+				}else if(gender2.equals("female")) {
+					gender = 1;
+				}else {
+					gender = 3;//확인불가
+				}
+				vo.setMember_name(name);
+				vo.setMember_id(id);
+				vo.setMember_password(pwencoder.encode(pw));
+				vo.setMember_email(email);
+				vo.setMember_gender(gender);
+				vo.setMember_phonenum(" ");
+				vo.setMember_address(" ");
+				List<MemberAuthVO> authList = new ArrayList<MemberAuthVO>();
+				authList.add(new MemberAuthVO(id, "ROLE_USER"));
+				vo.setAuthList(authList);
+				boolean result = service.memberRegister(vo);
+				if(result) {
+					session.setAttribute("kakaoName", name);
+					session.setAttribute("id", id);
+					session.setAttribute("access_token", access_token);
+					return true;
+				}
+				
+			} else {
+				System.out.println("카카오톡 사용자 있음");
+				session.setAttribute("kakaoName", name);
+				session.setAttribute("id", id);
+				session.setAttribute("access_token", access_token);
+				return true;
+			}
+			
+			return false;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Kakao Login service: 예외 발생");
+			return false;
+		}
+
+	}
 	
 	
 	@RequestMapping("/joinForm")
