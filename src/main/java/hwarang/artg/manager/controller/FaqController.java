@@ -1,6 +1,9 @@
 package hwarang.artg.manager.controller;
 
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,12 +15,18 @@ import hwarang.artg.common.model.CriteriaDTO;
 import hwarang.artg.common.model.PageDTO;
 import hwarang.artg.manager.model.FAQVO;
 import hwarang.artg.manager.service.FAQService;
+import hwarang.artg.member.model.MemberVO;
+import hwarang.artg.member.service.MemberService;
 
 @Controller
 @RequestMapping("/faq")
 public class FaqController {
 	@Autowired
 	private FAQService service;
+	@Autowired
+	private MemberService memService;
+	@Autowired
+	private PasswordEncoder pwEncoder;
 	
 	@RequestMapping("/faqList")
 	public String showFaqList(CriteriaDTO cri, Model model) {
@@ -74,11 +83,14 @@ public class FaqController {
 	}
 	
 	@RequestMapping(value="/checkPw", method=RequestMethod.POST)
-	public String doCheckPw(int num, String type, String password, Model model) {
+	public String doCheckPw(int num, String type, String password, Model model, Principal principal) {
 		String url = "faqList";
 		String msg = "";
+		String id = principal.getName();
+		MemberVO mem = memService.memberGetOne(id);
+		String originPw = mem.getMember_password();
 		FAQVO faq = service.faqGetOne(num);
-		if(faq != null && password.equals("true")) {
+		if(faq != null && pwEncoder.matches(password, originPw)) {
 			//비밀번호 일치
 			if(type.equals("delete")) {
 				// 삭제요청
@@ -95,7 +107,7 @@ public class FaqController {
 			}
 		}else {
 			//비밀번호 불일치
-			System.out.println("비밀번호가 틀렸습니다.");
+			System.out.println("비밀번호 오류");
 			msg = "비밀번호를 다시 확인하세요.";
 			url = "noticeView?num="+num;
 		}

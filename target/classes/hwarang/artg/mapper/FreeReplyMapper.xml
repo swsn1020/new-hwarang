@@ -37,14 +37,11 @@ select * from free_reply where free_reply_num = #{num}
 			where free_reply_num = {num}
 </select>
 
-<<<<<<< HEAD
 <select id="getReplyCnt" resultType="int">
 		SELECT count(*) AS 
 		FROM free_reply WHERE free_num = #{fboardNum}
 </select>
 
-=======
->>>>>>> refs/heads/jm
 <!-- 신고처리 -hj- -->
 <update id="updateBlock">
 	UPDATE free_reply SET BLOCK = #{block} WHERE free_reply_num = #{num}

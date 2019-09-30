@@ -26,7 +26,6 @@
 				(select to_char(review_reply_reg_date,'yyyy-mm-dd hh12:mi:ss') from review_reply where review_reply_num = r.review_reply_num) as review_reply_reg_date
 			from review_reply r where review_num = #{review_num} order by review_reply_num desc
 		</select>
-<<<<<<< HEAD
 		<!-- 댓글 총 개수 -->
 		<select id="getReplyCnt" resultType="int">
 			SELECT count(*) AS 
@@ -36,6 +35,4 @@
 		<select id="getBoardNum" resultType="int">
 			SELECT review_num FROM review_reply WHERE review_reply_num = #{review_reply_num}
 		</select>
-=======
->>>>>>> refs/heads/jm
 	</mapper>
