@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hwarang.artg.mapper.TicketBoardMapper">
+<insert id="insertBoard" parameterType="hwarang.artg.community.model.TicketBoardVO">
+insert into ticket_board
+	(ticket_num,member_id,ticket_title,ticket_content,ticket_price)
+	values(seq_b_ticket.nextval,#{userid},#{title},#{content},#{price})
+</insert>
+<update id="updateBoard" parameterType="hwarang.artg.community.model.TicketBoardVO">
+update ticket_board
+	set ticket_title = #{title},
+		ticket_content = #{content},
+		ticket_price = #{price}
+		where ticket_num = #{num}
+</update>
+<delete id="deleteBoard" parameterType="int">
+delete from ticket_board where ticket_num = #{num}
+</delete>
+
+<select id="selectOne" parameterType="int" resultMap="ticketboardMap">
+select * from ticket_board where ticket_num = #{num}
+</select>
+
+<select id="selectAll" resultMap="ticketboardMap">
+select * from ticket_board order by ticket_num desc
+</select>
+
+<update id="updateReadCount" parameterType="hwarang.artg.community.model.TicketBoardVO">
+update ticket_board
+	set ticket_readcnt = ticket_readcnt + 1
+		where ticket_num = #{param1}
+</update>
+
+<resultMap id="ticketboardMap" type="hwarang.artg.community.model.TicketBoardVO">
+<result column="ticket_num" property="num"/>
+<result column="member_id" property="userid"/>
+<result column="ticket_title" property="title"/>
+<result column="ticket_conetnt" property="content"/>
+<result column="ticket_price" property="price"/>
+<result column="ticket_regdate" property="regDate"/>
+<result column="ticket_updatedate" property="upDateDate"/>
+<result column="ticket_readcnt" property="readCount"/>
+<result column="ticket_recomm_cnt" property="recommCount"/>
+<result column="ticket_disrecomm_cnt" property="disrecommCount"/>
+</resultMap>
+</mapper>

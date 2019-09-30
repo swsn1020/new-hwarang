@@ -5,8 +5,11 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import hwarang.artg.mapper.MemberAuthMapper;
 import hwarang.artg.mapper.MemberMapper;
+import hwarang.artg.member.model.MemberAuthVO;
 import hwarang.artg.member.model.MemberVO;
 import hwarang.artg.rrboard.service.ReviewBoardService;
 
@@ -15,23 +18,22 @@ public class MemberService {
 	@Autowired
 	private MemberMapper membermapper;
 	@Autowired
+	private MemberAuthMapper maMapper;
+	
+	@Autowired
 	private ReviewBoardService rbservice;
 	
 	public MemberVO memberFindId(String member_name) {
 		return membermapper.selectMember_name(member_name);
 	}
-	public boolean memberRegister(String id,String name,String pw,String email,int gender,String phone,String address) {
-		MemberVO member = new MemberVO();
-		member.setMember_id(id);
-		member.setMember_name(name);
-		member.setMember_password(pw);
-		member.setMember_email(email);
-		member.setMember_gender(gender);
-		member.setMember_phonenum(phone);
-		member.setMember_address(address);
-		int rowCount = membermapper.insertMember(member);
-		if(rowCount > 0) {
-			return true;
+	
+	@Transactional
+	public boolean memberRegister(MemberVO member) {
+		if(membermapper.insertMember(member)>0) {
+			MemberAuthVO ma = member.getAuthList().get(0);
+			if(maMapper.insertMember_Auth(ma)>0) {
+				return true;				
+			}
 		}
 		return false;
 	}

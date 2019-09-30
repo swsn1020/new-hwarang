@@ -1,5 +1,6 @@
 package hwarang.artg.exhibition.controller;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -41,6 +43,8 @@ public class ExhibitionController {
 
 	@GetMapping("")
 	public String exhibitionShow(Model model, CriteriaDTO cri, ExhibitionVO exh) throws Exception {
+		//시큐리티로 유저 권한 확인하는 방법
+		System.out.println(SecurityContextHolder.getContext().getAuthentication().getAuthorities());
 		if(cri.getAmount()==10 || cri.getAmount()==0) {
 			cri.setAmount(12);
 		}
@@ -54,8 +58,13 @@ public class ExhibitionController {
 		model.addAttribute("realmname",service.getExhRealmName());
 		model.addAttribute("area",service.getExhArea());
 		model.addAttribute("pageMaker", page);
-		model.addAttribute("group",fService.getGroup("id"));
-		model.addAttribute("eList", service.pagingList(cri, exh, "id"));
+		//로그인하지 않은 상태에서 스프링 시큐리티에서 유저아이디 값 구하는법
+		String id = SecurityContextHolder.getContext().getAuthentication().getName();
+		System.out.println(id);
+		if(!id.equals("anonymousUser")) {
+			model.addAttribute("group",fService.getGroup( id));			
+		}
+		model.addAttribute("eList", service.pagingList(cri, exh, id));
 		return "/exhibition/exhibition";
 	}
 
@@ -100,26 +109,29 @@ public class ExhibitionController {
 	}
 	
 	@GetMapping("/recentlyView")
-	public void recentlyView(Model model, CriteriaDTO cri) {
+	public void recentlyView(Model model, CriteriaDTO cri, Principal principal) {
+		String id = principal.getName();
 		cri.setAmount(5);
-		PageDTO page = new PageDTO(cri, rService.getTotalCount("id"));
-		model.addAttribute("rList", rService.getList(cri, "id"));
+		PageDTO page = new PageDTO(cri, rService.getTotalCount(id));
+		model.addAttribute("rList", rService.getList(cri, id));
 		model.addAttribute("pageMaker", page);
 	}
 
 	@PostMapping("/removeRecentlyView")
-	public String removerecentlyView(@RequestParam("seq") String[] seq, String id) {
+	public String removerecentlyView(@RequestParam("seq") String[] seq, Principal principal) {
+		String id = principal.getName();
 		for(int i=0; i<seq.length; i++) {
-			rService.removeRecentlyView(new RecentlyViewVO(Integer.parseInt(seq[i]), "id"));
+			rService.removeRecentlyView(new RecentlyViewVO(Integer.parseInt(seq[i]), id));
 		}
 		return "redirect:/exhibition/recentlyView";
 	}
 	
 	
 	@RequestMapping("/favoriteList")
-	public void exhibitionFavorite(Model model, String group, CriteriaDTO cri) {
+	public void exhibitionFavorite(Model model, String group, CriteriaDTO cri, Principal principal) {
+		String id = principal.getName();
 		FavoriteMarkVO fav = new FavoriteMarkVO();
-		fav.setMember_id("id");
+		fav.setMember_id(id);
 		if(group==null) {
 			fav.setFavorite_group("찜 목록");
 			model.addAttribute("pGroup","찜 목록");
@@ -130,7 +142,7 @@ public class ExhibitionController {
 		cri.setAmount(5);
 		PageDTO page = new PageDTO(cri, fService.getTotalCount(fav.getFavorite_group()));
 		model.addAttribute("pageMaker", page);
-		model.addAttribute("group",fService.getGroup("id"));
+		model.addAttribute("group",fService.getGroup(id));
 		model.addAttribute("fList",fService.paigingFavoriteList(fav, cri));
 	}
 	
@@ -138,13 +150,12 @@ public class ExhibitionController {
 	@ResponseBody
 	public ResponseEntity<String> addFavoriteMark(@RequestBody FavoriteMarkVO vo) {
 		System.out.println(vo.getExh_seq());
-		FavoriteMarkVO fav = new FavoriteMarkVO();
 		return fService.addFavorite(vo) == true ? new ResponseEntity<>("success", HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR); 
 	}
 	
 
 	@PostMapping("/removeFavorite")
-	public String removeFavoriteMark(@RequestParam("seq") String[] seq, String id) {
+	public String removeFavoriteMark(@RequestParam("seq") String[] seq, Principal principal) {
 		for(int i=0; i<seq.length; i++) {
 			FavoriteMarkVO fav = new FavoriteMarkVO();
 			fav.setExh_seq(Integer.parseInt(seq[i]));

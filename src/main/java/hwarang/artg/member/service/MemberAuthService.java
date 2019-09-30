@@ -28,8 +28,8 @@ public class MemberAuthService {
 		}
 		return false;
 	}
-	public boolean memberauthRemove(String id) {
-		if(memberauthmapper.deleteMember_Auth(id) > 0) {
+	public boolean memberauthRemove(MemberAuthVO ma) {
+		if(memberauthmapper.deleteMember_Auth(ma) > 0) {
 			return true;
 		}
 		return false;

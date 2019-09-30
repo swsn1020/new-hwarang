@@ -28,7 +28,8 @@ public class ItemTests {
 	
 	@Setter(onMethod_ = { @Autowired })
 	FavoriteMarkService fService;
-
+	@Autowired
+	MemberMapper mMapper;
 //	@Test
 //	public void testInsert() {
 //		try {
@@ -68,4 +69,8 @@ public class ItemTests {
 //		fav.setExh_seq(152825);
 //		System.out.println(fService.getSeq(fav));
 //	}
+	@Test
+	public void getMember() {
+		System.out.println(mMapper.selectMember("id1"));
+	}
 }

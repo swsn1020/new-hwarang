@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hwarang.artg.mapper.AlarmMapper">
+	<insert id="insertAlarm" parameterType="hwarang.artg.manager.model.AlarmVO">
+		INSERT INTO ALARM (ALARM_NUM, MEMBER_ID, ALARM_CONTENT, ALARM_CATEGORY, ALARM_KEYWORD)
+		VALUES (seq_alarm.nextval, #{memId}, #{content}, #{category}, #{keyword})
+	</insert>
+	<update id="updateAlarm" parameterType="hwarang.artg.manager.model.AlarmVO">
+		UPDATE ALARM SET ALARM_CONTENT = #{content}, ALARM_CATEGORY = #{category}, ALARM_KEYWORD = #{keyword}
+		WHERE ALARM_NUM = #{num}
+	</update>
+	<delete id="deleteAlarm" parameterType="int">
+		DELETE FROM ALARM WHERE ALARM_NUM = #{num}
+	</delete>
+	<select id="selectAlarm" parameterType="int" resultMap="aMap">
+		SELECT * FROM ALARM WHERE ALARM_NUM = #{num}
+	</select>
+	<select id="selectAllAlarms" resultMap="aMap">
+		SELECT * FROM ALARM order by ALARM_NUM desc
+	</select>
+	<resultMap type="hwarang.artg.manager.model.AlarmVO" id="aMap">
+		<result column="ALARM_NUM" property="num"/>
+		<result column="MEMBER_ID" property="memId"/>
+		<result column="ALARM_CONTENT" property="content"/>
+		<result column="ALARM_CATEGORY" property="category"/>
+		<result column="ALARM_KEYWORD" property="keyword"/>
+	</resultMap>
+</mapper>

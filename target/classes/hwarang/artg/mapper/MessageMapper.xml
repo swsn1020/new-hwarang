@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hwarang.artg.mapper.MessageMapper">
+	<insert id="insertMessage" parameterType="hwarang.artg.manager.model.MessageVO">
+		INSERT INTO MESSAGE (MSG_NUM, MEMBER_ID, MSG_TITLE, MSG_CONTENT, MSG_CATEGORY)
+		VALUES (seq_message.nextval, #{memId}, #{title}, #{content}, #{category})
+	</insert>
+	<update id="updateMessage" parameterType="hwarang.artg.manager.model.MessageVO">
+		UPDATE MESSAGE SET MSG_TITLE = #{title}, MSG_CONTENT = #{content}, MSG_CATEGORY = #{category}
+		WHERE MSG_NUM = #{num}
+	</update>
+	<delete id="deleteMessage" parameterType="int">
+		DELETE FROM MESSAGE WHERE MSG_NUM = #{num}
+	</delete>
+	<select id="selectMessage" parameterType="int" resultMap="mMap">
+		SELECT * FROM MESSAGE WHERE MSG_NUM = #{num}
+	</select>
+	<select id="selectAllMessages" resultMap="mMap">
+		SELECT * FROM MESSAGE order by MSG_NUM desc
+	</select>
+	<resultMap type="hwarang.artg.manager.model.MessageVO" id="mMap">
+		<result column="MSG_NUM" property="num"/>
+		<result column="MEMBER_ID" property="memId"/>
+		<result column="MSG_TITLE" property="title"/>
+		<result column="MSG_CONTENT" property="content"/>
+		<result column="MSG_CATEGORY" property="category"/>
+		<result column="MSG_REG_DATE" property="regDate"/>
+	</resultMap>
+</mapper>

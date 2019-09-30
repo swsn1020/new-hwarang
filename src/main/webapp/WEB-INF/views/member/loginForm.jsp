@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -93,13 +94,14 @@ function goLogin(){
 			<h1>HWARANG</h1>
 			<p>Your own exhibition</p>
 		</div>
+		${sessionScope }
 		<div class="" style="margin: 0 auto; width: 720px; overflow: hidden;">
 			<div class="form-group" style="float: left; width: 350px;">
 				<h3  align="center">HWARANG Login</h3>
 				<fieldset>
 					<form name="loginForm" id="loginForm">
 						<input type="text" name="username" id="member_id" class="form-control" placeholder="아이디"><br>
-						<input type="password" name="member_password" id="member_password" class="form-control" placeholder="비밀번호"><br>
+						<input type="password" name="password" id="member_password" class="form-control" placeholder="비밀번호"><br>
 						<button type="button" id="checkLogin" onclick="javascript:goLogin();" class="btn btn-primary" style="height: 50px; width: 350px; ">Login</button><br><br>
 					</form>
 				</fieldset>
@@ -129,6 +131,7 @@ function goLogin(){
 						<a id="kakao-login-btn"></a>
 					</li>
 				</ul>
+				<h2><c:out value="${param.error}"/>1</h2>
 			</div>
 		</div>
 	</div>

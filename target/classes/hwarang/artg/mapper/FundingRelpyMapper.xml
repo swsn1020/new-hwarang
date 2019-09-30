@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="hwarang.artg.mapper.FundingRelpyMapper">
+  
+  	<insert id="insert">
+  		insert into funding_reply (rno,funding_num, funding_reply, funding_replyer, funding_replyDate, funding_updateDate  )
+  		values (seq_funding_reply.nextval, #{rno},#{funding_num},#{funding_reply},#{funding_replyer},#{funding_replyDate},#{funding_updateDate})
+  	</insert>
+  	
+  	<select id="read" resultType="hwarang.artg.funding.model.FundingReplyVO">
+  		select * from funding_reply 
+  		where rno = #{rno}
+  	</select>
+  	
+  	<delete id="delete">
+  		delete from funding_reply 
+  		where rno = #{rno}
+  	</delete>
+  	
+  	<update id="update">
+  		update funding_reply set funding_reply = #{funding_reply}, funding_updateDate = sysdate
+  		where rno = #{rno}
+  	</update>
+  	
+  	<select id="getListWithPaging" resultType="hwarang.artg.funding.model.FundingReplyVO">
+  		select * from funding_reply 
+  		where funding_num = #{funding_num}
+  		order by rno asc
+  	</select>
+  	
+  </mapper>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hwarang.artg.mapper.PartyMemberMapper">
+<insert id="insertParty" parameterType="hwarang.artg.community.model.PartyMemberVO">
+	insert into party_member
+		(party_num,member_id)
+		values(#{partyboardnum},#{userid})
+
+</insert>
+<!-- <update id="updateParty" parameterType="hwarang.artg.community.model.PartyMemberVO"> -->
+
+<!-- </update> -->
+
+<delete id="deleteParty" parameterType="int">
+delete from party_member where party_num = #{partyboardnum}
+</delete>
+
+<select id="selectOne"  parameterType = "int" resultMap="partymemberMap">
+select * from party_member where party_num = #{partyboardnum}
+</select>
+<select id="selectAll" resultMap="partymemberMap">
+select * from party_member order by party_num desc
+</select>
+<resultMap id="partymemberMap" type="hwarang.artg.community.model.PartyMemberVO">
+<result column="party_num" property="partyboardnum"/>
+<result column="member_id" property="userid"/>
+</resultMap>
+</mapper>
