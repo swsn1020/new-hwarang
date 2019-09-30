@@ -42,6 +42,11 @@
 body {
   font-size: 0.9rem;
 }
+
+@media screen and (max-width: 768px) {
+    body { padding-top: 0px; }
+}
+
 .page-wrapper .sidebar-wrapper,
 .sidebar-wrapper .sidebar-brand > a,
 .sidebar-wrapper .sidebar-dropdown > a:after,
@@ -86,15 +91,15 @@ body {
 
 @media screen and (min-width: 768px) {
   .page-wrapper.toggled .page-content {
-    padding-left: 300px;
-    padding-top: 250px;
+/*     padding-left: 300px; */
+/*     padding-top: 250px; */
   }
 }
 /*----------------show sidebar button----------------*/
 #show-sidebar {
   position: relative;
   left: 0;
-  top: 240px;
+  top: 70px;
   border-radius: 0 4px 4px 0px;
   width: 35px;
   transition-delay: 0.3s;
@@ -356,7 +361,7 @@ body {
   display: inline-block;
   width: 100%;
   padding-left: 0px;
-  padding-top: 250px;
+/*   padding-top: 250px; */
    position: absolute;
 }
 
@@ -489,7 +494,7 @@ body {
 * ==========================================================
 */
 nav.navbar {
-  background: #ffffff;
+  background: #f4c256;
   padding-top: 15px;
   padding-bottom: 15px;
   color: #828085;
@@ -501,7 +506,9 @@ nav.navbar {
   padding-left: 0;
   padding-right: 0;
   width: 100%;
-  top: 70px;
+  position: -webkit-sticky;
+  position: sticky;
+/*   top: 70px; */
   /*==== Toggle Sidebar Btn ====*/
   /*==== Navbar Items ====*/
   /*==== Search Box ====*/
@@ -758,19 +765,8 @@ nav.navbar .dropdown-menu h3 {
   }
 }
 
-.content-inner {
-  position: relative;
-  width: calc(100%);
-  min-height: calc(100vh - 250px);
-  padding-bottom: 60px;
-  top: 250px;
-/*   padding-top : 250px; */
+. container {
+	text-align: center;
+	
 }
-
-@media (min-width: 768px){
-	.content-inner {
-		position: fixed;
-	}
-}
-
 

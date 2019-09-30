@@ -3,8 +3,8 @@
 <%@ include file="../../layout/logoleft2.jsp" %>
 <script type="text/javascript">
 </script>
-	<h3>공지사항</h3>
 	<div class="container">
+	<h3>공지사항</h3>
 	<table class="table table-hover" id="noticeTable">
 		<thead>
 			<tr>
@@ -54,6 +54,7 @@
 					</form>
 			</div>
 	</div>
+	
 	<div class="buttondiv">
 		<button type="button" class="btn btn-outline-secondary" onclick="location.href='noticeWrite'">글 쓰기</button>
 	</div>

@@ -18,7 +18,7 @@ $(function(){
 		<form id="noticeForm" action="noticeWrite" method="post">
 			<!-- security Token -->
 			<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
-			<input type="hidden" name="memId" value="haddie">
+			<input type="hidden" name="memId" value="">
 			<div class="table-responsive">
 			<table class="table">
 				<tr>

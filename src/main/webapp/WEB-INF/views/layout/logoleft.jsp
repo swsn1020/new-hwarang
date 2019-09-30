@@ -33,7 +33,6 @@
 .star {
 	color: #ffae00;
 }
-
 </style>
 
 <!-- 추가 import -->

@@ -71,23 +71,40 @@ $(function(){
 		
 	});
 </script>
+<style>
+.content {
+	padding: 16px;
+	position: relative;
+}
+
+#navbar {
+	overflow: hidden;
+}
+/* The sticky class is added to the navbar with JS when it reaches its scroll position */
+.sticky {
+	position: fixed;
+	top: 0;
+	width: 100%;
+}
+/* Add some top padding to the page content to prevent sudden quick movement (as the navigation bar gets a new position at the top of the page (position:fixed and top:0) */
+.sticky+.content {
+	padding-top: 100px;
+}
+</style>
 </head>
 <body>
-	
-		<!-- Main Navbar-->
-
-<!--       <header class="header"> -->
 	<!-- Hwarang Logo -->
-	<div class="page-wrapper  chiller-theme toggled">
+	<div class="page-wrapper chiller-theme toggled">
 		<h1>
 			<a href="/"><img class="mx-auto d-block"
 				src="https://trello-attachments.s3.amazonaws.com/5d6613e9716d6e23f5e579bb/312x140/3f52467f9d01dd9ce0a0f28eacece66e/%EB%A1%9C%EA%B3%A0.png"
 				alt="Hwarang Logo"></a>
 		</h1>
-<!-- 	</div> -->
-		<div class="page-content">
-        <nav class="navbar">
-            <div class="navbar-holder d-flex align-items-center justify-content-between">
+		
+		<!-- Main Navbar-->
+		<div id="navbar" style="z-index: 2">
+        <nav class="navbar" >
+            <div class="navbar-holder d-flex align-items-center justify-content-between" style="height: 60px;">
             	<!-- Navbar Header-->
               <div class="navbar-header">
               </div>
@@ -118,10 +135,23 @@ $(function(){
               </ul>
           </div>
         </nav>
-<!--        </div> -->
-<!--       </header> -->
+       </div>
+       <script>
+			window.onscroll = function() {myFunction()};
+			
+			var navbar = document.getElementById("navbar");
+			var sticky = navbar.offsetTop;
+			
+			function myFunction() {
+			  if (window.pageYOffset >= sticky) {
+			    navbar.classList.add("sticky")
+			  } else {
+			    navbar.classList.remove("sticky");
+			  }
+			}	
+		</script>
 	
-	<div class="row">
+	<div class="row content">
 	<div class="col-sm-2 d-flex align-items-stretch">
 		<a id="show-sidebar" class="btn" href="#">
 	    	<i class="fas fa-bars"></i>
@@ -195,4 +225,5 @@ $(function(){
 <!-- 	</div> -->
 		
 		<!-- 각자 내용 시작 -->
-<div class="col-sm-8">
+<div class="col-sm-8" style="margin-left: 30px; z-index: 1">
+	<div class="align-items-center">
