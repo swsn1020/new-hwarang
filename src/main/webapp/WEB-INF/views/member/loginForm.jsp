@@ -104,11 +104,11 @@ function goLogin(){
 						<input type="text" name="username" id="member_id" class="form-control" placeholder="아이디"><br>
 						<input type="password" name="password" id="member_password" class="form-control" placeholder="비밀번호"><br>
 						<button type="button" id="checkLogin" onclick="javascript:goLogin();" class="btn btn-primary" style="height: 50px; width: 350px; ">Login</button><br><br>
+						<div class="checkbox">
+							<label><input type="checkbox" name="remember-me">자동 로그인</label>
+						</div>
 					</form>
 				</fieldset>
-				<div class="checkbox">
-					<label><input type="checkbox" name="remember-me">자동 로그인</label>
-				</div>
 
 				<div style="margin: 20px auto 0; overflow: hidden; width: 280px;">
 					<ul>
