@@ -4,6 +4,7 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	<mapper namespace="hwarang.artg.mapper.RecommendBoardMapper">
 		<insert id="insertRecommend_Board" parameterType="hwarang.artg.rrboard.model.RecommendBoardVO">
+<<<<<<< HEAD
 			<selectKey order="BEFORE" keyProperty="recomm_num" resultType="int">
 				select seq_recommend_board.nextval from dual
 			</selectKey>
@@ -92,4 +93,36 @@
 			recomm_num > 0
 		</select>
 		
+=======
+			insert into recommend_board(recomm_num,member_id,recomm_title,recomm_content)
+			values(seq_recommend_board.nextval,#{member_id},#{recomm_title},#{recomm_content})
+		</insert>
+		<update id="updateRecommend_Board" parameterType="hwarang.artg.rrboard.model.RecommendBoardVO">
+			update recommend_board
+			set recomm_title = #{recomm_title},
+				recomm_content = #{recomm_content}
+			where recomm_num = #{recomm_num}
+		</update>
+		<update id="updateRecommend_Count" parameterType="int">
+			update recommend_board
+			set recomm_read_count = recomm_read_count + 1;
+			where recomm_num = #{recomm_num}
+		</update>
+		<delete id="deleteRecommend_Board" parameterType="int">
+			delete from recommend_board where recomm_num = #{recomm_num}
+		</delete>
+		<select id="selectRecommend_Board" parameterType="int" resultType="hwarang.artg.rrboard.model.RecommendBoardVO">
+			select *from recommend_board where recomm_num = #{recomm_num}
+		</select>
+		<select id="selectAllRecommend_Board" resultType="hwarang.artg.rrboard.model.RecommendBoardVO">
+			select *from recommend_board order by recomm_num desc
+		</select>
+		<!-- <select id="selectPageRecommend_Board" resultType="hwarang.artg.recommend.model.RecommendBoardVO">
+			select *
+			from (select rownum rnum,recomm_num,member_id,recomm_title,recomm_content,recomm_read_count
+					from recommend_board
+					order by recomm_num desc)
+			where rnum between #{param1} and #{param2}
+		</select> -->
+>>>>>>> refs/heads/jm
 	</mapper>

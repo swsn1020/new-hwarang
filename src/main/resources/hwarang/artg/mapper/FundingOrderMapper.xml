@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="hwarang.artg.mapper.FundingOrderMapper">
+
+	<select id="selectOne" resultType="hwarang.artg.funding.model.OrderVO">
+		select * from funding_order 
+		where order_seq_num = #{order_seq_num}
+	</select>
+	
+	<select id="selectAll" resultType="hwarang.artg.funding.model.OrderVO">
+		select * from funding_order
+	</select>
+	
+</mapper>

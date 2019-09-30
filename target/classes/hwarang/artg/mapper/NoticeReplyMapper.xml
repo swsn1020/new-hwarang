@@ -27,6 +27,7 @@
 		ORDER BY NOTICE_REPLY_UPDATEDATE ASC
 	</select>
 	<select id="getReplyCnt" resultType="int">
+<<<<<<< HEAD
 		SELECT count(*)
 		FROM NOTICE_REPLY WHERE NOTICE_NUM = #{boardNum}
 	</select>
@@ -61,6 +62,30 @@
 		SELECT count(*) FROM NOTICE_REPLY
 		 WHERE NOTICE_NUM = #{boardNum}
 	</select>
+=======
+		SELECT count(*) AS 
+		FROM NOTICE_REPLY WHERE NOTICE_NUM = #{boardNum}
+	</select>
+	<select id="selectReplies" resultMap="replyMap">
+		SELECT * FROM NOTICE_REPLY
+	</select>
+	
+	<!-- 페이징 처리
+	<select id="getListWithPaging" resultMap="replyMap">
+		<![CDATA[
+			SELECT NOTICE_REPLY_NUM, NOTICE_NUM, MEMBER_ID, NOTICE_REPLY_CONTENT, NOTICE_REPLY_REGDATE, NOTICE_REPLY_UPDATEDATE, BLOCK
+			  FROM (SELECT /*+INDEX_DESC(NOTICE_REPLY PK_NOTICE_REPLY_NUM) */ rownum as rNum, NOTICE_REPLY_NUM, NOTICE_NUM, MEMBER_ID, NOTICE_REPLY_CONTENT, NOTICE_REPLY_REGDATE, NOTICE_REPLY_UPDATEDATE, BLOCK 
+ 					  FROM NOTICE_REPLY 
+ 					 WHERE rownum <= #{pageNum} * #{amount})
+ 			 WHERE rNum > (#{pageNum} - 1) * #{amount}
+		]]>
+	</select>
+	-->
+	<select id="getTotalCount" resultType="int">
+		SELECT count(*) FROM NOTICE_REPLY
+	</select>
+	
+>>>>>>> refs/heads/jm
 	
 	<!-- 댓글 수 증가를 위해 댓글 번호로 해당 게시글 번호 얻어오기  -->
 	<select id="getBoardNum" resultType="int">

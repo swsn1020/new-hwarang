@@ -27,6 +27,7 @@ select * from free_board order by free_num desc
 <update id="updateReadCount" parameterType="hwarang.artg.community.model.FreeBoardVO">
 update free_board
 	set free_readcnt = free_readcnt +1
+<<<<<<< HEAD
 		where free_num = #{num}
 		
 </update>
@@ -58,6 +59,38 @@ update free_board
   from 
       ( select /*+INDEX_DESC(free_board pk_free_num) */
         rownum rn,free_num fNum,free_title, free_content, member_id, free_regdate, free_updatedate, free_readcnt, free_reply_cnt 
+=======
+		where free_num = #{param1}
+		
+</update>
+<sql id="criteriaDTO">
+ 	<trim prefix="(" suffix=") AND" prefixOverrides="OR"> 
+  		<foreach item="type" collection="typeArr">
+  			<trim prefix="OR">
+  				<choose>
+  					<when test="type == 'T'.toString()">
+  						free_title like '%'||#{keyword}||'%'
+  					</when>
+  					<when test="type == 'C'.toString()">
+  						free_content like '%'||#{keyword}||'%'
+  					</when>
+  					<when test="type == 'W'.toString()">
+  						member_id like '%'||#{keyword}||'%'
+  					</when>
+  				</choose>
+  			</trim>
+  		</foreach>
+  	</trim>
+</sql>
+
+<select id="getListWithPaging" parameterType="hwarang.artg.community.model.FreeBoardVO" resultMap="freeboardMap">
+  <![CDATA[
+  select 
+    free_num,member_id,free_title,free_content,free_regdate, free_updatedate,free_readcnt,free_reply_cnt
+  from 
+      ( select /*+INDEX_DESC(free_board pk_free_num) */
+        rownum rn,free_num,free_title, free_content, member_id, free_regdate, free_updatedate, free_readcnt, free_reply_cnt 
+>>>>>>> refs/heads/jm
       from free_board
       where
   ]]>
