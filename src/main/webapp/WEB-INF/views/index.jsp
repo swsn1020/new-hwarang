@@ -1,25 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
    <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+   <%@ include file="layout/left.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.4.1.js"
-	integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
-	crossorigin="anonymous"></script>
+<script type="text/javascript">
+</script>
 <script type="text/javascript">
 
 $(function(){
 	document.domain = "localhost";
+	window.close();
 	var naverUser = '${snsUser}';
 	if(naverUser == "naver"){
 		var url = "/index?naverResult=success&id='${param.id}'";
@@ -30,10 +24,8 @@ $(function(){
 </script>
 </head>
 <body>
-	<div class="container">
-		<div class="jumbotron text-center">
-			<h1>HWARANG</h1>
-			<p>Your own exhibition</p>
+		<div align="center">
+			<h1>로그인후 페이지</h1>
 		</div>
 		<div id="containers" style="width: 720px; margin: 0 auto;">
 		<table class="table">
@@ -75,6 +67,6 @@ $(function(){
 		</c:choose>
 		</table>
 		</div>
-	</div>
+<%@ include file="layout/bottom.jsp"%>
 </body>
 </html>

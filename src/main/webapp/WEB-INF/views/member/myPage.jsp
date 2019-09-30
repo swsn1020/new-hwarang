@@ -2,27 +2,19 @@
     pageEncoding="UTF-8"%>
     <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
     <%@taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
+    <%@ include file="../layout/left.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-<script 
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.4.1.js"
-	integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
-	crossorigin="anonymous"></script>
+<script type="text/javascript">
+
+</script>
 </head>
 <body>
-	<div class="container">
-		<div class="jumbotron text-center">
-			<h1>HWARANG</h1>
-			<p>Your own exhibition</p>
+		<div align="center">
+			<h1>나의 페이지</h1>
 		</div>
 		<div id="containers" style="width: 720px; margin: 0 auto;">
 			<!-- 회원의 기본정보 -->
@@ -47,7 +39,7 @@
 			<!-- 포인트 내역 -->
 			<div>
 				<h3>포인트 내역</h3>
-				<table class="table">
+				<table class="table" >
 					<tbody>
 					<tr align="center"> 
 						<th>번호</th>
@@ -56,7 +48,7 @@
 						<th>포인트</th>
 					</tr>
 					<c:forEach items="${points}" var="point">
-					<tr>
+					<tr align="center">
 						<td>${point.point_num}</td>
 						<td>
 						<c:if test="${point.point_use_date eq null}">
@@ -78,21 +70,39 @@
 					</tbody>
 				</table>
 			</div>
+			<!-- 나의 게시글 -->
+			<div>
+				<h3>나의 게시글</h3>
+				<table class="table">
+					<tbody align="center">
+						<tr> 
+							<th>구분</th>
+							<th>제목</th>
+							<th colspan="3">등록일</th>
+						</tr>
+						<c:forEach items="${review}" var="r">
+						<tr>
+							<td>후기</td>
+							<td><a href="/review/view?num=${r.review_num}">${r.review_title}</a></td>
+							<td><fmt:formatDate value="${r.review_reg_date}" pattern="yyyy-MM-dd"/></td>
+						</tr>
+						</c:forEach>
+						<c:forEach items="${recommend}" var="rc">
+						<tr>
+							<td>추천</td>
+							<td><a href="/recommend/view?num=${rc.recomm_num}">${rc.recomm_title}</a></td>
+							<td><fmt:formatDate value="${rc.recomm_reg_date}" pattern="yyyy-MM-dd"/></td>
+						</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+			</div>
 			<!-- 예매내역 -->
 			<div>
 				<h3>예매 내역</h3>
 				<table class="table">
 					<tbody>
 					
-					</tbody>
-				</table>
-			</div>
-			<!-- 나의 게시글 -->
-			<div>
-				<h3>나의 게시글</h3>
-				<table class="table">
-					<tbody>
-						
 					</tbody>
 				</table>
 			</div>
@@ -106,6 +116,6 @@
 				</table>
 			</div>
 		</div>
-	</div>
+<%@ include file="../layout/bottom.jsp"%>
 </body>
 </html>

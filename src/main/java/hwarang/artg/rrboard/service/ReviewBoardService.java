@@ -17,14 +17,14 @@ import hwarang.artg.common.model.CriteriaDTO;
 import hwarang.artg.common.model.DownloadView;
 import hwarang.artg.mapper.ReviewBoardMapper;
 import hwarang.artg.mapper.ReviewImgMapper;
+import hwarang.artg.mapper.ReviewReplyMapper;
 import hwarang.artg.rrboard.model.ReviewBoardVO;
 import hwarang.artg.rrboard.model.ReviewImgVO;
 
 @Service
 public class ReviewBoardService {
 	//파일 저장할 경로
-	private static final String UPLOAD_PATH = "d:\\temp";
-	
+	private static final String UPLOAD_PATH = "c:\\image";
 	@Autowired
 	private ReviewBoardMapper rbmapper;
 	@Autowired
@@ -37,46 +37,11 @@ public class ReviewBoardService {
 		return rbmapper.getListWithPaging(cri);
 	}
 	//총 페이지 수
-	public int getTotal() {
-		return rbmapper.getTotalCount();
+	public int getTotalCount(CriteriaDTO cri) {
+		return rbmapper.getTotalCount(cri);
 	}
 	
-	//search
-	
-//	public Map<String, Object> getSearchBoardList(Map<String, Object> param){
-//		//param이 포함하고 있어야 하는 값, 
-//		//firstRow,endRow : page(int)
-//		//(0)1,2,3,4 : type(int)
-//		//SearchBoardList가 ViewData를 만들어서 Controller에 넣어준다.
-//		//Map을 반환하는 이유는 list도 반환해야 하고, viewData도 반환해야되기 때문에
-//		//둘을 한꺼번에 반환하기 위해 사용함
-//		Map<String, Object> result = null;
-//		int page = (Integer) param.get("page");
-//		int type = (Integer) param.get("type");
-//		String keyword = (String) param.get("keyword");
-//		//dao에 넘겨줄 파라미터 설정
-//		PageDTO paging = null;
-//		param.put("firstRow",paging.getStartPage());
-//		param.put("endRow", paging.getEndPage());
-//		//type -> 1:제목 2:내용 3:제목+내용 4:작성자
-//		if(type==1) {
-//			param.put("review_title", keyword);
-//		}else if(type==2) {
-//			param.put("review_content", keyword);
-//		}else if(type==3) {
-//			param.put("review_title", keyword);
-//			param.put("review_content", keyword);
-//		}else if(type==4) {
-//			param.put("member_id", keyword);
-//		}
-//		result = getViewData(param); //Map
-//		//param을 이용해 dao에 전달
-//		List<ReviewBoardVO> searchedList = rbmapper.searchBoardList(param);
-//		result.put("reviewList", searchedList);
-//		return result;
-//	}
-	
-	
+
 	//파일업로드를 위한 파일 읽기,파일이름변환(첨부파일 업로드)
 	public String writeFile(MultipartFile file) {
 		String fullName = null;
@@ -123,7 +88,7 @@ public class ReviewBoardService {
 		
 		//파일 다운로드
 		public DownloadView getAttachment(String uuid) {
-			ReviewImgVO reviewImg = rimapper.selectReview_Img(uuid);
+			ReviewImgVO reviewImg = rimapper.selectReview_Img_uuid(uuid);
 			String fileName = reviewImg.getReview_uuid();
 			File file = new File(UPLOAD_PATH, fileName);
 			DownloadView view = new DownloadView(file);
@@ -141,7 +106,7 @@ public class ReviewBoardService {
 					System.out.println(fList.toString());
 					for (int i = 0; i < fList.size(); i++) {
 						Map<String, Object> fileMap = fList.get(i);
-						fileMap.put("reivew_num", rb.getReview_num());
+						fileMap.put("review", rb.getReview_num());
 						ReviewImgVO reviewImg = new ReviewImgVO();
 						reviewImg.setReview_uuid((String) fileMap.get("review_uuid"));
 						reviewImg.setReview_num((int) fileMap.get("review_num"));

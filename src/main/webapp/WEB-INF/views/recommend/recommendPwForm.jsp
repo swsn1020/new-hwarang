@@ -1,19 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ include file="../layout/left.jsp" %>
+<%@ include file="../layout/left.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>reviewPwForm</title>
+<title>recommendPwForm</title>
 <script type="text/javascript">
-
 </script>
 </head>
 <body>
 
 	<div align="center">
-			<h1>관람 후기</h1>
+		<h1>추천 게시판</h1>
 	</div>
 	<div align="center">
 		<h3>Please enter a password to ${param.button}.</h3>

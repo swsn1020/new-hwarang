@@ -14,11 +14,6 @@ import hwarang.artg.member.service.NaverService;
 
 @Controller
 public class IndexController {
-	@Autowired
-	private NaverService nservice;
-	@Autowired
-	private MemberService service;
-
 	@RequestMapping("/index")
 	public String showMain(Model model,HttpSession session) {
 		String kakaoName = (String) session.getAttribute("kakaoName");

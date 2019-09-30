@@ -40,10 +40,10 @@ public class ReviewImgService {
 		return count;
 	}
 	public List<ReviewImgVO> reviewimgGetImgList(int num){
-		return rimapper.selectReview_ImgList(num);
+		return rimapper.selectReview_Img_num(num);
 	}
 	public ReviewImgVO reviewimgGetOne(String uuid) {
-		return rimapper.selectReview_Img(uuid);
+		return rimapper.selectReview_Img_uuid(uuid);
 	}
 	public List<ReviewImgVO> reviewimgGetAll(){
 		return rimapper.selectAllReview_Img();

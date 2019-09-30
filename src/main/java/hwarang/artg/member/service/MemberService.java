@@ -70,11 +70,4 @@ public class MemberService {
 		}
 		return false;
 	}
-	//나의 게시글
-	public List<Object> memberBoardAll(String id){
-		List<Object> boardList = null;
-		rbservice.reviewboardGetIdAll(id);
-		
-		return boardList;
-	}
 }

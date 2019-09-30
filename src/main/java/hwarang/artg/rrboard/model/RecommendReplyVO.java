@@ -13,7 +13,7 @@ public class RecommendReplyVO {
 	private int recomm_num;
 	private String member_id;
 	private String recomm_reply_content;
-	private Date recomm_reply_reg_date;
+	private String recomm_reply_reg_date;
 	private Date recomm_reply_modi_date;
 	public int getRecomm_reply_num() {
 		return recomm_reply_num;
@@ -39,10 +39,10 @@ public class RecommendReplyVO {
 	public void setRecomm_reply_content(String recomm_reply_content) {
 		this.recomm_reply_content = recomm_reply_content;
 	}
-	public Date getRecomm_reply_reg_date() {
+	public String getRecomm_reply_reg_date() {
 		return recomm_reply_reg_date;
 	}
-	public void setRecomm_reply_reg_date(Date recomm_reply_reg_date) {
+	public void setRecomm_reply_reg_date(String recomm_reply_reg_date) {
 		this.recomm_reply_reg_date = recomm_reply_reg_date;
 	}
 	public Date getRecomm_reply_modi_date() {

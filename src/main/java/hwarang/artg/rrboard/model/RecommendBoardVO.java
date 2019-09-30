@@ -15,6 +15,7 @@ public class RecommendBoardVO {
 //	RECOMM_READ_COUNT               NUMBER(10)     
 //	RECOMM_RECOMM_COUNT             NUMBER(10)     
 //	RECOMM_DISRECOMM_COUNT          NUMBER(10) 
+//	REPLY_COUNT                     NUMBER(10)   
 	private int recomm_num;
 	private String member_id;
 	private String recomm_title;
@@ -24,7 +25,14 @@ public class RecommendBoardVO {
 	private int recomm_read_count;
 	private int recomm_recomm_count;
 	private int recomm_disrecomm_count;
-	private List<RecommendImgVO> imageList;
+	private int reply_count;
+	
+	public int getReply_count() {
+		return reply_count;
+	}
+	public void setReply_count(int reply_count) {
+		this.reply_count = reply_count;
+	}
 	
 	public int getRecomm_num() {
 		return recomm_num;
@@ -80,19 +88,14 @@ public class RecommendBoardVO {
 	public void setRecomm_disrecomm_count(int recomm_disrecomm_count) {
 		this.recomm_disrecomm_count = recomm_disrecomm_count;
 	}
-	public List<RecommendImgVO> getImageList() {
-		return imageList;
-	}
-	public void setImageList(List<RecommendImgVO> imageList) {
-		this.imageList = imageList;
-	}
+
 	@Override
 	public String toString() {
 		return "RecommendBoardVO [recomm_num=" + recomm_num + ", member_id=" + member_id + ", recomm_title="
 				+ recomm_title + ", recomm_content=" + recomm_content + ", recomm_reg_date=" + recomm_reg_date
 				+ ", recomm_modi_date=" + recomm_modi_date + ", recomm_read_count=" + recomm_read_count
 				+ ", recomm_recomm_count=" + recomm_recomm_count + ", recomm_disrecomm_count=" + recomm_disrecomm_count
-				+ ", imageList=" + imageList + "]";
+				+ "]";
 	}
 	
 	

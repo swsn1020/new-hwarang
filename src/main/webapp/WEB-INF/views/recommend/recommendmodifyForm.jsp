@@ -1,12 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-   <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-   <%@ include file="../layout/left.jsp" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ include file="../layout/left.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>reviewmodifyForm</title>
+<title>Insert title here</title>
 <script type="text/javascript">
 
 </script>
@@ -36,30 +36,23 @@ $(function(){
 </script>
 </head>
 <body>
-
 	<div align="center">
-			<h1>관람 후기</h1>
+		<h1>추천 게시판</h1>
 	</div>
 	<div>
 		<form action="modify" method="post" enctype="multipart/form-data">
-		<input type="hidden" name="num" value="${review.review_num}">
+		<input type="hidden" name="num" value="${recomm.recomm_num}">
 			<table class="table">
-				<tr>
-					<th>Program name</th>
-					<td>
-						${review.review_exh_name}
-					</td>
-				</tr>
 				<tr>
 					<th>Title</th>
 					<td>
-						<input type="text" name="title" value="${review.review_title}">
+						<input type="text" name="title" value="${recomm.recomm_title}">
 					</td>
 				</tr>
 				<tr>
 					<th>Write</th>
 					<td>
-						${review.member_id}
+						${recomm.member_id}
 					</td>
 				</tr>
 				<tr>
@@ -72,8 +65,8 @@ $(function(){
 							<c:otherwise>
 								<c:forEach items="${imgs }" var="img">
 								<div>
-									${img.review_filename }
-									<a href="#this" name="fileDeleteBtn" class="btn" data-uuid="${img.review_uuid }">삭제</a>
+									${img.recomm_filename }
+									<a href="#this" name="fileDeleteBtn" class="btn" data-uuid="${img.recomm_uuid }">삭제</a>
 								</div>
 								</c:forEach>
 								<!-- 파일 추가하기 -->
@@ -86,7 +79,7 @@ $(function(){
 				</tr>
 				<tr>
 					<td colspan="4">
-						<textarea rows="10" cols="50" name="content">${review.review_content}</textarea>
+						<textarea rows="10" cols="50" name="content">${recomm.recomm_content}</textarea>
 					</td>
 				</tr>
 				<tr>

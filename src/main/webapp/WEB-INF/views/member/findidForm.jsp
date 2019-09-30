@@ -1,34 +1,25 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+    <%@ include file="../layout/left.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
 <style type="text/css">
-*{
+.div{
 	margin: 0 auto;
 	padding: 0;
 	box-sizing: border-box;
+	display: block;
 }
 ul, ol, li {
     list-style: none;
 }
-div{
-	display: block;
-}
 </style>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.4.1.js"
-	integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
-	crossorigin="anonymous"></script>
+<script type="text/javascript">
+</script>
 <script type="text/javascript">
 function findId(){
 	if(document.findIdForm.member_name.value == ""){
@@ -48,15 +39,12 @@ function findId(){
 </script>
 </head>
 <body>
-	<div class="container">
-		<div class="jumbotron text-center">
-			<h1>HWARANG</h1>
-			<p>Your own exhibition</p>
+		<div align="center">
+			<h1>아이디 찾기</h1>
 		</div>
-		<div id="containers" style="width: 720px; margin: 0 auto;">
-			<div class="form-group" style="float: none; width: 350px;">
-				<h3 align="center">아이디 찾기</h3>
-				<div>
+			
+		<div id="containers" class="div" align="center">
+				<div style="width: 350px;">
 					<form name="findIdForm" id="findIdForm">
 						<input type="text" id="member_name" name="member_name" class="form-control" placeholder="이름">
 						<br>
@@ -73,8 +61,8 @@ function findId(){
 						<button type="button" onclick="location.href='/member/findpwForm'" class="btn btn-primary">비밀번호 찾기</button>
 					</div>
 				</c:if>
-			</div>
+			
 		</div>
-	</div>
+<%@ include file="../layout/bottom.jsp"%>
 </body>
 </html>

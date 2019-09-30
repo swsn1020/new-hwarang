@@ -36,8 +36,8 @@ public class RecommendImgService {
 		}
 		return false;
 	}
-	public RecommendImgVO recommendimgGetOne(int num) {
-		return rimapper.selectRecomm_Img(num);
+	public List<RecommendImgVO> recommendimgGetOne(int num) {
+		return rimapper.selectRecomm_Img_num(num);
 	}
 	public List<RecommendImgVO> recommendimgGetAll(){
 		return rimapper.selectAllRecomm_Img();

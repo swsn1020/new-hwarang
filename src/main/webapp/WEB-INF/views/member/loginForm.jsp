@@ -1,34 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ include file="../layout/left.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
 <style type="text/css">
-*{
+.div{
 	margin: 0 auto;
 	padding: 0;
 	box-sizing: border-box;
+	display: block;
 }
 ul, ol, li {
     list-style: none;
 }
-div{
-	display: block;
-}
 </style>
 <meta charset="UTF-8">
 <title>loginForm</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.4.1.js"
-	integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
-	crossorigin="anonymous"></script>
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 <script type="text/javascript">
 // 사용할 앱의 JavaScript 키를 설정해 주세요.
@@ -135,5 +124,6 @@ function goLogin(){
 			</div>
 		</div>
 	</div>
+<%@ include file="../layout/bottom.jsp"%>
 </body>
 </html>

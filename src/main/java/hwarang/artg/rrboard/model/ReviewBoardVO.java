@@ -13,7 +13,8 @@ public class ReviewBoardVO {
 //	REVIEW_MODI_DATE                DATE           
 //	REVIEW_READ_COUNT               NUMBER(10)     
 //	REVIEW_RECOMM_COUNT             NUMBER(10)     
-//	REVIEW_DISRECOMM_COUNT          NUMBER(10)    
+//	REVIEW_DISRECOMM_COUNT          NUMBER(10)  
+//	REPLY_COUNT                     NUMBER(10)   
 	private int review_num;
 	private String member_id;
 	private String review_title;
@@ -24,33 +25,15 @@ public class ReviewBoardVO {
 	private int review_read_count;
 	private int review_recomm_count;
 	private int review_disrecomm_count;
-	
-	/* 신고처리 -hj */
-	private String block;
-	public String getBlock() {
-		return block;
-	}
-	public void setBlock(String block) {
-		this.block = block;
-	}
-	
-	
-	private List<ReviewImgVO> imageList;
-	//댓글 개수 칼럼 추가 고려
 	private int reply_count;
-	
+
 	public int getReply_count() {
 		return reply_count;
 	}
 	public void setReply_count(int reply_count) {
 		this.reply_count = reply_count;
 	}
-	public List<ReviewImgVO> getImageList() {
-		return imageList;
-	}
-	public void setImageList(List<ReviewImgVO> imageList) {
-		this.imageList = imageList;
-	}
+
 	public int getReview_num() {
 		return review_num;
 	}
@@ -117,7 +100,7 @@ public class ReviewBoardVO {
 				+ review_title + ", review_exh_name=" + review_exh_name + ", review_content=" + review_content
 				+ ", review_reg_date=" + review_reg_date + ", review_modi_date=" + review_modi_date
 				+ ", review_read_count=" + review_read_count + ", review_recomm_count=" + review_recomm_count
-				+ ", review_disrecomm_count=" + review_disrecomm_count + ", imageList=" + imageList + "]";
+				+ ", review_disrecomm_count=" + review_disrecomm_count + "]";
 	}
 	
 	

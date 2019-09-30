@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ include file="../layout/left.jsp" %>
@@ -7,18 +7,21 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>reviewboardFrom</title>
+<title>recommendboardFrom</title>
 <script type="text/javascript">
 
 </script>
 </head>
 <body>
 		<div align="center">
-			<h1>관람 후기</h1>
+			<h1>추천 게시판</h1>
 		</div>
 		<div class="table-responsive">
-			<!-- member_id : 아이디 -->
-			<button onclick="location.href='write?member_id=test'" class="btn btn-link">Write</button>
+		 	<sec:authentication property="username" var="id"/>
+		 	<c:if test="${id.username eq post.username}">
+			 	<input type="hidden" name="username" id="member_id" value="${id.username}">
+				<button onclick="location.href='write?id=${id.username}'" class="btn btn-link">Write</button>		 	
+		 	</c:if>
 			<table class="table table-hover">
 				<thead>
 					<tr>
@@ -30,34 +33,30 @@
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach items="${reviewList}" var="review">
+					<c:forEach items="${recommendList}" var="recomm">
 						<tr align="center">
-							<td>${review.review_num}</td>
-							<td><a href="view?num=${review.review_num}">${review.review_title}</a>
-								<c:if test="${review.reply_count != 0}">
-									<span class="badge">${review.reply_count }</span>
+							<td>${recomm.recomm_num}</td>
+							<td><a href="view?num=${recomm.recomm_num}">${recomm.recomm_title}</a>
+								<c:if test="${recomm.reply_count != 0}">
+									<span class="badge">${recomm.reply_count }</span>
 								</c:if>
 							</td><!-- 댓글수 -->
-							<td>${review.member_id}</td>
-							<td><fmt:formatDate value="${review.review_reg_date}" pattern="yyyy-MM-dd"/></td>
-							<td>${review.review_read_count}</td>
+							<td>${recomm.member_id}</td>
+							<td><fmt:formatDate value="${recomm.recomm_reg_date}" pattern="yyyy-MM-dd"/></td>
+							<td>${recomm.recomm_read_count}</td>
 						</tr>
 					</c:forEach>
 				</tbody>
 			</table>
 		</div>
-		
 		<div style="text-align: center;">
-				<form id="searchForm" action="/review/reviewboard" method="get">
+				<form id="searchForm" action="/recommend/recommendboard" method="get">
 					<select name="type">
 						<option value="" 
 							<c:out value="${pageMaker.cri.type eq null ? 'selected' : ''}"/>>검색
 						</option>
 						<option value="T" 
 							<c:out value="${pageMaker.cri.type eq 'T'? 'selected' : ''}"/>>제목
-						</option>
-						<option value="E" 
-							<c:out value="${pageMaker.cri.type eq 'E' ? 'selected': ''}"/>>관람명
 						</option>
 						<option value="I" 
 							<c:out value="${pageMaker.cri.type eq 'I' ? 'selected': ''}"/>>작성자
@@ -86,18 +85,19 @@
 		<div class="container" align="center">
 			<ul class="pagination justify-content-center">
 				<li class='${pageMaker.prev == true ? "page-item ":"page-item disabled"}'>
-					<a class="page-link" href="reviewboard?pageNum=${pageMaker.startPage-1}&type=${param.type}&keyword=${param.keyword}">이전</a>
+					<a class="page-link" href="recommendboard?pageNum=${pageMaker.startPage-1}&type=${param.type}&keyword=${param.keyword}">이전</a>
 				</li>
 				<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
 					<li class='${pageMaker.cri.pageNum == num ? "page-item":"page-item active"}'>
-						<a class="page-link" href="reviewboard?pageNum=${num}&type=${param.type}&keyword=${param.keyword}">${num}</a>
+						<a class="page-link" href="recommendboard?pageNum=${num}&type=${param.type}&keyword=${param.keyword}">${num}</a>
 					</li>
 				</c:forEach>
 				<li class=' ${pageMaker.next == true ? "page-item":"page-item disabled"}'>
-					<a class="page-link" href="reviewboard?pageNum=${pageMaker.endPage+1}&type=${param.type}&keyword=${param.keyword}">다음</a>
+					<a class="page-link" href="recommendboard?pageNum=${pageMaker.endPage+1}&type=${param.type}&keyword=${param.keyword}">다음</a>
 				</li>
 			</ul>
 		</div>
 <%@ include file="../layout/bottom.jsp"%>
+
 </body>
 </html>

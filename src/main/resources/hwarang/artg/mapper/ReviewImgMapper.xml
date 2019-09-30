@@ -21,10 +21,10 @@
 		<select id="selectReview_ImgList_Count" parameterType="int" resultType="int">
 			select count(*) from review_img where review_num = #{review_num}
 		</select>
-		<select id="selectReview_Img" parameterType="String" resultType="hwarang.artg.rrboard.model.ReviewImgVO">
+		<select id="selectReview_Img_uuid" parameterType="String" resultType="hwarang.artg.rrboard.model.ReviewImgVO">
 			select *from review_img where review_uuid = #{review_uuid}
 		</select>
-		<select id="selectReview_ImgList" parameterType="int" resultType="hwarang.artg.rrboard.model.ReviewImgVO">
+		<select id="selectReview_Img_num" parameterType="int" resultType="hwarang.artg.rrboard.model.ReviewImgVO">
 			select *from review_img where review_num = #{review_num}
 			order by review_uuid asc
 		</select>

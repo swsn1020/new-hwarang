@@ -9,10 +9,8 @@
 		</insert>
 		<update id="updateRecomm_Img" parameterType="hwarang.artg.rrboard.model.RecommendImgVO">
 			update recommend_img
-			set recomm_uuid = #{recomm_uuid},
-				recomm_upload_path = #{recomm_upload_path},
-				recomm_filename = #{recomm_filename}
-			where recomm_num = #{recomm_num}
+			set recomm_filename = #{recomm_filename}
+			where recomm_num = #{recomm_uuid}
 		</update>
 		<delete id="deleteRecomm_Img_uuid" parameterType="String">
 			delete from recommend_img where recomm_uuid = #{recomm_uuid}
@@ -20,10 +18,18 @@
 		<delete id="deleteRecomm_Img_num" parameterType="int">
 			delete from recommend_img where recomm_num = #{recomm_num}
 		</delete>
-		<select id="selectRecomm_Img" parameterType="int" resultType="hwarang.artg.rrboard.model.RecommendImgVO">
+		<select id="selectRecomm_ImgList_Count" parameterType="int" resultType="int">
+			select count(*) from recommend_img where recomm_num = #{recomm_num}
+		</select>
+		<select id="selectRecomm_Img_num" parameterType="int" resultType="hwarang.artg.rrboard.model.RecommendImgVO">
 			select *from recommend_img where recomm_num = #{recomm_num}
+			order by recomm_uuid asc
+		</select>
+		<select id="selectRecomm_Img_uuid" parameterType="String" resultType="hwarang.artg.rrboard.model.RecommendImgVO">
+			select *from recommend_img where recomm_uuid = #{recomm_uuid}
 		</select>
 		<select id="selectAllRecomm_Img" resultType="hwarang.artg.rrboard.model.RecommendImgVO">
 			select *from recommend_img 
+			order by recomm_uuid asc
 		</select>
 	</mapper>

@@ -1,13 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-	<%@ include file="../layout/left.jsp" %>
+    pageEncoding="UTF-8"%>
+<%@ include file="../layout/left.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <script type="text/javascript" src="/resources/js/board.js?var=1"></script>
-<title>reviewwriteForm</title>
+<title>recommwriteForm</title>
 <script type="text/javascript">
+
 </script>
 <script type="text/javascript">
 $(function(){
@@ -22,28 +23,22 @@ $(function(){
 </script>
 </head>
 <body>
-		<div align="center">
-			<h1>관람 후기</h1>
-		</div>
+
+	<div align="center">
+		<h1>추천 게시판</h1>
+	</div>
 		<div class="form-group">
 		<form action="write" method="post" id="writeForm" enctype="multipart/form-data">
 			<!--  ${member_id} -->
 			<input type="hidden" name="member_id" value="test">
 			<table class="table">
 				<tr>
-					<th>Program name</th>
-					<td>
-						<%-- ${review_exh_name} --%> 
-						<input class="form-control" type="text" name="review_exh_name" value="test_exh_name">
-					</td>
-				</tr>
-				<tr>
 					<th>Title</th>
-					<td><input class="form-control" type="text" name="review_title"></td>
+					<td><input class="form-control" type="text" name="recomm_title"></td>
 				</tr>
 				<tr>
 					<th>Content</th>
-					<td><textarea class="form-control" name="review_content" rows="10" cols="50"></textarea>
+					<td><textarea class="form-control" name="recomm_content" rows="10" cols="50"></textarea>
 					</td>
 				</tr>
 				<tr>
@@ -57,7 +52,7 @@ $(function(){
 			<input style="align-content: center;" class='btn btn-link' type="submit" value="Ok"> 
 			<input style="align-content: center;" class='btn btn-link' type="reset" value="Reset">
 			<!-- 목록으로 돌아갈때 member_id 필요 -->
-			<input style="align-content: center;" class='btn btn-link' type="button" onclick="location.href='reviewboard'" value="List">
+			<input style="align-content: center;" class='btn btn-link' type="button" onclick="location.href='recommendboard'" value="List">
 			</div>
 		</form>
 		</div>

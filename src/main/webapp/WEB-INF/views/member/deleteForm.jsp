@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ include file="../layout/left.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
 <style type="text/css">
-* {
+.div{
     padding: 0;
 	margin: 0 auto;
     box-sizing: border-box;
@@ -15,16 +16,8 @@ form {
 </style>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.4.1.js"
-	integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
-	crossorigin="anonymous"></script>
+<script type="text/javascript">
+</script>
 <script type="text/javascript">
 	$(function(){
 		var id = '${param.id}';
@@ -50,20 +43,20 @@ form {
 			alert("안내사항 동의를 체크해주세요.");
 			return;
 		}
-		frm.submit;
+		document.deleteForm.method = "post";
+		document.deleteForm.action = "/member/delete";
+		document.deleteForm.submit();
 	}
 </script>
 </head>
 <body>
-	<div class="container">
-			<div class="jumbotron text-center">
-				<h1>HWARANG</h1>
-				<p>Your own exhibition</p>
-			</div>
-			<div id="containers" style="width: 720px; margin: 0 auto;" align="center">
-				<h3>회원 탈퇴</h3>
+
+		<div align="center">
+			<h1>탈 퇴</h1>
+		</div>
+			<div class="div" id="containers" style="width: 720px; margin: 0 auto;" align="center">
 				<form action="/member/delete" onsubmit="doSubmit(this);return false;">
-					<input type="hidden" name="snsId" id="snsId">
+					<input class="deleteForm" type="hidden" name="snsId" id="snsId">
 					<table class="table"> 
 						<tbody>
 							<tr>
@@ -86,8 +79,8 @@ form {
 							<tr>
 								<td colspan="2" align="center">
 								<div>
-									<button type="submit" >회원탈퇴</button>
-									<button type="button" onclick="history.back()">취소</button>
+									<input type="submit" value="회원탈퇴" class="form-control">
+									<input type="button" onclick="history.back()" class="form-control" value="취소">
 								</div>
 								</td>
 								
@@ -97,6 +90,6 @@ form {
 				</form>
 				
 			</div>
-	</div>
+<%@ include file="../layout/bottom.jsp"%>
 </body>
 </html>

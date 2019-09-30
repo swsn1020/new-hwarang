@@ -25,7 +25,7 @@ public class ReviewReplyService {
 		}
 		return false;
 	}
-	public boolean reviewreplysRemove(int reply_num) {
+	public boolean reviewreplysRemoves(int reply_num) {
 		if(rrmapper.deleteReview_Replys(reply_num) > 0) {
 			return true;
 		}
@@ -42,5 +42,8 @@ public class ReviewReplyService {
 	}
 	public List<ReviewReplyVO> reviewreplyGetAll(int num){
 		return rrmapper.selectAllReview_Reply(num);
+	}
+	public int getnReplyCount(int num) {
+		return rrmapper.getReplyCnt(num);
 	}
 }

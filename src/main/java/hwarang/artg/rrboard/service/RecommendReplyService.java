@@ -24,6 +24,12 @@ public class RecommendReplyService {
 		}
 		return false;
 	}
+	public boolean recommendreplysRemoves(int reply_num) {
+		if(rrmapper.deleteRecommend_Replys(reply_num) > 0) {
+			return true;
+		}
+		return false;
+	}
 	public boolean recommendreplyRemove(int num) {
 		if(rrmapper.deleteRecommend_Reply(num) > 0) {
 			return true;
@@ -33,7 +39,10 @@ public class RecommendReplyService {
 	public RecommendReplyVO recommendreplyGetOne(int num) {
 		return rrmapper.selectRecommend_Reply(num);
 	}
-	public List<RecommendReplyVO> recommendreplyGetAll(){
-		return rrmapper.selectAllRecommend_Reply();
+	public List<RecommendReplyVO> recommendreplyGetAll(int num){
+		return rrmapper.selectAllRecommend_Reply(num);
+	}
+	public int getnReplyCount(int num) {
+		return rrmapper.getReplyCnt(num);
 	}
 }

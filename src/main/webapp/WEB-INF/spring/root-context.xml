@@ -18,6 +18,7 @@
 		<property name="jdbcUrl" value="jdbc:oracle:thin:@project-hwarang.cemyeatzib04.us-east-2.rds.amazonaws.com:1521:HWARANG"></property>
 		<property name="username" value="hwarang_zigi"></property>
 		<property name="password" value="ckddud90"></property>
+		<property name="maximumPoolSize" value="5"></property>
 	</bean>
 
 	<!-- DataSource 선언 -->

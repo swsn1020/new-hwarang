@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+   	<%@ include file="../layout/left.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
 <style type="text/css">
-* {
+.div{
     padding: 0;
 	margin: 0 auto;
     box-sizing: border-box;
@@ -15,16 +16,9 @@ form {
 </style>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.4.1.js"
-	integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
-	crossorigin="anonymous"></script>
+<script type="text/javascript">
+
+</script>
 <script type="text/javascript">
 	$(function(){
 		$("#submit").on("click",function(){
@@ -44,6 +38,14 @@ form {
 		//카카오톡,네이버로 로그인한 정보란에 주소와 핸드폰번호가 null인 경우 입력부탁할것.
 		var phone = '${member.member_phonenum}';
 		var address = '${member.member_address}';
+		
+		/* if(phone == null && phone == ""){
+			alert("예매를 위해 입력해주셔야 합니다.");
+			$("select[name='tel1']").focus();
+		}
+		if(address == null && address == ""){
+			alert("예매를 위해 입력해주셔야 합니다.");
+		} */
 		
 		if(id.match(".*(naver).*") || id.match(".*(kakao).*")){
 			$("#inputId").val("간편 로그인");
@@ -93,15 +95,11 @@ form {
 </script>
 </head>
 <body>
-	<div class="container">
-		<div class="jumbotron text-center">
-			<h1>HWARANG</h1>
-			<p>Your own exhibition</p>
+
+		<div align="center">
+			<h1>정보 수정</h1>
 		</div>
-		<div id="containers" style="width: 720px; margin: 0 auto;">
-			<div align="center">
-					<h3>개인 정보 수정</h3>
-				</div>
+		<div class="div" id="containers" style="width: 720px; margin: 0 auto;">
 			<form id="form" name="form" method="post" action="/member/modify">
 				<input type="hidden" id="inputHid" name="SNSid">
 				<table class="table">
@@ -185,6 +183,6 @@ form {
 				</div>
 			</form>
 		</div>
-	</div>
+<%@ include file="../layout/bottom.jsp"%>
 </body>
 </html>

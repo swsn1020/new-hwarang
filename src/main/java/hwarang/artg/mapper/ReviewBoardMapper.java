@@ -15,20 +15,12 @@ public interface ReviewBoardMapper {
 	public List<ReviewBoardVO> selectAllReview_Board();
 	
 	public int updateReview_count(int review_num);
+//	public int updateReply_count();
 	
 	//paging
 	public List<ReviewBoardVO> getListWithPaging(CriteriaDTO cri);
-	public int getTotalCount();
+	public int getTotalCount(CriteriaDTO cri);
 	
 	//search
-	//현재 게시글의 총개수 
-	public int selectTotalBoardCount(Map<String, Object> param);
-	//검색어를 포함한,페이지 게시글 목록 조회 
-	public List<ReviewBoardVO> searchBoardList(Map<String , Object> param);
-	
-	
-	/* 신고처리 -hj*/
-	
-	
 	
 }

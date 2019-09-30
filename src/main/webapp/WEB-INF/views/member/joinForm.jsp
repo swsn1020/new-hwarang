@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+   	<%@ include file="../layout/left.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
 <style type="text/css">
-* {
+.div{
     padding: 0;
 	margin: 0 auto;
     box-sizing: border-box;
@@ -15,16 +16,9 @@ form {
 </style>
 <meta charset="UTF-8">
 <title>joinForm</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.4.1.js"
-	integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
-	crossorigin="anonymous"></script>
+<script type="text/javascript">
+
+</script>
 <script type="text/javascript">
 	$(function(){
 		$("#inputId").on("blur",function() {
@@ -83,22 +77,66 @@ function jusoCallBack(roadFullAddr,roadAddrPart1,addrDetail,roadAddrPart2,engAdd
 	document.form.addrDetail.value = addrDetail;
 	document.form.zipNo.value = zipNo;
 }
-
+function joinSubmit(){
+	if(document.form.id.value == ""){
+		alert("아이디을 입력해주세요.");
+		document.form.id.focus();
+		return;
+	}
+	if(document.form.password.value == ""){
+		alert("비밀번호을 입력해주세요.");
+		document.form.password.focus();
+		return;
+	}
+	if(document.form.name.value == ""){
+		alert("이름을 입력해주세요.");
+		document.form.name.focus();
+		return;
+	}
+	if(document.form.tel1.value == ""){
+		alert("전화번호을 입력해주세요.");
+		document.form.tel1.focus();
+		return;
+	}
+	if(document.form.tel2.value == ""){
+		alert("전화번호을 입력해주세요.");
+		document.form.tel2.focus();
+		return;
+	}
+	if(document.form.tel3.value == ""){
+		alert("전화번호을 입력해주세요.");
+		document.form.tel3.focus();
+		return;
+	}
+	if(document.form.email1.value == ""){
+		alert("이메일을 입력해주세요.");
+		document.form.email1.focus();
+		return;
+	}
+	if(document.form.email2.value == ""){
+		alert("이메일을 입력해주세요.");
+		document.form.email2.focus();
+		return;
+	}
+	if(document.form.roadAddrPart1.value == ""){
+		alert("주소을 입력해주세요.");
+		return;
+	}
+	document.form.method = "get";
+	document.form.action = "/member/join";
+	document.form.submit();
+}
 
 </script>
 </head>
 <body>
-	<div class="container">
-		<div class="jumbotron text-center">
-			<h1>HWARANG</h1>
-			<p>Your own exhibition</p>
+
+		<div align="center">
+			<h1>회원가입</h1>
 		</div>
 
-		<div id="containers" style="width: 720px; margin: 0 auto;">
+		<div class="div" id="containers" style="width: 720px; margin: 0 auto;">
 			<form id="form" name="form" method="post" action="/member/join">
-				<div align="center">
-					<h3>회원가입</h3>
-				</div>
 				<table class="table">
 				<tbody>
 					<tr>
@@ -182,11 +220,11 @@ function jusoCallBack(roadFullAddr,roadAddrPart1,addrDetail,roadAddrPart2,engAdd
 					</tbody>
 				</table>
 				<div class="form-inline" align="center"> 
-					<input type="submit" id="submit" value="확인" class="form-control">
-					<input type="button" value="취소" onclick="location.href='/member/loginForm'" class="form-control">
+					<button type="button" onclick="javascript:joinSubmit();" class="form-control">확인</button>
+					<button type="button" onclick="location.href='/member/loginForm'" class="form-control">취소</button>
 				</div>
 			</form>
 		</div>
-	</div>
+<%@ include file="../layout/bottom.jsp"%>
 </body>
 </html>

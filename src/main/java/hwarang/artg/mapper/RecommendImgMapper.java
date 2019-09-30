@@ -3,6 +3,7 @@ package hwarang.artg.mapper;
 import java.util.List;
 
 import hwarang.artg.rrboard.model.RecommendImgVO;
+import hwarang.artg.rrboard.model.ReviewImgVO;
 
 public interface RecommendImgMapper {
 	public int insertRecomm_Img(RecommendImgVO ri);
@@ -11,7 +12,11 @@ public interface RecommendImgMapper {
 	public int deleteRecomm_Img_uuid(String recomm_uuid);
 	public int deleteRecomm_Img_num(int recomm_num);
 	
-	public RecommendImgVO selectRecomm_Img(int recomm_num);
 	public List<RecommendImgVO> selectAllRecomm_Img();
+	public List<RecommendImgVO> selectRecomm_Img_num(int recomm_num);
+	public RecommendImgVO selectRecomm_Img_uuid(String uuid);
+	
+	public int selectRecomm_ImgList_Count(int recomm_num);
+	
 	
 }	
