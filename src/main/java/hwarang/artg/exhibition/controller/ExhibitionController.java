@@ -96,8 +96,8 @@ public class ExhibitionController {
 	}
 
 	@GetMapping("/view")
-	public void exhibitionDetail(Model model, int seq) {
-		rService.addRecentlyView(new RecentlyViewVO(seq, "id"));
+	public void exhibitionDetail(Model model, int seq, Principal principal) {
+		rService.addRecentlyView(new RecentlyViewVO(seq, principal.getName()));
 		model.addAttribute("group",fService.getGroup("id"));
 		model.addAttribute("exh", service.getOne(seq));
 	}
