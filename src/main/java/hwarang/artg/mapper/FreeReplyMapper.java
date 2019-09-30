@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import hwarang.artg.community.model.FreeReplyVO;
+import hwarang.artg.manager.model.NoticeReplyVO;
 
 public interface FreeReplyMapper {
 //	insertReply(Reply	) : int, 댓글정보 삽입
@@ -22,6 +23,10 @@ public interface FreeReplyMapper {
 	public String replyUserIdCheck(int num);
 	public int getReplyCnt(int fboardNum);
 	
+	
+	public List<FreeReplyVO> getListWithPaging(@Param("fboardNum")int fboardNum, @Param("start")int start, @Param("end")int end);
+	
+	public int getTotalCountByBNum(int fboardNum);
 	/* 신고처리 */
 	public int updateBlock(@Param("block")String block, @Param("num") int num);
 }

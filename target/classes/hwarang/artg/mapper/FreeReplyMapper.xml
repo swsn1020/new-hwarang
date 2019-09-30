@@ -29,8 +29,31 @@ select * from free_reply where free_reply_num = #{num}
  </select> 
 
  <select id="selectAll" resultMap="replyMap"> 
- select * from free_reply order by free_reply_num desc
+ select * from free_reply 
  </select> 
+<sql id="pagingHeader">
+select *
+	from (
+		select rownum as rn, a.* from(
+</sql>		
+<sql id="pagingFooter">
+	) A
+)
+	where rn between #{start} and #{end}	
+</sql> 
+<!-- 페이징 처리 -->
+<select id="getListWithPaging" resultMap="replyMap">
+	<include refid="pagingHeader"/>
+		select free_reply_num , free_num , member_id, free_reply_content, free_reply_regdate , free_reply_updatedate, block
+			from free_reply
+			where free_num = #{fboardNum}
+			order by free_reply_num
+	<include refid="pagingFooter"/>
+</select>
+<select id="getTotalCountByBNum" resultType="int">
+	select count(*) from free_reply
+	where free_num = #{fboardNum}
+</select>
 <select id="replyUserIdCheck" resultType="String">
 	select member_id
 		from free_reply
@@ -42,6 +65,11 @@ select * from free_reply where free_reply_num = #{num}
 		FROM free_reply WHERE free_num = #{fboardNum}
 </select>
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> refs/remotes/origin/geun2
 <!-- 신고처리 -hj- -->
 <update id="updateBlock">
 	UPDATE free_reply SET BLOCK = #{block} WHERE free_reply_num = #{num}

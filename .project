@@ -3,6 +3,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 	<name>new-hwarang</name>
 =======
 <<<<<<< HEAD
@@ -10,6 +11,8 @@
 >>>>>>> refs/remotes/origin/jm
 =======
 >>>>>>> branch 'master' of https://github.com/swsn1020/new-hwarang.git
+=======
+>>>>>>> refs/remotes/origin/geun2
 	<name>new-hwarang</name>
 	<comment></comment>
 	<projects>
@@ -29,6 +32,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 			<name>org.eclipse.wst.validation.validationbuilder</name>
 			<arguments>
 			</arguments>
@@ -44,7 +48,10 @@
 			</arguments>
 		</buildCommand>
 		<buildCommand>
+=======
+>>>>>>> refs/remotes/origin/geun2
 			<name>org.eclipse.m2e.core.maven2Builder</name>
+<<<<<<< HEAD
 =======
 			<name>org.eclipse.m2e.core.maven2Builder</name>
 			<arguments>
@@ -93,6 +100,8 @@
 =======
 			<name>org.eclipse.m2e.core.maven2Builder</name>
 >>>>>>> branch 'master' of https://github.com/swsn1020/new-hwarang.git
+=======
+>>>>>>> refs/remotes/origin/geun2
 			<arguments>
 			</arguments>
 		</buildCommand>
@@ -121,6 +130,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 		<nature>org.eclipse.wst.jsdt.core.jsNature</nature>
 >>>>>>> refs/remotes/origin/master
@@ -129,5 +139,7 @@
 >>>>>>> refs/remotes/origin/jm
 =======
 >>>>>>> branch 'master' of https://github.com/swsn1020/new-hwarang.git
+=======
+>>>>>>> refs/remotes/origin/geun2
 	</natures>
 </projectDescription>

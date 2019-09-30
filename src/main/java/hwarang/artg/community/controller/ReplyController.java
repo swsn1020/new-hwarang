@@ -1,6 +1,8 @@
 package hwarang.artg.community.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import hwarang.artg.common.model.ReplyPager;
 import hwarang.artg.community.model.FreeReplyVO;
 import hwarang.artg.community.service.FreeBoardService;
 import hwarang.artg.community.service.FreeReplyService;
@@ -44,8 +47,15 @@ public class ReplyController {
 		return freereplyservice.freereplyRemove(num);
 	}
 	@ResponseBody
-	@RequestMapping(value = "/all/{fboardNum}", method = RequestMethod.GET)
-	public List<FreeReplyVO> getfreeReplyList(@PathVariable("fboardNum") int fboardNum) {
-		return freereplyservice.freeReplyByBoard(fboardNum);
+	@RequestMapping(value = "/all", method = RequestMethod.GET)
+	public Map<String,Object> getfreeReplyList(@RequestParam("fboardNum")int fboardNum, @RequestParam(defaultValue = "1")int curPage, Model model) {
+		Map<String,Object> rMap = new HashMap<String,Object>();
+		int count = freereplyservice.getTotalReplies(fboardNum);
+		ReplyPager rPager = new ReplyPager(count, curPage);
+		int start = rPager.getPageBegin();
+		int end = rPager.getPageEnd();
+		rMap.put("rPager",rPager);
+		rMap.put("replyTable",freereplyservice.nRepliesGetByBNum(fboardNum, start, end));
+		return rMap;
 	}
 }
