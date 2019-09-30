@@ -104,11 +104,12 @@ public class MemberVO {
 	}
 	@Override
 	public String toString() {
-		return "Member [member_id=" + member_id + ", member_name=" + member_name + ", member_password="
+		return "MemberVO [member_id=" + member_id + ", member_name=" + member_name + ", member_password="
 				+ member_password + ", member_email=" + member_email + ", member_gender=" + member_gender
 				+ ", member_phonenum=" + member_phonenum + ", member_address=" + member_address + ", member_reg_date="
 				+ member_reg_date + ", member_report_count=" + member_report_count + ", member_status=" + member_status
-				+ ", member_point=" + member_point + "]";
+				+ ", member_point=" + member_point + ", authList=" + authList + "]";
 	}
+
 	
 }

@@ -100,7 +100,7 @@ public class NoticeService {
 	}
 	
 	public boolean nReplyRemoveByBNum(int boardNum) {
-		if(rDao.deleteReply(boardNum) > 0) {
+		if(rDao.deleteReplyByBNum(boardNum) > 0) {
 			return true;
 		}
 		return false;

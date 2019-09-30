@@ -1,7 +1,7 @@
 package hwarang.artg.manager.controller;
 
+import java.security.Principal;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.Cookie;
@@ -9,9 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,14 +22,20 @@ import hwarang.artg.common.model.PageDTO;
 import hwarang.artg.common.model.ReplyPager;
 import hwarang.artg.manager.model.NoticeReplyVO;
 import hwarang.artg.manager.model.NoticeVO;
-import hwarang.artg.manager.model.QnAVO;
 import hwarang.artg.manager.service.NoticeService;
+import hwarang.artg.member.model.MemberVO;
+import hwarang.artg.member.service.MemberService;
+
 
 @Controller
 @RequestMapping("/notice")
 public class NoticeController {
 	@Autowired
+	private PasswordEncoder pwEncoder;
+	@Autowired
 	private NoticeService service;
+	@Autowired
+	private MemberService memService;
 	
 	@RequestMapping("/noticeList")
 	public String showNoticeList(CriteriaDTO cri, Model model) {
@@ -164,16 +170,31 @@ public class NoticeController {
 	}
 	*/
 	
+	
+//	pwEncoder.matches(받아온 pw, 오리지널pw)
+	
 	/**** 비밀번호 확인(checkPassword) ****/
 	@RequestMapping(value="/checkPw", method=RequestMethod.POST)
-	public String doCheckPw(int num, String type, String password, Model model) {
+	public String doCheckPw(int num, String type, String password, Model model, Principal principal) {
 		String url = "noticeList";
 		String msg = "";
+		String id = principal.getName();
+		System.out.println("id는"+id);
+//		System.out.println("로그인한 아이디: "+id);
+		MemberVO mem = memService.memberGetOne(id);
+		System.out.println(mem);
+		String originPw = mem.getMember_password();
+		System.out.println("originPw"+originPw);
 		NoticeVO notice = service.noticeGetOne(num);
-		if(notice != null && password.equals("true")) {
+		if(notice != null && pwEncoder.matches(password, originPw)) {
 			//비밀번호 일치
 			if(type.equals("delete")) {
 				// 삭제요청
+				if(service.nReplyRemoveByBNum(num)) {
+					System.out.println("해당 notice Reply 삭제완료");
+				}else {
+					System.out.println("해당 notice Reply 삭제 실패");
+				}
 				if(service.noticeRemove(num)) {
 					//삭제 성공(파일 삭제) >> 이동할 화면
 					//Service에서 작성하기

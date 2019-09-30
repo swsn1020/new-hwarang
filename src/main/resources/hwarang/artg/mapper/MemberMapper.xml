@@ -3,6 +3,30 @@
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	<mapper namespace="hwarang.artg.mapper.MemberMapper">
+		<resultMap type="hwarang.artg.member.model.MemberAuthVO" id="authMap">
+			<result property="member_id" column="member_id" />
+			<result property="member_auth" column="member_auth" />
+		</resultMap>
+		<resultMap type="hwarang.artg.member.model.MemberVO" id="memberMap">
+			<id property="member_id" column="member_id" />
+			<result property="member_id" column="member_id" />
+			<result property="member_name" column="member_name" />
+			<result property="member_password" column="member_password" />
+			<result property="member_email" column="member_email" />
+			<result property="member_gender" column="member_gender" />
+			<result property="member_phonenum" column="member_phonenum" />
+			<result property="member_address" column="member_address" />
+			<result property="member_reg_date" column="member_reg_date" />
+			<result property="member_report_count" column="member_report_count" />
+			<result property="member_status" column="member_status" />
+			<collection property="authList" resultMap="authMap"/>
+		</resultMap>
+	
+		<select id="selectMember" parameterType="string"  resultMap="memberMap">
+			select mem.member_id,member_name,member_password,member_email,member_gender,member_phonenum,member_address,member_reg_date,member_report_count,member_status,
+			auth.member_auth from member mem Left Outer Join member_auth auth on mem.member_id = auth.member_id WHERE mem.member_id = #{member_id}
+		</select>
+
 		<insert id="insertMember" parameterType="hwarang.artg.member.model.MemberVO">
 			insert into member(member_id,member_name,member_password,member_email,member_gender,member_phonenum,member_address)
 			values(#{member_id},#{member_name},#{member_password},#{member_email},#{member_gender},#{member_phonenum},#{member_address})
@@ -24,9 +48,6 @@
 		<delete id="deleteMember" parameterType="string">
 			delete from member where member_id = #{member_id}
 		</delete>
-		<select id="selectMember" parameterType="string" resultType="hwarang.artg.member.model.MemberVO">
-			select * from member where member_id = #{member_id}
-		</select>
 		<select id="selectAllMember" resultType="hwarang.artg.member.model.MemberVO">
 			select *from member
 		</select>
