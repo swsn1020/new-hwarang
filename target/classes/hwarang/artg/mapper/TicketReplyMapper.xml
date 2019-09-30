@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="hwarang.artg.mapper.TicketReplyMapper">
+<insert id="insertReply" parameterType="hwarang.artg.community.model.TicketReplyVO">
+insert into ticket_reply
+	(ticket_reply_num,ticket_num,member_id,ticket_content)
+	values(seq_b_ticket_reply.nextval,#{boardNum},#{userid},#{content})
+</insert>
+<update id="updateReply" parameterType="hwarang.artg.community.model.TicketReplyVO">
+update ticket_reply
+	set party_reply_content = #{content}
+		where ticket_reply_num = #{num}
+</update>
+<delete id="deleteReply" parameterType="int">
+delete from ticket_reply where ticket_reply_num = #{num}
+</delete>
+
+<select id="selectOne" parameterType="int" resultMap="replyMap">
+select * from ticket_reply where ticket_reply_num = #{num}
+</select>
+
+<select id="selectListByNum" resultMap="replyMap">
+select * from ticket_reply where ticket_num = #{boardNum} 
+</select>
+
+<select id="selectAll" resultMap="replyMap">
+select * from ticket_reply order by ticket_reply_num desc
+</select>
+
+<resultMap id="replyMap" type="hwarang.artg.community.model.TicketReplyVO">
+ <result column="ticket_reply_num" property="num"/> 
+ <result column="ticket_num" property="boardNum"/> 
+ <result column="member_id" property="userid"/> 
+ <result column="ticket_reply_content" property="content"/> 
+ <result column="ticket_reply_regdate" property="regDate"/> 
+ <result column="ticket_reply_updatedate" property="upDateDate"/> 
+
+</resultMap>
+</mapper>

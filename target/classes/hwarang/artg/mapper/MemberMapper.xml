@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper    	
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<mapper namespace="hwarang.artg.mapper.MemberMapper">
+		<insert id="insertMember" parameterType="hwarang.artg.member.model.MemberVO">
+			insert into member(member_id,member_name,member_password,member_email,member_gender,member_phonenum,member_address)
+			values(#{member_id},#{member_name},#{member_password},#{member_email},#{member_gender},#{member_phonenum},#{member_address})
+		</insert>
+		<update id="updateMember_pw" parameterType="hwarang.artg.member.model.MemberVO">
+			update member
+			set member_password = #{member_password}
+			where member_id = #{member_id}	
+		</update>
+		<update id="updateMember" parameterType="hwarang.artg.member.model.MemberVO">
+			update member
+			set member_password = #{member_password},
+				member_email = #{member_email},
+				member_phonenum = #{member_phonenum},
+				member_address = #{member_address},
+				member_point = #{member_point}
+			where member_id = #{member_id}
+		</update>
+		<delete id="deleteMember" parameterType="string">
+			delete from member where member_id = #{member_id}
+		</delete>
+		<select id="selectMember" parameterType="string" resultType="hwarang.artg.member.model.MemberVO">
+			select * from member where member_id = #{member_id}
+		</select>
+		<select id="selectAllMember" resultType="hwarang.artg.member.model.MemberVO">
+			select *from member
+		</select>
+		<select id="selectMember_name" parameterType="string" resultType="hwarang.artg.member.model.MemberVO">
+			select *from member where member_name = #{member_name}
+		</select>
+	</mapper>

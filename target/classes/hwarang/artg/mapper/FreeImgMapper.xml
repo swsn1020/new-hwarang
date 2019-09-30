@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hwarang.artg.mapper.FreeImgMapper">
+	<insert id="insertFile" parameterType="hwarang.artg.community.model.FreeImgVO">
+		insert into FREE_IMG 
+			(FREE_UUID, FREE_NUM, FREE_UPLOADPATH, FREE_FILENAME)
+		values (#{uuid}, #{freeNum}, #{uploadPath}, #{originName})
+	</insert>
+	<update id="updateFile" parameterType="hwarang.artg.community.model.FreeImgVO">
+		UPDATE FREE_IMG SET FREE_FILENAME = #{originName}
+		WHERE FREE_UUID = #{uuid}
+	</update>
+	<delete id="deleteFile" parameterType="string">
+		delete from FREE_IMG where FREE_UUID = #{uuid}
+	</delete>
+	<delete id="deleteFileByFNum" parameterType="int">
+		delete from FREE_IMG where FREE_NUM = #{freeNum}
+	</delete>
+	<select id="selectFile" parameterType="string" resultMap="fImgMap">
+		select * from FREE_IMG where FREE_UUID = #{uuid}
+	</select>
+	<select id="selectFilesByFNum" parameterType="int" resultMap="fImgMap">
+		select * from FREE_IMG where FREE_NUM = #{freeNum} order by IMG_REG_DATE ASC, FREE_UUID ASC
+	</select>
+	<select id="selectAllFiles" resultMap="fImgMap">
+		select * from FREE_IMG order by FREE_UUID ASC
+	</select>
+	<resultMap type="hwarang.artg.community.model.FreeImgVO" id="fImgMap">
+		<result column="FREE_UUID" property="uuid"/>
+		<result column="FREE_NUM" property="freeNum"/>
+		<result column="FREE_UPLOADPATH" property="uploadPath"/>
+		<result column="FREE_FILENAME" property="originName"/>
+		<result column="IMG_REG_DATE" property="regDate"/>
+	</resultMap>
+
+</mapper>

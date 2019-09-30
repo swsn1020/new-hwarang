@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hwarang.artg.mapper.OrderSellerMapper">
+<insert id="insertOrder" parameterType="hwarang.artg.community.model.OrderSellerVO">
+insert into order_seller
+		(order_seller_num,ticket_num,member_id,order_status)		
+	values(seq_order_seller.nextval,#{ticketnum},#{userid},#{status})	
+</insert>
+
+<update id="updateOrder" parameterType="hwarang.artg.community.model.OrderSellerVO">
+update order_seller
+	set order_status = #{status}
+	where order_seller_num = #{num}
+</update>
+<delete id="deleteOrder" parameterType="int">
+delete from order_seller where order_seller_num = #{num}
+</delete>
+
+<select id="selectOne" parameterType="int" resultMap="ordersellerMap">
+select * from order_seller where order_seller_num = #{num}
+</select>
+
+<select id="selectAll" resultMap="ordersellerMap">
+select * from  order_seller order by order_seller_num desc
+</select>
+<resultMap id="ordersellerMap" type="hwarang.artg.community.model.OrderSellerVO">
+<result column="order_seller_num" property="num"/>
+<result column="ticket_num" property="ticketnum"/>
+<result column="member_id" property="userid"/>
+<result column="order_status" property="status"/>
+<result column="order_purchase_date" property="purchaseDate"/>
+</resultMap>
+</mapper>
