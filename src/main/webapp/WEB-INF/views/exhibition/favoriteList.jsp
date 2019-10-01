@@ -15,7 +15,7 @@ $(function(){ //전체선택 체크박스 클릭
 				$("input[type=checkbox]").prop("checked",false); 
 			} 
 	});
-	$(".btn-primary").click(function(e) {
+	$("#deleteFav").click(function(e) {
 		if($("input[type=checkbox]:checked").length==0){
 			alert("삭제할 공연을 체크해주세요!");
 			e.preventDefault();
@@ -47,7 +47,7 @@ $(function(){ //전체선택 체크박스 클릭
 						</label>
 					</div></th>
 				<th></th>
-				<th><button type="submit" class="btn btn-primary text-right">선택 삭제</button></th>
+				<th><button type="submit" id="deleteFav" class="btn btn-primary text-right">선택 삭제</button></th>
 			</tr>
 		</thead>
 		<tbody>

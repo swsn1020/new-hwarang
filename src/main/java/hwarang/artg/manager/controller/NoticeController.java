@@ -179,12 +179,12 @@ public class NoticeController {
 		String url = "noticeList";
 		String msg = "";
 		String id = principal.getName();
-		System.out.println("id는"+id);
+//		System.out.println("id는"+id);
 //		System.out.println("로그인한 아이디: "+id);
 		MemberVO mem = memService.memberGetOne(id);
-		System.out.println(mem);
+//		System.out.println(mem);
 		String originPw = mem.getMember_password();
-		System.out.println("originPw"+originPw);
+//		System.out.println("originPw"+originPw);
 		NoticeVO notice = service.noticeGetOne(num);
 		if(notice != null && pwEncoder.matches(password, originPw)) {
 			//비밀번호 일치

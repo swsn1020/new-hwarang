@@ -56,7 +56,7 @@
 		update exhibition set exh_value = #{exh_value} where exh_seq = #{exh_seq}
 	</update>
 
-	<delete id="dele0te">
+	<delete id="delete">
 		delete exhibition where exh_seq = #{exh_seq}
 	</delete>
 
@@ -114,6 +114,18 @@
 	</select>
 	<select id="getExhPlace" resultType="string">
 		select DISTINCT exh_place from exhibition order by exh_place
+	</select>
+	
+	<select id="getPlaceList" resultType="hwarang.artg.exhibition.model.ExhibitionVO">
+		select DISTINCT exh_placeseq, exh_gpsy, exh_gpsx from exhibition where exh_area = #{area}
+	</select>
+
+	<select id="getPlaceByPseq" resultType="hwarang.artg.exhibition.model.ExhibitionVO">
+		select DISTINCT exh_place, exh_placeurl, exh_placeaddr from exhibition where exh_placeseq = #{exh_placeseq}
+	</select>
+
+	<select id="getListByPlace" resultType="hwarang.artg.exhibition.model.ExhibitionVO">
+		select * from exhibition where exh_placeseq = #{exh_placeseq}
 	</select>
 
 </mapper>

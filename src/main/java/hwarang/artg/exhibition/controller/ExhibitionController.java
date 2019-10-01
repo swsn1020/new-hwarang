@@ -74,28 +74,41 @@ public class ExhibitionController {
 		if(area==null || area=="") {
 			area = "서울";
 		}
-		List<ExhibitionVO> list = service.showList(area);
+		List<ExhibitionVO> list = service.showPlaceList(area);
 		List<String> yList = new ArrayList<String>();
 		List<String> xList = new ArrayList<String>();
-		List<Integer> sList = new ArrayList<Integer>();
+		List<String> pList = new ArrayList<String>();
 		for(int i =0;i<list.size();i++) {
 			String x = list.get(i).getExh_gpsx();				
 			String y = list.get(i).getExh_gpsy();
-			int s = list.get(i).getExh_seq();
+			String p = list.get(i).getExh_placeseq();
 			if(!x.equals("정보없음")) {
 				if(!y.equals("정보없음")) {
 					xList.add(x);
 					yList.add(y);
-					sList.add(s);
+					pList.add(p);
 				}
 			}
 		}
 		model.addAttribute("area",service.getExhArea());
 		model.addAttribute("xList", xList);
 		model.addAttribute("yList", yList);
-		model.addAttribute("sList", sList);
+		model.addAttribute("pList", pList);
 	}
 
+	@GetMapping(value = "/getPlaceInfo/{placeseq}", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
+	@ResponseBody
+	public ResponseEntity<ExhibitionVO> getPlace(@PathVariable("placeseq") String placeseq) {
+		System.out.println(placeseq);
+		return new ResponseEntity<>(service.showPlaceListByPseq(placeseq), HttpStatus.OK);
+	}
+	
+	@GetMapping(value = "/{placeseq}", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
+	@ResponseBody
+	public ResponseEntity<List<ExhibitionVO>> getExhibitionListByPlace(@PathVariable("placeseq") String placeseq) {
+		return new ResponseEntity<>(service.showListByPlace(placeseq), HttpStatus.OK); 
+	}
+	
 	@GetMapping("/view")
 	public void exhibitionDetail(Model model, int seq, Principal principal) throws Exception {
 		String id = principal.getName();
@@ -109,9 +122,11 @@ public class ExhibitionController {
 	
 	@GetMapping(value = "/{seq}", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
 	@ResponseBody
-	public ResponseEntity<ExhibitionVO> getExhibition(Model model, @PathVariable("seq") int seq) {
+	public ResponseEntity<ExhibitionVO> getExhibition(@PathVariable("seq") int seq) {
 		return new ResponseEntity<>(service.getOne(seq), HttpStatus.OK);
 	}
+	
+	
 	
 	@GetMapping("/recentlyView")
 	public void recentlyView(Model model, CriteriaDTO cri, Principal principal) {

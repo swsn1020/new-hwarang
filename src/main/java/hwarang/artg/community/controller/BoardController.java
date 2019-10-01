@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -25,8 +26,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import hwarang.artg.common.model.CriteriaDTO;
 import hwarang.artg.community.model.FreeBoardVO;
 import hwarang.artg.common.model.PageDTO;
+import hwarang.artg.common.model.ReplyPager;
 import hwarang.artg.community.service.FreeBoardService;
 import hwarang.artg.community.service.FreeImgService;
+import hwarang.artg.community.service.FreeReplyService;
 import net.coobird.thumbnailator.Thumbnails;
 
 @Controller
@@ -35,6 +38,9 @@ public class BoardController {
 	private static final String UPLOAD_PATH = "C:\\IMAGE\\free";
 	@Autowired
 	private FreeBoardService fservice;
+	
+	@Autowired
+	private FreeReplyService rservice;
 
 	@Autowired
 	private FreeImgService imgService;
@@ -50,7 +56,7 @@ public class BoardController {
 	}
 
 	@RequestMapping("/freeboardView")
-	public String showfreeboardView(Model model, int num,HttpServletRequest request, HttpServletResponse response) {
+	public String showfreeboardView(Model model, int num,HttpServletRequest request, HttpServletResponse response, @RequestParam(defaultValue = "1")int curPage) {
 		FreeBoardVO free = fservice.freeboardGetone(num);
 		Cookie [] cookies = request.getCookies();
 		Cookie targetCookie = null;
@@ -96,6 +102,11 @@ public class BoardController {
 			}
 			free = fservice.freeboardGetone(num);
 			model.addAttribute("fboard",free);
+			int fboardNum = num;
+			int count = rservice.getTotalReplies(fboardNum);
+			ReplyPager rPager = new ReplyPager(count,curPage);
+			model.addAttribute("rPager",rPager);
+			System.out.println(curPage);
 			return "/board/freeboardView";
 			
 		}

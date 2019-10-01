@@ -7,7 +7,7 @@ import lombok.Data;
 public class RecentlyViewVO {
 	private int exh_seq;
 	private String member_id;
-	private Date rec_viewdate;
+	private Date recently_date;
 	
 	private String exh_title;
 	private String exh_place;
