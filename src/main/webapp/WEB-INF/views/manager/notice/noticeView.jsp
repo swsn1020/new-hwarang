@@ -36,7 +36,7 @@
 			var category = $("#blockForm").find('input[name="category"]');
 			category.val("Notice_Board");
 			var blockMemId = $("#blockForm").find('input[name="blockMemId"]');
-			blockMemId.val('haddie');	//관리자의 경우 아이디 넣기(현재아이디)
+			blockMemId.val('');	//관리자의 경우 아이디 넣기(현재아이디)
 			var blockForm = document.blockForm;
 			var url = "../block/form";
 			window.open("", "Report", "width=400, height=500, top=300, left=300");
@@ -45,6 +45,7 @@
 			blockForm.target = "Report";
 			blockForm.submit();
 		});
+		
 	});
 	
 	//댓글 총 수 불러오는 함수 따로 만들기
@@ -118,14 +119,12 @@
 						var content = data.replies[i].content;
 					}
 					
-					
-					
 					//수정폼 (수정, 삭제는 본인이 작성한 글만)
 					var modiForm = $("<form></form>");
 					var modiTxt = $("<div id='modi"+i+"' class='collapse'>"+
 							"<input type='hidden' name='num' value='"+data.replies[i].num+"'>"+
 							"<label for='pw'>password</label><br><input type='password' name='pw' class='form-control'><br>"+
-							"<textarea class='form-control' rows='5' name='content'>"+data.replies[i].content+"</textarea></div>");
+							"<textarea class='form-control' rows='5' name='content'>"+content+"</textarea></div>");
 					//삭제폼 (수정, 삭제는 본인이 작성한 글만)
 					var delForm = $("<form></form>");
 					var delTxt = $("<div id='del"+i+"' class='collapse'>"+
@@ -154,6 +153,11 @@
 					//내가 쓴 글일 경우 신고 버튼 없음
 					var blockBtn = $("<button type='button' class='btn btn-link btn-sm' style='color: red;'> 신고 </button>");
 					tr.append($("<td style='width: 200px;''>").append(modiBtn).append(delBtn).append(blockBtn));
+					
+					if(blockStatus == 'true'){
+						modiBtn.attr("disabled", "disabled");
+					}
+					
 					
 					//현재 로그인 한 아이디와 작성자가 같은 경우 attr(visibility)
 					var currId = replyTable.closest("div").find("input[name='currId']").val();
@@ -297,14 +301,14 @@
 				<tr>
 					<td colspan="4">
 						<div style="text-align: center;">
-						<c:choose>
-							<c:when test="${notice.block eq true}">
-								<p>관리자에 의해 삭제처리된 게시글입니다.</p>
-							</c:when>
-							<c:otherwise>
-								<p>${notice.content }</p>
-							</c:otherwise>
-						</c:choose>
+							<c:choose>
+								<c:when test="${notice.block eq true}">
+									<p>관리자에 의해 삭제처리된 게시글입니다.</p>
+								</c:when>
+								<c:otherwise>
+									<p>${notice.content }</p>
+								</c:otherwise>
+							</c:choose>
 						</div>
 					</td>
 				</tr>

@@ -16,6 +16,10 @@ import hwarang.artg.manager.model.NoticeVO;
 import hwarang.artg.mapper.BlockStatusMapper;
 import hwarang.artg.mapper.NoticeMapper;
 import hwarang.artg.mapper.NoticeReplyMapper;
+import hwarang.artg.rrboard.model.ReviewBoardVO;
+import hwarang.artg.rrboard.model.ReviewReplyVO;
+import hwarang.artg.rrboard.service.ReviewBoardService;
+import hwarang.artg.rrboard.service.ReviewReplyService;
 
 @Service
 public class BlockStatusService {
@@ -27,6 +31,10 @@ public class BlockStatusService {
 	private FreeBoardService freeBoardService;
 	@Autowired
 	private FreeReplyService freeReplyService;
+	@Autowired
+	private ReviewBoardService reviewBoardService;
+	@Autowired
+	private ReviewReplyService reviewReplyService;
 	
 	
 	//신고 등록
@@ -125,6 +133,7 @@ public class BlockStatusService {
 				break;
 			case "Review" :
 				category = "리뷰게시판";
+				reviewBoardService.doBoardBlock("true", boardNum);
 				break;
 			}
 		}else {
@@ -138,17 +147,11 @@ public class BlockStatusService {
 				category = "자유게시판";
 				freeReplyService.doReplyBlock("true", boardNum);
 				break;
-			case "Party" :
-				category = "파티게시판";
-				break;
-			case "Ticket" :
-				category = "티켓게시판";
-				break;
 			case "Review" :
 				category = "리뷰게시판";
+				reviewReplyService.doReplyBlock("true", boardNum);
 				break;
 			}
-			noticeService.doNoticeReplyBlock("true", boardNum);
 		}
 	}
 	
@@ -176,14 +179,18 @@ public class BlockStatusService {
 		case "Free" :
 			category = "자유게시판";
 			break;
-		case "Party" :
-			category = "파티게시판";
-			break;
-		case "Ticket" :
-			category = "티켓게시판";
-			break;
 		case "Review" :
 			category = "리뷰게시판";
+			if(subCategory.equals("Board")) {
+				subCategory = "게시글";
+				ReviewBoardVO review = reviewBoardService.reviewboardGetOne(boardNum);
+				originContent = review.getReview_content();
+			}else if(subCategory.equals("Reply")) {
+				subCategory = "댓글";
+				System.out.println("댓글");
+				ReviewReplyVO reply = reviewReplyService.reviewreplyGetOne(boardNum);
+				originContent = reply.getReview_reply_content();
+			}
 			break;
 		}
 		

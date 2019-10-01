@@ -33,6 +33,7 @@ public class ReviewReplyController {
 	@RequestMapping("/replyView")
 	public List<ReviewReplyVO> showReplyView(int num) {
 		List<ReviewReplyVO> replyList = service.reviewreplyGetAll(num);
+		System.out.println(replyList);
 		return replyList;
 	}
 	@ResponseBody

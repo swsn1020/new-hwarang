@@ -57,7 +57,7 @@ function removeAll(e){
 		<h3>신고게시판</h3>
 		<div class="form-group">
 			<form id="reportForm" action="reportWrite" method="post" enctype="multipart/form-data">
-				<input type="hidden" name="memId" value="<sec:authentication property="principal.Username"/>">
+				<input type="text" name="memId" value="<sec:authentication property="principal.Username"/>">
 				<div class="table-responsive">
 					<table class="table">
 						<tr>
@@ -69,9 +69,7 @@ function removeAll(e){
 									<option value="Free">자유게시판</option>
 									<option value="Review">후기게시판</option>
 									<option value="Exhibition">전시게시판</option>
-									<option value="Ticket">티켓나눔게시판</option>
 									<option value="Funding">펀딩게시판</option>
-									<option value="Party">파티원게시판</option>
 								</select>
 								<select id="subCategory" name="subCategory" class="form-control col-md-3" style="display: inline-block;">
 									<option value="default">--분류--</option>

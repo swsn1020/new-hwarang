@@ -3,6 +3,8 @@ package hwarang.artg.mapper;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
+
 import hwarang.artg.common.model.CriteriaDTO;
 import hwarang.artg.rrboard.model.ReviewBoardVO;
 
@@ -23,4 +25,6 @@ public interface ReviewBoardMapper {
 	
 	//search
 	
+	//게시글 block 처리
+	public int updateBlock(@Param("block")String block, @Param("num") int num);
 }

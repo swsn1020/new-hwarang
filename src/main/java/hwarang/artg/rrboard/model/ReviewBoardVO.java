@@ -26,7 +26,14 @@ public class ReviewBoardVO {
 	private int review_recomm_count;
 	private int review_disrecomm_count;
 	private int reply_count;
-
+	private String block;
+	public String getBlock() {
+		return block;
+	}
+	public void setBlock(String block) {
+		this.block = block;
+	}
+	
 	public int getReply_count() {
 		return reply_count;
 	}
