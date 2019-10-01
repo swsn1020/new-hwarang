@@ -69,16 +69,15 @@
 						<td style="text-align: center;">${regDate }</td>
 						<c:choose>
 							<c:when test="${qna.reply  eq '미답변'}">
-								<td style="color: red;"> 미답변 </td>
+								<td style="color: red; text-align: center;">미답변</td>
 							</c:when>
 							<c:otherwise>
-								<td>답변완료</td>
+								<td style="text-align: center;">답변완료</td>
 							</c:otherwise>
 						</c:choose>
 					</tr>
 			</c:forEach>
 		</table>
-		
 		
 		<!-- Pagination -->
 		<div class="container">
@@ -96,5 +95,6 @@
 				</li>
 			</ul>
 		</div>
+		
 	</div>
 <%@ include file="../../layout/bottom.jsp"%>

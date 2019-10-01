@@ -4,7 +4,7 @@
 
 //공지사항, REPORT, FAQ, QNA 게시판  form 요소들 유효성 검사
 function valCheck(formId){
-	//form 요소 선택하기
+	//form 요소 선택하기 (form.find("input[name='title'").length && )
 	//유효성 검사가 제대로 끝나면 true, 아니면 false 반환
 	var form = $("#"+formId);
 	if(form.find("input[name='title'").val().trim()==''){

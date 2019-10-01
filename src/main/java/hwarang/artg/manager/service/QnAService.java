@@ -106,9 +106,14 @@ public class QnAService {
 		if(dao.deleteQnA(num) > 0) {
 			//포함된 파일 모두 삭제
 			System.out.println("qna삭제요청");
-			if(imgDao.deleteFileByQNum(num)>0) {
-				System.out.println("파일 삭제 성공");
-				return true;
+			if(imgDao.selectFilesByQNum(num) != null) {
+				if(imgDao.deleteFileByQNum(num)>0) {
+					System.out.println("파일 삭제 성공");
+					return true;
+				}else {
+					System.out.println("첨부파일 없음");
+					return true;
+				}
 			}
 		}
 		System.out.println("QnA 삭제 실패");

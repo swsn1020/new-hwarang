@@ -383,7 +383,7 @@
 	<div class="container">
 		<form id="replyForm">
 			<input type="hidden" name="boardNum" value="${notice.num}">
-			<input type="text" name="memId" value='<sec:authentication property="principal.Username"/>'>
+			<input type="hidden" name="memId" value='<sec:authentication property="principal.Username"/>'>
 			<table class="table">
 				<tr>
 					<th>댓글쓰기</th>

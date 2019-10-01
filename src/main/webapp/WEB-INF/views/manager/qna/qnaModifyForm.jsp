@@ -65,28 +65,26 @@ function removeAll(e){
     }
 }
 </script>
-
 	<div class="container">
+		<h3>질문 수정</h3>
 		<div class="form-group">
 		<form id="qnaForm" action="qnaModify" method="post" enctype="multipart/form-data">
-			<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
 			<input type="hidden" name="num" value="${qna.num }">
 			<!-- 	write한사람이랑 같아야, 로그인한 사람과 일치		<input type="hidden" name="memId" value="haddie"> -->
 			<table class="table">
 				<tr>	
 					<!-- 문의 종류 -->
-					<th>문의분류</th>
+					<th style="width: 17%">문의분류</th>
 					<td>
-						<select id="category" name="category" class="form-control col-md-3" disabled="disabled" style="display: inline-block;">
+						<select id="category" name="category" class="form-control col-md-3" style="display: inline-block;"  onchange="doChange(this, 'subCategory')">
 							<option value="info">고객정보</option>
 							<option value="order">주문</option>
 							<option value="Board">게시판</option>
 							<option value="other">기타</option>
 						</select>
-						<select id="subCategory" name="subCategory" class="form-control col-md-3" disabled="disabled" style="display: inline-block;">
+						<select id="subCategory" name="subCategory" class="form-control col-md-3" style="display: inline-block;">
 							<option value="modiInfo">정보수정</option>
 							<option value="delInfo">회원탈퇴</option>
-							<option value="point">포인트</option>
 							<option value="pay">결제</option>
 							<option value="cancel">취소</option>
 							<option value="change">변경</option>
@@ -111,7 +109,7 @@ function removeAll(e){
 				</tr>
 				<tr>
 					<td colspan="2">
-						<textarea class="form-control" rows="10" name="content" style="resize: none;">${qna.content }</textarea>
+						<textarea class="form-control" rows="15" name="content" style="resize: none;">${qna.content }</textarea>
 					</td>
 				</tr>
 				<tr>
@@ -128,9 +126,9 @@ function removeAll(e){
 					</td>
 				</tr>
 			</table>
-			<div class="btn-div" style="text-align: center;">
-				<input type="submit" class="btn btn-outline-primary" value="수정">
-				<input type="button" class="btn btn-outline-info" value="목록" onclick="location.href='qnaListForUser?memId=${qna.memId}'">
+			<div class="btnGroup" style="text-align: center;"> 
+				<input type="submit" class="btn btn-outline-primary btn-sm" value="수정">
+				<input type="button" class="btn btn-outline-dark btn-sm" value="목록" onclick="location.href='qnaListForUser?memId=${qna.memId}'">
 			</div>
 		</form>
 		</div>

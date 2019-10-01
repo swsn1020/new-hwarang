@@ -270,7 +270,7 @@ $(function(){
             <div class="left-col col-lg-6 d-flex align-items-center justify-content-between">
               <div class="project-title d-flex align-items-center">
                 <div class="text">
-                  <h3 class="h4"><a href="/qna/qnaList" style="color: none;">Q&amp;A</a></h3><small>최근 등록된 문의</small>
+                  <h3 class="h4"><a href="/qna/qnaListForManager" style="color: none;">Q&amp;A</a></h3><small>최근 등록된 문의</small>
                 </div>
               </div>
               <div class="project-date"><span class="hidden-sm-down"><%=date %></span></div>

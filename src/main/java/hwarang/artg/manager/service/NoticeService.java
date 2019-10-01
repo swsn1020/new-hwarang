@@ -36,7 +36,8 @@ public class NoticeService {
 	
 	public boolean noticeRemove(int num) {
 		if(dao.deleteNotice(num) > 0) {
-			return true;
+			System.out.println("해당 notice 삭제 성공");
+				return true;
 		}
 		return false;
 	}
