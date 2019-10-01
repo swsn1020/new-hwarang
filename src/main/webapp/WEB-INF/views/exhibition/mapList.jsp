@@ -50,6 +50,9 @@
 		    		      infowindow.open(map, marker);
 		    		});
 				});
+				getPlaceList(p, function(){
+					
+				});
 
 		};
 		
@@ -80,8 +83,8 @@
 			}
 		});
 	}
-	function getList(p, callback, error) {
-		$.getJSON("/exhReplies/"+p+".json", function(data) {
+	function getPlaceList(p, callback, error) {
+		$.getJSON("/exhibition/placeList/"+p+".json", function(data) {
 			if(callback){
 				callback(data);
 			}

@@ -95,13 +95,13 @@ public class ExhibitionController {
 	@GetMapping(value = "/getPlaceInfo/{placeseq}", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
 	@ResponseBody
 	public ResponseEntity<ExhibitionVO> getPlace(@PathVariable("placeseq") String placeseq) {
-		System.out.println(placeseq);
 		return new ResponseEntity<>(service.showPlaceListByPseq(placeseq), HttpStatus.OK);
 	}
 	
-	@GetMapping(value = "/{placeseq}", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
+	@GetMapping(value = "/placeList/{placeseq}", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
 	@ResponseBody
 	public ResponseEntity<List<ExhibitionVO>> getExhibitionListByPlace(@PathVariable("placeseq") String placeseq) {
+		System.out.println(placeseq+11);
 		return new ResponseEntity<>(service.showListByPlace(placeseq), HttpStatus.OK); 
 	}
 	
