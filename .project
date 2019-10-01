@@ -1,18 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-	<name>new-hwarang</name>
-=======
-<<<<<<< HEAD
-=======
->>>>>>> refs/remotes/origin/jm
-=======
->>>>>>> branch 'master' of https://github.com/swsn1020/new-hwarang.git
-=======
->>>>>>> refs/remotes/origin/geun2
 	<name>new-hwarang</name>
 	<comment></comment>
 	<projects>
@@ -29,79 +16,7 @@
 			</arguments>
 		</buildCommand>
 		<buildCommand>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-			<name>org.eclipse.wst.validation.validationbuilder</name>
-			<arguments>
-			</arguments>
-		</buildCommand>
-		<buildCommand>
-			<name>org.springframework.ide.eclipse.core.springbuilder</name>
-			<arguments>
-			</arguments>
-		</buildCommand>
-		<buildCommand>
-			<name>org.springframework.ide.eclipse.boot.validation.springbootbuilder</name>
-			<arguments>
-			</arguments>
-		</buildCommand>
-		<buildCommand>
-=======
->>>>>>> refs/remotes/origin/geun2
 			<name>org.eclipse.m2e.core.maven2Builder</name>
-<<<<<<< HEAD
-=======
-			<name>org.eclipse.m2e.core.maven2Builder</name>
-			<arguments>
-			</arguments>
-		</buildCommand>
-		<buildCommand>
-			<name>org.eclipse.wst.validation.validationbuilder</name>
-			<arguments>
-			</arguments>
-		</buildCommand>
-		<buildCommand>
-			<name>org.springframework.ide.eclipse.core.springbuilder</name>
-			<arguments>
-			</arguments>
-		</buildCommand>
-		<buildCommand>
-			<name>org.springframework.ide.eclipse.boot.validation.springbootbuilder</name>
->>>>>>> refs/remotes/origin/master
-			<arguments>
-			</arguments>
-		</buildCommand>
-	</buildSpec>
-	<natures>
-		<nature>org.springframework.ide.eclipse.core.springnature</nature>
-		<nature>org.eclipse.m2e.core.maven2Nature</nature>
-		<nature>org.eclipse.jdt.core.javanature</nature>
-		<nature>org.eclipse.wst.common.project.facet.core.nature</nature>
-		<nature>org.eclipse.wst.common.modulecore.ModuleCoreNature</nature>
-=======
-	<name>hwarang</name>
->>>>>>> refs/remotes/origin/master
-	<comment></comment>
-	<projects>
-	</projects>
-	<buildSpec>
-		<buildCommand>
-			<name>org.eclipse.wst.common.project.facet.core.builder</name>
-			<arguments>
-			</arguments>
-		</buildCommand>
-		<buildCommand>
-			<name>org.eclipse.jdt.core.javabuilder</name>
-=======
-			<name>org.eclipse.m2e.core.maven2Builder</name>
->>>>>>> refs/remotes/origin/jm
-=======
-			<name>org.eclipse.m2e.core.maven2Builder</name>
->>>>>>> branch 'master' of https://github.com/swsn1020/new-hwarang.git
-=======
->>>>>>> refs/remotes/origin/geun2
 			<arguments>
 			</arguments>
 		</buildCommand>
@@ -127,19 +42,5 @@
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>org.eclipse.wst.common.project.facet.core.nature</nature>
 		<nature>org.eclipse.wst.common.modulecore.ModuleCoreNature</nature>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-		<nature>org.eclipse.wst.jsdt.core.jsNature</nature>
->>>>>>> refs/remotes/origin/master
->>>>>>> refs/remotes/origin/master
-=======
->>>>>>> refs/remotes/origin/jm
-=======
->>>>>>> branch 'master' of https://github.com/swsn1020/new-hwarang.git
-=======
->>>>>>> refs/remotes/origin/geun2
 	</natures>
 </projectDescription>

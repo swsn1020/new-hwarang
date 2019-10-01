@@ -20,4 +20,7 @@ public interface ExhibitionMapper {
 	public List<String> getExhRealmName();
 	public List<String> getExhArea();
 	public List<String> getExhPlace();
+	public List<ExhibitionVO> getPlaceList(String area);
+	public ExhibitionVO getPlaceByPseq(String placeseq);
+	public List<ExhibitionVO> getListByPlace(String placeseq);
 }
