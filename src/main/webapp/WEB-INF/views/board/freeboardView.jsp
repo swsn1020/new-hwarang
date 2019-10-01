@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <title>Insert title here</title>
 <%@ include file="../layout/left.jsp"%>
+
 <script type="text/javascript">
 $(function() {	//문서가 로딩되면 실행할 함수
 		/*댓글 목록 그리기 */
@@ -94,8 +95,7 @@ function replyList(num){
 				if(rPager.curPage == rPager.totalPage){
 					$("#right").attr("class", "page-item disabled");
 				}
-				console.log(data);
-				
+
 				for(var i in data.replyTable){
 				//등록일자 얻어오기
 				var upDateDate = new Date(data.replyTable[i].upDateDate);
@@ -112,41 +112,75 @@ function replyList(num){
 				
 				
 				var tr = $("<tr>");
-				var num = data.replyTable[i].free_reply_num;
-				var userid = data.replyTable[i].userid;
-				var content = data.replyTable[i].content;
+// 				var num = data.replyTable[i].free_reply_num;
+// 				var userid = data.replyTable[i].userid;
+// 				var content = data.replyTable[i].content;
+			
+				//수정폼
+				var modiForm = $("<form></form");
+				var modiText = $("<div id='modi"+i+"'class='collapse'><input type='hidden' name='num' value='"+data.replyTable[i].num+"'><input type='hidden' name='userid' value='"+data.replyTable[i].userid+"'><br><textarea class='form-control' name='content' rows='5'>"+data.replyTable[i].content + "</textarea></div>");
 				
-				var modiText = $("<div id='mod"+i+"' class='collapse form-group'><input type='hidden' name='num' value='"+num+"'><input type='hidden' name='userid' value='"+userid+"'><br><textarea class='form-control' name='content' rows='3' cols='80'>"+content + "</textarea></div>");
+				//삭제폼
+				var delForm = $("<form></form>");
+				var delText = $("<div id='del"+i+"' class='collapse'><input type='hidden' name='num' value='"+data.replyTable[i].num+"'></div>");
 				
-				var remvText = $("<div id='modd"+i+"' class='collapse form-group'><input type='hidden' name='num' value='"+num+"'><input type='hidden' name='userid2' value='"+userid+"'></div>");
 				
-				var rbtnModify = $("<button type='button' class='btn btn-link' data-toggle='collapse' data-target='#mod"+i+"'>M</button>");
+				//수정 확인버튼
+				var rbtnModify = $("<button type='button' class='btn btn-link'>수정</button>");
+				modiText.append(rbtnModify);
+				modiForm.append(modiText);
 				
-				var rbtnRemove = $("<button type='button' class='btn btn-link' data-toggle='collapse' data-target='#modd"+i+"'>D</button>");
+				//삭제 확인버튼				
+				var rbtnRemove = $("<button type='button' class='btn btn-link'>ok</button>");
+				delText.append(rbtnRemove);
+				delForm.append(delText);
+				
+				var tr = $("<tr>");
+				
+				tr.append($("<td>" +rnum+ "</td>"));
+				rnum++;
+				tr.append($("<td><a href='#'>"+data.replyTable[i].userid+"</a><br>"+finalDate+"</td>"));
+				tr.append($("<td>").text(data.replyTable[i].content).append(modiForm));
+				tr.append($("<td>").append(delForm));
+				
+				var modiBtn = $("<button type='button' class='btn btn-link btn-sm' data-toggle='collapse' data-target='#modi"+i+"'> 수정 </a>");
+				var delBtn = $("<button type='button' class='btn btn-link btn-sm' data-toggle='collapse' data-target='#del"+i+"'> 삭제 </a>");
+				tr.append($("<td style='width: 200px;''>").append(modiBtn).append(delBtn));
+				//disabled 설정하기
+				
+				
+				var currId = table.closest("div").find("input[name='currId']").val();
+//					alert(currId);
+				if(currId != data.replyTable[i].userid){
+					console.log("아이디 일치하지 않음");
+					modiBtn.css("display", "none");
+					delBtn.css("display", "none");
+				}else{
+					console.log("아이디 일치");
+					modiBtn.css("display", "true");
+					delBtn.css("display", "true");
+				}
 
-				var form = $("<form action='#' id='modify'></form>");
-				var form2 = $("<form action='#' id='remove'></form>");
-				var btnSubmit = $("<button type='button' class='btn btn-link' id='btnModify'>ok</button>");
-				var btnSubmit2 = $("<button type='button' class='btn btn-link' id='btnRemove'>ok</button>");
-				// btnSubmit을 on.click 했을때 url로 요청을 보내서 컨트롤러와 연결.
 				
-				//신고버튼
-				var blockBtn = $("<button type='button' class='btn btn-link btn-sm' style='color: red;'> 신고 </button>");
-				
-				$("<td>").text(data.replyTable[i].userid).appendTo(tr);
-				$("<td>").text(data.replyTable[i].content)
-					.append(form.append(modiText.append(btnSubmit)))
-					.appendTo(tr);
-				$("<td>").append(form2.append(remvText.append(btnSubmit2)))
-					.appendTo(tr);
-				$("<td>").text(finalDate)
-				.appendTo(tr);
-				$("<td>").append(rbtnModify).append(rbtnRemove)
-				.appendTo(tr);
-				//신고버튼 붙이기 확인 필요!
-				tr.append(blockBtn);
-// 				tr.appendTo(table);
-			$("#btnModify").on("click",function(){
+				modiBtn.on("click", function(){
+					var delBtn = $(this).next();
+					if (delBtn.attr('disabled') == 'disabled') {
+						delBtn.removeAttr('disabled');
+					} else {
+						delBtn.attr('disabled', 'true');
+					}
+				});
+				delBtn.on("click", function(){
+					var modiBtn = $(this).prev();
+					if (modiBtn.attr('disabled') == 'disabled') {
+						modiBtn.removeAttr('disabled');
+					} else {
+						modiBtn.attr('disabled', 'true');
+					}
+				});
+			
+		    //수정확인
+			rbtnModify.on("click",function(){
 				var d = $(this).closest("form").serialize();			
 				$.ajax({
 						url : "${contextPath}/reply/modifyReply",
@@ -164,11 +198,9 @@ function replyList(num){
 				});
 				return false;
 			});
-			
-			$("#btnRemove").on("click",function(){
-// 				var d = $("#remove").serialize();
-				var d = $(this).closest("form2").serialize();
-				alert("test");
+			//삭제확인
+			rbtnRemove.on("click",function(){
+				var d = $(this).closest("form").serialize();
 				$.ajax({
 					url : "${contextPath}/reply/removeReply",
 					type : "post",
@@ -190,20 +222,22 @@ function replyList(num){
 	},
 	error: function(){
 		alert("list 오류");
-	}
-			
+	}		
 	});
 }
 </script>
 	<fmt:formatDate value="${fboard.regDate }" var="regDate" pattern="yyyy-MM-dd"/>
-<div class="container">
+		<div class="container">
 			<tr>
 				<td>
+				<input type="button" class="btn btn-primary" value="목록" onclick="location.href='freeboard'">
+				<input type="hidden" value="<sec:authentication property="principal.Username" var="id"/>">
+				<c:if test="${id eq fboard.userid}">			
 				<input type="button" class="btn btn-primary" value="수정" onclick="location.href='modify?num=${fboard.num }'"> 
 				<input type="button" class="btn btn-primary" value="삭제" onclick="location.href='remove?num=${fboard.num }'"> 
-				<input type="button" class="btn btn-primary" value="목록" onclick="location.href='freeboard'">
 				<input type="button" class="btn btn-primary" value="새글쓰기" onclick="location.href='register'">
 				<button id="btn-block" class="btn btn-outline-danger btn-sm">신고</button>
+				</c:if>
 				</td>
 			</tr>
 	<div class="table-responsive">
@@ -213,13 +247,13 @@ function replyList(num){
 				<td>${fboard.title}</td>
 			</tr>
 			<tr>
-				<th>작성자</th>	
-				<td>${fboard.userid}</td>
-			</tr>
-			<tr>
-				<td colspan="2">
-				<div style="display: inline-block;">작성일&nbsp; ${regDate } </div>&nbsp;
-						<div id="readCnt" style="display: inline-block;">조회수&nbsp; ${fboard.readCount }</div>
+				<td colspan="2">		
+				<div class="article_writer">
+				${fboard.userid} <span class="bar2">|</span>
+				<div id="readCnt" style="display: inline-block;">조회 ${fboard.readCount }</div>
+				<span class="bar2">|</span>
+				&nbsp; ${regDate}
+				</div>
 				</td>
 			</tr>
 			<tr>
@@ -252,6 +286,12 @@ function replyList(num){
 	
 	<!-- 댓글 목록 div -->
 	<div class="container">
+		<sec:authorize access="isAnonymous()">
+			<input type="hidden" name="currId" value="anonymous"/>
+		</sec:authorize>	
+		<sec:authorize access="isAuthenticated()">
+			<input type="hidden" name="currId" value="<sec:authentication property="principal.username"/>">
+		</sec:authorize>
 		<table  class="table table-hover" id="replyTable">
 			<thead></thead>
 		</table>
@@ -283,10 +323,9 @@ function replyList(num){
 			<input type="hidden" name="boardNum" value="${fboard.num}">
 			<table class="table">
 				<tr>
-					<th>아이디</th>
-					<td><input type="text" name="userid"></td>
-				</tr>
-				<tr>
+					<td>
+						<input type="hidden" name="userid" value="${fboard.userid}">
+					</td>
 					<th>내용</th>
 					<td><textarea rows="3" cols="30" name="content"></textarea></td>
 					<td>

@@ -1,5 +1,6 @@
 package hwarang.artg.community.controller;
 
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,7 +34,8 @@ public class ReplyController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public boolean registerfreeReply(FreeReplyVO freereply) {
+	public boolean registerfreeReply(FreeReplyVO freereply,Principal principal,Model model) {
+		model.addAttribute("principal",principal);
 		return freereplyservice.freereplyRegister(freereply);
 	}
 	@ResponseBody
@@ -48,7 +50,8 @@ public class ReplyController {
 	}
 	@ResponseBody
 	@RequestMapping(value = "/all", method = RequestMethod.GET)
-	public Map<String,Object> getfreeReplyList(@RequestParam("fboardNum")int fboardNum, @RequestParam(defaultValue = "1")int curPage, Model model) {
+	public Map<String,Object> getfreeReplyList(@RequestParam("fboardNum")int fboardNum, @RequestParam(defaultValue = "1")int curPage, Model model,Principal principal) {
+		model.addAttribute("principal",principal);
 		Map<String,Object> rMap = new HashMap<String,Object>();
 		int count = freereplyservice.getTotalReplies(fboardNum);
 		ReplyPager rPager = new ReplyPager(count, curPage);

@@ -37,6 +37,12 @@
 .star {
 	color: #ffae00;
 }
+.article_writer {
+    position: relative;
+    clear: both;
+    padding: 8px 8px 9px 17px;
+    margin-bottom: 20px;
+    z-index: 11;
 </style>
 </head>
 <body>
