@@ -2,50 +2,51 @@ ${mem }<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncod
 <title>화랑-신고게시판</title>
 <%@ include file="../../layout/left.jsp" %>
 <style>
-	.container {
-		margin: 10px;
-		padding: 15px;
+	.container{
+		margin: 10px 0px;
+		padding: 3px 0px;
+	}
+	th {
+		text-align: center;
 	}
 </style>
 	<div class="container">
-		<h3 style="text-align: center;">신고게시판</h3> <br>
-			<div class="table-responsive">
-			<table class="table table-hover">
+		<h3>신고게시판</h3>
+		<div class="buttondiv" style="text-align: center; float: right; margin-bottom: 10px;">
+			<button type="button" class="btn btn-outline-secondary btn-sm" onclick="location.href='reportWrite'">신고글 작성</button>
+		</div>
+		<table class="table table-hover">
 			<thead>
 				<tr>
 					<th>번호</th>
 					<th>제목</th>
 					<th>작성자</th>
 					<th>등록일</th>
-					<th>답변상태</th>
+					<th>처리상태</th>
 				</tr>
-				</thead>
-				<c:forEach items="${reportList }" var="report">
+			</thead>
+			<c:forEach items="${reportList }" var="report">
 				<fmt:formatDate value="${report.regDate }" var="regDate" pattern="yyyy-MM-dd"/>
 				<tr>
-					<td>${report.num }</td>
+					<td style="text-align: center;">${report.num }</td>
 					<td>
 						<a href="reportView?num=${report.num }">${report.title }</a>
 						<span><i class="fa fa-lock fa-sm"></i></span>
 					</td>
-					<td>${report.memId }</td>
-					<td>${regDate }</td>
+					<td style="text-align: center;">${report.memId }</td>
+					<td style="text-align: center;">${regDate }</td>
 					<c:choose>
 						<c:when test="${report.reply eq '미해결' || report.reply eq null }">
-							<td style="color: red;">처리 중</td>
+							<td style="color: red; text-align: center;">처리 중</td>
 						</c:when>
 						<c:otherwise>
-							<td style="color: black;">처리 완료</td>
+							<td style="text-align: center;">처리 완료</td>
 						</c:otherwise>
 					</c:choose>
 				</tr>
-				</c:forEach>
-			</table>
-			</div>
-		</div>
-		<div class="buttondiv" align="center">
-			<button type="button" class="btn btn-outline-secondary" onclick="location.href='reportWrite'">글 쓰기</button>
-		</div>
+			</c:forEach>
+		</table>
+	</div>
 		
 		<!-- Pagination -->
 		<div class="container">

@@ -298,7 +298,7 @@
 					<td colspan="4">
 						<div style="text-align: center;">
 						<c:choose>
-							<c:when test="${notice.block eq 'true'}">
+							<c:when test="${notice.block eq true}">
 								<p>관리자에 의해 삭제처리된 게시글입니다.</p>
 							</c:when>
 							<c:otherwise>
@@ -341,7 +341,9 @@
 	
 	<div class="btnGroup" style="text-align: center;">
 		<button onclick="location.href='noticeList'" class="btn btn-outline-dark btn-sm">목록</button>
-		<button id="btn-block" class="btn btn-outline-danger btn-sm">신고</button>
+		<c:if test="${notice.block != true}">
+			<button id="btn-block" class="btn btn-outline-danger btn-sm">신고</button>
+		</c:if>
 	</div>
 	<br>
 	

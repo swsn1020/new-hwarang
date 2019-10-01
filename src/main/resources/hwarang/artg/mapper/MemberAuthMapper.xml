@@ -21,4 +21,7 @@
 		<select id="selectAllMember_Auth" resultType="hwarang.artg.member.model.MemberAuthVO">
 			select *from member_auth
 		</select>
+		<select id="selectMemberAuthsById" parameterType="string" resultType="string">
+			select MEMBER_AUTH from member_auth where member_id = #{member_id}
+		</select>
 	</mapper>

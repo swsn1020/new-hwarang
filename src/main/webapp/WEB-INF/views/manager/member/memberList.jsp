@@ -52,7 +52,7 @@ $(function(){
 				</tr>
 			</thead>
 			<tbody>
-				<c:set var="rnum" value="${pageMaker.total - ((pageMaker.cri.pageNum-1)*12)}"/>
+				<c:set var="rnum" value="${pageMaker.total - ((pageMaker.cri.pageNum-1)*10)}"/>
 				<c:forEach items="${memberList }" var="member" varStatus="vs">
 					<fmt:formatDate value="${member.member_reg_date }" var="regDate" pattern="yyyy-MM-dd"/>
 					<tr>

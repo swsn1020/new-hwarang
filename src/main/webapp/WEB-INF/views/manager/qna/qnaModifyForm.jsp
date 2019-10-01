@@ -74,9 +74,9 @@ function removeAll(e){
 			<table class="table">
 				<tr>	
 					<!-- 문의 종류 -->
-					<th style="width: 17%">문의분류</th>
+					<th style="width: 17%">문의 분류</th>
 					<td>
-						<select id="category" name="category" class="form-control col-md-3" style="display: inline-block;"  onchange="doChange(this, 'subCategory')">
+						<select id="category" name="category" class="form-control col-md-3" style="display: inline-block;" onchange="doChange(this, 'subCategory')">
 							<option value="info">고객정보</option>
 							<option value="order">주문</option>
 							<option value="Board">게시판</option>
@@ -115,14 +115,14 @@ function removeAll(e){
 				<tr>
 					<th>파일첨부</th>
 					<td>
-							<c:forEach items="${qnaImgList }" var="qnaImg">
-								<div>
-									${qnaImg.originName }
-									<a href="#this" name="fileDeleteBtn" class="btn" data-uuid="${qnaImg.uuid }">삭제</a>
-								</div>
-							</c:forEach>
-							<!-- 파일 추가하기 -->
-							<p style="margin: 5px;"><input type="file" name="file" multiple="multiple"></p>
+						<c:forEach items="${qnaImgList }" var="qnaImg">
+							<div>
+								${qnaImg.originName }
+								<a href="#this" name="fileDeleteBtn" class="btn" data-uuid="${qnaImg.uuid }">삭제</a>
+							</div>
+						</c:forEach>
+						<!-- 파일 추가하기 -->
+						<p style="margin: 5px;"><input type="file" name="file" multiple="multiple"></p>
 					</td>
 				</tr>
 			</table>

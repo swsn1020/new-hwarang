@@ -42,10 +42,6 @@
 		text-align: center;
 	}
 </style>
-	<!-- 관리자에게만 보여질 1:1 문의 페이지
-			행 눌렀을 때 내용+파일 보여지고 답변하기 모달창 띄우기
-			++ 마이페이지에서 내가쓴 게시물 qnaView는 따로 만들기
-	 -->
 	<div class="container" style="padding-left: 50px; padding-right: 50px;">
 		<h3>관리자-1:1문의현황</h3>
 		<table class="table table-hover">

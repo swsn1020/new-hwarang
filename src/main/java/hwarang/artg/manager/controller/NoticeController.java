@@ -31,11 +31,11 @@ import hwarang.artg.member.service.MemberService;
 @RequestMapping("/notice")
 public class NoticeController {
 	@Autowired
-	private PasswordEncoder pwEncoder;
-	@Autowired
 	private NoticeService service;
 	@Autowired
 	private MemberService memService;
+	@Autowired
+	private PasswordEncoder pwEncoder;
 	
 	@RequestMapping("/noticeList")
 	public String showNoticeList(CriteriaDTO cri, Model model) {

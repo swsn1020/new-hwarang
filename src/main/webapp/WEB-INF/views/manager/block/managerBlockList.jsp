@@ -3,9 +3,8 @@
 <%@ include file="../../layout/left.jsp" %>
 <script type="text/javascript">
 	$(function(){
-		$("#blocks tr td[name='final']").css('color', 'red');
+		
 	});
-
 
 	function replyRegister(modalId){
 		var blockNum = $("#"+modalId).find('input').val();
@@ -31,12 +30,21 @@
 		});
 	}
 </script>
-	<div class="container">
-		<h3>전체 신고상황</h3>
+<style>
+	.container{
+		margin: 10px 0px;
+		padding: 3px 0px;
+	}
+	table th, td {
+		text-align: center;
+	}
+</style>
+	<div class="container" style="padding-left: 50px; padding-right: 50px;">
+		<h3>TOTAL BLOCK LIST</h3>
 		<table class="table table-hover" id="blocks">
 			<thead>
 				<tr>
-					<th>번호</th>
+					<th>신고번호</th>
 					<th>게시판</th>
 					<th>게시글번호</th>
 					<th>작성자</th>
@@ -56,8 +64,7 @@
 						<c:when test="${block.reply eq '미확인' }">
 							<!-- 	<td>미답변</td>  onclick="show(this);"-->
 							<td id="final">
-								<button type="button" id="btn-reply" class="btn btn-outline-primary btn-sm"
-									data-toggle="modal" data-target="#replyModal${vs.index }">답변하기</button>
+								<button type="button" id="btn-reply" class="btn btn-outline-danger btn-sm"	data-toggle="modal" data-target="#replyModal${vs.index }">답변하기</button>
 							</td>
 						</c:when>
 						<c:otherwise>
@@ -71,21 +78,31 @@
 								<div class="modal-content">
 									<!-- Modal Header -->
 									<div class="modal-header">
-										<h1 class="modal-title">답변작성</h1>
+										<h2 class="modal-title">답변작성</h2>
 										<button type="button" class="close" data-dismiss="modal">×</button>
 									</div>
 									<!-- Modal body -->
 									<div class="modal-body">
-										<div style="margin: 10px;">${block.content}<br></div>
-										<div>
-											<textarea class="form-control" name="reply" id="reply" rows="5" style="resize: none;">${block.reply }</textarea>
-										</div>
+										<table class="table">
+											<tr>
+												<th style="width: 25%;">신고사유</th>
+												<td>
+													<div style="margin: 10px;">${block.content}</div>
+												</td>
+											</tr>
+											<tr>
+												<th>처리 메세지</th>
+												<td>
+													<textarea class="form-control" name="reply" id="reply" rows="5" style="resize: none;">${block.reply }</textarea>
+												</td>
+											</tr>
+										</table>
 									</div>
 									<!-- Modal footer -->
 									<div class="modal-footer">
 										<input type="hidden" id="bsNum" value="${block.num }">
-										<button type="button" class="btn btn-outline-primary" onclick="replyRegister('replyModal${vs.index }');">답변등록</button>
-										<button type="button" class="btn btn-outline-danger" data-dismiss="modal">Close</button>
+										<button type="button" class="btn btn-outline-primary btn-sm" onclick="replyRegister('replyModal${vs.index }');">답변등록</button>
+										<button type="button" class="btn btn-outline-dark btn-sm" data-dismiss="modal">닫기</button>
 									</div>
 								</div>
 							</div>

@@ -40,4 +40,8 @@ public class MemberAuthService {
 	public List<MemberAuthVO> memberauthGetAll(){
 		return memberauthmapper.selectAllMember_Auth();
 	}
+	
+	public List<String> memberAuthsById(String id){
+		return memberauthmapper.selectMemberAuthsById(id);
+	}
 }

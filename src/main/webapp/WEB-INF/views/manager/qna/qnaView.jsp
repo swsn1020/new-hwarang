@@ -26,7 +26,7 @@ $(function(){
 </script>
 	<fmt:formatDate value="${qna.regDate }" var="regDate" pattern="yyyy-MM-dd"/>
 	<div class="container">
-		<h3>작성한 문의</h3>
+		<h3>Q&amp;A 글</h3>
 		<table class="table">
 			<tr>
 				<th style="width: 17%;">문의분류</th>
@@ -113,6 +113,7 @@ $(function(){
 					<td colspan="3">${qna.reply }</td>
 				</tr>
 				<tr>
+					<!-- 답변등록Form -->
 					<td colspan="4">
 						<div class="form-group collapse" id="replyForm" style="text-align: center;">
 							<form action="replyModify" method="post">
@@ -126,7 +127,6 @@ $(function(){
 			</table>
 		</div>
 	
-	<!-- 답변등록Form -->
 	
 		
 		<!-- CheckPwModal -->

@@ -30,6 +30,7 @@ import hwarang.artg.manager.model.QnAVO;
 import hwarang.artg.manager.service.QnAImgService;
 import hwarang.artg.manager.service.QnAService;
 import hwarang.artg.member.model.MemberVO;
+import hwarang.artg.member.service.MemberAuthService;
 import hwarang.artg.member.service.MemberService;
 import net.coobird.thumbnailator.Thumbnails;
 
@@ -44,25 +45,30 @@ public class QnAController {
 	private PasswordEncoder pwEncoder;
 	@Autowired
 	private MemberService memService;
+	@Autowired
+	private MemberAuthService memAuthService;
 	
 	@RequestMapping("/qnaListForManager")
 	public String showQnAList(CriteriaDTO cri, Model model, Principal principal) {
 		System.out.println("qnaListForManager요청");
-		/* 권한 확인
-		Collection<? extends GrantedAuthority> auths =  SecurityContextHolder.getContext().getAuthentication().getAuthorities();
-		if(auths.equals("ROLE_ADMIN") || auths.equals("ROLE_MANAGER")) {
-			System.out.println("관리자입니다.");
-		}else {
-			System.out.println("user입니다.");
-		}
-		*/
 		
-		//페이징 처리 없는 list
+		String id = principal.getName();
+		List<String> auths = memAuthService.memberAuthsById(id);
+		if(auths.contains("ROLE_ADMIN") || auths.contains("ROLE_MANAGER")) {
+			//페이징 처리 없는 list
 //		model.addAttribute("qnaList", service.qnaGetAll());
-		PageDTO page = new PageDTO(cri, service.getTotalCount());
-		model.addAttribute("pageMaker", page);
-		model.addAttribute("qnaList", service.pagingList(cri));
-		return "manager/qna/managerQnaList";
+			PageDTO page = new PageDTO(cri, service.getTotalCount());
+			model.addAttribute("pageMaker", page);
+			model.addAttribute("qnaList", service.pagingList(cri));
+			return "manager/qna/managerQnaList";
+		}else {
+			String msg = "접근 권한이 없는 페이지입니다.";
+			String url = "/";
+			model.addAttribute("msg", msg);
+			model.addAttribute("url", url);
+			return "manager/result";
+		}
+		
 	}
 	
 	@RequestMapping("/qnaListForUser")

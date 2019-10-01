@@ -94,19 +94,19 @@ public class QnAService {
 	}
 	
 	//관리자_답변 수정하기
-		public boolean qnaModify(int num, String reply) {
-			if(dao.updateReply(num, reply) > 0) {
-				return true;
-			}
-			return false;
+	public boolean qnaModify(int num, String reply) {
+		if(dao.updateReply(num, reply) > 0) {
+			return true;
 		}
+		return false;
+	}
 	
 	@Transactional
 	public boolean qnaRemove(int num) {
 		if(dao.deleteQnA(num) > 0) {
 			//포함된 파일 모두 삭제
 			System.out.println("qna삭제요청");
-			if(imgDao.selectFilesByQNum(num) != null) {
+			if(!imgDao.selectFilesByQNum(num).isEmpty()) {
 				if(imgDao.deleteFileByQNum(num)>0) {
 					System.out.println("파일 삭제 성공");
 					return true;

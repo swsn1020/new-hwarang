@@ -8,6 +8,8 @@
 <meta charset="UTF-8">
 <title>화랑-신고</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="/resources/css/contents.css">
+<link rel="stylesheet" type="text/css" href="/resources/css/respond.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
@@ -52,52 +54,48 @@ $(function(){
 </head>
 <body>
 	<div class="container" style="width: 400px; height: 500px;">
-	<h3>신고하기</h3>
-	<div class="form-group" style="padding: 5px;">
-	<form id="blockForm" name="blockForm" method="post">
-		<input type="hidden" name="category" value="${category }">
-		<input type="hidden" name="boardNum" value="${boardNum }"> 
-		<input type="hidden" name="blockMemId" value="${blockMemId }">
-				<!-- 로그인한 아이디로 자동으로 들어가기 -->
-					<p style="font-weight: bold;">신고자ID 
-						<input type="text" name="memId" class="form-control" value="<sec:authentication property="principal.Username"/>" readonly="readonly">
-					</p>
-					<fieldset>
-						<legend style="font-weight: bold; font-size: medium;">신고 내용</legend>
-						<div class="form-check">
-					      <label class="form-check-label" for="radio1">
-					        <input type="radio" class="form-check-input" id="radio1" name="content" value="영리/홍보" onclick="hide('div-content')">부적절한 홍보 게시물
-					      </label>
-					    </div>
-					    <div class="form-check">
-					      <label class="form-check-label" for="radio2">
-					        <input type="radio" class="form-check-input" id="radio2" name="content" value="음란성" onclick="hide('div-content')">음란성 또는 청소년에게 부적합한 내용
-					      </label>
-					    </div>
-					    <div class="form-check">
-					      <label class="form-check-label" for="radio3">
-					        <input type="radio" class="form-check-input" id="radio3" name="content" value="장난성" onclick="hide('div-content')">장난성 또는 질문에 맞지 않는 무의미글
-					      </label>
-					    </div>
-					    <div class="form-check">
-					      <label class="form-check-label" for="radio4">
-					        <input type="radio" class="form-check-input" id="radio4" name="content" onclick="show('div-content')" value="">기타 <br>
-					      </label>
-					      	<div id="div-content" style="display:none">
-					        	<textarea id="txt-content" class="form-control" rows="5" style="resize: none;"></textarea>
-					        </div>
-					    </div>
-					</fieldset>
-		
-	    <br>
-	    <div style="text-align: center;">
-	    	<p style="color: red;">한번 신고한 글은 수정할 수 없습니다.</p>
-		<input type="submit" class="btn btn-outline-danger" value="신고하기">
-		<input type="reset" class="btn btn-outline-dark" value="다시작성">
+		<h3>신고하기</h3>
+		<div class="form-group" style="padding: 5px;">
+			<form id="blockForm" name="blockForm" method="post">
+				<input type="hidden" name="category" value="${category }">
+				<input type="hidden" name="boardNum" value="${boardNum }"> 
+				<input type="hidden" name="blockMemId" value="${blockMemId }">
+				<p style="font-weight: bold;">신고자ID 
+					<input type="text" name="memId" class="form-control" value="<sec:authentication property="principal.Username"/>" readonly="readonly">
+				</p>
+				<fieldset>
+					<legend style="font-weight: bold; font-size: medium;">신고 내용</legend>
+					<div class="form-check">
+				      <label class="form-check-label" for="radio1">
+				        <input type="radio" class="form-check-input" id="radio1" name="content" value="부적절한 홍보 게시물" onclick="hide('div-content')">부적절한 홍보 게시물
+				      </label>
+				    </div>
+				    <div class="form-check">
+				      <label class="form-check-label" for="radio2">
+				        <input type="radio" class="form-check-input" id="radio2" name="content" value="음란성 또는 청소년에게 부적합한 내용" onclick="hide('div-content')">음란성 또는 청소년에게 부적합한 내용
+				      </label>
+				    </div>
+				    <div class="form-check">
+				      <label class="form-check-label" for="radio3">
+				        <input type="radio" class="form-check-input" id="radio3" name="content" value="장난성 또는 질문에 맞지 않는 무의미글" onclick="hide('div-content')">장난성 또는 질문에 맞지 않는 무의미글
+				      </label>
+				    </div>
+				    <div class="form-check">
+				      <label class="form-check-label" for="radio4">
+				        <input type="radio" class="form-check-input" id="radio4" name="content" onclick="show('div-content')" value="">기타 <br>
+				      </label>
+				      	<div id="div-content" style="display:none">
+				        	<textarea id="txt-content" class="form-control" rows="5" style="resize: none;"></textarea>
+				        </div>
+				    </div>
+				</fieldset><br>
+			    <div style="text-align: center;">
+		    		<p style="color: red;">*한번 신고한 글은 수정할 수 없습니다.</p>
+					<input type="submit" class="btn btn-outline-danger btn-sm" value="신고등록">
+					<input type="button" class="btn btn-outline-dark btn-sm" value="닫기" onclick="self.close();">
+				</div>
+			</form>
+			</div>
 		</div>
-	</form>
-	
-	</div>
-	</div>
 </body>
 </html>

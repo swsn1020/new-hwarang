@@ -65,68 +65,60 @@ function removeAll(e){
 }
 </script>
 	<div class="container">
+		<h3>신고 글 수정</h3>
 		<div class="form-group">
-		<!-- 이미지 넣기 -->
-		<form id="replyForm" action="reportModify" method="post" enctype="multipart/form-data">
-			<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
-			<input type="hidden" name="num" value="${report.num }">
-<!-- 			<input type="hidden" name="memId" value="haddie"> -->
-			<table class="table">
-				<tr>
-					<th>게시판 종류</th>
-					<td>
-						<select id="category" name="category" class="form-control col-sm-3" onchange="doChange(this, 'subCategory')" style="display: inline-block;">
-							<option value="default">--게시판 선택--</option>
-							<option value="Notice">공지게시판</option>
-							<option value="Free">자유게시판</option>
-							<option value="Review">후기게시판</option>
-							<option value="Exhibition">전시게시판</option>
-							<option value="Ticket">티켓나눔게시판</option>
-							<option value="Funding">펀딩게시판</option>
-							<option value="Party">파티원게시판</option>
-						</select>
-						<select id="subCategory" name="subCategory" class="form-control col-sm-3" style="display: inline-block;">
-							<option value="default">--분류--</option>
-							<option value="Board">게시글</option>
-							<option value="Reply">댓글</option>
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<th>제목</th>
-					<td>
-						<input class="form-control" type="text" name="title" value="${report.title }">
-					</td>
-				</tr>
-				<tr>
-					<td colspan="2">
-						<textarea class="form-control" rows="10" name="content" style="resize: none;">${report.content }</textarea>
-					</td>
-				</tr>
-				<tr>
-					<th>파일 첨부</th>
-					<td>
-<%-- 						<c:choose> --%>
-<%-- 							<c:when test="${empty reportImgList }"> --%>
-<%-- 							</c:when> --%>
-<%-- 							<c:otherwise> --%>
-								<c:forEach items="${reportImgList }" var="reportImg">
-									<div>
-										${reportImg.originName }
-										<a href="#this" name="fileDeleteBtn" class="btn" data-uuid="${reportImg.uuid }">삭제</a>
-									</div>
-								</c:forEach>
-<%-- 							</c:otherwise> --%>
-<%-- 						</c:choose> --%>
+			<form id="replyForm" action="reportModify" method="post" enctype="multipart/form-data">
+				<input type="hidden" name="num" value="${report.num }">
+				<table class="table">
+					<tr>
+						<th style="width: 20%;">게시판 종류</th>
+						<td>
+							<select id="category" name="category" class="form-control col-sm-3" onchange="doChange(this, 'subCategory')" style="display: inline-block;">
+								<option value="default">--게시판 선택--</option>
+								<option value="Notice">공지게시판</option>
+								<option value="Free">자유게시판</option>
+								<option value="Review">후기게시판</option>
+								<option value="Exhibition">전시게시판</option>
+								<option value="Ticket">티켓나눔게시판</option>
+								<option value="Funding">펀딩게시판</option>
+								<option value="Party">파티원게시판</option>
+							</select>
+							<select id="subCategory" name="subCategory" class="form-control col-sm-3" style="display: inline-block;">
+								<option value="default">--분류--</option>
+								<option value="Board">게시글</option>
+								<option value="Reply">댓글</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<th>제목</th>
+						<td>
+							<input class="form-control" type="text" name="title" value="${report.title }">
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							<textarea class="form-control" rows="15" name="content" style="resize: none;">${report.content }</textarea>
+						</td>
+					</tr>
+					<tr>
+						<th>파일 첨부</th>
+						<td>
+							<c:forEach items="${reportImgList }" var="reportImg">
+								<div>
+									${reportImg.originName }
+									<a href="#this" name="fileDeleteBtn" class="btn" data-uuid="${reportImg.uuid }">삭제</a>
+								</div>
+							</c:forEach>
 							<p style="margin: 5px;"><input type="file" name="file" multiple="multiple"></p>
-					</td>
-				</tr>
-			</table>
-			<div class="btn-div" style="text-align: center;">
-				<input type="submit" class="btn btn-outline-primary" value="수정">
-				<input type="button" class="btn btn-outline-info" value="목록" onclick="location.href='reportList'">
-			</div>
-		</form>
+						</td>
+					</tr>
+				</table>
+				<div class="btnGroup" style="text-align: center;">
+					<input type="submit" class="btn btn-outline-primary btn-sm" value="수정">
+					<input type="button" class="btn btn-outline-info btn-sm" value="목록" onclick="location.href='reportList'">
+				</div>
+			</form>
 		</div>
 	</div>
 <%@ include file="../../layout/bottom.jsp"%>

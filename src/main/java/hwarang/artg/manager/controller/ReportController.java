@@ -3,11 +3,16 @@ package hwarang.artg.manager.controller;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.OutputStream;
+import java.security.Principal;
+import java.util.Collection;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +27,9 @@ import hwarang.artg.common.model.PageDTO;
 import hwarang.artg.manager.model.ReportVO;
 import hwarang.artg.manager.service.ReportImgService;
 import hwarang.artg.manager.service.ReportService;
+import hwarang.artg.member.model.MemberVO;
+import hwarang.artg.member.service.MemberAuthService;
+import hwarang.artg.member.service.MemberService;
 import net.coobird.thumbnailator.Thumbnails;
 
 @Controller
@@ -31,6 +39,12 @@ public class ReportController {
 	private ReportService service;
 	@Autowired
 	private ReportImgService imgService;
+	@Autowired
+	private MemberService memService;
+	@Autowired
+	private PasswordEncoder pwEncoder;
+	@Autowired
+	private MemberAuthService memAuthService;
 	
 	@RequestMapping("/reportList")
 	public String showReportList(CriteriaDTO cri, Model model) {
@@ -67,10 +81,23 @@ public class ReportController {
 	}
 	
 	@RequestMapping("/reportView")
-	public String showReportView(int num, Model model) {
-		model.addAttribute("report", service.reportGetOne(num));
-		model.addAttribute("reportImgList", imgService.reportImgGetByRNum(num));
-		return "manager/report/reportView";
+	public String showReportView(int num, Model model, Principal principal) {
+		String id = principal.getName();
+		String writer = service.reportGetOne(num).getMemId();
+		List<String> auths = memAuthService.memberAuthsById(id);
+		System.out.println(auths);
+		if(id.equals(writer) || auths.contains("ROLE_ADMIN") || auths.contains("ROLE_MANAGER")) {
+			System.out.println("권한 확인 완료");
+			model.addAttribute("report", service.reportGetOne(num));
+			model.addAttribute("reportImgList", imgService.reportImgGetByRNum(num));
+			return "manager/report/reportView";
+		}else {
+			String msg = "해당 신고글 작성자만 열람 가능합니다.";
+			String url = "reportList";
+			model.addAttribute("msg", msg);
+			model.addAttribute("url", url);
+			return "manager/result";
+		}
 	}
 	
 	@RequestMapping("/reportModify")
@@ -115,11 +142,14 @@ public class ReportController {
 	}
 	
 	@RequestMapping(value="/checkPw", method=RequestMethod.POST)
-	public String doCheckPw(int num, String type, String password, Model model) {
+	public String doCheckPw(int num, String type, String password, Model model, Principal principal) {
 		String url = "reportList";
 		String msg = "";
+		String id = principal.getName();
+		MemberVO mem = memService.memberGetOne(id);
+		String originPw = mem.getMember_password();
 		ReportVO report = service.reportGetOne(num);
-		if(report != null && password.equals("true")) {
+		if(report != null && pwEncoder.matches(password, originPw)) {
 			//비밀번호 일치
 			if(type.equals("delete")) {
 				// 삭제요청

@@ -1,9 +1,11 @@
 package hwarang.artg.manager.controller;
 
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,12 +16,18 @@ import hwarang.artg.common.model.CriteriaDTO;
 import hwarang.artg.common.model.PageDTO;
 import hwarang.artg.manager.model.BlockStatusVO;
 import hwarang.artg.manager.service.BlockStatusService;
+import hwarang.artg.member.service.MemberService;
 
 @Controller
 @RequestMapping("/block")
 public class BlockController {
 	@Autowired
 	private BlockStatusService service;
+	@Autowired
+	private PasswordEncoder pwEncoder;
+	@Autowired
+	private MemberService memService;
+	
 	
 	@RequestMapping("/blockListForManager")
 	public String showBlockListM(CriteriaDTO cri, Model model) {
@@ -31,16 +39,25 @@ public class BlockController {
 	}
 	
 	@RequestMapping("/blockListForUser")
-	public String showBlockListU(String memId, CriteriaDTO cri, Model model) {
+	public String showBlockListU(String memId, CriteriaDTO cri, Model model, Principal principal) {
 		System.out.println("blockList요청 For User");
 		//기본
 //		List<BlockStatusVO> blockList = service.blockGetAllById(memId);
 //		model.addAttribute("blockList", blockList);
-		//페이징처리 + 행번호로 출력
-		PageDTO page = new PageDTO(cri, service.getTotalCount(memId));
-		model.addAttribute("pageMaker", page);
-		model.addAttribute("blockList", service.pagingList(cri, memId));
-		return "manager/block/userBlockList";
+		String id = principal.getName();
+		if(memId.equals(id)) {
+			//페이징처리 + 행번호로 출력
+			PageDTO page = new PageDTO(cri, service.getTotalCount(memId));
+			model.addAttribute("pageMaker", page);
+			model.addAttribute("blockList", service.pagingList(cri, memId));
+			return "manager/block/userBlockList";
+		}else {
+			String msg = "해당 신고 접수자만 열람 가능합니다.";
+			String url = "blockListForUser?memId="+id;
+			model.addAttribute("msg", msg);
+			model.addAttribute("url", url);
+			return "manager/result";
+		}
 	}
 	
 	
@@ -107,12 +124,14 @@ public class BlockController {
 	}
 	
 	@RequestMapping(value="/checkPw", method=RequestMethod.POST)
-	public String doCheckPw(int num, String type, String memId, String password, Model model) {
-		System.out.println("checkPw요청들어옴 "+type);
-		String url = "blockListForUser?memId="+memId;
+	public String doCheckPw(int num, String type, String password, Model model, Principal principal) {
+		System.out.println("checkPw요청들어옴 ");
+		String id = principal.getName();
+		String originPw = memService.memberGetOne(id).getMember_password();
+		String url = "blockListForUser?memId="+id;
 		String msg = "";
 		BlockStatusVO block = service.blockGetOne(num);
-		if(block != null && password.equals("true")) {
+		if(block != null && pwEncoder.matches(password, originPw)) {
 			//비밀번호 일치
 			if(type.equals("delete")) {
 				// 삭제요청
