@@ -294,7 +294,7 @@
         <li>
           <div class="video-wrap">
             <div class="video-container" data-video-url="${funding.funding_video}">
-              <div class="video-cover icon-movie" data-cover-url="" style="background-image: url(https://img5.yna.co.kr/etc/inner/KR/2019/03/20/AKR20190320055600030_01_i_P2.jpg)"></div>
+              <div class="video-cover icon-movie" data-cover-url="" style="background-image: url(http://www.jeigroup.com/public/images/board/play.png)"></div>
             </div>
           </div>
         </li>
@@ -429,7 +429,6 @@
 
   
   <!-- E : 업데이트 링크 -->
-
   <input type="hidden" id="movieembed" value="">
 </div>
 
