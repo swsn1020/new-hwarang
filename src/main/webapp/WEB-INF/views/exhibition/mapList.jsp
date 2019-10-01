@@ -11,7 +11,7 @@
 	$(function() {
 		var xList = <c:out value="${xList}"/>;
 		var yList = <c:out value="${yList}"/>;
-	  	var sList = <c:out value="${sList}"/>;
+	  	var pList = <c:out value="${pList}"/>;
 		var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
 		var options = { //지도를 생성할 때 필요한 기본 옵션
 				center: new kakao.maps.LatLng(yList[0], xList[0]),
@@ -28,44 +28,36 @@
 		var zoomControl = new kakao.maps.ZoomControl();
 		map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 
-		function mapMarker(i,seq){					
-			getExh(seq, function(exh){
-				var y = exh.exh_gpsy;
-				var x = exh.exh_gpsx;
-				var favi= 'star fas';
-				var favm= '#fav-RemoveModal';
-				if(exh.favorite_status == 0){
-					favi = 'far';
-					favm = '#fav-AddModal';
-				}
-				
+		function mapMarker(i,y,x,p){				
 				var position = new kakao.maps.LatLng(y, x);
 	            var marker = new daum.maps.Marker({
 	                map : map,
 	                position : position
 	            });
-	    		var iwContent = '<div style="padding:5px;"><div><p><a href="/exhibition/view?seq='+seq+'">'+exh.exh_title+'</a> <i id="favStatus${e.exh_seq}"class="'+favi+' fa-star" data-toggle="modal" data-target="'+favm+'"></i></p><div><table class="table"><tbody><tr><td>길찾기</td><td><a href="https://map.kakao.com/link/to/'+exh.exh_place+','+y+','+x+'" target="_blank"><i class="fas fa-map-marked-alt"></i></a></td></tr><tr><td>주소</td><td><a href="'+exh.exh_placeurl+'">'+exh.exh_place+'</a></td></tr><tr><td>전화번호</td><td>'+exh.exh_phone+'</td></tr></tbody></table></div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
-	    	    iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
-	    	    // 인포윈도우를 생성합니다
-	    		var infowindow = new kakao.maps.InfoWindow({
-	    		    content : iwContent,
-	    		    removable : iwRemoveable
-	    		});
-	    	
-	    		// 마커에 클릭이벤트를 등록합니다
-	    		kakao.maps.event.addListener(marker, 'click', function() {
-	    		      // 마커 위에 인포윈도우를 표시합니다
-	    		      infowindow.open(map, marker);
-	    		});
-			});
+			
+				getPlaceInfo(p, function(exh){
+		    		var iwContent = '<div style="padding:5px;"><p><a href="'+exh.exh_placeurl+'">'+exh.exh_place+'</a></p><div><table class="table"><tbody><tr><td>'+exh.exh_placeaddr+'</td><td><a href="https://map.kakao.com/link/to/'+exh.exh_placeaddr+','+y+','+x+'" target="_blank"><i class="fas fa-map-marked-alt"></i></a></td></tr><tr><td><a class="btn btn-primary" data-toggle="collapse" data-target="#exhModal'+p+'">해당 장소의 공연보기</a></td></tr></tbody></table></div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+		    	    iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
+		    	    // 인포윈도우를 생성합니다
+		    		var infowindow = new kakao.maps.InfoWindow({
+		    		    content : iwContent,
+		    		    removable : iwRemoveable
+		    		});
+		    	
+		    		// 마커에 클릭이벤트를 등록합니다
+		    		kakao.maps.event.addListener(marker, 'click', function() {
+		    		      // 마커 위에 인포윈도우를 표시합니다
+		    		      infowindow.open(map, marker);
+		    		});
+				});
 
 		};
 		
-		var size = ${fn:length(xList)};
+		var size = ${fn:length(yList)};
 		for(var i=0; i<size; i++){
-			mapMarker(i,sList[i]);
+			mapMarker(i,yList[i],xList[i],pList[i]);
 		};
-	});
+ 	});
 	function getExh(seq, callback, error) {
 		$.getJSON("/exhibition/"+seq+".json", function(data) {
 			if(callback){
@@ -77,56 +69,30 @@
 			}
 		});
 	}
-	
-	function addFavorite(seq) {
-		var id = 'id';
-		var groupValue = $("#favGroup"+seq).val();
-		var fav = {
-			exh_seq	: seq,
-			member_id : id,
-			favorite_group : groupValue
-		};
-		
-		favService.add(fav, function(result) {
-			if(result){
-				alert("관심 등록 완료 되었습니다.");
-				$("#favStatus"+seq).attr("class","star fas fa-star");
-				+$("#favStatus"+seq).attr("data-target","#fav-RemoveModal"+seq);
-				$(".close").click();
-			}else{
-				alert("관심 등록이 실패 되었습니다.");	
+	function getPlaceInfo(p, callback, error) {
+		$.getJSON("/exhibition/getPlaceInfo/"+p+".json", function(data) {
+			if(callback){
+				callback(data);
 			}
-			return false;
-		})
-	};
+		}).fail(function(xhr, status, err) {
+			if(error){
+				error();
+			}
+		});
+	}
+	function getList(p, callback, error) {
+		$.getJSON("/exhReplies/"+p+".json", function(data) {
+			if(callback){
+				callback(data);
+			}
+		}).fail(function(xhr, status, err) {
+			if(error){
+				error();
+			}
+		});
+	}
 	
-	function removeFavorite(seq) {
-		var id = 'id';
-		var fav = {
-			exh_seq	: seq,
-			member_id : id,
-		};
 
-		favService.remove(fav, function(result) {
-			if(result){
-				alert("관심 삭제가 완료 되었습니다.");
-				$("#favStatus"+seq).attr("class","far fa-star");
-				$("#favStatus"+seq).attr("data-target","#fav-AddModal"+seq);
-				$(".close").click();
-			}else{
-				alert("관심 삭제가 실패 되었습니다.");	
-			}
-			return false;
-		})
-	};
-	
-	function addFavGroup() {
-		var basicGroup = $("#basic-group");
-		var addGroupVal = $("#addFavGroup").val();
-		basicGroup.attr("value",addGroupVal);
-		basicGroup.text("새로운 그룹 - "+addGroupVal);
-		alert(addGroupVal+" 이 입력 되었습니다.");
-	};
 </script>
 </head>
 <body>

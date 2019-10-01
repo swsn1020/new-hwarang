@@ -5,7 +5,6 @@
 	$(function(){
 		
 	});
-	
 /*
 	function replyRegister(modalId){
 		var qnaNum = $("#"+modalId).find('input').val();
@@ -34,11 +33,20 @@
 */
 
 </script>
+<style>
+	.container{
+		margin: 10px 0px;
+		padding: 3px 0px;
+	}
+	th {
+		text-align: center;
+	}
+</style>
 	<!-- 관리자에게만 보여질 1:1 문의 페이지
 			행 눌렀을 때 내용+파일 보여지고 답변하기 모달창 띄우기
 			++ 마이페이지에서 내가쓴 게시물 qnaView는 따로 만들기
 	 -->
-	<div class="container">
+	<div class="container" style="padding-left: 50px; padding-right: 50px;">
 		<h3>관리자-1:1문의현황</h3>
 		<table class="table table-hover">
 			<thead>
@@ -51,23 +59,23 @@
 					<th>답변상태</th>
 				</tr>
 			</thead>
-			<c:forEach items="${qnaList }" var="qna" varStatus="vs">
-			<fmt:formatDate value="${qna.regDate }" var="regDate" pattern="yyyy-MM-dd"/>
-				<tr>
-					<td>${qna.num }</td>
-					<td>${qna.category }</td>
-					<td><a href="qnaView?num=${qna.num }">${qna.title }</a></td>
-					<td>${qna.memId }</td>
-					<td>${regDate }</td>
-					<c:choose>
-						<c:when test="${qna.reply  eq '미답변'}">
-							<td style="color: red;"> 미답변 </td>
-						</c:when>
-						<c:otherwise>
-							<td>답변완료</td>
-						</c:otherwise>
-					</c:choose>
-				</tr>
+			<c:forEach items="${qnaList }" var="qna">
+				<fmt:formatDate value="${qna.regDate }" var="regDate" pattern="yyyy-MM-dd"/>
+					<tr>
+						<td style="text-align: center;">${qna.num }</td>
+						<td style="text-align: center;">${qna.category }</td>
+						<td><a href="qnaView?num=${qna.num }">${qna.title }</a></td>
+						<td style="text-align: center;">${qna.memId }</td>
+						<td style="text-align: center;">${regDate }</td>
+						<c:choose>
+							<c:when test="${qna.reply  eq '미답변'}">
+								<td style="color: red;"> 미답변 </td>
+							</c:when>
+							<c:otherwise>
+								<td>답변완료</td>
+							</c:otherwise>
+						</c:choose>
+					</tr>
 			</c:forEach>
 		</table>
 		

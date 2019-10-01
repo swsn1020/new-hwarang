@@ -149,24 +149,26 @@
 					tr.append($("<td><a href='#'>"+memId+"</a><br>"+finalDate+"</td>"));
 					tr.append($("<td>").text(content).append(modiForm));
 					tr.append($("<td>").append(delForm));
-					var modiBtn = $("<button type='button' class='btn btn-link btn-sm' data-toggle='collapse' data-target='#modi"+i+"'> 수정 </a>");
-					var delBtn = $("<button type='button' class='btn btn-link btn-sm' data-toggle='collapse' data-target='#del"+i+"'> 삭제 </a>");
+					var modiBtn = $("<button type='button' id='modi-btn' class='btn btn-link btn-sm' data-toggle='collapse' data-target='#modi"+i+"'> 수정 </button>");
+					var delBtn = $("<button type='button' id='del-btn' class='btn btn-link btn-sm' data-toggle='collapse' data-target='#del"+i+"'> 삭제 </button>");
 					//내가 쓴 글일 경우 신고 버튼 없음
 					var blockBtn = $("<button type='button' class='btn btn-link btn-sm' style='color: red;'> 신고 </button>");
 					tr.append($("<td style='width: 200px;''>").append(modiBtn).append(delBtn).append(blockBtn));
 					
 					//현재 로그인 한 아이디와 작성자가 같은 경우 attr(visibility)
-					/*
-					var con = replyTable.closest("div");
-// 					alert(con.find("input[name='currId']").val());
-					var currId = con.find("input[name='currId']").val();
-					if(currId == data.replies[i].memId)){
-						modiBtn.attr('visibility', 'visible');
+					var currId = replyTable.closest("div").find("input[name='currId']").val();
+// 					alert(currId);
+					if(currId != memId){
+						console.log("아이디 일치하지 않음");
+						modiBtn.css("display", "none");
+						delBtn.css("display", "none");
+						blockBtn.css("display", "true");
 					}else{
-						modiBtn.removeAttr('visibility');
+						console.log("아이디 일치");
+						modiBtn.css("display", "true");
+						delBtn.css("display", "true");
+						blockBtn.css("display", "none");
 					}
-					*/
-					
 					
 					//disabled 설정하기
 					modiBtn.on("click", function(){
@@ -345,6 +347,13 @@
 	
 	<!-- 댓글 목록 div -->
 	<div class="container">
+		<sec:authorize access="isAnonymous()">
+			<input type="hidden" name="currId" value="anonymous"/>
+		</sec:authorize>	
+		<sec:authorize access="isAuthenticated()">
+			<input type="hidden" name="currId" value="<sec:authentication property="principal.Username"/>">
+		</sec:authorize>
+		
 		<table class="table table-hover" id="replies">
 			<thead></thead>
 		</table>
@@ -367,14 +376,6 @@
 		</ul>
 	</div>
 	
-<%-- 	<c:if test="<sec:authorize access="isAnonymous()"></sec:authorize>"> --%>
-<%-- 		<c:set var="currId" value="anonymous"/> --%>
-<%-- 	</c:if> --%>
-	
-<%-- 	<sec:authorize access="isAuthenticated()"> --%>
-<%-- 		<c:set var="currId" value="<sec:authentication property="principal.Username"/>"/> --%>
-<%-- 	</sec:authorize> --%>
-	<input type="text" name="currId" value="${currId }">
 	
 	<br>
 	<sec:authorize access="isAuthenticated()">
