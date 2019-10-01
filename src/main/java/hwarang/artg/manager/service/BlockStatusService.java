@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import hwarang.artg.common.model.CriteriaDTO;
+import hwarang.artg.community.model.FreeBoardVO;
+import hwarang.artg.community.model.FreeReplyVO;
 import hwarang.artg.community.service.FreeBoardService;
 import hwarang.artg.community.service.FreeReplyService;
 import hwarang.artg.manager.model.BlockStatusVO;
@@ -178,6 +180,16 @@ public class BlockStatusService {
 			break;
 		case "Free" :
 			category = "자유게시판";
+			if(subCategory.equals("Board")) {
+				subCategory = "게시글";
+				FreeBoardVO free = freeBoardService.freeboardGetone(boardNum);
+				originContent = free.getContent();
+			}else if(subCategory.equals("Reply")) {
+				subCategory = "댓글";
+				System.out.println("댓글");
+				FreeReplyVO reply = freeReplyService.freereplyGetone(boardNum);
+				originContent = reply.getContent();
+			}
 			break;
 		case "Review" :
 			category = "리뷰게시판";

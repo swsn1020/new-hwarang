@@ -39,11 +39,12 @@ $(function() {	//문서가 로딩되면 실행할 함수
 	$("#btn-block").on("click", function(){
 		var category = $("#blockForm").find('input[name="category"]');
 		category.val("Free_Board");
-// 		var bMemId = $("#blockForm").find('input[name="bMemId"]');
-// 		bMemId.val('haddie');	//관리자의 경우 아이디 넣기(현재아이디)
+		var writer = '${fboard.userid}';
+		var bMemId = $("#blockForm").find('input[name="blockMemId"]');
+		bMemId.val(writer);	//관리자의 경우 아이디 넣기(현재아이디)
 		var blockForm = document.blockForm;
 		var url = "/block/form";
-		window.open("", "Report", "width=1000, height=1000, top=300, left=1000");
+		window.open("", "Report", "width=400, height=500, top=300, left=300");
 		
 		blockForm.action = url;
 		blockForm.target = "Report";
@@ -110,6 +111,13 @@ function replyList(num){
 				minute = minute >= 10 ? minute : '0'+minute;
 				var finalDate = year+"-"+month+"-"+date+" "+hour+":"+minute;
 				
+				var blockStatus = data.replyTable[i].block;
+				if(blockStatus == 'true'){
+					var content = '관리자에 의해 삭제처리 된 댓글입니다.';
+				}else{
+					var content = data.replyTable[i].content;
+				}
+				
 				
 				var tr = $("<tr>");
 // 				var num = data.replyTable[i].free_reply_num;
@@ -118,7 +126,7 @@ function replyList(num){
 			
 				//수정폼
 				var modiForm = $("<form></form");
-				var modiText = $("<div id='modi"+i+"'class='collapse'><input type='hidden' name='num' value='"+data.replyTable[i].num+"'><input type='hidden' name='userid' value='"+data.replyTable[i].userid+"'><br><textarea class='form-control' name='content' rows='5'>"+data.replyTable[i].content + "</textarea></div>");
+				var modiText = $("<div id='modi"+i+"'class='collapse'><input type='hidden' name='num' value='"+data.replyTable[i].num+"'><input type='hidden' name='userid' value='"+data.replyTable[i].userid+"'><br><textarea class='form-control' name='content' rows='5'>"+ content + "</textarea></div>");
 				
 				//삭제폼
 				var delForm = $("<form></form>");
@@ -140,14 +148,20 @@ function replyList(num){
 				tr.append($("<td>" +rnum+ "</td>"));
 				rnum++;
 				tr.append($("<td><a href='#'>"+data.replyTable[i].userid+"</a><br>"+finalDate+"</td>"));
-				tr.append($("<td>").text(data.replyTable[i].content).append(modiForm));
+				tr.append($("<td>").text(content).append(modiForm));
 				tr.append($("<td>").append(delForm));
 				
 				var modiBtn = $("<button type='button' class='btn btn-link btn-sm' data-toggle='collapse' data-target='#modi"+i+"'> 수정 </a>");
 				var delBtn = $("<button type='button' class='btn btn-link btn-sm' data-toggle='collapse' data-target='#del"+i+"'> 삭제 </a>");
-				tr.append($("<td style='width: 200px;''>").append(modiBtn).append(delBtn));
+				//신고버튼
+				var blockBtn = $("<button type='button' class='btn btn-link btn-sm' style='color: red;'> 신고 </button>");
+				
+				tr.append($("<td style='width: 200px;''>").append(modiBtn).append(delBtn).append(blockBtn));
 				//disabled 설정하기
 				
+				if(blockStatus == 'true'){
+					modiBtn.attr("disabled", "disabled");
+				}
 				
 				var currId = table.closest("div").find("input[name='currId']").val();
 //					alert(currId);
@@ -217,6 +231,30 @@ function replyList(num){
 				});
 				return false;
 			});
+			
+			//신고 댓글처리 메서드
+			(function(m) {
+				blockBtn.on("click", function(){
+				var category = $("#blockForm").find('input[name="category"]');
+				category.val("Free_Reply");
+				var replyMemId = data.replyTable[m].userid;
+				var blockMemId = $("#blockForm").find('input[name="blockMemId"]');
+				blockMemId.val(replyMemId);
+				var replyNum = data.replyTable[m].num;
+				var rInput = $("#blockForm").find('input[name="replyNum"]');
+				rInput.val(replyNum);
+//					alert(rInput.val());
+				var blockForm = document.blockForm;
+				var url = "../block/form";
+				window.open("", "Report", "width=400, height=500, top=300, left=300");
+				
+				blockForm.action = url;
+				blockForm.target = "Report";
+				blockForm.submit();
+				});
+			})(i)	// 댓글 해당 인덱스 보내기(클로저 방지)
+			
+			
 			table.append(tr);
 		}
 	},
@@ -228,18 +266,14 @@ function replyList(num){
 </script>
 	<fmt:formatDate value="${fboard.regDate }" var="regDate" pattern="yyyy-MM-dd"/>
 		<div class="container">
-			<tr>
-				<td>
 				<input type="button" class="btn btn-primary" value="목록" onclick="location.href='freeboard'">
 				<input type="hidden" value="<sec:authentication property="principal.Username" var="id"/>">
 				<c:if test="${id eq fboard.userid}">			
-				<input type="button" class="btn btn-primary" value="수정" onclick="location.href='modify?num=${fboard.num }'"> 
-				<input type="button" class="btn btn-primary" value="삭제" onclick="location.href='remove?num=${fboard.num }'"> 
-				<input type="button" class="btn btn-primary" value="새글쓰기" onclick="location.href='register'">
-				<button id="btn-block" class="btn btn-outline-danger btn-sm">신고</button>
+					<input type="button" class="btn btn-primary" value="수정" onclick="location.href='modify?num=${fboard.num }'"> 
+					<input type="button" class="btn btn-primary" value="삭제" onclick="location.href='remove?num=${fboard.num }'"> 
+					<input type="button" class="btn btn-primary" value="새글쓰기" onclick="location.href='register'">
+					<button id="btn-block" class="btn btn-outline-danger btn-sm">신고</button>
 				</c:if>
-				</td>
-			</tr>
 	<div class="table-responsive">
 		<table class="table">
 			<tr>
@@ -258,7 +292,16 @@ function replyList(num){
 			</tr>
 			<tr>
 				<th></th>
-				<td>${fboard.content}</td>
+				<td>
+					<c:choose>
+						<c:when test="${fboard.block eq true}">
+							<p>관리자에 의해 삭제처리된 게시글입니다.</p>
+						</c:when>
+						<c:otherwise>
+							<p>${fboard.content }</p>
+						</c:otherwise>
+					</c:choose>
+				</td>
 			</tr>
 		<tr>
 			<th>첨부파일</th>
@@ -337,8 +380,7 @@ function replyList(num){
 	</div>	
 	<!-- 신고pop에 보낼 내용 -->
 	<form id="blockForm" name="blockForm" method="post">
-<%-- 		<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"> --%>
-		<input type="hidden" name="bMemId" value="${fboard.userid}">
+		<input type="hidden" name="blockMemId" value="">
 		<input type="hidden" name="category" value="">
 		<input type="hidden" name="boardNum" value="${fboard.num }">
 		<input type="hidden" name="replyNum" value="">
