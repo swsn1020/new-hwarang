@@ -22,6 +22,10 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <!-- jQuery -->
+  <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+  <!-- iamport.payment.js -->
+  <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 <style>
 #layer {
 	z-index: 2;
@@ -191,21 +195,7 @@
 
 	}
 	
-function fn_pay_phone(){
-	
-	
-	var e_card=document.getElementById("tr_pay_card");
-	var e_phone=document.getElementById("tr_pay_phone");
-	e_card.style.visibility="hidden";
-	e_phone.style.visibility="visible";
-}
 
-function fn_pay_card(){
-	var e_card=document.getElementById("tr_pay_card");
-	var e_phone=document.getElementById("tr_pay_phone");
-	e_card.style.visibility="visible";
-	e_phone.style.visibility="hidden";
-}
 
 function imagePopup(type) {
 	if (type == 'open') {
@@ -418,90 +408,35 @@ function fn_show_order_detail(){
 	imagePopup('open');
 }
 
-function fn_process_pay_order(){
+var IMP = window.IMP; // 생략해도 괜찮습니다.
+IMP.init("imp88213691"); // "imp00000000" 대신 발급받은 "가맹점 식별코드"를 사용합니다.
+
+function requestPay() {
+    // IMP.request_pay(param, callback) 호출
+    IMP.request_pay({ // param
+        pg: "inicis",
+        pay_method: "card",
+        merchant_uid: "ORD20180131-0000011",
+        name: "노르웨이 회전 의자",
+        amount: 64900,
+        buyer_email: "gildong@gmail.com",
+        buyer_name: "홍길동",
+        buyer_tel: "010-4242-4242",
+        buyer_addr: "서울특별시 강남구 신사동",
+        buyer_postcode: "01181"
+    }, function (rsp) { // callback
+        if (rsp.success) {
+            // 결제 성공 시 로직,
+            alert("성공")
+      
+        } else {
+           
+            // 결제 실패 시 로직,
+           alert("실패")
+        }
+    });
+  }
 	
-	alert("최종 결제하기");
-	var formObj=document.createElement("form");
-    var i_receiver_name=document.createElement("input");
-    
-    var i_receiver_hp1=document.createElement("input");
-    var i_receiver_hp2=document.createElement("input");
-    var i_receiver_hp3=document.createElement("input");
-   
-    var i_receiver_tel1=document.createElement("input");
-    var i_receiver_tel2=document.createElement("input");
-    var i_receiver_tel3=document.createElement("input");
-    
-    var i_delivery_address=document.createElement("input");
-    var i_delivery_message=document.createElement("input");
-    var i_delivery_method=document.createElement("input");
-    var i_gift_wrapping=document.createElement("input");
-    var i_pay_method=document.createElement("input");
-    var i_card_com_name=document.createElement("input");
-    var i_card_pay_month=document.createElement("input");
-    var i_pay_orderer_hp_num=document.createElement("input");
-   
-    i_receiver_name.name="receiver_name";
-    i_receiver_hp1.name="receiver_hp1";
-    i_receiver_hp2.name="receiver_hp2";
-    i_receiver_hp3.name="receiver_hp3";
-   
-    i_receiver_tel1.name="receiver_tel1";
-    i_receiver_tel2.name="receiver_tel2";
-    i_receiver_tel3.name="receiver_tel3";
-   
-    i_delivery_address.name="delivery_address";
-    i_delivery_message.name="delivery_message";
-    i_delivery_method.name="delivery_method";
-    i_gift_wrapping.name="gift_wrapping";
-    i_pay_method.name="pay_method";
-    i_card_com_name.name="card_com_name";
-    i_card_pay_month.name="card_pay_month";
-    i_pay_orderer_hp_num.name="pay_orderer_hp_num";
-  
-    i_receiver_name.value=receiver_name;
-    i_receiver_hp1.value=hp1;
-    i_receiver_hp2.value=hp2;
-    i_receiver_hp3.value=hp3;
-    
-    i_receiver_tel1.value=tel1;
-    i_receiver_tel2.value=tel2;
-    i_receiver_tel3.value=tel3;
-    ;
-    i_delivery_address.value=delivery_address;
-    i_delivery_message.value=delivery_message;
-    i_delivery_method.value=delivery_method;
-    i_gift_wrapping.value=gift_wrapping;
-    i_pay_method.value=pay_method;
-    i_card_com_name.value=card_com_name;
-    i_card_pay_month.value=card_pay_month;
-    i_pay_orderer_hp_num.value=pay_orderer_hp_num;
-    
-    formObj.appendChild(i_receiver_name);
-    formObj.appendChild(i_receiver_hp1);
-    formObj.appendChild(i_receiver_hp2);
-    formObj.appendChild(i_receiver_hp3);
-    formObj.appendChild(i_receiver_tel1);
-    formObj.appendChild(i_receiver_tel2);
-    formObj.appendChild(i_receiver_tel3);
-
-    formObj.appendChild(i_delivery_address);
-    formObj.appendChild(i_delivery_message);
-    formObj.appendChild(i_delivery_method);
-    formObj.appendChild(i_gift_wrapping);
-    
-    formObj.appendChild(i_pay_method);
-    formObj.appendChild(i_card_com_name);
-    formObj.appendChild(i_card_pay_month);
-    formObj.appendChild(i_pay_orderer_hp_num);
-    
-
-    document.body.appendChild(formObj); 
-    formObj.method="post";
-    formObj.action="${contextPath}/order/payToOrderGoods.do";
-    formObj.submit();
-	imagePopup('close');
-}
 </script>
 </head>
 <body>
@@ -846,7 +781,7 @@ function fn_process_pay_order(){
 	<center>
 		<br>
 		<br> 
-		<a href="javascript:fn_show_order_detail();">결제하기</a> 
+		<!-- <a href="javascript:fn_show_order_detail();">결제하기</a>  -->
 		<br> 
 		<a href="${contextPath}/funding/list">펀딩페이지로 </a>
 	
@@ -969,7 +904,6 @@ function fn_process_pay_order(){
 				   </tr>
 				   <tr>
 				    <td colspan=2 align=center>
-				    <input  name="btn_process_pay_order" type="button" onClick="fn_process_pay_order()" value="최종결제하기">
 				    </td>
 				   </tr>
 				</tbody>
@@ -979,7 +913,7 @@ function fn_process_pay_order(){
 			</div>
 			<div class="clear"></div>	
 			<br> 
+			<button onclick="requestPay()">결제하기</button>
+			
 			
 <%@include file="../layout/bottom.jsp"%>
-			
-			
