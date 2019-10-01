@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<title>자유게시판 상세보기</title>
-<%@ include file="../layout/left.jsp" %>
+<title>Insert title here</title>
+<%@ include file="../layout/left.jsp"%>
 <script type="text/javascript">
 $(function() {	//문서가 로딩되면 실행할 함수
 		/*댓글 목록 그리기 */
-	replyList();
+	replyList(1);
 	$("#btnRegister").on("click",function(){
 		//replyForm에 작성된 내용을 DB에 쓰기 후, 결과 받아와서 처리
 		var data = $("#Replyregister").serialize();
@@ -19,7 +19,7 @@ $(function() {	//문서가 로딩되면 실행할 함수
 					alert("등록 완료");
 					$("#Replyregister")[0].reset();
 					//새로운 댓글 목록 그리기
-					replyList();
+					location.reload();
 				}else{
 					//댓글 등록 실패
 					alert("오류가 발생했습니다.계속 발생한다면 문의하세요.")
@@ -72,18 +72,33 @@ function getReplyCnt(){
 	return replyCount;
 }
 
-function replyList(){
+function replyList(num){
 		var table = $("#replyTable");
 		$("#replyTable tr").remove();
 		getReplyCnt();
 		$.ajax({
-			url : "${contextPath}/reply/all/"+${fboard.num},
+			url : "${contextPath}/reply/all",
+			data : {"fboardNum" : '${fboard.num}',"curPage":num},
 			type : "get",
 			dataType : "json",
 			success : function(data){
-			for(var i in data){
+				//data는 list
+				var rnum = (Number(num) * 10) -9;
+				var rPager = data.rPager;
+				console.log(rPager);
+				console.log(rPager.curPage);
+				console.log(rPager.totalPage);
+				if(rPager.curPage != 1){
+					$("#left").attr("class", "page-item");
+				}
+				if(rPager.curPage == rPager.totalPage){
+					$("#right").attr("class", "page-item disabled");
+				}
+				console.log(data);
+				
+				for(var i in data.replyTable){
 				//등록일자 얻어오기
-				var upDateDate = new Date(data[i].upDateDate);
+				var upDateDate = new Date(data.replyTable[i].upDateDate);
 				var year = upDateDate.getFullYear();
 				var month = upDateDate.getMonth()+1;
 				month = month >= 10 ? month: '0'+month;
@@ -97,13 +112,13 @@ function replyList(){
 				
 				
 				var tr = $("<tr>");
-				var num = data[i].free_reply_num;
-				var userid = data[i].userid;
-				var content = data[i].content;
+				var num = data.replyTable[i].free_reply_num;
+				var userid = data.replyTable[i].userid;
+				var content = data.replyTable[i].content;
 				
-				var modiText = $("<div id='mod"+i+"' class='collapse form-group'><input type='hidden' name='num' value='"+data[i].num+"'><input type='hidden' name='userid' value='"+data[i].userid+"'><br><textarea class='form-control' name='content' rows='3' cols='80'>"+ data[i].content + "</textarea></div>");
+				var modiText = $("<div id='mod"+i+"' class='collapse form-group'><input type='hidden' name='num' value='"+num+"'><input type='hidden' name='userid' value='"+userid+"'><br><textarea class='form-control' name='content' rows='3' cols='80'>"+content + "</textarea></div>");
 				
-				var remvText = $("<div id='modd"+i+"' class='collapse form-group'><input type='hidden' name='num' value='"+data[i].num+"'><input type='hidden' name='userid2' value='"+data[i].userid+"'></div>");
+				var remvText = $("<div id='modd"+i+"' class='collapse form-group'><input type='hidden' name='num' value='"+num+"'><input type='hidden' name='userid2' value='"+userid+"'></div>");
 				
 				var rbtnModify = $("<button type='button' class='btn btn-link' data-toggle='collapse' data-target='#mod"+i+"'>M</button>");
 				
@@ -118,8 +133,8 @@ function replyList(){
 				//신고버튼
 				var blockBtn = $("<button type='button' class='btn btn-link btn-sm' style='color: red;'> 신고 </button>");
 				
-				$("<td>").text(data[i].userid).appendTo(tr);
-				$("<td>").text(data[i].content)
+				$("<td>").text(data.replyTable[i].userid).appendTo(tr);
+				$("<td>").text(data.replyTable[i].content)
 					.append(form.append(modiText.append(btnSubmit)))
 					.appendTo(tr);
 				$("<td>").append(form2.append(remvText.append(btnSubmit2)))
@@ -130,12 +145,9 @@ function replyList(){
 				.appendTo(tr);
 				//신고버튼 붙이기 확인 필요!
 				tr.append(blockBtn);
-				tr.appendTo(table);
-			}(i);
-			
+// 				tr.appendTo(table);
 			$("#btnModify").on("click",function(){
-				var d = $(this).closest("form").serialize();
-				
+				var d = $(this).closest("form").serialize();			
 				$.ajax({
 						url : "${contextPath}/reply/modifyReply",
 						type: "post",
@@ -154,8 +166,8 @@ function replyList(){
 			});
 			
 			$("#btnRemove").on("click",function(){
-				var d = $("#remove").serialize();
-// 				var d = $(this).closest("form2").serialize();
+// 				var d = $("#remove").serialize();
+				var d = $(this).closest("form2").serialize();
 				alert("test");
 				$.ajax({
 					url : "${contextPath}/reply/removeReply",
@@ -173,55 +185,49 @@ function replyList(){
 				});
 				return false;
 			});
-			
-			//신고 댓글처리 메서드
-			/*
-			(function(m) {
-				blockBtn.on("click", function(){
-				var category = $("#blockForm").find('input[name="category"]');
-				category.val("Notice_Reply");
-				var replyMemId = data[m].memId;
-				var bMemId = $("#blockForm").find('input[name="bMemId"]');
-				bMemId.val(replyMemId);
-				var replyNum = data[m].num;
-				var rInput = $("#blockForm").find('input[name="replyNum"]');
-				rInput.val(replyNum);
-//					alert(rInput.val());
-				var blockForm = document.blockForm;
-				var url = "../block/form";
-				window.open("", "Report", "width=400, height=500, top=300, left=300");
-				
-				blockForm.action = url;
-				blockForm.target = "Report";
-				blockForm.submit();
-				});
-			})(i)	// 댓글 해당 인덱스 보내기(클로저 방지)
-			*/
+			table.append(tr);
 		}
+	},
+	error: function(){
+		alert("list 오류");
+	}
+			
 	});
 }
 </script>
-	<div class="container">
-		<div class="table-responsive">
+	<fmt:formatDate value="${fboard.regDate }" var="regDate" pattern="yyyy-MM-dd"/>
+<div class="container">
+			<tr>
+				<td>
+				<input type="button" class="btn btn-primary" value="수정" onclick="location.href='modify?num=${fboard.num }'"> 
+				<input type="button" class="btn btn-primary" value="삭제" onclick="location.href='remove?num=${fboard.num }'"> 
+				<input type="button" class="btn btn-primary" value="목록" onclick="location.href='freeboard'">
+				<input type="button" class="btn btn-primary" value="새글쓰기" onclick="location.href='register'">
+				<button id="btn-block" class="btn btn-outline-danger btn-sm">신고</button>
+				</td>
+			</tr>
+	<div class="table-responsive">
 		<table class="table">
 			<tr>
-				<th>작성자</th>
-				<td>${fboard.userid}</td>
-			</tr>	
-				<th>조회수</th>
-				<td>${fboard.readCount}</td>
-				<th>추천</th>
-				<td>${fboard.recommCount}</td>
-				<th>비추천</th>
-				<td>${fboard.disrecommCount}</td>
-				<th>작성일</th>
-				<td>${fboard.regDate}</td>
+				<th>제목</th>
+				<td>${fboard.title}</td>
 			</tr>
 			<tr>
-				<th>내용</th>
+				<th>작성자</th>	
+				<td>${fboard.userid}</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+				<div style="display: inline-block;">작성일&nbsp; ${regDate } </div>&nbsp;
+						<div id="readCnt" style="display: inline-block;">조회수&nbsp; ${fboard.readCount }</div>
+				</td>
+			</tr>
+			<tr>
+				<th></th>
 				<td>${fboard.content}</td>
 			</tr>
 		<tr>
+			<th>첨부파일</th>
 				<td>
 					<div>
 						<c:choose>
@@ -240,29 +246,42 @@ function replyList(){
 					</div>	
 			</td>
 		</tr>
-			<tr>
-				<td>
-				<input type="button" class="btn btn-primary" value="수정" onclick="location.href='modify?num=${fboard.num }'"> 
-				<input type="button" class="btn btn-primary" value="삭제" onclick="location.href='remove?num=${fboard.num }'"> 
-				<input type="button" class="btn btn-primary" value="목록" onclick="location.href='freeboard'">
-				<button id="btn-block" class="btn btn-outline-danger btn-sm">신고</button>
-				<input type="button" class="btn btn-primary" value="새글쓰기" onclick="location.href='register'">
-				</td>
-			</tr>
 		</table>
 		</div>
 	</div>
-	<div>
-		<table id="replyTable">
+	
+	<!-- 댓글 목록 div -->
+	<div class="container">
+		<table  class="table table-hover" id="replyTable">
+			<thead></thead>
 		</table>
 	</div>
+	<!-- 페이징 -->
+	<div class="container">
+		<ul class="pagination justify-content-center">
+			<li id="left" class="page-item disabled">
+				<a class="page-link" href="javascript:replyList(1)">&laquo;</a>
+			</li>
+			<c:forEach var="num" begin="${rPager.blockBegin }" end="${rPager.totalPage}">
+				<li class='${rPager.curPage == num ? "active" : "page-item"}'>
+					<a class="page-link" href="javascript:replyList(${num})">[${num}]</a>
+				</li>
+			</c:forEach>
+			<li id="right" class="page-item">
+				<a class="page-link" href="javascript:replyList(${rPager.totalPage })">&raquo;</a>
+			</li>
+		</ul>
+	</div>
+	
+	
 	<div>
 	<!-- 댓글등록 -->
 	</div>
+	<div class="container">
 		<form id="Replyregister">
 			<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
 			<input type="hidden" name="boardNum" value="${fboard.num}">
-			<table>
+			<table class="table">
 				<tr>
 					<th>아이디</th>
 					<td><input type="text" name="userid"></td>
@@ -276,7 +295,7 @@ function replyList(){
 				</tr>
 			</table>
 		</form>
-		
+	</div>	
 	<!-- 신고pop에 보낼 내용 -->
 	<form id="blockForm" name="blockForm" method="post">
 <%-- 		<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }"> --%>

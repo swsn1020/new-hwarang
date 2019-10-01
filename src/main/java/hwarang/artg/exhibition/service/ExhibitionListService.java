@@ -23,6 +23,17 @@ public class ExhibitionListService {
 	@Autowired
 	private ExhibitionMapper mapper;
 
+	public List<ExhibitionVO> showPlaceList(String area) {
+		return mapper.getPlaceList(area);
+	}
+	
+	public ExhibitionVO showPlaceListByPseq(String placeseq) {
+		return mapper.getPlaceByPseq(placeseq);
+	}
+	
+	public List<ExhibitionVO> showListByPlace(String placeseq) {
+		return mapper.getListByPlace(placeseq);
+	}
 
 	public List<ExhibitionVO> showList(String area) {
 		return mapper.selectAll(area);

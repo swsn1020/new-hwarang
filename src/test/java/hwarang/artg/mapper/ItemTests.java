@@ -69,8 +69,12 @@ public class ItemTests {
 //		fav.setExh_seq(152825);
 //		System.out.println(fService.getSeq(fav));
 //	}
+//	@Test
+//	public void getMember() {
+//		System.out.println(mMapper.selectMember("id1"));
+//	}
 	@Test
-	public void getMember() {
-		System.out.println(mMapper.selectMember("id1"));
+	public void getPlace() {
+		System.out.println(mapper.getPlaceList("서울"));
 	}
 }

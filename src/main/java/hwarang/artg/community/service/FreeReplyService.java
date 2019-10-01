@@ -43,7 +43,16 @@ public class FreeReplyService {
 	public String idCheck(int num) {
 		return freereplyMapper.replyUserIdCheck(num);
 	}
-	
+	public List<FreeReplyVO> nRepliesGetByBNum(int fboardNum,int start,int end){
+		return freereplyMapper.getListWithPaging(fboardNum, start, end);
+	}
+	//페이징
+	public int getTotalReplies(int fboardNum) {
+		return freereplyMapper.getTotalCountByBNum(fboardNum);
+	}
+	public int getReplyCount(int num) {
+		return freereplyMapper.getReplyCnt(num);
+	}
 	
 	/*신고처리 -hj*/
 	//Block 처리하기2(Reply)
