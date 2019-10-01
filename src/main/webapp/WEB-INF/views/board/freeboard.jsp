@@ -5,7 +5,10 @@
 	<h3>자유게시판</h3>
 	<div id="table-responsive">
 		<div class="buttondiv" style="margin-top: 10px; margin-bottonm: 10px;">
+		<!-- 로그인이 안되있을 경우 글쓰는 권한 X -->
+		<sec:authorize access="hasRole('ROLE_USER')">
 		<button type ="button" class="btn btn-outline-secondary" onclick="location.href='register'">게시글 등록</button>
+		</sec:authorize>
 		</div>
 		<table class="table table-hover">
 			<tr>
