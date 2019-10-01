@@ -16,10 +16,11 @@
 	$(function() {
 
 		ReplyView();
+		var num = ${recomm.recomm_num};
 		$("#rbtnWrite").on("click", function() {
 			var data = $("#rwriteForm").serialize();
 			$.ajax({
-				url : "/rreply/rwrite",
+				url : "/rreply/rwrite?num="+num,
 				data : data,
 				type : "post",
 				dataType : "json",
@@ -52,12 +53,12 @@
 		 $("#modalDiv2").hide("slow");
 		 }); */
 	});
-	var memberid = ${id};
+
 	function ReplyView() {
 		var table = $("#replyTable");
 		$("#replyTable tr:gt(0)").remove();
 		var recommNum = ${recomm.recomm_num};
-
+		var seqid = $("#seqid").val();
 		/* member_id 수정해야됨 */
 		$.ajax({
 					url : "/rreply/replyView?num=" + recommNum,
@@ -66,8 +67,8 @@
 					success : function(data) {
 						for ( var i in data) {
 							var tr = $("<tr>");
-							var modiText = $("<div id='mod"+i+"' class='collapse form-group'> <input type='hidden' name='num' value='"+data[i].recomm_reply_num+"'><input type='hidden' name='id' value='"+data[i].member_id+"'><br><textarea class='form-control' name='content' rows='3' cols='80'>"+data[i].recomm_reply_content+"</textarea></div>");
-							var remvText = $("<div id='modd"+i+"' class='collapse form-group'> <input type='hidden' name='num2' value='"+data[i].recomm_reply_num+"'><input type='hidden' name='id2' value='"+data[i].member_id+"'></div>");
+							var modiText = $("<div id='mod"+i+"' class='collapse form-group'> <input type='hidden' name='num' value='"+data[i].recomm_reply_num+"'><br><textarea class='form-control' name='content' rows='3' cols='80'>"+data[i].recomm_reply_content+"</textarea></div>");
+							var remvText = $("<div id='modd"+i+"' class='collapse form-group'> <input type='hidden' id='replynum' name='num' value='"+data[i].recomm_reply_num+"'></div>");
 							
 							var rbtnModify = $("<button type='button' class='btn btn-link' data-toggle='collapse' data-target='#mod"+i+"'>M</button>");
 							var rbtnRemove = $("<button type='button' class='btn btn-link' data-toggle='collapse' data-target='#modd"+i+"'>D</button>");
@@ -77,22 +78,20 @@
 							var form2 = $("<form action='#'></form>");
 
 							var btnSubmit = $("<button type='button' class='btn btn-link'>ok</button>");
-							var btnSubmit2 = $("<button type='button' class='btn btn-link'>ok</button>");
+							
 
 							$("<td>").text(data[i].member_id).appendTo(tr);
 							$("<td>").text(data[i].recomm_reply_content)
 									.append(form.append(modiText.append(btnSubmit)))
 									.appendTo(tr);
-							$("<td>").append(form2.append(remvText.append(btnSubmit2)))
-									.appendTo(tr);
+							$("<td>").append(form2.append(remvText)).appendTo(tr);
 							$("<td>").text(data[i].recomm_reply_reg_date)
 									.appendTo(tr);
 							
-							if(memberid.equals(data[i].member_id)){		
+							if(seqid == data[i].member_id){		
 								$("<td>").append(rbtnModify).append(rbtnRemove).appendTo(tr);
 							}
-							
-							$("<td>").append(btnReport).appendTo(tr);
+							$("<td colspan='2'>").append(btnReport).appendTo(tr);
 
 							tr.appendTo(table);
 
@@ -112,6 +111,30 @@
 								}else{
 									modifyBtn.attr('disabled','true');
 								}
+								
+								var data = $(this).closest("form").serialize();
+								var replynum = $("#replynum").val();
+								/* alert(data); */
+								$.ajax({
+									url : "/rreply/rdelete?num="+replynum,
+									data : data,
+									type : "post",
+									dataType : "json",
+									success : function(result) {
+										if (result) {
+											alert("삭제되었습니다.");
+											ReplyView();
+										} else {
+											alert("다시 시도해주세요.");
+											ReplyView();
+										}
+									},
+									error : function() {
+										alert("replyDelete error");
+									}
+								});
+								return false;
+								
 							});
 
 							btnSubmit.on("click", function() {
@@ -137,29 +160,7 @@
 								});
 								return false;
 							});
-							btnSubmit2.on("click", function() {
-								var data = $(this).closest("form").serialize();
-								/* alert(data); */
-								$.ajax({
-									url : "/rreply/rdelete",
-									data : data,
-									type : "post",
-									dataType : "json",
-									success : function(result) {
-										if (result) {
-											alert("삭제되었습니다.");
-											ReplyView();
-										} else {
-											alert("다시 시도해주세요.");
-											ReplyView();
-										}
-									},
-									error : function() {
-										alert("replyDelete error");
-									}
-								});
-								return false;
-							});
+
 						}
 
 					}
@@ -214,7 +215,8 @@
 				<tr align="right">
 					<td colspan="4">
 					<input type="button" onclick="location.href='/recommend/recommendboard'" value="List" class="btn btn-link"> 
-					<input type="text" value="<sec:authentication property="principal.Username" var="id"/>">
+					<sec:authentication property="principal.username" var="id"/>
+					<input type="hidden" id="seqid" value="${id}">
 					<c:if test="${id eq recomm.member_id}">
 						<input type="button" onclick="location.href='/recommend/modify?num=${recomm.recomm_num}'" value="Modify" class="btn btn-link"> 
 						<input type="button" onclick="location.href='/recommend/remove?num=${recomm.recomm_num}'" value="Remove" class="btn btn-link">					

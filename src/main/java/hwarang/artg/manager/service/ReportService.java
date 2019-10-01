@@ -29,6 +29,10 @@ public class ReportService {
 	@Autowired
 	private ReportImgMapper imgDao;
 	
+	public List<ReportVO> reportGetAllId(String id){
+		return dao.selectReport_id(id);
+	}
+	
 	@Transactional
 	public boolean reportRegister(ReportVO report, List<MultipartFile> fileList) {
 		if (dao.insertReport(report) > 0) {

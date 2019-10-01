@@ -37,6 +37,9 @@ public class FreeBoardService {
 	@Autowired
 	private FreeImgMapper freeimgMapper;
 	
+	public List<FreeBoardVO> freeboardGetAllId(String id) {
+		return freeboardMapper.selectOne_id(id);
+	}
 	@Transactional
 	public boolean freeboardRegister(FreeBoardVO freeboard,List<MultipartFile> fileList) {
 		if(freeboardMapper.insertBoard(freeboard)>0) {

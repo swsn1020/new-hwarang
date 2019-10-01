@@ -80,14 +80,13 @@ function goLogin(){
 <body>
 	<div class="container">
 
-		<div class="jumbotron text-center ">
-			<h1>HWARANG</h1>
-			<p>Your own exhibition</p>
-		</div>
+		<h1 align="center">로그인</h1>
+		<br>
+		<br>
 		<%-- ${sessionScope } --%>
 		<div class="" style="margin: 0 auto; width: 720px; overflow: hidden;">
 			<div class="form-group" style="float: left; width: 350px;">
-				<h3  align="center">HWARANG Login</h3>
+				<h3 align="center">화랑 ID 로그인</h3>
 				<fieldset>
 					<form name="loginForm" id="loginForm">
 						<input type="text" name="username" id="member_id" class="form-control" placeholder="아이디"><br>
@@ -112,7 +111,7 @@ function goLogin(){
 
 
 			<div class="" style=" width: 300px; height: 400px; float: left; padding-left: 60px; margin-left: 65px;">
-				<h3  align="center">SNS Simple Login</h3>
+				<h3  align="center">SNS 간편 로그인</h3>
 				<ul style="align-content: center;">
 					<li>
 						<br>

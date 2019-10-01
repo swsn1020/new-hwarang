@@ -2,6 +2,11 @@
 	pageEncoding="UTF-8"%>
 <script type="text/javascript">
 	$(function() {
+		document.domain = "localhost";
+		var url = "/";
+		window.opener.location.replace(url);
+		window.close();
+		
 		Kakao.init('f2ce3ae8264eed849df9ea6f9ad313b9');
 		Kakao.PlusFriend.createAddFriendButton({
 			container : '#plusfriend-addfriend-button',
@@ -11,6 +16,7 @@
 			container : '#plusfriend-chat-button',
 			plusFriendId : '_xingBT' // 플러스친구 홈 URL에 명시된 id로 설정합니다.
 		});
+		
 	});
 </script>
 </div>

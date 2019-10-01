@@ -4,6 +4,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
+import java.security.Principal;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +32,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import hwarang.artg.common.model.EmailDTO;
 import hwarang.artg.common.model.EmailSender;
+import hwarang.artg.community.service.FreeBoardService;
+import hwarang.artg.manager.service.ReportService;
 import hwarang.artg.member.model.MemberAuthVO;
 import hwarang.artg.member.model.MemberVO;
 import hwarang.artg.member.service.KakaoService;
@@ -62,7 +65,10 @@ public class MemberController {
 	private RecommendBoardService recommendservice;
 	@Autowired
 	private PasswordEncoder pwencoder;
-	
+	@Autowired
+	private FreeBoardService freeservice;
+	@Autowired
+	private ReportService reportservice;
 //	@Autowired
 //	@Qualifier("userAuthenticationManager")
 //	private AuthenticationManager authManager;
@@ -146,7 +152,7 @@ public class MemberController {
 		}
 		session.setAttribute("naverName", userInfo.get("name"));
 		session.setAttribute("id", id);
-		return "redirect:/index";
+		return "redirect:/";
 	}
 
 	@ResponseBody
@@ -354,11 +360,14 @@ public class MemberController {
 		return "/member/result";
 	}
 	@RequestMapping("/myPage")
-	public String showMyPage(String id,Model model) {
+	public String showMyPage(Principal principa,Model model) {
+		String id = principa.getName();
 		model.addAttribute("member", service.memberGetOne(id));
 		model.addAttribute("points", pservice.pointGetOne(id));
 		model.addAttribute("review", reviewservice.reviewboardGetIdAll(id));
 		model.addAttribute("recommend", recommendservice.recommendboardGetAll_Id(id));
+		model.addAttribute("free", freeservice.freeboardGetAllId(id));
+		model.addAttribute("id", id);
 		return "/member/myPage";
 	}
 	

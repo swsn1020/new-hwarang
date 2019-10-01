@@ -13,6 +13,7 @@ public interface FreeBoardMapper{
 	public int updateBoard(FreeBoardVO freeboard);
 	public int deleteBoard(int num);
 	public FreeBoardVO selectOne(int num);
+	public List<FreeBoardVO> selectOne_id(String member_id);
 	public List<FreeBoardVO> selectAll(); 
 	public int updateReadCount(int num);
 	public List<FreeBoardVO> getListWithPaging(CriteriaDTO cri);

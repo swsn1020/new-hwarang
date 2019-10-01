@@ -17,10 +17,11 @@
 	$(function() {
 
 		ReplyView();
+		var num = ${review.review_num};
 		$("#rbtnWrite").on("click", function() {
 			var data = $("#rwriteForm").serialize();
 			$.ajax({
-				url : "/reply/rwrite",
+				url : "/reply/rwrite?num="+num,
 				data : data,
 				type : "post",
 				dataType : "json",
@@ -58,6 +59,7 @@
 		var table = $("#replyTable");
 		$("#replyTable tr:gt(0)").remove();
 		var reviewNum = ${review.review_num};
+		var seqid = $("#seqid").val();
 		/* member_id 수정해야됨 */
 		$.ajax({
 					url : "/reply/replyView?num=" + reviewNum,
@@ -66,9 +68,8 @@
 					success : function(data) {
 						for ( var i in data) {
 							var tr = $("<tr>");
-							var modiText = $("<div id='mod"+i+"' class='collapse form-group'><input type='hidden' name='num' value='"+data[i].review_reply_num+"'><input type='hidden' name='id' value='"+data[i].member_id+"'> password <input class='form-control' type='text' name='pw'><br><textarea class='form-control' name='content' rows='3' cols='80'>"
-									+ data[i].review_reply_content + "</textarea></div>");
-							var remvText = $("<div id='modd"+i+"' class='collapse form-group'><input type='hidden' name='num2' value='"+data[i].review_reply_num+"'><input type='hidden' name='id2' value='"+data[i].member_id+"'> password <input class='form-control' type='text' name='pw2'></div>");
+							var modiText = $("<div id='mod"+i+"' class='collapse form-group'><input type='hidden' name='num' value='"+data[i].review_reply_num+"'><input type='hidden' name='id' value='"+data[i].member_id+"'><textarea class='form-control' name='content' rows='3' cols='80'>"+data[i].review_reply_content+"</textarea></div>");
+							var remvText = $("<div id='modd"+i+"' class='collapse form-group'><input type='hidden' id='replynum' name='num' value='"+data[i].review_reply_num+"'></div>");
 							
 							var rbtnModify = $("<button type='button' class='btn btn-link' data-toggle='collapse' data-target='#mod"+i+"'>M</button>");
 							var rbtnRemove = $("<button type='button' class='btn btn-link' data-toggle='collapse' data-target='#modd"+i+"'>D</button>");
@@ -77,19 +78,20 @@
 							var form = $("<form action='#'></form>");
 							var form2 = $("<form action='#'></form>");
 							var btnSubmit = $("<button type='button' class='btn btn-link'>ok</button>");
-							var btnSubmit2 = $("<button type='button' class='btn btn-link'>ok</button>");
 
 							$("<td>").text(data[i].member_id).appendTo(tr);
 							$("<td>").text(data[i].review_reply_content)
 									.append(form.append(modiText.append(btnSubmit)))
 									.appendTo(tr);
-							$("<td>").append(form2.append(remvText.append(btnSubmit2)))
-									.appendTo(tr);
+							$("<td>").append(form2.append(remvText)).appendTo(tr);
 							$("<td>").text(data[i].review_reply_reg_date)
 									.appendTo(tr);
-							$("<td>").append(rbtnModify).append(rbtnRemove)
-									.appendTo(tr);
-							$("<td>").append(btnReport).appendTo(tr);
+							
+							if(seqid == data[i].member_id){
+								$("<td>").append(rbtnModify).append(rbtnRemove).appendTo(tr);								
+							}
+						
+							$("<td colspan='2'>").append(btnReport).appendTo(tr);
 
 							tr.appendTo(table);
 
@@ -109,6 +111,29 @@
 								}else{
 									modifyBtn.attr('disabled','true');
 								}
+								
+								var data = $(this).closest("form").serialize();
+								var replynum = $("#replynum").val();
+								/* alert(data); */
+								$.ajax({
+									url : "/reply/rdelete?num="+replynum,
+									data : data,
+									type : "post",
+									dataType : "json",
+									success : function(result) {
+										if (result) {
+											alert("삭제되었습니다.");
+											ReplyView();
+										} else {
+											alert("다시 시도해주세요.");
+											ReplyView();
+										}
+									},
+									error : function() {
+										alert("replyDelete error");
+									}
+								});
+								return false;
 							});
 
 							btnSubmit.on("click", function() {
@@ -130,29 +155,6 @@
 									},
 									error : function() {
 										alert("replyModify error");
-									}
-								});
-								return false;
-							});
-							btnSubmit2.on("click", function() {
-								var data = $(this).closest("form").serialize();
-								/* alert(data); */
-								$.ajax({
-									url : "/reply/rdelete",
-									data : data,
-									type : "post",
-									dataType : "json",
-									success : function(result) {
-										if (result) {
-											alert("삭제되었습니다.");
-											ReplyView();
-										} else {
-											alert("다시 시도해주세요.");
-											ReplyView();
-										}
-									},
-									error : function() {
-										alert("replyDelete error");
 									}
 								});
 								return false;
@@ -213,9 +215,13 @@
 				</tr>
 				<tr align="right">
 					<td colspan="4">
-					<input type="button" onclick="location.href='reviewboard'" value="List" class="btn btn-link"> 
-					<input type="button" onclick="location.href='checkPw?id=${review.member_id}&num=${review.review_num}&button=modify'" value="Modify" class="btn btn-link"> 
-					<input type="button" onclick="location.href='checkPw?id=${review.member_id}&num=${review.review_num}&button=remove'" value="Remove" class="btn btn-link">
+					<input type="button" onclick="location.href='/review/reviewboard'" value="List" class="btn btn-link"> 
+					<sec:authentication property="principal.username" var="id"/>
+					<input type="hidden" id="seqid" value="${id}"> 
+					<c:if test="${id eq review.member_id}">
+						<input type="button" onclick="location.href='/review/modify?num=${review.review_num}'" value="Modify" class="btn btn-link"> 
+						<input type="button" onclick="location.href='/review/remove?num=${review.review_num}'" value="Remove" class="btn btn-link">
+					</c:if>
 					<input type="button" onclick="location.href='report'" value="Report" class="btn btn-link">
 					</td>
 				</tr>
@@ -224,8 +230,7 @@
 		<!-- 리뷰댓글등록 -->
 		<div class="form-group">
 			<form id="rwriteForm">
-				<!-- member_id 고치기 -->
-				<input type="hidden" name="member_id" value="test"> 
+				<input type="hidden" name="member_id" value="${id}"> 
 				<input type="hidden" name="review_num" value="${review.review_num}">
 				<table>
 					<tr>
