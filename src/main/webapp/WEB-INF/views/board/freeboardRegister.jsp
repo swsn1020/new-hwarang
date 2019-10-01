@@ -5,6 +5,8 @@
 		<h4>게시글 등록</h4>
 		<div class="form-group">
 		<form action="register" method="post" enctype="multipart/form-data">
+			<sec:authentication property="principal.username" var="userid"/>
+			<input type="hidden" name="userid" value="${userid}">
 			<table class="table">
 				<tr>
 					<th>제목</th>

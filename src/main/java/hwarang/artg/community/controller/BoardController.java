@@ -3,6 +3,7 @@ package hwarang.artg.community.controller;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.OutputStream;
+import java.security.Principal;
 import java.text.DateFormat;
 import java.util.List;
 
@@ -46,17 +47,21 @@ public class BoardController {
 	private FreeImgService imgService;
 
 	@RequestMapping(value = "/freeboard", method = RequestMethod.GET)
-	public String showfreeboardList(Model model, CriteriaDTO cri) throws Exception {
+	public String showfreeboardList(Model model, CriteriaDTO cri,Principal principal) throws Exception {
 		PageDTO page = new PageDTO(cri, fservice.getTotal(cri));
 		System.out.println(page);
 		model.addAttribute("pageMaker", page);
 		model.addAttribute("freeboard", fservice.pagingList(cri));
+		model.addAttribute("principal",principal);
 		System.out.println(page);
 		return "/board/freeboard";
 	}
 
 	@RequestMapping("/freeboardView")
-	public String showfreeboardView(Model model, int num,HttpServletRequest request, HttpServletResponse response, @RequestParam(defaultValue = "1")int curPage) {
+	public String showfreeboardView(Model model, int num,HttpServletRequest request, HttpServletResponse response, @RequestParam(defaultValue = "1")int curPage,Principal principal) {
+		String id = principal.getName();
+		model.addAttribute("id",id);
+		model.addAttribute("principal",principal);
 		FreeBoardVO free = fservice.freeboardGetone(num);
 		Cookie [] cookies = request.getCookies();
 		Cookie targetCookie = null;
@@ -117,9 +122,9 @@ public class BoardController {
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
-	public String showRegisterfreeForm() {
+	public String showRegisterfreeForm(Principal principal,Model model) {
+		model.addAttribute("principal",principal);
 		return "/board/freeboardRegister";
-
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
