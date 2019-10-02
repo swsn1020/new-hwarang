@@ -71,6 +71,11 @@
 	 WHERE rnum BETWEEN 1 AND 5
 </select>
 
+<select id="getCountNotChecked" resultType="int">
+	select count(*)
+	from block_status
+	where BS_REPLY = '미확인'
+</select>
 
 
 <resultMap type="hwarang.artg.manager.model.BlockStatusVO" id="bsMap">

@@ -52,6 +52,7 @@ public class ManagerMainController {
 		model.addAttribute("freeBTC", managerService.freeBTodayCount());
 		model.addAttribute("recommBTC", managerService.RecommBTodayCount());
 		
+		model.addAttribute("blockCnt", blockService.getBlockCountNotChecked());
 		return "manager/adminMain";
 	}
 	

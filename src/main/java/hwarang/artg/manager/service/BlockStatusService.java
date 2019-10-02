@@ -236,5 +236,8 @@ public class BlockStatusService {
 		return params;
 	}
 	
+	public int getBlockCountNotChecked() {
+		return dao.getCountNotChecked();
+	}
 	
 }

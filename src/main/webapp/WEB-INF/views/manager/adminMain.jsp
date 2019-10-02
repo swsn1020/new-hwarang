@@ -5,6 +5,7 @@
 <%@ page import = "java.text.SimpleDateFormat" %>
 
 <!-- Google fonts - Poppins -->
+<script src="https://kit.fontawesome.com/1e1a69f988.js"></script>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,700">
 <script	src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
 <script type="text/javascript">
@@ -128,8 +129,8 @@ $(function(){
 	<section class="dashboard-counts no-padding-bottom">
 		<div class="container-fluid">
 			<div class="row bg-white has-shadow">
-				<div style="width: 100%; padding-left: 10px; margin-bottom: 10px;">
-				<h1>Total Statistics</h1>
+				<div style="width: 100%; margin-bottom: 10px; text-align: center;">
+					<h1 style="color: #4A4445"><strong>Total Statistics</strong></h1>
 				</div>
 				<!-- Item -->
 				<div class="col-xl-4 col-sm-8">
@@ -142,8 +143,9 @@ $(function(){
 							</span>
 							<div class="progress">
 								<div role="progressbar" style="width: 25%; height: 4px;"
-									aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"
-									class="progress-bar bg-violet"></div>
+									aria-valuenow="${totalMembers }" aria-valuemin="0" aria-valuemax="100"
+									class="progress-bar bg-violet">
+								</div>
 							</div>
 						</div>
 						<!--                     신규 가입자 수 -->
@@ -156,7 +158,7 @@ $(function(){
 				<div class="col-xl-4 col-sm-8">
 					<div class="item d-flex align-items-center">
 						<div class="icon bg-red">
-							<i class="icon-padnote fa-lg" style="padding-top: 5px;"></i>
+							<i class="fas fa-pencil-alt fa-lg" style="padding-top: 10px;"></i>
 						</div>
 						<div class="title">
 							<span>Total<br>Posts
@@ -177,7 +179,7 @@ $(function(){
 				<div class="col-xl-4 col-sm-8">
 					<div class="item d-flex align-items-center">
 						<div class="icon bg-green">
-							<i class="icon-bill fa-lg" style="padding-top: 5px;"></i>
+							<i class="fas fa-comment-dots fa-lg" style="padding-top: 10px;"></i>
 						</div>
 						<div class="title">
 							<span>Total<br>Replies
@@ -196,25 +198,26 @@ $(function(){
 			</div>
 		</div>
 	</section>
+	<br><br><br>
 	<!-- Dashboard Header Section    -->
     <section class="dashboard-header">
       <div class="container-fluid">
-      	<div style="width: 100%; padding-left: 10px; margin-bottom: 10px;">
-			<h1>Recently Posted</h1>
+      	<div style="width: 100%; margin-bottom: 10px; text-align: center;">
+			<h1 style="color: #4A4445"><strong>Recently Posted</strong></h1>
 		</div>
         <div class="row">
           <!-- Statistics -->
           <div class="statistics col-lg-3 col-12">
             <div class="statistic d-flex align-items-center bg-white has-shadow">
-              <div class="icon bg-red"><i class="fa fa-tasks fa-lg"></i></div>
+              <div class="icon bg-red"><i class="fa fa-tasks fa-lg" style="padding-top: 10px;"></i></div>
               <div class="text"><small style="font-weight: bold;">New Members<br> for a week</small><br><strong><a href="/admin/memberList?type=W">${newMemCount }</a></strong></div>
             </div>
             <div class="statistic d-flex align-items-center bg-white has-shadow">
-              <div class="icon bg-green"><i class="fa fa-calendar-o fa-lg"></i></div>
+              <div class="icon bg-green"><i class="fa fa-calendar-o fa-lg" style="padding-top: 10px;"></i></div>
               <div class="text"><strong><a href="/exhibition">${ExhiCountMonth}</a></strong><br><small>EXHIBITION</small></div>
             </div>
             <div class="statistic d-flex align-items-center bg-white has-shadow">
-              <div class="icon bg-orange"><i class="fa fa-paper-plane-o  fa-lg"></i></div>
+              <div class="icon bg-orange"><i class="fa fa-paper-plane-o fa-lg" style="padding-top: 10px;"></i></div>
               <div class="text"><strong>147</strong><br><small>CORPORATION</small></div>
             </div>
           </div>
@@ -245,7 +248,7 @@ $(function(){
 					 	<strong class="text-green">TOTAL AMOUNT</strong><br>
 					 </div>
 					 <div class="statistic d-flex align-items-center bg-white has-shadow">
-	                    <div class="icon bg-green"><i class="fa fa-line-chart"></i></div>
+	                    <div class="icon bg-green"><i class="fa fa-line-chart" style="padding-top: 10px;"></i></div>
 	                    <div class="text"><strong>99.9%</strong><br><small>크라우드펀딩 총 금액</small>
                     </div>
                   </div>
@@ -253,16 +256,20 @@ $(function(){
           </div>
         </div>
     </section>
+    <br><br><br>
     <!-- Projects Section-->
     <section class="projects no-padding-top">
       <div class="container-fluid">
+      	<div style="width: 100%; margin-bottom: 10px; text-align: center;">
+			<h1 style="color: #4A4445"><strong>Board Status</strong></h1>
+		</div>
         <!-- Project-->
         <div class="project">
           <div class="row bg-white has-shadow">
             <div class="left-col col-lg-6 d-flex align-items-center justify-content-between">
               <div class="project-title d-flex align-items-center">
                 <div class="text">
-                  <h3 class="h4"><a href="/qna/qnaListForManager" style="color: none;">Q&amp;A</a></h3><small>최근 등록된 문의</small>
+                  <h3 class="h4"><a href="/qna/qnaListForManager" style="color: #C8A25B">Q&amp;A</a></h3><small>최근 등록된 문의</small>
                 </div>
               </div>
               <div class="project-date"><span class="hidden-sm-down"><%=date %></span></div>
@@ -301,10 +308,10 @@ $(function(){
 							<td>${regDate }</td>
 							<c:choose>
 								<c:when test="${qna.reply  eq '미답변' || qna.reply eq null}">
-									<td>미답변</td>
+									<td style="color: #BA4E59;"><strong>미답변</strong></td>
 								</c:when>
 								<c:otherwise>
-									<td>답변완료</td>
+									<td><strong>답변완료</strong></td>
 								</c:otherwise>
 							</c:choose>
 						</tr>
