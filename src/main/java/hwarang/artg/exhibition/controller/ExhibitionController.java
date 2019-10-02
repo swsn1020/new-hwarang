@@ -101,7 +101,6 @@ public class ExhibitionController {
 	@GetMapping(value = "/placeList/{placeseq}", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
 	@ResponseBody
 	public ResponseEntity<List<ExhibitionVO>> getExhibitionListByPlace(@PathVariable("placeseq") String placeseq) {
-		System.out.println(placeseq+"ads");
 		return new ResponseEntity<>(service.showListByPlace(placeseq), HttpStatus.OK); 
 	}
 	
