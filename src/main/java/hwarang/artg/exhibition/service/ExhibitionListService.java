@@ -17,7 +17,7 @@ import hwarang.artg.exhibition.model.FavoriteMarkVO;
 import hwarang.artg.mapper.ExhibitionMapper;
 
 @Service
-public class ExhibitionListService {
+public class ExhibitionListService implements Runnable{
 	public final static String PERFORMANCE_URL = "http://www.culture.go.kr/openapi/rest/publicperformancedisplays/area";
 	public final static String SERVICE_KEY = "lC8yHF1DodgPZJZKtzXssNiqMkAYDgZRbHSPlU0ugzFUcEDrgFZOh1HPGhReobUFwYGi9mNi9qEyjINoHIo8%2FA%3D%3D";
 	@Autowired
@@ -102,5 +102,10 @@ public class ExhibitionListService {
 		for (int i = 0; i < list.size(); i++) {
 			mapper.insert(service.apiParserSearch(list.get(i)));
 		}
+	}
+
+	@Override
+	public void run() {
+		
 	}
 }
