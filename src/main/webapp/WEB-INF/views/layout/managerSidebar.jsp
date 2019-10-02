@@ -141,7 +141,7 @@ $(function(){
 	      <div class="sidebar-menu">
 	        <ul>
 	          <li class="header-menu">
-	            <span>General</span>
+	            <span>Settings</span>
 	          </li>
 	          <li class="sidebar-dropdown">
 	            <a href="#">
@@ -173,12 +173,6 @@ $(function(){
 	                </li>
 	                <li>
 	                  <a href="/">Review Board</a>
-	                </li>
-	                <li>
-	                  <a href="/">Ticket Board</a>
-	                </li>
-	                <li>
-	                  <a href="/">Party Board</a>
 	                </li>
 	                <li>
 	                  <a href="/">Recommend Board</a>
@@ -239,31 +233,8 @@ $(function(){
 	              </ul>
 	            </div>
 	          </li>
-	          <li class="header-menu">
-	            <span>Settings</span>
-	          </li>
-	          <li>
-	            <a href="#">
-	              <i class="fa fa-book"></i>
-	              <span>Documentation</span>
-	              <span class="badge badge-pill badge-info">Beta</span>
-	            </a>
-	          </li>
-	          <li>
-	            <a href="#">
-	              <i class="fa fa-calendar"></i>
-	              <span>Calendar</span>
-	            </a>
-	          </li>
-	          <li>
-	            <a href="#">
-	              <i class="fa fa-folder"></i>
-	              <span>Examples</span>
-	            </a>
-	          </li>
 	        </ul>
 	      </div>
-	      <!-- sidebar-menu  -->
 	    </div>
 	    <!-- sidebar-content  -->
 	    <div class="sidebar-footer">

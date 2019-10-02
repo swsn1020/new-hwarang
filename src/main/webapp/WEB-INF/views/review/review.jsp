@@ -84,12 +84,13 @@
 					success : function(data) {
 						for ( var i in data) {
 							console.log(data);
+							
 							var blockStatus = data[i].block;
-							alert(blockStatus);
+// 							alert(blockStatus);
 							if(blockStatus == 'true'){
 								var content = '관리자에 의해 삭제처리 된 댓글입니다.';
 							}else{
-								var content = data[i].review_content;
+								var content = data[i].review_reply_content;
 							}
 							
 							var tr = $("<tr>");

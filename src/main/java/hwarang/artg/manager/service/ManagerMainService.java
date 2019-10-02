@@ -43,10 +43,6 @@ public class ManagerMainService {
 	public int qnaTodayCount() {
 		return dao.todayGetQnACount();
 	}
-	//party_board
-	public int partyBTodayCount() {
-		return dao.todayGetPBCount();
-	}
 	//report_board
 	public int reportTodayCount() {
 		return dao.todayGetReportBCount();
@@ -58,10 +54,6 @@ public class ManagerMainService {
 	//review_board
 	public int reviewBTodayCount() {
 		return dao.todayGetReviewBCount();
-	}
-	//ticekt_board
-	public int ticketBTodayCount() {
-		return dao.todayGetTBCount();
 	}
 	//free_board
 	public int freeBTodayCount() {

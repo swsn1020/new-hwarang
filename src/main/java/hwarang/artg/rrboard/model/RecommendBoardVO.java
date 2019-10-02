@@ -26,7 +26,13 @@ public class RecommendBoardVO {
 	private int recomm_recomm_count;
 	private int recomm_disrecomm_count;
 	private int reply_count;
-	
+	private String block;
+	public String getBlock() {
+		return block;
+	}
+	public void setBlock(String block) {
+		this.block = block;
+	}
 	public int getReply_count() {
 		return reply_count;
 	}

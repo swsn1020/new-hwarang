@@ -46,11 +46,9 @@ public class ManagerMainController {
 		
 		/* 각 게시판 그래프 그리기 - 오늘 등록된 게시글 수 */
 		model.addAttribute("qnaTC", managerService.qnaTodayCount());
-		model.addAttribute("partyBTC", managerService.partyBTodayCount());
 		model.addAttribute("reportTC", managerService.reportTodayCount());
 		model.addAttribute("blockTC", managerService.blockTodayCount());
 		model.addAttribute("reviewBTC", managerService.reviewBTodayCount());
-		model.addAttribute("ticketBTC", managerService.ticketBTodayCount());
 		model.addAttribute("freeBTC", managerService.freeBTodayCount());
 		model.addAttribute("recommBTC", managerService.RecommBTodayCount());
 		

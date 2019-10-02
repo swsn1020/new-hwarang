@@ -21,16 +21,12 @@ public interface ManagerMainMapper {
 	//각 게시글 별 오늘 등록된 데이터 수 조회하기
 	//QNA
 	public int todayGetQnACount();
-	//party_board
-	public int todayGetPBCount();
 	//report_board
 	public int todayGetReportBCount();
 	//block_status
 	public int todayGetBBCount();
 	//review_board
 	public int todayGetReviewBCount();
-	//ticket_board
-	public int todayGetTBCount();
 	//free_board
 	public int todayGetFBCount();
 	//recommend_board

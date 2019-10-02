@@ -42,7 +42,6 @@ function doChange(srcE, targetId){
 		var opt5 = new Option('추천게시판', 'Recommend');
 		var opt6 = new Option('펀딩게시판', 'Funding');
 		var opt7 = new Option('후기게시판', 'Review');
-		var opt8 = new Option('티켓나눔게시판', 'Ticket');
 		//option 추가
 		$("#subCategory").append(opt1);
 		$("#subCategory").append(opt2);
@@ -51,7 +50,6 @@ function doChange(srcE, targetId){
 		$("#subCategory").append(opt5);
 		$("#subCategory").append(opt6);
 		$("#subCategory").append(opt7);
-		$("#subCategory").append(opt8);
     }
     else {
     	var opt = new Option('기타 서비스', 'service', true, true);

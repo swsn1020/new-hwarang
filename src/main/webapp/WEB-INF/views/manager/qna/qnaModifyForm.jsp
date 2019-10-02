@@ -96,7 +96,6 @@ function removeAll(e){
 							<option value="Recommend">추천게시판</option>
 							<option value="Funding">펀딩게시판</option>
 							<option value="Review">후기게시판</option>
-							<option value="Ticket">티켓나눔게시판</option>
 							<option value="service">기타 서비스</option>
 						</select>
 					</td>

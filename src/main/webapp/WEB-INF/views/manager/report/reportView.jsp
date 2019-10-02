@@ -67,9 +67,7 @@ function show(id){
 						<option value="Free">자유게시판</option>
 						<option value="Review">후기게시판</option>
 						<option value="Exhibition">전시게시판</option>
-						<option value="Ticket">티켓나눔게시판</option>
 						<option value="Funding">펀딩게시판</option>
-						<option value="Party">파티원게시판</option>
 					</select>
 					<select class="form-control col-sm-3" id="subCategory" name="subCategory" disabled="disabled" style="display: inline-block;">
 						<option value="Board">게시글</option>

@@ -39,20 +39,18 @@ $(function(){
             }
         },
         data: {
-            labels: ["NOTICE", "FREE", "REPORT", "BLOCK", "PARTY", "TICKET", "REVIEW", "RECOMMEND"],
+            labels: ["NOTICE", "FREE", "REPORT", "BLOCK", "REVIEW", "RECOMMEND"],
             datasets: [
                 {
                     label: "Posted today each board",
-                    data: ['${qnaTC}', '${freeBTC}', '${reportTC}', '${blockTC}', '${partyBTC}', '${ticketBTC}', '${reviewBTC}', '${recommBTC}'],
+                    data: ['${qnaTC}', '${freeBTC}', '${reportTC}', '${blockTC}', '${reviewBTC}', '${recommBTC}'],
                     backgroundColor: [
                     	'rgba(255, 99, 132, 0.2)',
-    	                'rgba(225, 99, 132, 0.2)',
     	                'rgba(54, 162, 235, 0.2)',
     	                'rgba(255, 206, 86, 0.2)',
     	                'rgba(75, 192, 192, 0.2)',
     	                'rgba(153, 102, 255, 0.2)',
     	                'rgba(255, 159, 64, 0.2)',
-    	                'rgba(153, 102, 255, 0.2)'
                     ],
                     borderColor: [
                         'rgb(121, 106, 238)',
@@ -61,12 +59,6 @@ $(function(){
                         'rgb(121, 106, 238)',
                         'rgb(121, 106, 238)',
                         'rgb(121, 106, 238)',
-                        'rgb(121, 106, 238)',
-                        'rgb(121, 106, 238)',
-                        'rgb(121, 106, 238)',
-                        'rgb(121, 106, 238)',
-                        'rgb(121, 106, 238)',
-                        'rgb(121, 106, 238)'
                     ],
                     borderWidth: 1,
                 }

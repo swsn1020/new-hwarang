@@ -15,8 +15,29 @@
 		class="hwarang.artg.security.CustomUserDetailsService" />
 	<security:http>
 <!-- 		<security:intercept-url pattern="/member/**/*" access="hasAnyRole('ROLE_USER')" /> -->
-<!-- 		<security:intercept-url pattern="/admin/**/*" access="hasAnyRole('ROLE_ADMIN')" /> -->
+		<security:intercept-url pattern="/admin/**/*" access="hasAnyRole('ROLE_ADMIN')" />
 		<security:intercept-url pattern="/exhibition/**/*" access="hasAnyRole('ROLE_USER')" />
+		
+		<!-- Notice, QnA, FAQ, block security 설정 -->
+		<security:intercept-url pattern="/notice/noticeWrite" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')" />
+		<security:intercept-url pattern="/notice/noticeModify" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')" />
+		<security:intercept-url pattern="/notice/checkPw" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')" />
+		
+		<security:intercept-url pattern="/faq/faqWrite" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')" />
+		<security:intercept-url pattern="/faq/faqModify" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')" />
+		<security:intercept-url pattern="/faq/checkPw" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')" />
+		
+		<security:intercept-url pattern="/qna/*" access="hasAnyRole('ROLE_USER')" />
+		<security:intercept-url pattern="/qna/qnaListForManager" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')" />
+		<security:intercept-url pattern="/qna/replyModify" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')" />
+		
+		<security:intercept-url pattern="/report/*" access="hasAnyRole('ROLE_USER')" />
+		<security:intercept-url pattern="/report/reportModify" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')" />
+		
+		<security:intercept-url pattern="/block/*" access="hasAnyRole('ROLE_USER')" />
+		<security:intercept-url pattern="/block/blockListForManager" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')" />
+		<security:intercept-url pattern="/block/replyModify" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')" />
+		
 		<security:form-login login-page="/member/loginForm" />
 		<security:logout logout-url="/logout" invalidate-session="true" delete-cookies="remember-me,JSESSION_ID" logout-success-url="/" />
 		<security:access-denied-handler ref="customAccessDenied" />

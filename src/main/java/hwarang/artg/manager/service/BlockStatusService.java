@@ -18,8 +18,12 @@ import hwarang.artg.manager.model.NoticeVO;
 import hwarang.artg.mapper.BlockStatusMapper;
 import hwarang.artg.mapper.NoticeMapper;
 import hwarang.artg.mapper.NoticeReplyMapper;
+import hwarang.artg.rrboard.model.RecommendBoardVO;
+import hwarang.artg.rrboard.model.RecommendReplyVO;
 import hwarang.artg.rrboard.model.ReviewBoardVO;
 import hwarang.artg.rrboard.model.ReviewReplyVO;
+import hwarang.artg.rrboard.service.RecommendBoardService;
+import hwarang.artg.rrboard.service.RecommendReplyService;
 import hwarang.artg.rrboard.service.ReviewBoardService;
 import hwarang.artg.rrboard.service.ReviewReplyService;
 
@@ -37,6 +41,10 @@ public class BlockStatusService {
 	private ReviewBoardService reviewBoardService;
 	@Autowired
 	private ReviewReplyService reviewReplyService;
+	@Autowired
+	private RecommendBoardService recommBoardService;
+	@Autowired
+	private RecommendReplyService recommReplyService;
 	
 	
 	//신고 등록
@@ -127,15 +135,13 @@ public class BlockStatusService {
 				category = "자유게시판";
 				freeBoardService.doBoardBlock("true", boardNum);
 				break;
-			case "Party" :
-				category = "파티게시판";
-				break;
-			case "Ticket" :
-				category = "티켓게시판";
-				break;
 			case "Review" :
 				category = "리뷰게시판";
 				reviewBoardService.doBoardBlock("true", boardNum);
+				break;
+			case "Recommend" :
+				category = "추천게시판";
+				recommBoardService.doBoardBlock("true", boardNum);
 				break;
 			}
 		}else {
@@ -152,6 +158,10 @@ public class BlockStatusService {
 			case "Review" :
 				category = "리뷰게시판";
 				reviewReplyService.doReplyBlock("true", boardNum);
+				break;
+			case "Recommend" :
+				category = "추천게시판";
+				recommReplyService.doReplyBlock("true", boardNum);
 				break;
 			}
 		}
@@ -202,6 +212,19 @@ public class BlockStatusService {
 				System.out.println("댓글");
 				ReviewReplyVO reply = reviewReplyService.reviewreplyGetOne(boardNum);
 				originContent = reply.getReview_reply_content();
+			}
+			break;
+		case "Recommend" :
+			category = "추천게시판";
+			if(subCategory.equals("Board")) {
+				subCategory = "게시글";
+				RecommendBoardVO recomm = recommBoardService.recommendboardGetOne(boardNum);
+				originContent = recomm.getRecomm_content();
+			}else if(subCategory.equals("Reply")) {
+				subCategory = "댓글";
+				System.out.println("댓글");
+				RecommendReplyVO reply = recommReplyService.recommendreplyGetOne(boardNum);
+				originContent = reply.getRecomm_reply_content();
 			}
 			break;
 		}

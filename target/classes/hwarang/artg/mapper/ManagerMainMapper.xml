@@ -32,11 +32,6 @@
 		SELECT count(*) FROM QNA WHERE TO_CHAR(QNA_REG_DATE, 'YYYY-MM-DD') = TO_CHAR(sysdate, 'YYYY-MM-DD')
 	]]>
 </select>
-<select id="todayGetPBCount" resultType="int">
-	<![CDATA[
-		SELECT count(*) FROM PARTY_BOARD WHERE TO_CHAR(PARTY_REGDATE, 'YYYY-MM-DD') = TO_CHAR(sysdate, 'YYYY-MM-DD')
-	]]>
-</select>
 <select id="todayGetReportBCount" resultType="int">
 	<![CDATA[
 		SELECT count(*) FROM REPORT_BOARD WHERE TO_CHAR(REPORT_REG_DATE, 'YYYY-MM-DD') = TO_CHAR(sysdate, 'YYYY-MM-DD')
@@ -50,11 +45,6 @@
 <select id="todayGetReviewBCount" resultType="int">
 	<![CDATA[
 		SELECT count(*) FROM REVIEW_BOARD WHERE TO_CHAR(REVIEW_REG_DATE, 'YYYY-MM-DD') = TO_CHAR(sysdate, 'YYYY-MM-DD')
-	]]>
-</select>
-<select id="todayGetTBCount" resultType="int">
-	<![CDATA[
-		SELECT count(*) FROM TICKET_BOARD WHERE TO_CHAR(TICKET_REGDATE, 'YYYY-MM-DD') = TO_CHAR(sysdate, 'YYYY-MM-DD')
 	]]>
 </select>
 <select id="todayGetFBCount" resultType="int">

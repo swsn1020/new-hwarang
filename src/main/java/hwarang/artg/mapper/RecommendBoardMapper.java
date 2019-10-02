@@ -2,6 +2,8 @@ package hwarang.artg.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import hwarang.artg.common.model.CriteriaDTO;
 import hwarang.artg.rrboard.model.RecommendBoardVO;
 
@@ -24,4 +26,7 @@ public interface RecommendBoardMapper {
 	public int getTotalCount(CriteriaDTO cri);
 	
 	//search
+	
+	//게시글 block 처리
+	public int updateBlock(@Param("block")String block, @Param("num") int num);
 }
