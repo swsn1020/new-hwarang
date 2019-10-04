@@ -221,7 +221,7 @@ public class QnAController {
 	}
 	
 	//첨부 파일 저장(Thumbnail)
-	public static final String UPLOAD_PATH = "C:\\IMAGE\\QnA";
+	public static final String UPLOAD_PATH = "C:\\IMAGE\\Report";
 	@RequestMapping("/downloadThumb")
 	protected void download(String uuid, HttpServletResponse response) throws Exception {
 		OutputStream out = response.getOutputStream();

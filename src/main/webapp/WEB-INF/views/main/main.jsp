@@ -8,7 +8,7 @@
 <%@include file="../layout/left.jsp"%>
 <!--  본문시작  -->
 <div class="album py-5">
-	<h2 class="text-center">Populor / Review top 3</h2>
+	<h2 class="text-center">Popular / Review top 3</h2>
 	<div class="container">
 		<!--  사진 나오는 부분 -->
 		<div class="row " style="padding: 20px;">

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import hwarang.artg.common.model.CriteriaDTO;
 import hwarang.artg.mapper.ManagerMainMapper;
 import hwarang.artg.member.model.MemberVO;
+import hwarang.artg.rrboard.model.ReviewBoardVO;
 
 @Service
 public class ManagerMainService {
@@ -77,5 +78,14 @@ public class ManagerMainService {
 		return dao.getListWithPaging(cri);
 	}
 
+	//total funding price
+	public int getTotalPrice() {
+		return dao.getTotalPrice();
+	}
+	
+	//Review 미리보기
+	public List<ReviewBoardVO> getReviewsTop(){
+		return dao.getReviews();
+	}
 
 }

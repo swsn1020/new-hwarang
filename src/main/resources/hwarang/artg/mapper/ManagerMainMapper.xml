@@ -62,6 +62,15 @@
 		select count(*) from exhibition where trunc(exh_startdate, 'mm') = trunc(sysdate, 'mm')
 	]]>
 </select>
+<select id="getTotalPrice" resultType="int">
+	select sum(funding_price) from crowdfunding
+</select>
+<select id="getReviews"
+		resultType="hwarang.artg.rrboard.model.ReviewBoardVO">
+		select *
+		from ( select * from review_board order by review_reg_date desc)
+		where rownum between 1 and 5
+	</select>
 
 <sql id="criteriaDTO">
 	<trim prefix="(" suffix=") AND " prefixOverrides="OR">

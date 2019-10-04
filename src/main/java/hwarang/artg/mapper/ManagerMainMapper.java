@@ -4,6 +4,8 @@ import java.util.List;
 
 import hwarang.artg.common.model.CriteriaDTO;
 import hwarang.artg.member.model.MemberVO;
+import hwarang.artg.rrboard.model.ReviewBoardVO;
+import hwarang.artg.rrboard.model.ReviewImgVO;
 
 public interface ManagerMainMapper {
 	
@@ -42,8 +44,12 @@ public interface ManagerMainMapper {
 	public List<MemberVO> getListWithPaging(CriteriaDTO cri);
 	
 	
-	
 	//이번달 시작하는 전시회 수
 	public int getExhibCountMonth();
-
+	
+	//total funding price
+	public int getTotalPrice();
+	
+	//Review 글 얻어오기
+	public List<ReviewBoardVO> getReviews();
 }

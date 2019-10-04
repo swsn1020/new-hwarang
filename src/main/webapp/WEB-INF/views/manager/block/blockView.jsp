@@ -34,8 +34,16 @@
 			</tr>
 			<tr>
 				<th>신고 대상 ID</th>
-				<td>${block.blockMemId}</td>
-				<td></td>
+				<td>${block.blockMemId }</td>
+				<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_ADMIN')">
+					<td>
+						<form id="blockForm" action="blockMember" method="post">
+							<input type="hidden" name="member_id" value="${block.blockMemId }">
+							<input type="submit" value="차단설정" class="btn btn-outline-danger btn-sm">
+						</form>
+					</td>
+				</sec:authorize>
+					
 				<th>신고 대상 게시글 번호</th>
 				<td>${block.boardNum }</td>
 			</tr>
@@ -45,11 +53,10 @@
 			</tr>
 			<tr>
 				<th>처리상태</th>
-				<td colspan="2">${block.reply }
-					<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')">
-						<button class="btn btn-outline-info btn-sm" data-toggle="collapse" data-target="#replyForm">답변등록</button>
-					</sec:authorize>
-				</td>
+				<td>${block.reply }</td>
+				<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')">
+					<td><button class="btn btn-outline-info btn-sm" data-toggle="collapse" data-target="#replyForm">답변등록</button></td>
+				</sec:authorize>
 				<th>답변 등록일</th>
 				<c:choose>
 					<c:when test="${block.reply != '미해결' || block.reply != null }">

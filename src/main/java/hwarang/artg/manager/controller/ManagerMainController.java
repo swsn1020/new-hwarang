@@ -1,17 +1,28 @@
 package hwarang.artg.manager.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.OutputStream;
+import java.security.Principal;
+
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import hwarang.artg.common.model.CriteriaDTO;
 import hwarang.artg.common.model.PageDTO;
 import hwarang.artg.manager.service.BlockStatusService;
 import hwarang.artg.manager.service.ManagerMainService;
 import hwarang.artg.manager.service.QnAService;
+import hwarang.artg.member.model.MemberVO;
 import hwarang.artg.member.service.MemberService;
+import hwarang.artg.rrboard.service.ReviewImgService;
+import net.coobird.thumbnailator.Thumbnails;
 
 @Controller
 @RequestMapping("/admin")
@@ -26,7 +37,7 @@ public class ManagerMainController {
 	private MemberService memberService;
 	
 	@RequestMapping("/main")
-	public String showMainPage(Model model) {
+	public String showMainPage(Model model, Principal principal) {
 		System.out.println("Manager Main 요청들어옴");
 		/* 총 멤버 수, 총 게시글 수, 총 댓글 수 */
 		model.addAttribute("totalMembers", managerService.memberCounts());
@@ -53,8 +64,21 @@ public class ManagerMainController {
 		model.addAttribute("recommBTC", managerService.RecommBTodayCount());
 		
 		model.addAttribute("blockCnt", blockService.getBlockCountNotChecked());
+		
+		//로그인 한 아이디 or 이름
+		MemberVO mem = memberService.memberGetOne(principal.getName());
+		String memName = mem.getMember_name();
+		model.addAttribute("memId", principal.getName());
+		model.addAttribute("memName", memName);
+		
+		model.addAttribute("totalFP", managerService.getTotalPrice());
+		
+		// 사진 띄우기
+		model.addAttribute("reviewList", managerService.getReviewsTop());
 		return "manager/adminMain";
 	}
+	
+			
 	
 	@RequestMapping("/memberList")
 	public String showMemberList(CriteriaDTO cri, Model model) {

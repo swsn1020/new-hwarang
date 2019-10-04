@@ -8,6 +8,8 @@
 <script src="https://kit.fontawesome.com/1e1a69f988.js"></script>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,700">
 <script	src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
+<!-- <script src="http://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script> -->
+<!-- <script src="/resources/js/manager/jquery.counterup.js"></script> -->
 <script type="text/javascript">
 $(function(){
 	//차트 그림그리기
@@ -66,62 +68,20 @@ $(function(){
             ]
         }
     });
+	
+    var totalFP = numberWithCommas('${totalFP}');
+//     alert(totalFP);
+	$(".counter").text(totalFP).append("<small style='color: black;'>원</small>");
     
-
- // ------------------------------------------------------- //
-    // Line Chart 1
-    // ------------------------------------------------------ //
-    var LINECHART = $('#lineChart');
-    var myLineChart = new Chart(LINECHART, {
-        type: 'line',
-        options: {
-            scales: {
-                xAxes: [{
-                    display: true,
-                    gridLines: {
-                        display: false
-                    }
-                }],
-                yAxes: [{
-                	display: false,
-                    gridLines: {
-                        display: false
-                    }
-                }]
-            }
-        },
-        data: {
-            labels: ["AUG", "SEP", "OCT", "NOV", "DEC"],
-            datasets: [
-                {
-                	label: "Page Visitors",
-                    fill: true,
-                    lineTension: 0,
-                    backgroundColor: "transparent",
-                    borderColor: '#f15765',
-                    pointBorderColor: '#da4c59',
-                    pointHoverBackgroundColor: '#da4c59',
-                    borderCapStyle: 'butt',
-                    borderDash: [],
-                    borderDashOffset: 0.0,
-                    borderJoinStyle: 'miter',
-                    borderWidth: 1,
-                    pointBackgroundColor: "#fff",
-                    pointBorderWidth: 1,
-                    pointHoverRadius: 5,
-                    pointHoverBorderColor: "#fff",
-                    pointHoverBorderWidth: 2,
-                    pointRadius: 1,
-                    pointHitRadius: 0,
-                    data: [15, 20, 30, 35, 22],
-                    spanGaps: false
-                }
-            ]
-        }
-    });
+	$("#review0").addClass('active');
 
 });	//onload End
+    
+    function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
 </script>
+
 <!-- content-inner -->
 <!-- 신규가입자(수), 신규게시물(수), 신규 댓글(수),  -->
 <div class="content-inner" style="padding-bottom: 59px;">
@@ -210,7 +170,7 @@ $(function(){
           <div class="statistics col-lg-3 col-12">
             <div class="statistic d-flex align-items-center bg-white has-shadow">
               <div class="icon bg-red"><i class="fa fa-tasks fa-lg" style="padding-top: 10px;"></i></div>
-              <div class="text"><small style="font-weight: bold;">New Members<br> for a week</small><br><strong><a href="/admin/memberList?type=W">${newMemCount }</a></strong></div>
+              <div class="text"><strong><a href="/admin/memberList?type=W">${newMemCount }</a></strong><br><small>New Members within a week</small><br></div>
             </div>
             <div class="statistic d-flex align-items-center bg-white has-shadow">
               <div class="icon bg-green"><i class="fa fa-calendar-o fa-lg" style="padding-top: 10px;"></i></div>
@@ -218,41 +178,55 @@ $(function(){
             </div>
             <div class="statistic d-flex align-items-center bg-white has-shadow">
               <div class="icon bg-orange"><i class="fa fa-paper-plane-o fa-lg" style="padding-top: 10px;"></i></div>
-              <div class="text"><strong>147</strong><br><small>CORPORATION</small></div>
+              <div class="text"><strong><a href="#"><span class="counter"></span></a></strong><br><small>TOTAL FUNDING PRICE</small></div>
             </div>
           </div>
           <div class="chart col-lg-6 col-12">
-					<!-- Bar Chart   -->
-					<div class="bar-chart has-shadow bg-white">
-						<div class="title">
-							<strong class="text-violet">Posted Today</strong><br>
-							<%
-								SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-								String date = sdf.format(new Date());
-							%>
-							<small><%=date %> 등록된 게시글</small>
-						</div>
-						<canvas id="barChartHome"></canvas>
-					</div>
-				</div>
-				<div class="chart col-lg-3 col-12">
-					<!-- Line Chart -->
+				<!-- Bar Chart   -->
+				<div class="bar-chart has-shadow bg-white">
 					<div class="title">
-						<strong class="text-red">Visitors</strong><br>
+						<strong class="text-violet">Posted Today</strong><br>
+						<%
+							SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+							String date = sdf.format(new Date());
+						%>
+						<small><%=date %> 등록된 게시글</small>
 					</div>
-					<div
-						class="line-chart bg-white d-flex align-items-center justify-content-center has-shadow">
-						<canvas id="lineChart"></canvas>
-					</div>
-					 <div class="title" style="width: 100%; display: block;">
-					 	<strong class="text-green">TOTAL AMOUNT</strong><br>
-					 </div>
-					 <div class="statistic d-flex align-items-center bg-white has-shadow">
-	                    <div class="icon bg-green"><i class="fa fa-line-chart" style="padding-top: 10px;"></i></div>
-	                    <div class="text"><strong>99.9%</strong><br><small>크라우드펀딩 총 금액</small>
-                    </div>
-                  </div>
+					<canvas id="barChartHome"></canvas>
 				</div>
+			</div>
+			<!-- images -->
+			<div class="images col-lg-3 col-12">
+				<div class="image d-flex align-items-center bg-white has-shadow">
+					<div id="img" class="carousel slide" data-ride="carousel" style="width: 100%; height: 100%;">
+					<p><strong class="text-red">REVIEW BOARD</strong></p>
+						 <!-- Indicators -->
+						  <ul class="carousel-indicators">
+						    <li data-target="#img" data-slide-to="0" class="active"></li>
+						    <li data-target="#img" data-slide-to="1"></li>
+						    <li data-target="#img" data-slide-to="2"></li>
+						  </ul>
+						  
+						  <!-- The slideshow -->
+						  <div class="carousel-inner">
+						  	<c:forEach items="${reviewList }" var="review" varStatus="vs">
+							    <div class="carousel-item" id="review${vs.index }">
+							      <p><strong>${review.review_title }</strong></p>
+							      <br><br><br>
+							      <p>${review.review_content }</p>
+							    </div>
+						  	</c:forEach>
+						  </div>
+						  <!-- Left and right controls -->
+						  <a class="carousel-control-prev" href="#img" data-slide="prev">
+						    <span class="carousel-control-prev-icon"></span>
+						  </a>
+						  <a class="carousel-control-next" href="#img" data-slide="next">
+						    <span class="carousel-control-next-icon"></span>
+						  </a>
+					</div>
+				</div>
+			</div>
           </div>
         </div>
     </section>
@@ -269,7 +243,7 @@ $(function(){
             <div class="left-col col-lg-6 d-flex align-items-center justify-content-between">
               <div class="project-title d-flex align-items-center">
                 <div class="text">
-                  <h3 class="h4"><a href="/qna/qnaListForManager" style="color: #C8A25B">Q&amp;A</a></h3><small>최근 등록된 문의</small>
+                  <h3 class="h4"><a href="/qna/qnaListForManager">Q&amp;A</a></h3><small>최근 등록된 문의</small>
                 </div>
               </div>
               <div class="project-date"><span class="hidden-sm-down"><%=date %></span></div>
@@ -282,7 +256,7 @@ $(function(){
               <div class="time"><i class="fa fa-clock-o"></i><%=date2 %> </div>
               <div class="project-progress">
                 <div class="progress">
-                  <div role="progressbar" style="width: 45%; height: 6px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-red"></div>
+                  <div role="progressbar" style="width: 45%; height: 6px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-yellow"></div>
                 </div>
               </div>
             </div>
@@ -304,7 +278,7 @@ $(function(){
 						<tr>
 							<td>${qna.num }</td>
 							<td>${qna.category }</td>
-							<td><a href="/qna/qnaView?num=${qna.num}">${qna.title }</a></td>
+							<td><a href="/qna/qnaView?num=${qna.num}" style="color: #666"  onmouseover="this.style.color='black'" onmouseout="this.style.color='#666'">${qna.title }</a></td>
 							<td>${regDate }</td>
 							<c:choose>
 								<c:when test="${qna.reply  eq '미답변' || qna.reply eq null}">
@@ -344,9 +318,7 @@ $(function(){
 						</div>
 						<div class="project-progress">
 							<div class="progress">
-								<div role="progressbar" style="width: 60%; height: 6px;"
-									aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"
-									class="progress-bar bg-green"></div>
+								<div role="progressbar" style="width: 60%; height: 6px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-red"></div>
 							</div>
 						</div>
 					</div>

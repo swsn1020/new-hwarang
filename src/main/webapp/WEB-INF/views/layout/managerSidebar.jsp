@@ -115,8 +115,8 @@ $(function(){
 	      </div>
 	      <div class="sidebar-header">
 	        <div class="user-info">
-	          <span class="user-name">Hyeji <!-- 아이디 불러오기 -->
-	            <strong>Lee</strong>
+	          <span class="user-name">${memName } <!-- 아이디 불러오기 -->
+	            <strong>(${memId })</strong>
 	          </span>
 	          <span class="user-role">Administrator</span>
 	          <span class="user-status">
@@ -197,7 +197,7 @@ $(function(){
 	                  <a href="#">Authorization Settings</a>
 	                </li>
 	                <li>
-	                  <a href="#">Block Status <span class="badge badge-pill badge-danger">${blockCnt }</span>
+	                  <a href="/block/blockListForManager">Block Status <span class="badge badge-pill badge-danger">${blockCnt }</span>
 	                  </a>
 	                </li>
 	              </ul>

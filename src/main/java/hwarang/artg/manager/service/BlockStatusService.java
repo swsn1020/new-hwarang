@@ -18,6 +18,7 @@ import hwarang.artg.manager.model.NoticeVO;
 import hwarang.artg.mapper.BlockStatusMapper;
 import hwarang.artg.mapper.NoticeMapper;
 import hwarang.artg.mapper.NoticeReplyMapper;
+import hwarang.artg.member.service.MemberService;
 import hwarang.artg.rrboard.model.RecommendBoardVO;
 import hwarang.artg.rrboard.model.RecommendReplyVO;
 import hwarang.artg.rrboard.model.ReviewBoardVO;
@@ -45,6 +46,8 @@ public class BlockStatusService {
 	private RecommendBoardService recommBoardService;
 	@Autowired
 	private RecommendReplyService recommReplyService;
+	@Autowired
+	private MemberService memberService;
 	
 	
 	//신고 등록
@@ -236,8 +239,12 @@ public class BlockStatusService {
 		return params;
 	}
 	
+	//미확인 차단 수(manager sidebar)
 	public int getBlockCountNotChecked() {
 		return dao.getCountNotChecked();
 	}
+	
+	
+	
 	
 }

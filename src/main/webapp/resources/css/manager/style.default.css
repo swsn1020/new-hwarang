@@ -63,7 +63,7 @@ header.page-header {
 }
 
 table {
-  font-size: 0.9em;
+  font-size: 1em;
   color: #666;
 }
 
@@ -208,7 +208,7 @@ input {
 }
 
 .bg-yellow {
-  background: #eef157 !important;
+  background: #C8A25B !important;
   color: #fff;
 }
 
@@ -260,11 +260,11 @@ input {
 }
 
 .text-yellow {
-  color: #eef157;
+  color: #C8A25B;
 }
 
 .text-yellow:hover {
-  color: #eef157;
+  color: #C8A25B;
 }
 
 .text-green {
@@ -808,6 +808,33 @@ section.dashboard-counts div[class*='col-']:last-of-type .item {
   height: 100%;
   margin: 0;
 }
+/* 이미지 띄우기 */
+.image {
+  padding: 15px 15px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  height: 100%;
+}
+
+.statistic:last-of-type {
+  margin-bottom: 0;
+}
+
+.statistic strong {
+  font-size: 1.5em;
+  color: #333;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.statistic small {
+  color: #aaa;
+  text-transform: uppercase;
+}
+
+
+
+
 
 /*  DASHBOARD HEADER  MEDIAQUERIES ------------------------*/
 @media (max-width: 991px) {
@@ -830,7 +857,7 @@ section.dashboard-counts div[class*='col-']:last-of-type .item {
 
 /* 사용자 추가 */
 .project a {
-	color: #666;
+	color: #C8A25B;
 	font-weight: bold;
 }
 
@@ -846,6 +873,16 @@ section.dashboard-counts div[class*='col-']:last-of-type .item {
 
 .project, #project2 a:hover {
 	color: #DE7487;
+}
+
+/*blockStauts, MemberList CSS 사용자 지정 */
+.project, #project3 a {
+	color: #80425A;
+	font-weight: bold;
+}
+
+.project, #project3 a:hover {
+	color: #735D72;
 }
 
 .project div[class*='col-'] {
@@ -1643,7 +1680,7 @@ STYLE SWITCHER FOR DEMO
 
 /*
  * 2. BUTTONS
- */
+ 
 .btn {
   font-weight: 400;
   border: 1px solid transparent;
@@ -1721,13 +1758,14 @@ body {
 }
 
 a {
-  color: #796AEE;
+  color: #666;
   text-decoration: none;
 }
 
 a:focus, a:hover {
-  color: #3b25e6;
+  color: #D06C56;
   text-decoration: underline;
+  font-weight: bold;
 }
 
 /*

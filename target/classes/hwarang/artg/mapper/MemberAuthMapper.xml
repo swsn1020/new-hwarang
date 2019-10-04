@@ -5,7 +5,7 @@
 	<mapper namespace="hwarang.artg.mapper.MemberAuthMapper">
 
 		<insert id="insertMember_Auth" parameterType="hwarang.artg.member.model.MemberAuthVO">
-			insert into member_auth(member_id,member_auth)
+			insert into member_auth(member_id, member_auth)
 			values(#{member_id},#{member_auth})
 		</insert>
 		<update id="updateMember_Auth" parameterType="hwarang.artg.member.model.MemberAuthVO">

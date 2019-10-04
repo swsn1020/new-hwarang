@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import hwarang.artg.common.model.CriteriaDTO;
@@ -90,37 +91,42 @@ public class BlockController {
 		return "manager/block/blockModify";
 	}
 	
-	@RequestMapping(value="blockModify", method=RequestMethod.POST)
-	public String doBlockModify(BlockStatusVO block, Model model) {
-		String url = "";
-		String msg = "";
-		if(service.blockModify(block)) {
-			msg = "";
-		}else {
-			url = "";
-		}
-		model.addAttribute("url", url);
-		model.addAttribute("msg", msg);
-		return "manager/result";
-	}
-	
 	@ResponseBody
 	@RequestMapping(value="/replyModify", method=RequestMethod.POST)
-	public boolean doReplyModify(int num, String reply) {
+	public boolean doReplyModify(int num, String reply, @RequestParam("blockMemId")String id) {
 		System.out.println("replyModify 요청 들어옴");
 		if(reply.contains("삭제")) {
 			service.doCheckCategory(num);
+			if(memService.memberGetOne(id) != null) {
+				if(memService.doMemberCountBlock(id)) {
+					System.out.println("Member Report Count up!");
+				}
+			}else{
+				System.out.println("해당하는 id의 멤버가 없습니다.");
+			}
 		}
 		return service.replyModify(reply, num);
 	}
 	
+	//blockView 설정**
 	@RequestMapping("blockView")
-	public String showBlockView(int num, Model model) {
+	public String showBlockView(int num, Model model, Principal principal) {
 		System.out.println("blockView 요청 들어옴");
-		Map<String, Object> maps = service.doCheckBlock(num);
-		System.out.println(maps.toString());
-		model.addAllAttributes(service.doCheckBlock(num));
-		return "manager/block/blockView";
+		String id = principal.getName();
+		BlockStatusVO block = service.blockGetOne(num);
+		if(id.equals(block.getMemId())){
+			Map<String, Object> maps = service.doCheckBlock(num);
+			System.out.println(maps.toString());
+			model.addAllAttributes(service.doCheckBlock(num));
+			return "manager/block/blockView";
+		}else {
+			String msg = "해당 신고 접수자만 열람 가능합니다.";
+			String url = "blockListForUser?memId="+id;
+			model.addAttribute("msg", msg);
+			model.addAttribute("url", url);
+			return "manager/result";
+		}
+		
 	}
 	
 	@RequestMapping(value="/checkPw", method=RequestMethod.POST)
@@ -158,6 +164,20 @@ public class BlockController {
 		}
 		model.addAttribute("msg", msg);
 		model.addAttribute("url", url);
+		return "manager/result";
+	}
+	
+	@RequestMapping(value="blockMember", method=RequestMethod.POST)
+	public String doBlockMember(@RequestParam("member_id")String id, Model model) {
+		String msg = id+"님의 계정차단에 실패하였습니다.";
+		String url = "/admin/memberList";
+		if(memService.doMemberStatusBlock(id)) {
+			msg = id+"님의 활동정지가 설정되었습니다.";
+		}else {
+			url = "history.go(-1)";
+		}
+		model.addAttribute("url", url);
+		model.addAttribute("msg", msg);
 		return "manager/result";
 	}
 	

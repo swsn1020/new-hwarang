@@ -70,4 +70,20 @@ public class MemberService {
 		}
 		return false;
 	}
+	
+	//Member block Count 처리
+	public boolean doMemberCountBlock(String id) {
+		if(membermapper.blockCountMember(id)>0) {
+			return true;
+		}
+		return false;
+	}
+	
+	//Member block Status 처리
+	public boolean doMemberStatusBlock(String id) {
+		if(membermapper.blockStatusMember(id)>0) {
+			return true;
+		}
+		return false;
+	}
 }

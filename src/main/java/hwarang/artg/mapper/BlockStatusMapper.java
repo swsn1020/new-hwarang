@@ -33,7 +33,7 @@ public interface BlockStatusMapper {
 	//최근 신고접수 불러오기(날짜 정렬)
 	public List<BlockStatusVO> getListByRegDate();
 	
-	//미확인 차단 수
+	//미확인 차단 수(manager sidebar)
 	public int getCountNotChecked();
 
 }
