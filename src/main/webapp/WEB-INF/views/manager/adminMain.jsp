@@ -88,7 +88,7 @@ $(function(){
 	background-color: #B2A49A;
 	}
 	.carousel-control-prev-icon {
-	background-color: black;
+	color: black;
 	}
 	
 </style>
@@ -222,8 +222,8 @@ $(function(){
 						  <!-- The slideshow -->
 						  <div class="carousel-inner" style="padding-left: 30px; padding-right: 30px; height: 80%;">
 						  	<c:forEach items="${reviewList }" var="review" varStatus="vs">
-							    <div class="carousel-item" id="review${vs.index }" onclick="location.href='/review/view?num=${review.review_num}'">
-							      <p><strong>${review.review_title }</strong></p>
+							    <div class="carousel-item" id="review${vs.index }">
+							      <p><strong><a href="/review/view?num=${review.review_num}">${review.review_title }</a></strong></p>
 							      <br><br><br>
 							      <p>${review.review_content }</p>
 							    </div>
