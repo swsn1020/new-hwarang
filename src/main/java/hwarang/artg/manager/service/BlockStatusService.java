@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import hwarang.artg.common.model.CriteriaDTO;
+import hwarang.artg.community.model.FreeBoardVO;
+import hwarang.artg.community.model.FreeReplyVO;
 import hwarang.artg.community.service.FreeBoardService;
 import hwarang.artg.community.service.FreeReplyService;
 import hwarang.artg.manager.model.BlockStatusVO;
@@ -16,6 +18,15 @@ import hwarang.artg.manager.model.NoticeVO;
 import hwarang.artg.mapper.BlockStatusMapper;
 import hwarang.artg.mapper.NoticeMapper;
 import hwarang.artg.mapper.NoticeReplyMapper;
+import hwarang.artg.member.service.MemberService;
+import hwarang.artg.rrboard.model.RecommendBoardVO;
+import hwarang.artg.rrboard.model.RecommendReplyVO;
+import hwarang.artg.rrboard.model.ReviewBoardVO;
+import hwarang.artg.rrboard.model.ReviewReplyVO;
+import hwarang.artg.rrboard.service.RecommendBoardService;
+import hwarang.artg.rrboard.service.RecommendReplyService;
+import hwarang.artg.rrboard.service.ReviewBoardService;
+import hwarang.artg.rrboard.service.ReviewReplyService;
 
 @Service
 public class BlockStatusService {
@@ -27,6 +38,16 @@ public class BlockStatusService {
 	private FreeBoardService freeBoardService;
 	@Autowired
 	private FreeReplyService freeReplyService;
+	@Autowired
+	private ReviewBoardService reviewBoardService;
+	@Autowired
+	private ReviewReplyService reviewReplyService;
+	@Autowired
+	private RecommendBoardService recommBoardService;
+	@Autowired
+	private RecommendReplyService recommReplyService;
+	@Autowired
+	private MemberService memberService;
 	
 	
 	//신고 등록
@@ -117,14 +138,13 @@ public class BlockStatusService {
 				category = "자유게시판";
 				freeBoardService.doBoardBlock("true", boardNum);
 				break;
-			case "Party" :
-				category = "파티게시판";
-				break;
-			case "Ticket" :
-				category = "티켓게시판";
-				break;
 			case "Review" :
 				category = "리뷰게시판";
+				reviewBoardService.doBoardBlock("true", boardNum);
+				break;
+			case "Recommend" :
+				category = "추천게시판";
+				recommBoardService.doBoardBlock("true", boardNum);
 				break;
 			}
 		}else {
@@ -138,17 +158,15 @@ public class BlockStatusService {
 				category = "자유게시판";
 				freeReplyService.doReplyBlock("true", boardNum);
 				break;
-			case "Party" :
-				category = "파티게시판";
-				break;
-			case "Ticket" :
-				category = "티켓게시판";
-				break;
 			case "Review" :
 				category = "리뷰게시판";
+				reviewReplyService.doReplyBlock("true", boardNum);
+				break;
+			case "Recommend" :
+				category = "추천게시판";
+				recommReplyService.doReplyBlock("true", boardNum);
 				break;
 			}
-			noticeService.doNoticeReplyBlock("true", boardNum);
 		}
 	}
 	
@@ -175,15 +193,42 @@ public class BlockStatusService {
 			break;
 		case "Free" :
 			category = "자유게시판";
-			break;
-		case "Party" :
-			category = "파티게시판";
-			break;
-		case "Ticket" :
-			category = "티켓게시판";
+			if(subCategory.equals("Board")) {
+				subCategory = "게시글";
+				FreeBoardVO free = freeBoardService.freeboardGetone(boardNum);
+				originContent = free.getContent();
+			}else if(subCategory.equals("Reply")) {
+				subCategory = "댓글";
+				System.out.println("댓글");
+				FreeReplyVO reply = freeReplyService.freereplyGetone(boardNum);
+				originContent = reply.getContent();
+			}
 			break;
 		case "Review" :
 			category = "리뷰게시판";
+			if(subCategory.equals("Board")) {
+				subCategory = "게시글";
+				ReviewBoardVO review = reviewBoardService.reviewboardGetOne(boardNum);
+				originContent = review.getReview_content();
+			}else if(subCategory.equals("Reply")) {
+				subCategory = "댓글";
+				System.out.println("댓글");
+				ReviewReplyVO reply = reviewReplyService.reviewreplyGetOne(boardNum);
+				originContent = reply.getReview_reply_content();
+			}
+			break;
+		case "Recommend" :
+			category = "추천게시판";
+			if(subCategory.equals("Board")) {
+				subCategory = "게시글";
+				RecommendBoardVO recomm = recommBoardService.recommendboardGetOne(boardNum);
+				originContent = recomm.getRecomm_content();
+			}else if(subCategory.equals("Reply")) {
+				subCategory = "댓글";
+				System.out.println("댓글");
+				RecommendReplyVO reply = recommReplyService.recommendreplyGetOne(boardNum);
+				originContent = reply.getRecomm_reply_content();
+			}
 			break;
 		}
 		
@@ -193,6 +238,13 @@ public class BlockStatusService {
 		params.put("originContent", originContent);
 		return params;
 	}
+	
+	//미확인 차단 수(manager sidebar)
+	public int getBlockCountNotChecked() {
+		return dao.getCountNotChecked();
+	}
+	
+	
 	
 	
 }

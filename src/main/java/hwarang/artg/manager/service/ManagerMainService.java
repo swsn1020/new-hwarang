@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import hwarang.artg.common.model.CriteriaDTO;
 import hwarang.artg.mapper.ManagerMainMapper;
 import hwarang.artg.member.model.MemberVO;
+import hwarang.artg.rrboard.model.ReviewBoardVO;
 
 @Service
 public class ManagerMainService {
@@ -43,10 +44,6 @@ public class ManagerMainService {
 	public int qnaTodayCount() {
 		return dao.todayGetQnACount();
 	}
-	//party_board
-	public int partyBTodayCount() {
-		return dao.todayGetPBCount();
-	}
 	//report_board
 	public int reportTodayCount() {
 		return dao.todayGetReportBCount();
@@ -58,10 +55,6 @@ public class ManagerMainService {
 	//review_board
 	public int reviewBTodayCount() {
 		return dao.todayGetReviewBCount();
-	}
-	//ticekt_board
-	public int ticketBTodayCount() {
-		return dao.todayGetTBCount();
 	}
 	//free_board
 	public int freeBTodayCount() {
@@ -85,5 +78,14 @@ public class ManagerMainService {
 		return dao.getListWithPaging(cri);
 	}
 
+	//total funding price
+	public int getTotalPrice() {
+		return dao.getTotalPrice();
+	}
+	
+	//Review 미리보기
+	public List<ReviewBoardVO> getReviewsTop(){
+		return dao.getReviews();
+	}
 
 }

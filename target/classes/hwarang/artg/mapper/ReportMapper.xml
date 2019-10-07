@@ -13,7 +13,7 @@
 		WHERE REPORT_NUM = #{num}
 	</update>
 	<update id="updateReply">
-		UPDATE REPORT_BOARD SET REPORT_REPLY = #{reply}
+		UPDATE REPORT_BOARD SET REPORT_REPLY = #{reply}, REPORT_MODI_DATE = sysdate
 		WHERE REPORT_NUM = #{num}
 	</update>
 	<delete id="deleteReport" parameterType="int">

@@ -30,14 +30,14 @@ public class ItemTests {
 	FavoriteMarkService fService;
 	@Autowired
 	MemberMapper mMapper;
-//	@Test
-//	public void testInsert() {
-//		try {
-//			service.apiParserSearch();
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//	}
+	@Test
+	public void testInsert() {
+		try {
+			service.apiParserSearch();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 
 //	@Test
@@ -73,8 +73,8 @@ public class ItemTests {
 //	public void getMember() {
 //		System.out.println(mMapper.selectMember("id1"));
 //	}
-	@Test
-	public void getPlace() {
-		System.out.println(mapper.getPlaceList("서울"));
-	}
+//	@Test
+//	public void getPlace() {
+//		System.out.println(mapper.getPlaceList("서울"));
+//	}
 }

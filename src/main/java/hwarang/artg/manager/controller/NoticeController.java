@@ -31,11 +31,11 @@ import hwarang.artg.member.service.MemberService;
 @RequestMapping("/notice")
 public class NoticeController {
 	@Autowired
-	private PasswordEncoder pwEncoder;
-	@Autowired
 	private NoticeService service;
 	@Autowired
 	private MemberService memService;
+	@Autowired
+	private PasswordEncoder pwEncoder;
 	
 	@RequestMapping("/noticeList")
 	public String showNoticeList(CriteriaDTO cri, Model model) {
@@ -190,14 +190,14 @@ public class NoticeController {
 			//비밀번호 일치
 			if(type.equals("delete")) {
 				// 삭제요청
-				if(service.nReplyRemoveByBNum(num)) {
-					System.out.println("해당 notice Reply 삭제완료");
-				}else {
-					System.out.println("해당 notice Reply 삭제 실패");
-				}
 				if(service.noticeRemove(num)) {
 					//삭제 성공(파일 삭제) >> 이동할 화면
 					//Service에서 작성하기
+					if(service.nReplyRemoveByBNum(num)) {
+						System.out.println("공지댓글 삭제 성공");
+					}else {
+						System.out.println("공지 댓글 삭제 실패");
+					}
 					System.out.println("Notice삭제 성공");
 					msg = "공지가 삭제되었습니다";
 				}else {

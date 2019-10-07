@@ -40,7 +40,7 @@ import hwarang.artg.rrboard.service.ReviewReplyService;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
 public class BeanTest {
-	@Autowired
+//	@Autowired
 //	private MemberMapper dao;
 //	@Autowired
 //	private MemberService service;
@@ -51,7 +51,7 @@ public class BeanTest {
 //	private TasteMapper dao;
 //	private TasteService s;
 //	private PointMapper dao;
-	private PointService s;
+//	private PointService s;
 //	private RecommendBoardMapper dao;
 //	private RecommendBoardService s;
 //	private RecommendImgMapper dao;
@@ -66,11 +66,14 @@ public class BeanTest {
 //	private ReviewReplyService s;
 	
 	@Autowired
-	private MemberService ms;
+//	private MemberService ms;
+	private MemberAuthService memas;
+	
 	
 	@Test
 	public void test() {
-		s.pointGetRegister(1, 100, "포인트사용", "bbb");
+		System.out.println(memas.memberauthGetOne("id1"));
+//		s.pointGetRegister(1, 100, "포인트사용", "bbb");
 		
 		
 //		System.out.println(s.pointRemove(24));
@@ -152,7 +155,7 @@ public class BeanTest {
 //		dao.deleteMember_Auth("test1");
 		
 		
-		for(int i=1;i<6;i++) {
+//		for(int i=1;i<6;i++) {
 //			PointVO p = new PointVO();
 //			p.setMember_id("test"+i);
 //			dao.insertPoint(p);
@@ -215,7 +218,7 @@ public class BeanTest {
 //		System.out.println(service.memberGetOne("test199"));
 //		System.out.println(membermapper.selectMember("test199"));
 		
-		ms.memberGetOne("id1");
+//		ms.memberGetOne("id1");
 		
-	}
+//	}
 }

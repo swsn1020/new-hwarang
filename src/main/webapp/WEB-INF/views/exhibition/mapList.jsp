@@ -36,7 +36,7 @@
 	            });
 			
 				getPlaceInfo(p, function(exh){
-		    		var iwContent = '<div style="padding:5px;"><p><a href="'+exh.exh_placeurl+'">'+exh.exh_place+'</a></p><div><table class="table"><tbody><tr><td>'+exh.exh_placeaddr+'</td><td><a href="https://map.kakao.com/link/to/'+exh.exh_placeaddr+','+y+','+x+'" target="_blank"><i class="fas fa-map-marked-alt"></i></a></td></tr><tr><td><a class="btn btn-primary" data-toggle="collapse" data-target="#exhModal'+p+'">해당 장소의 공연보기</a></td></tr></tbody></table></div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+		    		var iwContent = '<div style="padding:5px;"><p><a href="'+exh.exh_placeurl+'">'+exh.exh_place+'</a></p><div><table class="table"><tbody><tr><td>'+exh.exh_placeaddr+'</td><td><a href="https://map.kakao.com/link/to/'+exh.exh_placeaddr+','+y+','+x+'" target="_blank"><i class="fas fa-map-marked-alt"></i></a></td></tr><tr><td><a class="btn btn-primary" onclick="getList('+p+')">해당 장소의 공연보기</a></td></tr></tbody></table></div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
 		    	    iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
 		    	    // 인포윈도우를 생성합니다
 		    		var infowindow = new kakao.maps.InfoWindow({
@@ -80,8 +80,8 @@
 			}
 		});
 	}
-	function getList(p, callback, error) {
-		$.getJSON("/exhReplies/"+p+".json", function(data) {
+	function getPlaceList(p, callback, error) {
+		$.getJSON("/exhibition/placeList/"+p+".json", function(data) {
 			if(callback){
 				callback(data);
 			}
@@ -90,6 +90,18 @@
 				error();
 			}
 		});
+	}
+	
+	function getList(p){
+		getPlaceList(p, function(eList){
+			var str = "";
+			var exhibition = $("#exhibition");			
+			for(var i=0; i<eList.length; i++){
+				console.log(eList[i]);
+				str += "<tr><td>"+eList[i].exh_title+"</td><td>"+eList[i].exh_startDate.substring(0,10)+" ~ "+eList[i].exh_endDate.substring(0,10)+"</td><td><a class='btn btn-primary' href='/exhibition/view?seq="+eList[i].exh_seq+"'>공연 페이지</a></td></tr>"
+			};
+			exhibition.html(str);
+		});	
 	}
 	
 
@@ -106,70 +118,26 @@
 			</select>
 			<button type="submit" class="btn btn-primary">검색</button>
 		</form>
-		<div id="map" style="width: 1200px; height: 650px;"></div>
-			<!-- 관심추가  Modal -->
-			<div class="modal" id="fav-AddModal">
-				<div class="modal-dialog">
-					<div class="modal-content">
-						<!-- Modal Header -->
-						<div class="modal-header">
-							<p class="modal-title">관심목록 추가</p>
-							<button type="button" class="close" data-dismiss="modal">&times;</button>
-						</div>
-						<!-- Modal body -->
-						<div class="content">
-							<div>
-								<input id="addFavGroup" type="text"
-									placeholder="새로운 그룹 이름  추가"> <a
-									class="btn btn-secondary" onclick="addFavGroup()">그룹추가</a>
-							</div>
-							<select name="group" id="favGroup">
-								<option selected value="찜 목록" id="basic-group">기본
-									- 찜 목록</option>
-								<c:forEach items="${group}" var="g">
-									<option value="${g}">${g}</option>
-								</c:forEach>
-							</select>
-							<p class="info">
-								<strong>${e.exh_title}</strong> (가)이 추가됩니다. <br />추가하시겠습니까?
-							</p>
-						</div>
-						<!-- Modal footer -->
-						<div class="modal-footer">
-							<a onclick="addFavorite()"><img
-								src="http://img.echosting.cafe24.com/skin/base_ko_KR/link/btn_add.gif"
-								alt="추가하기"></a> <a data-dismiss="modal"><img
-								src="http://img.echosting.cafe24.com/skin/base_ko_KR/link/btn_cancel.gif"
-								alt="취소하기"></a>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- 관심삭제  Modal -->
-			<div class="modal" id="fav-RemoveModal">
-				<div class="modal-dialog">
-					<div class="modal-content">
-						<!-- Modal Header -->
-						<div class="modal-header">
-							<p class="modal-title">관심목록 삭제</p>
-							<button type="button" class="close" data-dismiss="modal">&times;</button>
-						</div>
-						<!-- Modal body -->
-						<div class="content">
-							<p class="info">
-								<strong>${e.exh_title}</strong> (가)이 삭제됩니다. <br />정말로 삭제 하시겠습니까?
-							</p>
-						</div>
-						<!-- Modal footer -->
-						<div class="modal-footer">
-							<a class="btn btn-primary" onclick="removeFavorite()">삭제하기</a>
-							<a data-dismiss="modal"><img
-								src="http://img.echosting.cafe24.com/skin/base_ko_KR/link/btn_cancel.gif"
-								alt="취소하기"></a>
-						</div>
-					</div>
-				</div>
-			</div>
+		<!-- 카카오 지도 부분 -->
+		<div id="map" style="width: 1100px; height: 500px;"></div>
+
+		<!-- 공연정보 부분  -->
+		<br>
+		<div>
+			<table class="table table-hover">
+			    <thead  style="text-align: center;">
+			      <tr>
+			        <th>공연명</th>
+			        <th>기간</th>
+			        <th>상세페이지</th>
+			      </tr>
+			    </thead>
+			    <tbody id="exhibition">
+	
+			    </tbody>
+			  </table>
+		</div>
+
 	</div>
 <%@include file="../layout/bottom.jsp"%>
 </body>

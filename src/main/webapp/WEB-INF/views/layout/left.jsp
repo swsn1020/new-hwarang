@@ -84,7 +84,7 @@
                             <a href="/faq/faqList">FAQ</a>
                         </li>
                         <li>
-                            <a href="/qna/qnaListForUser?memId=haddie">Q&amp;A</a>
+                            <a href="/qna/qnaListForUser?memId=">Q&amp;A</a>
                         </li>
                         <li>
                             <a href="/report/reportList">신고게시판</a>

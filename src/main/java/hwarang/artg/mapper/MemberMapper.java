@@ -14,4 +14,9 @@ public interface MemberMapper {
 	public List<MemberVO> selectAllMember();
 	public MemberVO selectMember_name(String member_name);
 	
+	/* Mananger 권한 Member 관리 */
+	//1. report_count 증가
+	public int blockCountMember(String member_id);
+	//2. 'disabled'설정하기
+	public int blockStatusMember(String member_id);
 }

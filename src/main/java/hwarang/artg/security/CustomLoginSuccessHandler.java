@@ -23,6 +23,10 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler{
 		auth.getAuthorities().forEach(authority -> {
 			roleNames.add(authority.getAuthority());
 		});
+		
+		//관리자 권한 --> 페이지이동 추가 **
+		
+		
 		request.setAttribute("role", roleNames);
 		response.sendRedirect("");
 	}

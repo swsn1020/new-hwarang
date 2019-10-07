@@ -22,6 +22,12 @@
 		SELECT * FROM FAQ order by FAQ_NUM desc
 	</select>
 	
+	<select id="selectRecentFAQs" resultMap="FAQMap">
+		SELECT * 
+		  FROM ( SELECT * FROM FAQ order by FAQ_REG_DATE desc)
+	  	 WHERE rownum between 1 and 7
+	</select>
+	
 	<sql id="criteriaDTO">
 		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
 			<foreach collection="typeArr" item="type">

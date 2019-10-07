@@ -15,6 +15,14 @@ public class RecommendReplyVO {
 	private String recomm_reply_content;
 	private String recomm_reply_reg_date;
 	private Date recomm_reply_modi_date;
+	private String block;
+	public String getBlock() {
+		return block;
+	}
+	public void setBlock(String block) {
+		this.block = block;
+	}
+	
 	public int getRecomm_reply_num() {
 		return recomm_reply_num;
 	}

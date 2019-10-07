@@ -2,6 +2,8 @@ package hwarang.artg.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import hwarang.artg.rrboard.model.RecommendReplyVO;
 
 public interface RecommendReplyMapper {
@@ -15,4 +17,7 @@ public interface RecommendReplyMapper {
 	public int getReplyCnt(int recomm_num);
 	//댓글 총 개수
 	public int getTotalCount();
+	
+	//댓글  block 처리
+	public int updateBlock(@Param("block")String block, @Param("num") int num);
 }

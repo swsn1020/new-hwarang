@@ -4,6 +4,8 @@ import java.util.List;
 
 import hwarang.artg.common.model.CriteriaDTO;
 import hwarang.artg.member.model.MemberVO;
+import hwarang.artg.rrboard.model.ReviewBoardVO;
+import hwarang.artg.rrboard.model.ReviewImgVO;
 
 public interface ManagerMainMapper {
 	
@@ -21,16 +23,12 @@ public interface ManagerMainMapper {
 	//각 게시글 별 오늘 등록된 데이터 수 조회하기
 	//QNA
 	public int todayGetQnACount();
-	//party_board
-	public int todayGetPBCount();
 	//report_board
 	public int todayGetReportBCount();
 	//block_status
 	public int todayGetBBCount();
 	//review_board
 	public int todayGetReviewBCount();
-	//ticket_board
-	public int todayGetTBCount();
 	//free_board
 	public int todayGetFBCount();
 	//recommend_board
@@ -46,8 +44,12 @@ public interface ManagerMainMapper {
 	public List<MemberVO> getListWithPaging(CriteriaDTO cri);
 	
 	
-	
 	//이번달 시작하는 전시회 수
 	public int getExhibCountMonth();
-
+	
+	//total funding price
+	public int getTotalPrice();
+	
+	//Review 글 얻어오기
+	public List<ReviewBoardVO> getReviews();
 }

@@ -5,6 +5,7 @@
 <%@ page import = "java.text.SimpleDateFormat" %>
 
 <!-- Google fonts - Poppins -->
+<script src="https://kit.fontawesome.com/1e1a69f988.js"></script>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,700">
 <script	src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
 <script type="text/javascript">
@@ -39,20 +40,18 @@ $(function(){
             }
         },
         data: {
-            labels: ["NOTICE", "FREE", "REPORT", "BLOCK", "PARTY", "TICKET", "REVIEW", "RECOMMEND"],
+            labels: ["NOTICE", "FREE", "REPORT", "BLOCK", "REVIEW", "RECOMMEND"],
             datasets: [
                 {
                     label: "Posted today each board",
-                    data: ['${qnaTC}', '${freeBTC}', '${reportTC}', '${blockTC}', '${partyBTC}', '${ticketBTC}', '${reviewBTC}', '${recommBTC}'],
+                    data: ['${qnaTC}', '${freeBTC}', '${reportTC}', '${blockTC}', '${reviewBTC}', '${recommBTC}'],
                     backgroundColor: [
                     	'rgba(255, 99, 132, 0.2)',
-    	                'rgba(225, 99, 132, 0.2)',
     	                'rgba(54, 162, 235, 0.2)',
     	                'rgba(255, 206, 86, 0.2)',
     	                'rgba(75, 192, 192, 0.2)',
     	                'rgba(153, 102, 255, 0.2)',
     	                'rgba(255, 159, 64, 0.2)',
-    	                'rgba(153, 102, 255, 0.2)'
                     ],
                     borderColor: [
                         'rgb(121, 106, 238)',
@@ -61,74 +60,38 @@ $(function(){
                         'rgb(121, 106, 238)',
                         'rgb(121, 106, 238)',
                         'rgb(121, 106, 238)',
-                        'rgb(121, 106, 238)',
-                        'rgb(121, 106, 238)',
-                        'rgb(121, 106, 238)',
-                        'rgb(121, 106, 238)',
-                        'rgb(121, 106, 238)',
-                        'rgb(121, 106, 238)'
                     ],
                     borderWidth: 1,
                 }
             ]
         }
     });
-    
-
- // ------------------------------------------------------- //
-    // Line Chart 1
-    // ------------------------------------------------------ //
-    var LINECHART = $('#lineChart');
-    var myLineChart = new Chart(LINECHART, {
-        type: 'line',
-        options: {
-            scales: {
-                xAxes: [{
-                    display: true,
-                    gridLines: {
-                        display: false
-                    }
-                }],
-                yAxes: [{
-                	display: false,
-                    gridLines: {
-                        display: false
-                    }
-                }]
-            }
-        },
-        data: {
-            labels: ["AUG", "SEP", "OCT", "NOV", "DEC"],
-            datasets: [
-                {
-                	label: "Page Visitors",
-                    fill: true,
-                    lineTension: 0,
-                    backgroundColor: "transparent",
-                    borderColor: '#f15765',
-                    pointBorderColor: '#da4c59',
-                    pointHoverBackgroundColor: '#da4c59',
-                    borderCapStyle: 'butt',
-                    borderDash: [],
-                    borderDashOffset: 0.0,
-                    borderJoinStyle: 'miter',
-                    borderWidth: 1,
-                    pointBackgroundColor: "#fff",
-                    pointBorderWidth: 1,
-                    pointHoverRadius: 5,
-                    pointHoverBorderColor: "#fff",
-                    pointHoverBorderWidth: 2,
-                    pointRadius: 1,
-                    pointHitRadius: 0,
-                    data: [15, 20, 30, 35, 22],
-                    spanGaps: false
-                }
-            ]
-        }
-    });
-
+	
+    var totalFP = numberWithCommas('${totalFP}');
+//     alert(totalFP);
+	$(".counter").text(totalFP).append("<small style='color: black;'>원</small>");
+	$("#review0").addClass('active');
 });	//onload End
+    
+    function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
 </script>
+<style>
+	.carousel-indicators li {
+    width: 10px;
+    height: 10px;
+    border-radius: 100%;
+    background: gray;
+	}
+	.carousel-indicators li.active  {
+	background-color: #B2A49A;
+	}
+	.carousel-control-prev-icon {
+	color: black;
+	}
+	
+</style>
 <!-- content-inner -->
 <!-- 신규가입자(수), 신규게시물(수), 신규 댓글(수),  -->
 <div class="content-inner" style="padding-bottom: 59px;">
@@ -136,8 +99,8 @@ $(function(){
 	<section class="dashboard-counts no-padding-bottom">
 		<div class="container-fluid">
 			<div class="row bg-white has-shadow">
-				<div style="width: 100%; padding-left: 10px; margin-bottom: 10px;">
-				<h1>Total Statistics</h1>
+				<div style="width: 100%; margin-bottom: 10px; text-align: center;">
+					<h1 style="color: #4A4445"><strong>Total Statistics</strong></h1>
 				</div>
 				<!-- Item -->
 				<div class="col-xl-4 col-sm-8">
@@ -150,8 +113,9 @@ $(function(){
 							</span>
 							<div class="progress">
 								<div role="progressbar" style="width: 25%; height: 4px;"
-									aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"
-									class="progress-bar bg-violet"></div>
+									aria-valuenow="${totalMembers }" aria-valuemin="0" aria-valuemax="100"
+									class="progress-bar bg-violet">
+								</div>
 							</div>
 						</div>
 						<!--                     신규 가입자 수 -->
@@ -164,7 +128,7 @@ $(function(){
 				<div class="col-xl-4 col-sm-8">
 					<div class="item d-flex align-items-center">
 						<div class="icon bg-red">
-							<i class="icon-padnote fa-lg" style="padding-top: 5px;"></i>
+							<i class="fas fa-pencil-alt fa-lg" style="padding-top: 10px;"></i>
 						</div>
 						<div class="title">
 							<span>Total<br>Posts
@@ -185,7 +149,7 @@ $(function(){
 				<div class="col-xl-4 col-sm-8">
 					<div class="item d-flex align-items-center">
 						<div class="icon bg-green">
-							<i class="icon-bill fa-lg" style="padding-top: 5px;"></i>
+							<i class="fas fa-comment-dots fa-lg" style="padding-top: 10px;"></i>
 						</div>
 						<div class="title">
 							<span>Total<br>Replies
@@ -204,73 +168,94 @@ $(function(){
 			</div>
 		</div>
 	</section>
+	<br><br><br>
 	<!-- Dashboard Header Section    -->
     <section class="dashboard-header">
       <div class="container-fluid">
-      	<div style="width: 100%; padding-left: 10px; margin-bottom: 10px;">
-			<h1>Recently Posted</h1>
+      	<div style="width: 100%; margin-bottom: 10px; text-align: center;">
+			<h1 style="color: #4A4445"><strong>Recently Posted</strong></h1>
 		</div>
         <div class="row">
           <!-- Statistics -->
           <div class="statistics col-lg-3 col-12">
             <div class="statistic d-flex align-items-center bg-white has-shadow">
-              <div class="icon bg-red"><i class="fa fa-tasks fa-lg"></i></div>
-              <div class="text"><small style="font-weight: bold;">New Members<br> for a week</small><br><strong><a href="/admin/memberList?type=W">${newMemCount }</a></strong></div>
+              <div class="icon bg-red"><i class="fa fa-tasks fa-lg" style="padding-top: 10px;"></i></div>
+              <div class="text"><strong><a href="/admin/memberList?type=W">${newMemCount }</a></strong><br><small>New Members within a week</small><br></div>
             </div>
             <div class="statistic d-flex align-items-center bg-white has-shadow">
-              <div class="icon bg-green"><i class="fa fa-calendar-o fa-lg"></i></div>
+              <div class="icon bg-green"><i class="fa fa-calendar-o fa-lg" style="padding-top: 10px;"></i></div>
               <div class="text"><strong><a href="/exhibition">${ExhiCountMonth}</a></strong><br><small>EXHIBITION</small></div>
             </div>
             <div class="statistic d-flex align-items-center bg-white has-shadow">
-              <div class="icon bg-orange"><i class="fa fa-paper-plane-o  fa-lg"></i></div>
-              <div class="text"><strong>147</strong><br><small>CORPORATION</small></div>
+              <div class="icon bg-orange"><i class="fa fa-paper-plane-o fa-lg" style="padding-top: 10px;"></i></div>
+              <div class="text"><strong><a href="/funding"><span class="counter"></span></a></strong><br><small>TOTAL FUNDING PRICE</small></div>
             </div>
           </div>
           <div class="chart col-lg-6 col-12">
-					<!-- Bar Chart   -->
-					<div class="bar-chart has-shadow bg-white">
-						<div class="title">
-							<strong class="text-violet">Posted Today</strong><br>
-							<%
-								SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-								String date = sdf.format(new Date());
-							%>
-							<small><%=date %> 등록된 게시글</small>
-						</div>
-						<canvas id="barChartHome"></canvas>
-					</div>
-				</div>
-				<div class="chart col-lg-3 col-12">
-					<!-- Line Chart -->
+				<!-- Bar Chart   -->
+				<div class="bar-chart has-shadow bg-white">
 					<div class="title">
-						<strong class="text-red">Visitors</strong><br>
+						<strong class="text-violet">Posted Today</strong><br>
+						<%
+							SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+							String date = sdf.format(new Date());
+						%>
+						<small><%=date %> 등록된 게시글</small>
 					</div>
-					<div
-						class="line-chart bg-white d-flex align-items-center justify-content-center has-shadow">
-						<canvas id="lineChart"></canvas>
-					</div>
-					 <div class="title" style="width: 100%; display: block;">
-					 	<strong class="text-green">TOTAL AMOUNT</strong><br>
-					 </div>
-					 <div class="statistic d-flex align-items-center bg-white has-shadow">
-	                    <div class="icon bg-green"><i class="fa fa-line-chart"></i></div>
-	                    <div class="text"><strong>99.9%</strong><br><small>크라우드펀딩 총 금액</small>
-                    </div>
-                  </div>
+					<canvas id="barChartHome"></canvas>
 				</div>
+			</div>
+			<!-- images -->
+			<div class="images col-lg-3 col-12" style="text-align: center;">
+				<div class="image d-flex align-items-center bg-white has-shadow">
+					<div id="img" class="carousel slide" data-ride="carousel" style="width: 100%; height: 100%;">
+						<p><strong class="text-red">REVIEW BOARD</strong></p>
+						 <!-- Indicators -->
+						  <ul class="carousel-indicators">
+						    <li data-target="#img" data-slide-to="0" class="active"></li>
+						    <li data-target="#img" data-slide-to="1"></li>
+						    <li data-target="#img" data-slide-to="2"></li>
+						     <li data-target="#img" data-slide-to="3"></li>
+						      <li data-target="#img" data-slide-to="4"></li>
+						  </ul>
+						  
+						  <!-- The slideshow -->
+						  <div class="carousel-inner" style="padding-left: 30px; padding-right: 30px; height: 80%;">
+						  	<c:forEach items="${reviewList }" var="review" varStatus="vs">
+							    <div class="carousel-item" id="review${vs.index }">
+							      <p><strong><a href="/review/view?num=${review.review_num}">${review.review_title }</a></strong></p>
+							      <br><br><br>
+							      <p>${review.review_content }</p>
+							    </div>
+						  	</c:forEach>
+						  </div>
+						  <!-- Left and right controls -->
+						  <a class="carousel-control-prev" href="#img" data-slide="prev">
+						    <span class="carousel-control-prev-icon"></span>
+						  </a>
+						  <a class="carousel-control-next" href="#img" data-slide="next">
+						    <span class="carousel-control-next-icon"></span>
+						  </a>
+					</div>
+				</div>
+			</div>
           </div>
         </div>
     </section>
+    <br><br><br>
     <!-- Projects Section-->
     <section class="projects no-padding-top">
       <div class="container-fluid">
+      	<div style="width: 100%; margin-bottom: 10px; text-align: center;">
+			<h1 style="color: #4A4445"><strong>Board Status</strong></h1>
+		</div>
         <!-- Project-->
         <div class="project">
           <div class="row bg-white has-shadow">
             <div class="left-col col-lg-6 d-flex align-items-center justify-content-between">
               <div class="project-title d-flex align-items-center">
                 <div class="text">
-                  <h3 class="h4"><a href="/qna/qnaList" style="color: none;">Q&amp;A</a></h3><small>최근 등록된 문의</small>
+                  <h3 class="h4"><a href="/qna/qnaListForManager">Q&amp;A</a></h3><small>최근 등록된 문의</small>
                 </div>
               </div>
               <div class="project-date"><span class="hidden-sm-down"><%=date %></span></div>
@@ -283,7 +268,7 @@ $(function(){
               <div class="time"><i class="fa fa-clock-o"></i><%=date2 %> </div>
               <div class="project-progress">
                 <div class="progress">
-                  <div role="progressbar" style="width: 45%; height: 6px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-red"></div>
+                  <div role="progressbar" style="width: 45%; height: 6px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-yellow"></div>
                 </div>
               </div>
             </div>
@@ -305,14 +290,14 @@ $(function(){
 						<tr>
 							<td>${qna.num }</td>
 							<td>${qna.category }</td>
-							<td><a href="/qna/qnaView?num=${qna.num}">${qna.title }</a></td>
+							<td><a href="/qna/qnaView?num=${qna.num}" style="color: #666"  onmouseover="this.style.color='black'" onmouseout="this.style.color='#666'">${qna.title }</a></td>
 							<td>${regDate }</td>
 							<c:choose>
 								<c:when test="${qna.reply  eq '미답변' || qna.reply eq null}">
-									<td>미답변</td>
+									<td style="color: #BA4E59;"><strong>미답변</strong></td>
 								</c:when>
 								<c:otherwise>
-									<td>답변완료</td>
+									<td><strong>답변완료</strong></td>
 								</c:otherwise>
 							</c:choose>
 						</tr>
@@ -345,9 +330,7 @@ $(function(){
 						</div>
 						<div class="project-progress">
 							<div class="progress">
-								<div role="progressbar" style="width: 60%; height: 6px;"
-									aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"
-									class="progress-bar bg-green"></div>
+								<div role="progressbar" style="width: 60%; height: 6px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-red"></div>
 							</div>
 						</div>
 					</div>
@@ -383,10 +366,12 @@ $(function(){
 		</div>
     </section>
 	<!-- Updates Section -->
+	<!-- 
 	<section class="updates no-padding-top">
 		<div class="container-fluid">
 			<div class="row">
 				<!-- Recent Updates-->
+				<!-- 
 				<div class="col-lg-4">
 					<div class="recent-updates card">
 						<div class="card-close">
@@ -411,6 +396,7 @@ $(function(){
 						</div>
 						<div class="card-body no-padding">
 							<!-- Item-->
+							<!-- 
 							<div class="item d-flex justify-content-between">
 								<div class="info d-flex">
 									<div class="icon">
@@ -427,6 +413,7 @@ $(function(){
 								</div>
 							</div>
 							<!-- Item-->
+							<!-- 
 							<div class="item d-flex justify-content-between">
 								<div class="info d-flex">
 									<div class="icon">
@@ -443,6 +430,7 @@ $(function(){
 								</div>
 							</div>
 							<!-- Item        -->
+							<!-- 
 							<div class="item d-flex justify-content-between">
 								<div class="info d-flex">
 									<div class="icon">
@@ -459,6 +447,7 @@ $(function(){
 								</div>
 							</div>
 							<!-- Item-->
+							<!-- 
 							<div class="item d-flex justify-content-between">
 								<div class="info d-flex">
 									<div class="icon">
@@ -475,6 +464,7 @@ $(function(){
 								</div>
 							</div>
 							<!-- Item-->
+							<!-- 
 							<div class="item d-flex justify-content-between">
 								<div class="info d-flex">
 									<div class="icon">
@@ -494,6 +484,7 @@ $(function(){
 					</div>
 				</div>
 				<!-- Daily Feeds -->
+				<!-- 
 				<div class="col-lg-4">
 					<div class="daily-feeds card">
 						<div class="card-close">
@@ -518,6 +509,7 @@ $(function(){
 						</div>
 						<div class="card-body no-padding">
 							<!-- Item-->
+							<!-- 
 							<div class="item">
 								<div class="feed d-flex justify-content-between">
 									<div class="feed-body d-flex justify-content-between">
@@ -538,6 +530,7 @@ $(function(){
 								</div>
 							</div>
 							<!-- Item-->
+							<!-- 
 							<div class="item">
 								<div class="feed d-flex justify-content-between">
 									<div class="feed-body d-flex justify-content-between">
@@ -564,6 +557,7 @@ $(function(){
 								</div>
 							</div>
 							<!-- Item-->
+							<!-- 
 							<div class="item clearfix">
 								<div class="feed d-flex justify-content-between">
 									<div class="feed-body d-flex justify-content-between">
@@ -587,12 +581,13 @@ $(function(){
 										and typesetting industry. Lorem Ipsum has been the industry's
 										standard dummy text ever since the 1500s. Over the years.</small>
 								</div>
-								<!--                   <div class="CTAs pull-right"><a href="#" class="btn btn-xs btn-secondary"><i class="fa fa-thumbs-up"> </i>Like</a></div> -->
+								                  <div class="CTAs pull-right"><a href="#" class="btn btn-xs btn-secondary"><i class="fa fa-thumbs-up"> </i>Like</a></div>
 							</div>
 						</div>
 					</div>
 				</div>
 				<!-- Check List -->
+				<!-- 
 				<div class="col-lg-4">
 					<div class="checklist card">
 						<div class="card-close">

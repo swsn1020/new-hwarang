@@ -2,6 +2,8 @@ package hwarang.artg.manager.service;
 
 import java.util.List;
 
+import javax.naming.NoInitialContextException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -36,7 +38,8 @@ public class NoticeService {
 	
 	public boolean noticeRemove(int num) {
 		if(dao.deleteNotice(num) > 0) {
-			return true;
+			System.out.println("해당 notice 삭제 성공");
+				return true;
 		}
 		return false;
 	}
@@ -47,6 +50,10 @@ public class NoticeService {
 	
 	public List<NoticeVO> noticeGetAll() {
 		return dao.selectAllNotices();
+	}
+	
+	public List<NoticeVO> noticeRecentAll(){
+		return dao.selectRecentNotices();
 	}
 	
 	//페이징 처리한 list

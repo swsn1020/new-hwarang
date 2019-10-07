@@ -92,4 +92,9 @@
 			recomm_num > 0
 		</select>
 		
+		<!-- block 처리 -->
+	<update id="updateBlock">
+		UPDATE RECOMMEND_BOARD SET BLOCK = #{block} WHERE recomm_num = #{num}
+	</update>
+		
 	</mapper>

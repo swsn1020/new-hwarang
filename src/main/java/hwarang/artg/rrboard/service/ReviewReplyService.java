@@ -46,4 +46,11 @@ public class ReviewReplyService {
 	public int getnReplyCount(int num) {
 		return rrmapper.getReplyCnt(num);
 	}
+	
+	public boolean doReplyBlock(String block, int num) {
+		if(rrmapper.updateBlock(block, num) > 0) {
+			return true;
+		}
+		return false;
+	}
 }

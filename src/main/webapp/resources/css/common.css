@@ -42,7 +42,7 @@ img,input,select,textarea,button,label {vertical-align:middle;}
 caption,legend {width:1px;height:1px;margin-top:-1px;line-height:1px;text-indent:-9999px;overflow:hidden;}
 header,section,nav,hgroup,footer,aside,article,figure,nav {display:block;}
 table td {word-wrap:break-word;word-break:break-all;}
-hr {display:none;}
+/* hr {display:none;} */
 .hide {position:absolute;left:0;top:0;overflow:hidden;text-indent:-9999px;}
 
 /* link_style */

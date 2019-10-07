@@ -17,8 +17,9 @@
 </div>
 <div class="col-sm-2" style="padding: 0px;">
 	<ul class="nav ">
-		<li class="nav-item col-sm-12 alert alert-danger" id="side_item"><a
-			class="nav-link" href="#"> 멤버 페이지</a></li>
+		<li class="nav-item col-sm-12 alert alert-danger" id="side_item">
+			<a class="nav-link" href="#"> 멤버 페이지</a>
+		</li>
 		<sec:authorize access="isAuthenticated()">
 		<li class="nav-item col-sm-6" id="side_item"><a
 			class="nav-link fas fa-user-cog" href="/member/myPage">Detail</a></li>

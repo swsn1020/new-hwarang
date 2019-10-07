@@ -17,11 +17,10 @@ $(function(){
 	<h3>화랑-신고수정하기</h3>
 	<div class="form-group"></div>
 	<form action="blockModify" method="post">
-		<input type="hidden" name="${_csrf.parameterName }" value="${_csrf.token }">
 		<input type="text" name="num" value="${block.num }">
 		<input type="text" name="category" value="${block.category }">
 		<input type="text" name="boardNum" value="${block.boardNum }"> 
-		<input type="text" name="bMemId" value="${block.bMemId }">
+		<input type="text" name="blockMemId" value="${block.bMemId }">
 		<!-- 작성자 아이디 (받아오기) -->
 		<input type="text" name="memId" value="haddie" readonly="readonly">
 	

@@ -7,6 +7,7 @@
 <sec:authentication property="principal" var="pinfo" />
 <!DOCTYPE html>
 <html lang="en">
+<script src="https://kit.fontawesome.com/1e1a69f988.js"></script>
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
@@ -52,14 +53,14 @@ $(function(){
 <div class="page-wrapper chiller-theme toggled">
       <!-- Main Navbar-->
       <header class="header">
-        <nav class="navbar">
+        <nav class="navbar fixed-top" style="background-color: #ffffff; height: 70px; box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1), -1px 0 2px rgba(0, 0, 0, 0.05); z-index: 1">
           <div class="container-fluid">
             <div class="navbar-holder d-flex align-items-center justify-content-between">
               <!-- Navbar Header-->
               <div class="navbar-header">
                 <!-- Navbar Brand -->
                 <a href="/admin/main" class="navbar-brand d-none d-sm-inline-block">
-                  <div class="brand-text d-none d-lg-inline-block"><span>Hwarang </span><strong>Dashboard</strong></div>
+                  <div class="brand-text d-none d-lg-inline-block"><span>Hwarang&nbsp; </span><strong>Artground</strong></div>
                   <div class="brand-text d-none d-sm-inline-block d-lg-none"><strong>HD</strong></div>
                 </a>
                 <!-- Toggle Button-->
@@ -100,11 +101,11 @@ $(function(){
           </div>
         </nav>
       </header>
-	<div class="page-content d-flex align-items-stretch"  style="background-color: #F3F4F5;">
-	  <a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
-	    <i class="fas fa-bars"></i>
+	<div class="page-content d-flex align-items-stretch"  style="background-color: #F3F4F5; z-index: -1">
+	  <a id="show-sidebar" class="btn btn-primary" href="#">
+	    <i class="fas fa-bars" style="color: black;"></i>
 	  </a>
-	  <nav id="sidebar" class="sidebar-wrapper">
+	  <nav id="sidebar" class="sidebar-wrapper" style="box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1), -1px 0 2px rgba(0, 0, 0, 0.05);">
 	    <div class="sidebar-content">
 	      <div class="sidebar-brand">
 	        <a href="#">sidebar</a>
@@ -114,8 +115,8 @@ $(function(){
 	      </div>
 	      <div class="sidebar-header">
 	        <div class="user-info">
-	          <span class="user-name">Hyeji <!-- 아이디 불러오기 -->
-	            <strong>Lee</strong>
+	          <span class="user-name">${memName } <!-- 아이디 불러오기 -->
+	            <strong>(${memId })</strong>
 	          </span>
 	          <span class="user-role">Administrator</span>
 	          <span class="user-status">
@@ -125,6 +126,7 @@ $(function(){
 	        </div>
 	      </div>
 	      <!-- sidebar-header  -->
+	      <!-- 
 	      <div class="sidebar-search">
 	        <div>
 	          <div class="input-group">
@@ -141,12 +143,12 @@ $(function(){
 	      <div class="sidebar-menu">
 	        <ul>
 	          <li class="header-menu">
-	            <span>General</span>
+	            <span>Settings</span>
 	          </li>
 	          <li class="sidebar-dropdown">
 	            <a href="#">
-	              <i class="fa fa-tachometer-alt"></i>
-	              <span>Boards</span>
+	              <i class="fas fa-clipboard"></i>
+	              <span><strong>Boards</strong></span>
 	<!--                   'Pro'아이콘 -->
 	<!--                     <span class="badge badge-pill badge-success">Pro</span> -->
 	            </a>
@@ -166,33 +168,27 @@ $(function(){
 	                  <a href="/faq/faqList">FAQ Board</a>
 	                </li>
 	                <li>
-	                  <a href="/">Free Board</a>
+	                  <a href="/free/freeboard">Free Board</a>
 	                </li>
 	                <li>
 	                  <a href="/exhibition">Exhibition</a>
 	                </li>
 	                <li>
-	                  <a href="/">Review Board</a>
+	                  <a href="/review/reviewboard">Review Board</a>
 	                </li>
 	                <li>
-	                  <a href="/">Ticket Board</a>
-	                </li>
-	                <li>
-	                  <a href="/">Party Board</a>
-	                </li>
-	                <li>
-	                  <a href="/">Recommend Board</a>
+	                  <a href="/recommend/recommendboard">Recommend Board</a>
 	                </li>
 	              </ul>
 	            </div>
 	          </li>
 	          <li class="sidebar-dropdown">
 	            <a href="#">
-	              <i class="fa fa-shopping-cart"></i>
-	              <span>Members</span>
+	              <i class="fa fa-users"></i>
+	              <span><strong>Members</strong></span>
 	<!--               <span class="badge badge-pill badge-danger">3</span> -->
 	            </a>
-	            <div class="sidebar-submenu">
+	            <div class="sidebar-submenu active">
 	              <ul>
 	                <li>
 	                  <a href="/admin/memberList">All Members</a>
@@ -201,7 +197,7 @@ $(function(){
 	                  <a href="#">Authorization Settings</a>
 	                </li>
 	                <li>
-	                  <a href="#">Block Status <span class="badge badge-pill badge-danger">3</span>
+	                  <a href="/block/blockListForManager">Block Status <span class="badge badge-pill badge-danger">${blockCnt }</span>
 	                  </a>
 	                </li>
 	              </ul>
@@ -223,49 +219,10 @@ $(function(){
 	              </ul>
 	            </div>
 	          </li>
-	          <li class="sidebar-dropdown">
-	            <a href="#">
-	              <i class="fa fa-chart-line"></i>
-	              <span>Charts</span>
-	            </a>
-	            <div class="sidebar-submenu">
-	              <ul>
-	                <li>
-	                  <a href="#">Pie chart</a>
-	                </li>
-	                <li>
-	                  <a href="#">Histogram</a>
-	                </li>
-	              </ul>
-	            </div>
-	          </li>
-	          <li class="header-menu">
-	            <span>Settings</span>
-	          </li>
-	          <li>
-	            <a href="#">
-	              <i class="fa fa-book"></i>
-	              <span>Documentation</span>
-	              <span class="badge badge-pill badge-info">Beta</span>
-	            </a>
-	          </li>
-	          <li>
-	            <a href="#">
-	              <i class="fa fa-calendar"></i>
-	              <span>Calendar</span>
-	            </a>
-	          </li>
-	          <li>
-	            <a href="#">
-	              <i class="fa fa-folder"></i>
-	              <span>Examples</span>
-	            </a>
-	          </li>
 	        </ul>
 	      </div>
-	      <!-- sidebar-menu  -->
 	    </div>
-	    <!-- sidebar-content  -->
+	    <!-- sidebar-content  
 	    <div class="sidebar-footer">
 	      <a href="#">
 	        <i class="fa fa-bell"></i>&nbsp;
@@ -283,4 +240,5 @@ $(function(){
 	        <i class="fa fa-power-off"></i>&nbsp;
 	      </a>
 	    </div>
+	    -->
 	  </nav>

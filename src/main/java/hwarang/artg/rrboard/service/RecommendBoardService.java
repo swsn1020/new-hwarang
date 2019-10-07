@@ -228,4 +228,11 @@ public class RecommendBoardService {
 		return rb;
 	}
 	
+	//block 처리
+	public boolean doBoardBlock(String block, int num) {
+		if(rbmapper.updateBlock(block, num) > 0) {
+			return true;
+		}
+		return false;
+	}
 }

@@ -1,10 +1,12 @@
 package hwarang.artg.member.model;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 
-public class MemberVO {
+public class MemberVO implements Serializable{
+	private static final long serialVersionUID = 1L;
 //	  member_id varchar2(50) PRIMARY KEY,
 //    member_name varchar2(50) NOT NULL,
 //    member_password varchar2(60) not null,

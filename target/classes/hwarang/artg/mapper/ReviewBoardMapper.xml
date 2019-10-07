@@ -105,6 +105,8 @@
 		review_num > 0
 	</select>
 	
-	
-	
+	<!-- block 처리 -->
+	<update id="updateBlock">
+		UPDATE REVIEW_BOARD SET BLOCK = #{block} WHERE REVIEW_NUM = #{num}
+	</update>
 </mapper>
