@@ -46,19 +46,10 @@ public class BlockController {
 //		List<BlockStatusVO> blockList = service.blockGetAllById(memId);
 //		model.addAttribute("blockList", blockList);
 		String id = principal.getName();
-		if(memId.equals(id)) {
-			//페이징처리 + 행번호로 출력
-			PageDTO page = new PageDTO(cri, service.getTotalCount(memId));
+			PageDTO page = new PageDTO(cri, service.getTotalCount(id));
 			model.addAttribute("pageMaker", page);
-			model.addAttribute("blockList", service.pagingList(cri, memId));
+			model.addAttribute("blockList", service.pagingList(cri, id));
 			return "manager/block/userBlockList";
-		}else {
-			String msg = "해당 신고 접수자만 열람 가능합니다.";
-			String url = "blockListForUser?memId="+id;
-			model.addAttribute("msg", msg);
-			model.addAttribute("url", url);
-			return "manager/result";
-		}
 	}
 	
 	

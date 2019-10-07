@@ -1,12 +1,15 @@
 package hwarang.artg.main.controller;
 
+import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import hwarang.artg.common.model.CriteriaDTO;
-import hwarang.artg.common.model.PageDTO;
 import hwarang.artg.exhibition.service.ExhibitionListService;
 import hwarang.artg.manager.service.FAQService;
 import hwarang.artg.manager.service.NoticeService;
@@ -26,6 +29,7 @@ public class MainController {
 		model.addAttribute("eList", service.mainList(cri,"id"));
 		model.addAttribute("noticeList", noticeService.noticeRecentAll());
 		model.addAttribute("faqList", faqService.fagRecentAll());
+
 		return "/main/main";
 	}
 	
