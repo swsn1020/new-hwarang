@@ -20,8 +20,16 @@
 			<a class="nav-link" href="#"> 멤버 페이지</a>
 		</li>
 		<sec:authorize access="isAuthenticated()">
-		<li class="nav-item col-sm-6" id="side_item"><a
-			class="nav-link fas fa-user-cog" href="/member/myPage">Detail</a></li>
+		<sec:authorize access="hasRole('ROLE_ADMIN')">
+		<li class="nav-item col-sm-6" id="side_item">
+			<a	class="nav-link fas fa-user-cog" href="/admin/main">관리자</a>
+		</li>
+		</sec:authorize>
+		<sec:authorize access="!hasRole('ROLE_ADMIN')">
+		<li class="nav-item col-sm-6" id="side_item">
+			<a	class="nav-link fas fa-user-cog" href="/member/myPage">Detail</a>
+		</li>
+		</sec:authorize>
 		<li class="nav-item col-sm-6" id="side_item"><a
 			class="nav-link fas fa-sign-out-alt" href="/logout">Logout</a></li>
 		<li class="nav-item col-sm-12" id="side_item"><a

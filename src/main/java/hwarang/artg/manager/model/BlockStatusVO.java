@@ -30,5 +30,6 @@ public class BlockStatusVO {
 		private String reply;
 		private Date regDate;
 		private Date manageDate;
+		private String boardTitle;
 	
 }

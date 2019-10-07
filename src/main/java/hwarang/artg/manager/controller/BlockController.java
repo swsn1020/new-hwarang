@@ -40,36 +40,29 @@ public class BlockController {
 	}
 	
 	@RequestMapping("/blockListForUser")
-	public String showBlockListU(String memId, CriteriaDTO cri, Model model, Principal principal) {
+	public String showBlockListU(CriteriaDTO cri, Model model, Principal principal) {
 		System.out.println("blockList요청 For User");
 		//기본
 //		List<BlockStatusVO> blockList = service.blockGetAllById(memId);
 //		model.addAttribute("blockList", blockList);
 		String id = principal.getName();
-		if(memId.equals(id)) {
-			//페이징처리 + 행번호로 출력
-			PageDTO page = new PageDTO(cri, service.getTotalCount(memId));
-			model.addAttribute("pageMaker", page);
-			model.addAttribute("blockList", service.pagingList(cri, memId));
-			return "manager/block/userBlockList";
-		}else {
-			String msg = "해당 신고 접수자만 열람 가능합니다.";
-			String url = "blockListForUser?memId="+id;
-			model.addAttribute("msg", msg);
-			model.addAttribute("url", url);
-			return "manager/result";
-		}
+		//페이징처리 + 행번호로 출력
+		PageDTO page = new PageDTO(cri, service.getTotalCount(id));
+		model.addAttribute("pageMaker", page);
+		model.addAttribute("blockList", service.pagingList(cri, id));
+		return "manager/block/userBlockList";
 	}
 	
 	
 	@RequestMapping(value="form", method=RequestMethod.POST)
-	public String showBlockForm(String blockMemId, String category, String boardNum, String replyNum, Model model) {
+	public String showBlockForm(String blockMemId, String category, String boardNum, String replyNum, String boardTitle, Model model) {
 		//게시판_상세보기에서 신고버튼 클릭
 		System.out.println("신고 팝업 요청");
 //		Map<String, Object> params = new HashMap<String, Object>();
 //		params.put("category", category);
 		model.addAttribute("blockMemId", blockMemId);
 		model.addAttribute("category", category);
+		model.addAttribute("boardTitle", boardTitle);
 //		System.out.println(category.substring(category.indexOf("_")+1).equals("Board"));
 		if(category.substring(category.indexOf("_")+1).equals("Board")) {
 			model.addAttribute("boardNum", boardNum);
@@ -85,18 +78,21 @@ public class BlockController {
 		return service.blockRegister(block);
 	}
 	
-	@RequestMapping(value="blockModify", method=RequestMethod.GET)
+	@RequestMapping(value="/blockModify", method=RequestMethod.GET)
 	public String showBlockModify(int num, Model model) {
 		model.addAttribute("block", service.blockGetOne(num));
 		return "manager/block/blockModify";
 	}
 	
-	@ResponseBody
-	@RequestMapping(value="/replyModify", method=RequestMethod.POST)
-	public boolean doReplyModify(int num, String reply, @RequestParam("blockMemId")String id) {
+//	@ResponseBody
+	@RequestMapping(value="replyModify", method=RequestMethod.POST)
+	public String doReplyModify(@RequestParam("num")int num, @RequestParam("reply")String reply, Model model) {
 		System.out.println("replyModify 요청 들어옴");
+		String msg = "처리에 실패하였습니다.";
+		String url = "/block/blockListForManager";
 		if(reply.contains("삭제")) {
 			service.doCheckCategory(num);
+			String id = service.blockGetOne(num).getBlockMemId();
 			if(memService.memberGetOne(id) != null) {
 				if(memService.doMemberCountBlock(id)) {
 					System.out.println("Member Report Count up!");
@@ -104,28 +100,28 @@ public class BlockController {
 			}else{
 				System.out.println("해당하는 id의 멤버가 없습니다.");
 			}
+			if(service.replyModify(reply, num)) {
+				msg = "신고 처리가 완료되었습니다.";
+			}else {
+				url = "/block/blockView?num="+num;
+			}
 		}
-		return service.replyModify(reply, num);
+		model.addAttribute("url", url);
+		model.addAttribute("msg", msg);
+		return "manager/result";
 	}
 	
 	//blockView 설정**
 	@RequestMapping("blockView")
 	public String showBlockView(int num, Model model, Principal principal) {
 		System.out.println("blockView 요청 들어옴");
-		String id = principal.getName();
-		BlockStatusVO block = service.blockGetOne(num);
-		if(id.equals(block.getMemId())){
-			Map<String, Object> maps = service.doCheckBlock(num);
-			System.out.println(maps.toString());
-			model.addAllAttributes(service.doCheckBlock(num));
-			return "manager/block/blockView";
-		}else {
-			String msg = "해당 신고 접수자만 열람 가능합니다.";
-			String url = "blockListForUser?memId="+id;
-			model.addAttribute("msg", msg);
-			model.addAttribute("url", url);
-			return "manager/result";
-		}
+//		String id = principal.getName();
+//		BlockStatusVO block = service.blockGetOne(num);
+		Map<String, Object> maps = service.doCheckBlock(num);
+		System.out.println(maps.toString());
+		model.addAllAttributes(service.doCheckBlock(num));
+		return "manager/block/blockView";
+		
 		
 	}
 	

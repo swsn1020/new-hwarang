@@ -60,6 +60,7 @@ $(function(){
 				<input type="hidden" name="category" value="${category }">
 				<input type="hidden" name="boardNum" value="${boardNum }"> 
 				<input type="hidden" name="blockMemId" value="${blockMemId }">
+				<input type="text" name="boardTitle" value="${boardTitle }">
 				<p style="font-weight: bold;">신고자ID 
 					<input type="text" name="memId" class="form-control" value="<sec:authentication property="principal.Username"/>" readonly="readonly">
 				</p>

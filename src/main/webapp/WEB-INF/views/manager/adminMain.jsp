@@ -6,6 +6,7 @@
 
 <!-- Google fonts - Poppins -->
 <script src="https://kit.fontawesome.com/1e1a69f988.js"></script>
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,700">
 <script	src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
 <script type="text/javascript">
@@ -88,8 +89,18 @@ $(function(){
 	background-color: #B2A49A;
 	}
 	.carousel-control-prev-icon {
-	color: black;
+	outline: black;
 	}
+ 	.carousel-item { 
+ 	  white-space: nowrap;  
+ 	  overflow: hidden; 
+ 	  text-overflow: ellipsis;  
+ 	} 
+	.carousel-inner .content {
+		width: 100%;
+   		height: 100%;
+	}
+	
 	
 </style>
 <!-- content-inner -->
@@ -218,14 +229,15 @@ $(function(){
 						     <li data-target="#img" data-slide-to="3"></li>
 						      <li data-target="#img" data-slide-to="4"></li>
 						  </ul>
-						  
+<!-- 						  style="width: 100%; height: 100%; padding-left: 30px; padding-right: 30px; padding-top: 20px; padding-bottom: 10px;" -->
 						  <!-- The slideshow -->
-						  <div class="carousel-inner" style="padding-left: 30px; padding-right: 30px; height: 80%;">
+						  <div class="carousel-inner" style="padding-left: 30px; padding-right: 30px;">
 						  	<c:forEach items="${reviewList }" var="review" varStatus="vs">
 							    <div class="carousel-item" id="review${vs.index }">
-							      <p><strong><a href="/review/view?num=${review.review_num}">${review.review_title }</a></strong></p>
-							      <br><br><br>
-							      <p>${review.review_content }</p>
+							      <div class="content">
+							      	<h5><a href="/review/view?num=${review.review_num}">${review.review_title }</a></h5>
+							      	<br><br><br><span> ${review.review_content }</span>
+							      </div>
 							    </div>
 						  	</c:forEach>
 						  </div>

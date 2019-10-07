@@ -203,22 +203,6 @@ $(function(){
 	              </ul>
 	            </div>
 	          </li>
-	          <li class="sidebar-dropdown">
-	            <a href="#">
-	              <i class="far fa-gem"></i>
-	              <span>Components</span>
-	            </a>
-	            <div class="sidebar-submenu">
-	              <ul>
-	                <li>
-	                  <a href="#">General</a>
-	                </li>
-	                <li>
-	                  <a href="#">Panels</a>
-	                </li>
-	              </ul>
-	            </div>
-	          </li>
 	        </ul>
 	      </div>
 	    </div>

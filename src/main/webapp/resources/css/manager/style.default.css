@@ -822,9 +822,6 @@ section.dashboard-counts div[class*='col-']:last-of-type .item {
 
 
 
-
-
-
 /*  DASHBOARD HEADER  MEDIAQUERIES ------------------------*/
 @media (max-width: 991px) {
   section.dashboard-header div[class*='col-'] {
@@ -873,6 +870,18 @@ section.dashboard-counts div[class*='col-']:last-of-type .item {
 .project, #project3 a:hover {
 	color: #735D72;
 }
+
+.pagination, .page-item a {
+	color: #5C5A5C !important;
+}
+
+li.active a{
+	color: #5C5A5C !important;
+	background-color: #E1DAD2 !important;
+}
+
+
+
 
 .project div[class*='col-'] {
   border-right: 1px solid #eee;
@@ -2280,3 +2289,4 @@ a > code {
   padding-bottom: 0.375rem;
   font-size: 125%;
 }
+

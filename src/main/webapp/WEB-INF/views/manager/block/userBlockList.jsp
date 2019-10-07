@@ -16,9 +16,9 @@
 		<thead>
 			<tr>
 				<th style="width: 10%">번호</th>
-				<th>신고번호</th>
-<!-- 				<th style="width: 15%">게시판</th> -->
-				<th style="width: 25%">신고사유</th>
+				<th style="width: 10%">신고번호</th>
+				<th>제목</th>
+				<th style="width: 25%">신고내용</th>
 				<th style="width: 15%">신고일</th>
 				<th style="width: 15%">처리상태</th>
 			</tr>
@@ -28,8 +28,16 @@
 				<fmt:formatDate value="${block.regDate }" var="regDate" pattern="yyyy-MM-dd"/>
 				<tr>
 					<td>${rnum }</td>
-					<td><a href="blockView?num=${block.num}">${block.num }(${block.category })</a></td>
-<%-- 					<td>${block.category }</td> --%>
+					<td>${block.num }</td>
+					<c:set var="category" value="${block.category }"/>
+					<c:choose>
+					<c:when test="${fn:contains(category, 'Reply')}">
+						<td>${block.boardTitle }_댓글</td>
+					</c:when>
+					<c:otherwise>
+						<td>${block.boardTitle }_게시글</td>
+					</c:otherwise>
+					</c:choose>
 					<td>${block.content }</td>
 					<td>${regDate }</td>
 					<c:choose>
@@ -50,15 +58,15 @@
 	<div class="container">
 		<ul class="pagination justify-content-center">
 			<li class='${ pageMaker.prev == true ? "page-item" : "page-item disabled" }'>
-				<a class="page-link" href="blockListForUser?memId=haddie&pageNum=${pageMaker.startPage-1 }">&laquo;</a>
+				<a class="page-link" href="blockListForUser?pageNum=${pageMaker.startPage-1 }">&laquo;</a>
 			</li>
 			<c:forEach var="num" begin="${pageMaker.startPage }" end="${pageMaker.endPage}">
 				<li class='${pageMaker.cri.pageNum == num ? "active" : "page-item"}'>
-					<a class="page-link" href="blockListForUser?memId=haddie&pageNum=${num}">${num}</a>
+					<a class="page-link" href="blockListForUser?pageNum=${num}">${num}</a>
 				</li>
 			</c:forEach>
 			<li class='${pageMaker.next == true ? "page-item" : "page-item disabled" }'>
-				<a class="page-link" href="blockListForUser?memId=haddie&pageNum=${pageMaker.endPage+1 }">&raquo;</a>
+				<a class="page-link" href="blockListForUser?pageNum=${pageMaker.endPage+1 }">&raquo;</a>
 			</li>
 		</ul>
 	</div>
