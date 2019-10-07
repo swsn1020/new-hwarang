@@ -17,10 +17,8 @@
 <!-- 		<security:intercept-url pattern="/member/**/*" access="hasAnyRole('ROLE_USER')" /> -->
 		<security:intercept-url pattern="/admin/*" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')" />
 		<security:intercept-url pattern="/exhibition/**/*" access="hasAnyRole('ROLE_USER')" />
-<<<<<<< HEAD
 		<security:intercept-url pattern="/review/**/*" access="hasAnyRole('ROLE_USER')" />
 		<security:intercept-url pattern="/recommend/**/*" access="hasAnyRole('ROLE_USER')" />
-=======
 		
 		<!-- Notice, QnA, FAQ, block security 설정 -->
 		<security:intercept-url pattern="/notice/noticeWrite" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')" />
@@ -43,7 +41,6 @@
 		<security:intercept-url pattern="/block/replyModify" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')" />
 		<security:intercept-url pattern="/block/blockMember" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')" />
 		
->>>>>>> refs/remotes/origin/master
 		<security:form-login login-page="/member/loginForm" />
 		<security:logout logout-url="/logout" invalidate-session="true" delete-cookies="remember-me,JSESSION_ID" logout-success-url="/" />
 		<security:access-denied-handler ref="customAccessDenied" />
