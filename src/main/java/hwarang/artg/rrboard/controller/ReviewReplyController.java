@@ -13,7 +13,7 @@ import hwarang.artg.rrboard.model.ReviewReplyVO;
 import hwarang.artg.rrboard.service.ReviewReplyService;
 
 @Controller
-@RequestMapping("/reply")
+@RequestMapping("/reviewreply")
 public class ReviewReplyController {
 	@Autowired
 	private ReviewReplyService service;

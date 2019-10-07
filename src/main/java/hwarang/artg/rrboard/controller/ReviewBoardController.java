@@ -56,6 +56,9 @@ public class ReviewBoardController {
 
 	@RequestMapping(value = "/reviewboard",method = RequestMethod.GET)
 	public String showreviewboard(Model model,CriteriaDTO cri,Principal principal) {
+		System.out.println("showreviewboard principal : " + principal.getName());
+		System.out.println("showreviewboard principal : " + principal.toString());
+		
 		PageDTO page = new PageDTO(cri, service.getTotalCount(cri));
 		model.addAttribute("pageMaker", page);
 		model.addAttribute("reviewList", service.pagingList(cri));
@@ -99,9 +102,10 @@ public class ReviewBoardController {
 
 	@RequestMapping("/view")
 	public String showreview(Model model, int num,Principal principal) {
+		String id = principal.getName();
+		model.addAttribute("id", id);
 		model.addAttribute("review", service.increasReadCnt(num));
 		model.addAttribute("imgs", imgservice.reviewimgGetImgList(num));
-		model.addAttribute("principal", principal);
 		return "/review/review";
 	}
 //	@RequestMapping(value = "/checkPw",method = RequestMethod.GET)

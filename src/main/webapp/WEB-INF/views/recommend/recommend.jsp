@@ -20,7 +20,7 @@
 		$("#rbtnWrite").on("click", function() {
 			var data = $("#rwriteForm").serialize();
 			$.ajax({
-				url : "/rreply/rwrite?num="+num,
+				url : "/recommendreply/rwrite?num="+num,
 				data : data,
 				type : "post",
 				dataType : "json",
@@ -34,7 +34,7 @@
 					ReplyView();
 				},
 				error : function() {
-					alert("replyWrtie error");
+					alert("recommendreplyWrtie error");
 				}
 			});
 			return false;
@@ -61,7 +61,7 @@
 		var seqid = $("#seqid").val();
 		/* member_id 수정해야됨 */
 		$.ajax({
-					url : "/rreply/replyView?num=" + recommNum,
+					url : "/recommendreply/replyView?num=" + recommNum,
 					type : "get",
 					dataType : "json",
 					success : function(data) {
@@ -91,6 +91,7 @@
 							if(seqid == data[i].member_id){		
 								$("<td>").append(rbtnModify).append(rbtnRemove).appendTo(tr);
 							}
+							
 							$("<td colspan='2'>").append(btnReport).appendTo(tr);
 
 							tr.appendTo(table);
@@ -116,7 +117,7 @@
 								var replynum = $("#replynum").val();
 								/* alert(data); */
 								$.ajax({
-									url : "/rreply/rdelete?num="+replynum,
+									url : "/recommendreply/rdelete?num="+replynum,
 									data : data,
 									type : "post",
 									dataType : "json",
@@ -130,7 +131,7 @@
 										}
 									},
 									error : function() {
-										alert("replyDelete error");
+										alert("recommendreplyDelete error");
 									}
 								});
 								return false;
@@ -141,7 +142,7 @@
 								var data = $(this).closest("form").serialize();
 								/* alert(data); */
 								$.ajax({
-									url : "/rreply/rmodify",
+									url : "/recommendreply/rmodify",
 									data : data,
 									type : "post",
 									dataType : "json",
@@ -155,7 +156,7 @@
 										}
 									},
 									error : function() {
-										alert("replyModify error");
+										alert("recommendreplyModify error");
 									}
 								});
 								return false;
@@ -215,7 +216,6 @@
 				<tr align="right">
 					<td colspan="4">
 					<input type="button" onclick="location.href='/recommend/recommendboard'" value="List" class="btn btn-link"> 
-					<sec:authentication property="principal.username" var="id"/>
 					<input type="hidden" id="seqid" value="${id}">
 					<c:if test="${id eq recomm.member_id}">
 						<input type="button" onclick="location.href='/recommend/modify?num=${recomm.recomm_num}'" value="Modify" class="btn btn-link"> 

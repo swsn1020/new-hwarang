@@ -5,7 +5,15 @@
 <%@ taglib uri="http://www.springframework.org/security/tags"
 	prefix="sec"%>
 <title>화 랑</title>
-<%@include file="../layout/left.jsp"%>
+<%@include file="../layout/menu.jsp"%>
+<script type="text/javascript">
+$(function(){
+	document.domain = "localhost";
+	var url = "/";
+	window.opener.location.replace(url);
+	window.close();
+});
+</script>
 <!--  본문시작  -->
 <div class="album py-5">
 	<h2 class="text-center">Populor / Review top 3</h2>

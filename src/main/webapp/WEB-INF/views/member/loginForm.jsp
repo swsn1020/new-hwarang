@@ -23,7 +23,7 @@ ul, ol, li {
 // 사용할 앱의 JavaScript 키를 설정해 주세요.
 $(function(){
 	document.domain = "localhost";
-	Kakao.init('2d9e59632a95ce30b56830828ea0f3ed');
+	Kakao.init('fb9aed23f848063a34eed98d2d7ea36b');
 	Kakao.Auth.createLoginButton({
 		container : '#kakao-login-btn',
 		success : function(authObj) {
@@ -44,11 +44,11 @@ function postLogin(authObj){
 		dataType: "json",
 		success: function(result){
 			if(result == true){
-				location.href = "/index?kakaoResult=success";
 				window.close();
+				window.location.href = "/";
 			}else{
-				location.href = "/member/loginForm";
 				window.close();
+				window.location.href = "/member/loginForm";
 			}
 		}
 	});
@@ -126,10 +126,10 @@ function goLogin(){
 						<a id="kakao-login-btn"></a>
 					</li>
 				</ul>
-<<<<<<< HEAD
-				<%-- <h2><c:out value="${param.error}"/>1</h2> --%>
+<%-- <<<<<<< HEAD
+				<h2><c:out value="${param.error}"/>1</h2>
 =======
->>>>>>> refs/remotes/origin/master
+>>>>>>> refs/remotes/origin/master --%>
 			</div>
 		</div>
 	</div>

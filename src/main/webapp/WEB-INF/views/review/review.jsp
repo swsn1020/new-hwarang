@@ -21,7 +21,7 @@
 		$("#rbtnWrite").on("click", function() {
 			var data = $("#rwriteForm").serialize();
 			$.ajax({
-				url : "/reply/rwrite?num="+num,
+				url : "/reviewreply/rwrite?num="+num,
 				data : data,
 				type : "post",
 				dataType : "json",
@@ -35,7 +35,7 @@
 					ReplyView();
 				},
 				error : function() {
-					alert("replyWrtie error");
+					alert("reivewreplyWrtie error");
 				}
 			});
 			return false;
@@ -62,7 +62,7 @@
 		var seqid = $("#seqid").val();
 		/* member_id 수정해야됨 */
 		$.ajax({
-					url : "/reply/replyView?num=" + reviewNum,
+					url : "/reviewreply/replyView?num=" + reviewNum,
 					type : "get",
 					dataType : "json",
 					success : function(data) {
@@ -116,7 +116,7 @@
 								var replynum = $("#replynum").val();
 								/* alert(data); */
 								$.ajax({
-									url : "/reply/rdelete?num="+replynum,
+									url : "/reviewreply/rdelete?num="+replynum,
 									data : data,
 									type : "post",
 									dataType : "json",
@@ -130,7 +130,7 @@
 										}
 									},
 									error : function() {
-										alert("replyDelete error");
+										alert("reviewreplyDelete error");
 									}
 								});
 								return false;
@@ -140,7 +140,7 @@
 								var data = $(this).closest("form").serialize();
 								/* alert(data); */
 								$.ajax({
-									url : "/reply/rmodify",
+									url : "/reviewreply/rmodify",
 									data : data,
 									type : "post",
 									dataType : "json",
@@ -154,7 +154,7 @@
 										}
 									},
 									error : function() {
-										alert("replyModify error");
+										alert("reviewreplyModify error");
 									}
 								});
 								return false;
@@ -216,7 +216,6 @@
 				<tr align="right">
 					<td colspan="4">
 					<input type="button" onclick="location.href='/review/reviewboard'" value="List" class="btn btn-link"> 
-					<sec:authentication property="principal.username" var="id"/>
 					<input type="hidden" id="seqid" value="${id}"> 
 					<c:if test="${id eq review.member_id}">
 						<input type="button" onclick="location.href='/review/modify?num=${review.review_num}'" value="Modify" class="btn btn-link"> 

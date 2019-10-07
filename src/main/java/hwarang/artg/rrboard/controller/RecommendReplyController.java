@@ -16,7 +16,7 @@ import hwarang.artg.rrboard.service.RecommendReplyService;
 import hwarang.artg.rrboard.service.ReviewReplyService;
 
 @Controller
-@RequestMapping("/rreply")
+@RequestMapping("/recommendreply")
 public class RecommendReplyController {
 	@Autowired
 	private RecommendReplyService service;

@@ -20,9 +20,12 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -69,9 +72,11 @@ public class MemberController {
 	private FreeBoardService freeservice;
 	@Autowired
 	private ReportService reportservice;
-//	@Autowired
-//	@Qualifier("userAuthenticationManager")
-//	private AuthenticationManager authManager;
+	
+	
+	@Autowired
+	@Qualifier("authenticationManager")
+	private AuthenticationManager authManager;
 //
 //	@Autowired
 //	@Qualifier("customAuthenticationProvider")
@@ -102,21 +107,25 @@ public class MemberController {
 	@RequestMapping("/naverLogin")
 	public String showMain(Model model,HttpSession session,HttpServletRequest request) {
 		
+		
+		
 		String code = request.getParameter("code");
 		String state = request.getParameter("state");
 		Map<String, Object> userInfo = nservice.getUserInfo(code, state);
 		
 		System.out.println("userInfo:"+userInfo);
 		//id는 네이버아이디마다 고유하게 발급되는 값	
+		
 		String id = "(naver)";
 		id += (String) userInfo.get("email");
 
 		MemberVO member = service.memberGetOne(id);
+		String pw= (String) userInfo.get("id");
 		
 		if(member == null) {
 			MemberVO vo  =new MemberVO();
 			String name = (String) userInfo.get("name");
-			String pw = (String) userInfo.get("id");
+//			pw = (String) userInfo.get("id");
 			String email = (String) userInfo.get("email");			
 			String gender2 = (String) userInfo.get("gender");
 			int gender = 00;
@@ -126,7 +135,7 @@ public class MemberController {
 				}else if(gender2.equals("M")) {
 					gender = 0;//남자
 				}else if(gender2.equals("U")) {
-					gender = 2;//확인불가
+					gender = 3;//확인불가
 				}				
 			}
 			if(name == null || email == null || gender2 == null) {
@@ -140,7 +149,7 @@ public class MemberController {
 				vo.setAuthList(authList);
 				vo.setMember_name(name);
 				vo.setMember_id(id);
-				vo.setMember_password(pw);
+				vo.setMember_password(pwencoder.encode(pw));
 				vo.setMember_email(email);
 				vo.setMember_gender(gender);
 				vo.setMember_phonenum(" ");
@@ -150,8 +159,25 @@ public class MemberController {
 		} else {
 			System.out.println("네이버 사용자 있음");
 		}
-		session.setAttribute("naverName", userInfo.get("name"));
-		session.setAttribute("id", id);
+		
+//		System.out.println("match: " + pwencoder.matches(pw, member.getMember_password()));
+		
+		List<GrantedAuthority> authList =new ArrayList<GrantedAuthority>();
+		authList.add(()->"ROLE_USER"); 
+		 UsernamePasswordAuthenticationToken authReq
+	      = new UsernamePasswordAuthenticationToken(id, pw,authList);
+
+		try {			
+			Authentication auth = authManager.authenticate(authReq);
+			SecurityContext sc = SecurityContextHolder.getContext();
+			sc.setAuthentication(auth);
+			session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, sc);
+			session.setAttribute("naverName", userInfo.get("name"));
+			session.setAttribute("id", id);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		 
 		return "redirect:/";
 	}
 
@@ -169,7 +195,6 @@ public class MemberController {
 		System.out.println("controller /kakaoLogin :" + params);
 		String access_token = (String) params.get("access_token");
 
-		try {
 			//이메일과 성별 제공 동의 확인하기
 			String scope = (String) params.get("scope");
 			System.out.println("scope:"+scope);
@@ -181,7 +206,7 @@ public class MemberController {
 			MemberVO member = service.memberGetOne(id);
 			
 			String name = (String) userInfo.get("name");
-			String pw = pwencoder.encode((String) userInfo.get("id"));
+			String pw = (String) userInfo.get("id");
 			
 			if (member == null) {
 				
@@ -189,10 +214,12 @@ public class MemberController {
 				String email = (String) userInfo.get("email");
 				String gender2 = (String) userInfo.get("gender");
 				int gender = 00;
-				if(gender2.equals("male")) {
-					gender = 0;
-				}else if(gender2.equals("female")) {
-					gender = 1;
+				if(gender2 != null) {
+					if(gender2.equals("male")) {
+						gender = 0;
+					}else if(gender2.equals("female")) {
+						gender = 1;
+					}
 				}else {
 					gender = 3;//확인불가
 				}
@@ -209,26 +236,30 @@ public class MemberController {
 				boolean result = service.memberRegister(vo);
 				if(result) {
 					session.setAttribute("kakaoName", name);
-					session.setAttribute("id", id);
-					session.setAttribute("access_token", access_token);
-					return true;
 				}
 				
 			} else {
 				System.out.println("카카오톡 사용자 있음");
 				session.setAttribute("kakaoName", name);
-				session.setAttribute("id", id);
-				session.setAttribute("access_token", access_token);
-				return true;
 			}
 			
-			return false;
+			
+			List<GrantedAuthority> authList =new ArrayList<GrantedAuthority>();
+			authList.add(()->"ROLE_USER"); 
+			UsernamePasswordAuthenticationToken authReq
+		     = new UsernamePasswordAuthenticationToken(id,pw,authList);
+			try {
+				Authentication auth = authManager.authenticate(authReq);
+				SecurityContext sc = SecurityContextHolder.getContext();
+				sc.setAuthentication(auth);
+				session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, sc);
+				session.setAttribute("naverName", userInfo.get("name"));
+			
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+			return true;
 
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println("Kakao Login service: 예외 발생");
-			return false;
-		}
 
 	}
 	
