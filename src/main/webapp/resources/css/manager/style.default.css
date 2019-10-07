@@ -816,21 +816,10 @@ section.dashboard-counts div[class*='col-']:last-of-type .item {
   height: 100%;
 }
 
-.statistic:last-of-type {
+.image:last-of-type {
   margin-bottom: 0;
 }
 
-.statistic strong {
-  font-size: 1.5em;
-  color: #333;
-  font-weight: 700;
-  line-height: 1;
-}
-
-.statistic small {
-  color: #aaa;
-  text-transform: uppercase;
-}
 
 
 

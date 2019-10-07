@@ -8,8 +8,6 @@
 <script src="https://kit.fontawesome.com/1e1a69f988.js"></script>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,700">
 <script	src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
-<!-- <script src="http://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script> -->
-<!-- <script src="/resources/js/manager/jquery.counterup.js"></script> -->
 <script type="text/javascript">
 $(function(){
 	//차트 그림그리기
@@ -72,16 +70,28 @@ $(function(){
     var totalFP = numberWithCommas('${totalFP}');
 //     alert(totalFP);
 	$(".counter").text(totalFP).append("<small style='color: black;'>원</small>");
-    
 	$("#review0").addClass('active');
-
 });	//onload End
     
     function numberWithCommas(x) {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 </script>
-
+<style>
+	.carousel-indicators li {
+    width: 10px;
+    height: 10px;
+    border-radius: 100%;
+    background: gray;
+	}
+	.carousel-indicators li.active  {
+	background-color: #B2A49A;
+	}
+	.carousel-control-prev-icon {
+	background-color: black;
+	}
+	
+</style>
 <!-- content-inner -->
 <!-- 신규가입자(수), 신규게시물(수), 신규 댓글(수),  -->
 <div class="content-inner" style="padding-bottom: 59px;">
@@ -178,7 +188,7 @@ $(function(){
             </div>
             <div class="statistic d-flex align-items-center bg-white has-shadow">
               <div class="icon bg-orange"><i class="fa fa-paper-plane-o fa-lg" style="padding-top: 10px;"></i></div>
-              <div class="text"><strong><a href="#"><span class="counter"></span></a></strong><br><small>TOTAL FUNDING PRICE</small></div>
+              <div class="text"><strong><a href="/funding"><span class="counter"></span></a></strong><br><small>TOTAL FUNDING PRICE</small></div>
             </div>
           </div>
           <div class="chart col-lg-6 col-12">
@@ -196,21 +206,23 @@ $(function(){
 				</div>
 			</div>
 			<!-- images -->
-			<div class="images col-lg-3 col-12">
+			<div class="images col-lg-3 col-12" style="text-align: center;">
 				<div class="image d-flex align-items-center bg-white has-shadow">
 					<div id="img" class="carousel slide" data-ride="carousel" style="width: 100%; height: 100%;">
-					<p><strong class="text-red">REVIEW BOARD</strong></p>
+						<p><strong class="text-red">REVIEW BOARD</strong></p>
 						 <!-- Indicators -->
 						  <ul class="carousel-indicators">
 						    <li data-target="#img" data-slide-to="0" class="active"></li>
 						    <li data-target="#img" data-slide-to="1"></li>
 						    <li data-target="#img" data-slide-to="2"></li>
+						     <li data-target="#img" data-slide-to="3"></li>
+						      <li data-target="#img" data-slide-to="4"></li>
 						  </ul>
 						  
 						  <!-- The slideshow -->
-						  <div class="carousel-inner">
+						  <div class="carousel-inner" style="padding-left: 30px; padding-right: 30px; height: 80%;">
 						  	<c:forEach items="${reviewList }" var="review" varStatus="vs">
-							    <div class="carousel-item" id="review${vs.index }">
+							    <div class="carousel-item" id="review${vs.index }" onclick="location.href='/review/view?num=${review.review_num}'">
 							      <p><strong>${review.review_title }</strong></p>
 							      <br><br><br>
 							      <p>${review.review_content }</p>
@@ -354,10 +366,12 @@ $(function(){
 		</div>
     </section>
 	<!-- Updates Section -->
+	<!-- 
 	<section class="updates no-padding-top">
 		<div class="container-fluid">
 			<div class="row">
 				<!-- Recent Updates-->
+				<!-- 
 				<div class="col-lg-4">
 					<div class="recent-updates card">
 						<div class="card-close">
@@ -382,6 +396,7 @@ $(function(){
 						</div>
 						<div class="card-body no-padding">
 							<!-- Item-->
+							<!-- 
 							<div class="item d-flex justify-content-between">
 								<div class="info d-flex">
 									<div class="icon">
@@ -398,6 +413,7 @@ $(function(){
 								</div>
 							</div>
 							<!-- Item-->
+							<!-- 
 							<div class="item d-flex justify-content-between">
 								<div class="info d-flex">
 									<div class="icon">
@@ -414,6 +430,7 @@ $(function(){
 								</div>
 							</div>
 							<!-- Item        -->
+							<!-- 
 							<div class="item d-flex justify-content-between">
 								<div class="info d-flex">
 									<div class="icon">
@@ -430,6 +447,7 @@ $(function(){
 								</div>
 							</div>
 							<!-- Item-->
+							<!-- 
 							<div class="item d-flex justify-content-between">
 								<div class="info d-flex">
 									<div class="icon">
@@ -446,6 +464,7 @@ $(function(){
 								</div>
 							</div>
 							<!-- Item-->
+							<!-- 
 							<div class="item d-flex justify-content-between">
 								<div class="info d-flex">
 									<div class="icon">
@@ -465,6 +484,7 @@ $(function(){
 					</div>
 				</div>
 				<!-- Daily Feeds -->
+				<!-- 
 				<div class="col-lg-4">
 					<div class="daily-feeds card">
 						<div class="card-close">
@@ -489,6 +509,7 @@ $(function(){
 						</div>
 						<div class="card-body no-padding">
 							<!-- Item-->
+							<!-- 
 							<div class="item">
 								<div class="feed d-flex justify-content-between">
 									<div class="feed-body d-flex justify-content-between">
@@ -509,6 +530,7 @@ $(function(){
 								</div>
 							</div>
 							<!-- Item-->
+							<!-- 
 							<div class="item">
 								<div class="feed d-flex justify-content-between">
 									<div class="feed-body d-flex justify-content-between">
@@ -535,6 +557,7 @@ $(function(){
 								</div>
 							</div>
 							<!-- Item-->
+							<!-- 
 							<div class="item clearfix">
 								<div class="feed d-flex justify-content-between">
 									<div class="feed-body d-flex justify-content-between">
@@ -558,12 +581,13 @@ $(function(){
 										and typesetting industry. Lorem Ipsum has been the industry's
 										standard dummy text ever since the 1500s. Over the years.</small>
 								</div>
-								<!--                   <div class="CTAs pull-right"><a href="#" class="btn btn-xs btn-secondary"><i class="fa fa-thumbs-up"> </i>Like</a></div> -->
+								                  <div class="CTAs pull-right"><a href="#" class="btn btn-xs btn-secondary"><i class="fa fa-thumbs-up"> </i>Like</a></div>
 							</div>
 						</div>
 					</div>
 				</div>
 				<!-- Check List -->
+				<!-- 
 				<div class="col-lg-4">
 					<div class="checklist card">
 						<div class="card-close">
