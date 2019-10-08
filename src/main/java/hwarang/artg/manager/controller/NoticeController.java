@@ -49,6 +49,18 @@ public class NoticeController {
 		return "manager/notice/noticeList";
 	}
 	
+	@RequestMapping("/noticeListForManager")
+	public String showNoticeListM(CriteriaDTO cri, Model model) {
+//		List<NoticeVO> n_List = service.noticeGetAll();
+//		model.addAttribute("noticeList", n_List);
+		//페이징 처리 List
+		System.out.println("noticeListForManager요청");
+		PageDTO page = new PageDTO(cri, service.getTotalCount(cri));
+		model.addAttribute("pageMaker", page);
+		model.addAttribute("noticeList", service.pagingList(cri));
+		return "manager/notice/noticeListM";
+	}
+	
 	@RequestMapping("/noticeWrite")
 	public String showNoticeWriteForm() {
 		return "manager/notice/noticeWriteForm";
@@ -57,7 +69,7 @@ public class NoticeController {
 	@RequestMapping(value="/noticeWrite", method=RequestMethod.POST)
 	public String doNoticeRegister(NoticeVO notice, Model model) {
 		String msg = "공지사항 등록에 실패하였습니다.";
-		String url = "noticeList";
+		String url = "noticeListForManager";
 		if(service.noticeRegister(notice)) {
 			//등록 성공 -> noticeList로 돌아감
 			msg = "공지사항이 등록되었습니다.";
@@ -153,7 +165,7 @@ public class NoticeController {
 	@RequestMapping(value="/noticeModify", method=RequestMethod.POST)
 	public String doNoticeModify(NoticeVO notice, Model model) {
 		String msg ="공지사항 수정에 실패하였습니다.";
-		String url = "noticeView?num="+notice.getNum();
+		String url = "noticeListForManager";
 		if(service.noticeModify(notice)) {
 			msg = "공지사항 수정에 성공하였습니다.";
 		}
@@ -176,7 +188,7 @@ public class NoticeController {
 	/**** 비밀번호 확인(checkPassword) ****/
 	@RequestMapping(value="/checkPw", method=RequestMethod.POST)
 	public String doCheckPw(int num, String type, String password, Model model, Principal principal) {
-		String url = "noticeList";
+		String url = "noticeListForManager";
 		String msg = "";
 		String id = principal.getName();
 //		System.out.println("id는"+id);

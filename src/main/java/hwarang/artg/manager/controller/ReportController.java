@@ -61,7 +61,7 @@ public class ReportController {
 	}
 	
 	@RequestMapping(value="/reportWrite", method=RequestMethod.POST)
-	public String doReportWrite(ReportVO report, String subCategory, Model model, MultipartHttpServletRequest request) {
+	public String doReportRegister(ReportVO report, String subCategory, Model model, MultipartHttpServletRequest request) {
 		System.out.println("reportWrite 요청");
 		String category = report.getCategory();
 		report.setCategory(category+"_"+subCategory);

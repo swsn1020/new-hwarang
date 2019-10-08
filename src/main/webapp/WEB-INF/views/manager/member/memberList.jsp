@@ -29,8 +29,9 @@ $(function(){
 				<h1 style="color: #80425A"><strong>Member List</strong></h1>
 			</div>
 		</div>
-		<div class="project" id="project4">
+		<div class="project" id="project3">
           <div class="row bg-white has-shadow">
+           <div class="card-body" style="padding: 20px;">
           	<div class="left-col col-lg-6 d-flex align-items-center justify-content-between">
               <div class="project-title d-flex align-items-center">
                 <div class="text">
@@ -45,22 +46,21 @@ $(function(){
 						<input type="text" name="keyword" id="search" disabled="disabled" value="<c:out value="${pageMaker.cri.keyword }"/>">
 						<input type="hidden" name="pageNum" value="<c:out value="${pageMaker.cri.pageNum }"/>">
 						<input type="hidden" name="amount" value="<c:out value="${pageMaker.cri.amount }"/>">
-						<input type="submit" class="btn btn-primary btn-sm" value="검색">
+						<input type="submit" class="btn btn-outline-primary btn-sm" value="검색">
 					</form>
                 </div>
               </div>
             </div>
-            <div class="card-body">
             	<div class="table-responsive">
 					<table class="table table-hover">
 						<thead>
 							<tr>
-								<th>No</th>
+								<th style="width: 10%;">No</th>
 								<th>ID</th>
 								<th>NAME</th>
 								<th>EMAIL</th>
 								<th>REGISTER DATE</th>
-								<th>BLOCK COUNT</th>
+								<th style="width: 10%;">BLOCK COUNT</th>
 								<th>STATUS</th>
 								<th>EDIT</th>
 							</tr>
@@ -78,7 +78,7 @@ $(function(){
 									<td>${member.member_report_count }</td>
 									<c:choose>
 										<c:when test="${member.member_status eq 'disabled' }">
-											<td style="color: red; font-weight: bolde;">${member.member_status }</td>
+											<td style="color: #9B434D; font-weight: bold;">${member.member_status }</td>
 										</c:when>
 										<c:otherwise>
 											<td>${member.member_status }</td>

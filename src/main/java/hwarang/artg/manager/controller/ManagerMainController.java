@@ -37,48 +37,37 @@ public class ManagerMainController {
 	private MemberService memberService;
 	
 	@RequestMapping("/main")
-	public String showMainPage(Model model, Principal principal) {
+	public String showMainPage(Model model) {
 		System.out.println("Manager Main 요청들어옴");
 		/* 총 멤버 수, 총 게시글 수, 총 댓글 수 */
 		model.addAttribute("totalMembers", managerService.memberCounts());
 		model.addAttribute("totalPosts", managerService.totalPost());
 		model.addAttribute("totalReplies", managerService.totalReply());
-		
 
 		/* 최근 일주일  가입한 신규 회원 수 */
 		model.addAttribute("newMemCount", managerService.newMemberCount());
 		/* 이번달 시작되는 전시회 수*/
 		model.addAttribute("ExhiCountMonth", managerService.thisMonthExhiCount());
-		
+		/* Funding Total Price */
+		model.addAttribute("totalFP", managerService.getTotalPrice());
 		
 		/* QNA, BLOCKSTATUS 5개씩 출력 */
 		model.addAttribute("qnaList", qnaService.qnaGetByRegDate());
 		model.addAttribute("blockList", blockService.blockGetByRegDate());
 		
-		/* 각 게시판 그래프 그리기 - 오늘 등록된 게시글 수 */
+		/* 그래프  - 오늘 등록된 게시글 수 */
 		model.addAttribute("qnaTC", managerService.qnaTodayCount());
 		model.addAttribute("reportTC", managerService.reportTodayCount());
 		model.addAttribute("blockTC", managerService.blockTodayCount());
 		model.addAttribute("reviewBTC", managerService.reviewBTodayCount());
 		model.addAttribute("freeBTC", managerService.freeBTodayCount());
 		model.addAttribute("recommBTC", managerService.RecommBTodayCount());
-		
 		model.addAttribute("blockCnt", blockService.getBlockCountNotChecked());
 		
-		//로그인 한 아이디 or 이름
-		MemberVO mem = memberService.memberGetOne(principal.getName());
-		String memName = mem.getMember_name();
-		model.addAttribute("memId", principal.getName());
-		model.addAttribute("memName", memName);
-		
-		model.addAttribute("totalFP", managerService.getTotalPrice());
-		
-		// 사진 띄우기
+		/* Review 게시판 불러오기 */
 		model.addAttribute("reviewList", managerService.getReviewsTop());
 		return "manager/adminMain";
 	}
-	
-			
 	
 	@RequestMapping("/memberList")
 	public String showMemberList(CriteriaDTO cri, Model model) {
@@ -86,13 +75,7 @@ public class ManagerMainController {
 		PageDTO page = new PageDTO(cri, managerService.totalMemCount(cri));
 		model.addAttribute("pageMaker", page);
 		model.addAttribute("memberList", managerService.pagingList(cri));
-		return "manager/member/memberList";
-	}
-	
-	@RequestMapping("/newMemberList")
-	public String showNeMemberList(Model model) {
-		System.out.println("admin/newMemberList 요청");
-		model.addAttribute("memberList", managerService.newMemberList());
+		model.addAttribute("blockCnt", blockService.getBlockCountNotChecked());
 		return "manager/member/memberList";
 	}
 	

@@ -14,11 +14,13 @@
 </script>
 	<div class="container" style="padding-left: 50px; padding-right: 50px;">
 	<h3>공지사항</h3>
+	<!-- 
 	<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')">
 	<div class="buttondiv" style="text-align: center; float: right; margin-bottom: 10px;">
 		<button type="button" class="btn btn-outline-secondary btn-sm" onclick="location.href='noticeWrite'">공지작성</button>
 	</div>
 	</sec:authorize>
+	-->
 	<table class="table table-hover">
 		<thead>
 			<tr>

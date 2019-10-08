@@ -864,7 +864,7 @@ section.dashboard-counts div[class*='col-']:last-of-type .item {
 /*blockStauts, MemberList CSS 사용자 지정 */
 .project, #project3 a {
 	color: #80425A;
-	font-weight: bold;
+	font-weight: normal !important;
 }
 
 .project, #project3 a:hover {
@@ -873,14 +873,14 @@ section.dashboard-counts div[class*='col-']:last-of-type .item {
 
 .pagination, .page-item a {
 	color: #5C5A5C !important;
+	font-weight: normal !important;
 }
 
-li.active a{
+.pagination li.active a{
 	color: #5C5A5C !important;
 	background-color: #E1DAD2 !important;
+	font-weight: bold !important;
 }
-
-
 
 
 .project div[class*='col-'] {

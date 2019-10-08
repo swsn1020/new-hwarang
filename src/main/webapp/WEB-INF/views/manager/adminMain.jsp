@@ -5,9 +5,7 @@
 <%@ page import = "java.text.SimpleDateFormat" %>
 
 <!-- Google fonts - Poppins -->
-<script src="https://kit.fontawesome.com/1e1a69f988.js"></script>
-<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" />
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,700">
+
 <script	src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
 <script type="text/javascript">
 $(function(){
@@ -191,15 +189,15 @@ $(function(){
           <div class="statistics col-lg-3 col-12">
             <div class="statistic d-flex align-items-center bg-white has-shadow">
               <div class="icon bg-red"><i class="fa fa-tasks fa-lg" style="padding-top: 10px;"></i></div>
-              <div class="text"><strong><a href="/admin/memberList?type=W">${newMemCount }</a></strong><br><small>New Members within a week</small><br></div>
+              <div class="text"><strong>${newMemCount }</strong><br><small>New Members within a week</small><br></div>
             </div>
             <div class="statistic d-flex align-items-center bg-white has-shadow">
               <div class="icon bg-green"><i class="fa fa-calendar-o fa-lg" style="padding-top: 10px;"></i></div>
-              <div class="text"><strong><a href="/exhibition">${ExhiCountMonth}</a></strong><br><small>EXHIBITION</small></div>
+              <div class="text"><strong>${ExhiCountMonth}</strong><br><small>This month Exhibition</small></div>
             </div>
             <div class="statistic d-flex align-items-center bg-white has-shadow">
               <div class="icon bg-orange"><i class="fa fa-paper-plane-o fa-lg" style="padding-top: 10px;"></i></div>
-              <div class="text"><strong><a href="/funding"><span class="counter"></span></a></strong><br><small>TOTAL FUNDING PRICE</small></div>
+              <div class="text"><strong><span class="counter"></span></strong><br><small>TOTAL FUNDING PRICE</small></div>
             </div>
           </div>
           <div class="chart col-lg-6 col-12">

@@ -1,3 +1,4 @@
+<%@page import="java.security.Principal"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -7,25 +8,22 @@
 <sec:authentication property="principal" var="pinfo" />
 <!DOCTYPE html>
 <html lang="en">
-<script src="https://kit.fontawesome.com/1e1a69f988.js"></script>
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-        crossorigin="anonymous">
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,700">
 <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
 <link rel="stylesheet" href="/resources/css/manager/fontastic.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-<!-- <link rel="stylesheet" href="/resources/css/manager/font-awesome.css"> -->
 <link rel="stylesheet" href="/resources/css/manager/style.default.css">
 <link rel="stylesheet" href="/resources/css/manager/managerSidebar.css">
+<script src="https://kit.fontawesome.com/1e1a69f988.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script>
 $(function(){
 	$(".sidebar-dropdown > a").click(function() {
@@ -95,7 +93,7 @@ $(function(){
                   </ul>
                 </li>
                 <!-- Logout    -->
-                <li class="nav-item"><a href="login.html" class="nav-link logout"> <span class="d-none d-sm-inline">Logout</span><i class="fa fa-sign-out fa-lg"></i></a></li>
+                <li class="nav-item"><a href="/logout" class="nav-link logout"> <span class="d-none d-sm-inline">Logout</span><i class="fa fa-sign-out fa-lg"></i></a></li>
               </ul>
             </div>
           </div>
@@ -115,8 +113,9 @@ $(function(){
 	      </div>
 	      <div class="sidebar-header">
 	        <div class="user-info">
-	          <span class="user-name">${memName } <!-- 아이디 불러오기 -->
-	            <strong>(${memId })</strong>
+	          <span class="user-name"> <!-- 아이디 불러오기 -->
+	          	<sec:authentication property="principal.username" var="memId"/>
+	            <strong>${memId }</strong>
 	          </span>
 	          <span class="user-role">Administrator</span>
 	          <span class="user-status">
@@ -126,20 +125,6 @@ $(function(){
 	        </div>
 	      </div>
 	      <!-- sidebar-header  -->
-	      <!-- 
-	      <div class="sidebar-search">
-	        <div>
-	          <div class="input-group">
-	            <input type="text" class="form-control search-menu" placeholder="Search...">
-	            <div class="input-group-append">
-	              <span class="input-group-text">
-	                <i class="fa fa-search" aria-hidden="true"></i>
-	              </span>
-	            </div>
-	          </div>
-	        </div>
-	      </div>
-	      <!-- sidebar-search  -->
 	      <div class="sidebar-menu">
 	        <ul>
 	          <li class="header-menu">
@@ -148,30 +133,25 @@ $(function(){
 	          <li class="sidebar-dropdown">
 	            <a href="#">
 	              <i class="fas fa-clipboard"></i>
-	              <span><strong>Boards</strong></span>
-	<!--                   'Pro'아이콘 -->
-	<!--                     <span class="badge badge-pill badge-success">Pro</span> -->
+	              <span><strong>Board Management</strong></span>
 	            </a>
 	            <div class="sidebar-submenu">
 	              <ul>
 	                <li>
-	                  <a href="/notice/noticeList">Notice Board <span class="badge badge-pill badge-warning">New</span>
+	                  <a href="/notice/noticeListForManager">Notice Board <span class="badge badge-pill badge-warning">New</span>
 	                  </a>
+	                </li>
+	                <li>
+	                  <a href="/faq/faqListForManager">FAQ Board</a>
 	                </li>
 	                <li>
 	                  <a href="/report/reportList">Report Board</a>
 	                </li>
 	                <li>
-	                  <a href="/qna/qnaList">Q&amp;A Board</a>
-	                </li>
-	                <li>
-	                  <a href="/faq/faqList">FAQ Board</a>
+	                  <a href="/qna/qnaListForManager">Q&amp;A Board</a>
 	                </li>
 	                <li>
 	                  <a href="/free/freeboard">Free Board</a>
-	                </li>
-	                <li>
-	                  <a href="/exhibition">Exhibition</a>
 	                </li>
 	                <li>
 	                  <a href="/review/reviewboard">Review Board</a>
@@ -185,7 +165,7 @@ $(function(){
 	          <li class="sidebar-dropdown">
 	            <a href="#">
 	              <i class="fa fa-users"></i>
-	              <span><strong>Members</strong></span>
+	              <span><strong>Member</strong></span>
 	<!--               <span class="badge badge-pill badge-danger">3</span> -->
 	            </a>
 	            <div class="sidebar-submenu active">
@@ -204,25 +184,44 @@ $(function(){
 	            </div>
 	          </li>
 	        </ul>
+	        <ul>
+        	  <li class="header-menu">
+          		<span>General</span>
+              </li>
+              <li class="sidebar-dropdown">
+	            <a href="#">
+	              <i class="fa fa-users"></i>
+	              <span><strong>Boards</strong></span>
+	<!--               <span class="badge badge-pill badge-danger">3</span> -->
+	            </a>
+	            <div class="sidebar-submenu"  style="display: none;">
+	              <ul>
+	                <li>
+	                  <a href="/exhibition">Exhibition</a>
+	                </li>
+	                <li>
+	                  <a href="/report/reportList">Report Board</a>
+	                </li>
+	                <li>
+	                  <a href="/qna/qnaList">Q&amp;A Board</a>
+	                </li>
+	                <li>
+	                  <a href="/free/freeboard">Free Board</a>
+	                </li>
+	                <li>
+	                  <a href="/review/reviewboard">Review Board</a>
+	                </li>
+	                <li>
+	                  <a href="/recommend/recommendboard">Recommend Board</a>
+	                </li>
+	                <li>
+	                  <a href="#">Funding Board</a>
+	                </li>
+	              </ul>
+	            </div>
+	          </li>
+	        </ul>
 	      </div>
 	    </div>
-	    <!-- sidebar-content  
-	    <div class="sidebar-footer">
-	      <a href="#">
-	        <i class="fa fa-bell"></i>&nbsp;
-	        <span class="badge badge-pill badge-warning notification">3</span>
-	      </a>
-	      <a href="#">
-	        <i class="fa fa-envelope"></i>&nbsp;
-	        <span class="badge badge-pill badge-success notification">7</span>
-	      </a>
-	      <a href="#">
-	        <i class="fa fa-cog"></i>&nbsp;
-	        <span class="badge-sonar"></span>
-	      </a>
-	      <a href="#">
-	        <i class="fa fa-power-off"></i>&nbsp;
-	      </a>
-	    </div>
-	    -->
+	    <!-- sidebar-content  -->
 	  </nav>

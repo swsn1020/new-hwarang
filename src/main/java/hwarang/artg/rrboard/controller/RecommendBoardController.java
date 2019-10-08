@@ -56,7 +56,7 @@ public class RecommendBoardController {
 	}
 
 	@RequestMapping(value = "/write", method = RequestMethod.POST)
-	public String showrwrite(String username, String recomm_title, String recomm_content,
+	public String showrRegister(String username, String recomm_title, String recomm_content,
 			 Model model,MultipartHttpServletRequest request){
 		// exh_name : 결제한 프로그램 명
 		List<MultipartFile> fileList =request.getFiles("file");
