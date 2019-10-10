@@ -4,8 +4,8 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	<mapper namespace="hwarang.artg.mapper.RecommendReplyMapper">
 		<insert id="insertRecommend_Reply" parameterType="hwarang.artg.rrboard.model.RecommendReplyVO">
-			insert into recommend_reply(recomm_reply_num,recomm_num,member_id,recomm_reply_content)
-			values(seq_recommend_reply.nextval,#{recomm_num},#{member_id},#{recomm_reply_content})
+			insert into recommend_reply(recomm_reply_num,recomm_num,member_id,recomm_reply_content,recomm_reply_reg_date)
+			values(seq_recommend_reply.nextval,#{recomm_num},#{member_id},#{recomm_reply_content},sysdate + 9/24)
 		</insert>
 		<update id="updateRecommend_Reply" parameterType="hwarang.artg.rrboard.model.RecommendReplyVO">
 			update recommend_reply

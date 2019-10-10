@@ -122,14 +122,12 @@
 							$("<td>").append(form2.append(remvText)).appendTo(tr);
 							$("<td>").text(data[i].review_reply_reg_date)
 									.appendTo(tr);
-<<<<<<< HEAD
 							
 							if(seqid == data[i].member_id){
 								$("<td>").append(rbtnModify).append(rbtnRemove).appendTo(tr);								
 							}
 						
 							$("<td colspan='2'>").append(btnReport).appendTo(tr);
-=======
 							$("<td>").append(rbtnModify).append(rbtnRemove)
 									.appendTo(tr);
 							$("<td>").append(blockBtn).appendTo(tr);
@@ -137,8 +135,6 @@
 							if(blockStatus == 'true'){
 								rbtnModify.attr("disabled", "disabled");
 							}
->>>>>>> refs/remotes/origin/master
-
 							tr.appendTo(table);
 
 							rbtnModify.on("click", function() {
