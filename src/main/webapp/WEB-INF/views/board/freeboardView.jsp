@@ -10,7 +10,7 @@ $(function() {	//문서가 로딩되면 실행할 함수
 		//replyForm에 작성된 내용을 DB에 쓰기 후, 결과 받아와서 처리
 		var data = $("#Replyregister").serialize();
 		$.ajax({
-			url : "${contextPath}/reply/register",
+			url : "${contextPath}/freereply/register",
 			data : data,
 			type : "post",
 			dataType : "json",
@@ -78,7 +78,7 @@ function replyList(num){
 		$("#replyTable tr").remove();
 		getReplyCnt();
 		$.ajax({
-			url : "${contextPath}/reply/all",
+			url : "${contextPath}/freereply/all",
 			data : {"fboardNum" : '${fboard.num}',"curPage":num},
 			type : "get",
 			dataType : "json",
@@ -183,7 +183,7 @@ function replyList(num){
 			rbtnModify.on("click",function(){
 				var d = $(this).closest("form").serialize();			
 				$.ajax({
-						url : "${contextPath}/reply/modifyReply",
+						url : "${contextPath}/freereply/modifyReply",
 						type: "post",
 						data : d,
 						dataType:"json",
@@ -202,7 +202,7 @@ function replyList(num){
 			rbtnRemove.on("click",function(){
 				var d = $(this).closest("form").serialize();
 				$.ajax({
-					url : "${contextPath}/reply/removeReply",
+					url : "${contextPath}/freereply/removeReply",
 					type : "post",
 					data : d,
 					dataType:"json",

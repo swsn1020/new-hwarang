@@ -5,7 +5,9 @@ import java.io.FileInputStream;
 import java.io.OutputStream;
 import java.security.Principal;
 import java.text.DateFormat;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -31,6 +33,8 @@ import hwarang.artg.common.model.ReplyPager;
 import hwarang.artg.community.service.FreeBoardService;
 import hwarang.artg.community.service.FreeImgService;
 import hwarang.artg.community.service.FreeReplyService;
+import hwarang.artg.manager.model.NoticeVO;
+import hwarang.artg.member.service.MemberService;
 import net.coobird.thumbnailator.Thumbnails;
 
 @Controller
@@ -45,6 +49,9 @@ public class BoardController {
 
 	@Autowired
 	private FreeImgService imgService;
+	
+	@Autowired
+	private MemberService memberservice;
 
 	@RequestMapping(value = "/freeboard", method = RequestMethod.GET)
 	public String showfreeboardList(Model model, CriteriaDTO cri,Principal principal) throws Exception {
@@ -52,16 +59,20 @@ public class BoardController {
 		System.out.println(page);
 		model.addAttribute("pageMaker", page);
 		model.addAttribute("freeboard", fservice.pagingList(cri));
-		model.addAttribute("principal",principal);
+//		model.addAttribute("principal",principal);
 		System.out.println(page);
 		return "/board/freeboard";
+	}
+	@RequestMapping("main")
+	public String main() {
+		return "/board/servey";
 	}
 
 	@RequestMapping("/freeboardView")
 	public String showfreeboardView(Model model, int num,HttpServletRequest request, HttpServletResponse response, @RequestParam(defaultValue = "1")int curPage,Principal principal) {
-		String id = principal.getName();
-		model.addAttribute("id",id);
-		model.addAttribute("principal",principal);
+//		String id = principal.getName();
+//		model.addAttribute("id",id);
+//		model.addAttribute("principal",principal);
 		FreeBoardVO free = fservice.freeboardGetone(num);
 		Cookie [] cookies = request.getCookies();
 		Cookie targetCookie = null;
@@ -111,9 +122,9 @@ public class BoardController {
 			int count = rservice.getTotalReplies(fboardNum);
 			ReplyPager rPager = new ReplyPager(count,curPage);
 			model.addAttribute("rPager",rPager);
+			model.addAttribute("freeImgList",imgService.freeImgGetByFNum(fboardNum));
 			System.out.println(curPage);
-			return "/board/freeboardView";
-			
+			return "/board/freeboardView";			
 		}
 		//선택된 게시물 없음
 		model.addAttribute(msg, "삭제된 게시물 입니다.");
@@ -122,8 +133,7 @@ public class BoardController {
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
-	public String showRegisterfreeForm(Principal principal,Model model) {
-		model.addAttribute("principal",principal);
+	public String showRegisterfreeForm(Model model) {
 		return "/board/freeboardRegister";
 	}
 
@@ -223,4 +233,21 @@ public class BoardController {
 		System.out.println("replyCount 요청 들어옴");
 		return fservice.getnReplyCount(fboardNum);
 	}	
+	
+	//수정한것
+	@RequestMapping("checkUserNotice")
+	public @ResponseBody Map<String, Object> checkUserNotify(
+			@RequestParam("member_id") String member_id) throws Exception {
+		Map<String, Object> ret = new HashMap<>();
+		int result = memberservice.getNoticeCount(member_id);
+		ret.put("result", result );
+		return ret;
+	}
+	
+	@RequestMapping("getUserNotice")
+	public @ResponseBody List<NoticeVO> getUserNotice(@RequestParam("member_id") String member_id){
+		List<NoticeVO> result = memberservice.getUserNotice(member_id);
+		if(result!=null) memberservice.readUserNotice(member_id);
+		return result;
+	}
 }
