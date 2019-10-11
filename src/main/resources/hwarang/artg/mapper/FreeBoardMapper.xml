@@ -18,6 +18,14 @@ update free_board
 <delete id="deleteBoard" parameterType="int">
 delete from free_board where free_num = #{num}
 </delete>
+<select id="selectOne_id" parameterType="String" resultMap="freeboardMap">
+select * from free_board where member_id = #{userid}
+</select>
+<select id="selectRecentFree" resultMap="freeboardMap">
+		SELECT * 
+		  FROM ( SELECT * FROM free_board order by free_regdate desc)
+	  	 WHERE rownum between 1 and 7
+</select>
 <select id="selectOne" parameterType="int" resultMap="freeboardMap">
 select * from free_board where free_num = #{num}
 </select>

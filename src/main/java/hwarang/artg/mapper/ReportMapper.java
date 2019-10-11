@@ -16,6 +16,7 @@ public interface ReportMapper {
 	public int updateReply(@Param("num")int num, @Param("reply")String reply);
 	public int deleteReport(int num);
 	public ReportVO selectReport(int num);
+	public List<ReportVO> selectReport_id(String id);
 	public List<ReportVO> selectAllReports();
 	
 	//첨부파일을 위한 업로드 메서드

@@ -279,8 +279,19 @@
 					<div id="map" style="width: 100%; height: 450px;"></div>
 		    </div>
 		    <div id="menu1" class="container tab-pane fade"><br>
-		      <h3>Menu 1</h3>
-		      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+		      <h3>블로그 리뷰</h3>
+		      <div>
+		      	<table class="table">
+					<c:forEach items="${blogReview}" var="blog">
+						<tr>
+							<td><a href="${blog.link}" >${blog.title}</a></td>
+						</tr>
+						<tr>
+							<td>${blog.description}</td>				
+						</tr>
+					</c:forEach>
+				</table>
+		      </div>
 		    </div>
 		    <div id="menu2" class="container tab-pane fade"><br>
 		      <h3>Menu 2</h3>

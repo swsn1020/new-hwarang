@@ -78,23 +78,6 @@
 		    <artifactId>json</artifactId>
 		    <version>20160810</version>
 		</dependency>
-		
-		<!-- webSocket hj추가 -->
-		<!-- https://mvnrepository.com/artifact/org.springframework/spring-websocket -->
-		<dependency>
-		    <groupId>org.springframework</groupId>
-		    <artifactId>spring-websocket</artifactId>
-		    <version>${org.springframework-version}</version>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.springframework/spring-messaging -->
-		<dependency>
-		    <groupId>org.springframework</groupId>
-		    <artifactId>spring-messaging</artifactId>
-		    <version>${org.springframework-version}</version>
-		</dependency>
-		
-		
-		
 		<!-- 여기까지 추가한 라이브러리-->
 
 		<!--시큐리티 spring security -->
@@ -131,8 +114,6 @@
 			<artifactId>aspectjweaver</artifactId>
 			<version>${org.aspectj-version}</version>
 		</dependency>
-		
-		
 
 		<!-- 커넥션풀 https://mvnrepository.com/artifact/com.zaxxer/HikariCP -->
 		<dependency>

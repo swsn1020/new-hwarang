@@ -13,15 +13,14 @@ import hwarang.artg.rrboard.model.ReviewReplyVO;
 import hwarang.artg.rrboard.service.ReviewReplyService;
 
 @Controller
-@RequestMapping("/reply")
+@RequestMapping("/reviewreply")
 public class ReviewReplyController {
 	@Autowired
 	private ReviewReplyService service;
-	@Autowired
-	private MemberService Mservice;
 	
 	@ResponseBody
 	@RequestMapping("/rwrite")
+
 	public boolean showRRegister(String member_id,int review_num,String rcontent) {
 		ReviewReplyVO rr = new ReviewReplyVO();
 		rr.setMember_id(member_id);
@@ -38,27 +37,16 @@ public class ReviewReplyController {
 	}
 	@ResponseBody
 	@RequestMapping("/rmodify")
-	public boolean showRmodify(int num,String id,String pw,String content) {
+	public boolean showRmodify(int num,String content) {
 		ReviewReplyVO rr = service.reviewreplyGetOne(num);
-		if(id.equals(rr.getMember_id())) {
-			if(Mservice.memberCheckPw(id, pw)) {
-				rr.setReview_reply_content(content);
-				service.reviewreplyModify(rr);
-				return true;
-			}
-		}
-		return false;
+		rr.setReview_reply_content(content);
+		service.reviewreplyModify(rr);
+		return true;
 	}
 	@ResponseBody
 	@RequestMapping("/rdelete")
-	public boolean showRdelete(int num2,String id2,String pw2){
-		ReviewReplyVO rr = service.reviewreplyGetOne(num2);
-		if(id2.equals(rr.getMember_id())) {
-			if(Mservice.memberCheckPw(id2, pw2)) {
-				service.reviewreplyRemove(num2);
-				return true;
-			}
-		}
-		return false;
+	public boolean showRdelete(int num){
+		service.reviewreplyRemove(num);
+		return true;
 	}
 }

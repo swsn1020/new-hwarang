@@ -13,6 +13,10 @@ public class MemberAuthService {
 	private MemberAuthMapper memberauthmapper;
 	
 	public boolean memberauthRegister(String id,String auth) {
+		
+		System.out.println("MemberAuthService : " + id);
+		System.out.println("MemberAuthService : " + auth);
+		
 		MemberAuthVO ma = new MemberAuthVO();
 		ma.setMember_id(id);
 		ma.setMember_auth(auth);

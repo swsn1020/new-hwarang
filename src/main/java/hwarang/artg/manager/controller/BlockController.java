@@ -46,6 +46,7 @@ public class BlockController {
 //		List<BlockStatusVO> blockList = service.blockGetAllById(memId);
 //		model.addAttribute("blockList", blockList);
 		String id = principal.getName();
+
 		//페이징처리 + 행번호로 출력
 		PageDTO page = new PageDTO(cri, service.getTotalCount(id));
 		model.addAttribute("pageMaker", page);

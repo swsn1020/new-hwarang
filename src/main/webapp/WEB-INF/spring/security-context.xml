@@ -17,6 +17,8 @@
 <!-- 		<security:intercept-url pattern="/member/**/*" access="hasAnyRole('ROLE_USER')" /> -->
 		<security:intercept-url pattern="/admin/*" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')" />
 		<security:intercept-url pattern="/exhibition/**/*" access="hasAnyRole('ROLE_USER')" />
+		<security:intercept-url pattern="/review/**/*" access="hasAnyRole('ROLE_USER')" />
+		<security:intercept-url pattern="/recommend/**/*" access="hasAnyRole('ROLE_USER')" />
 		
 		<!-- Notice, QnA, FAQ, block security 설정 -->
 		<security:intercept-url pattern="/notice/noticeWrite" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')" />
@@ -48,7 +50,7 @@
 		<security:remember-me data-source-ref="dataSource" token-validity-seconds="604800" />
 		<security:csrf disabled="true"/>
 	</security:http>
-	<security:authentication-manager>
+	<security:authentication-manager alias="authenticationManager">
 		<security:authentication-provider
 			user-service-ref="customUserDetailsService">
 			<!-- <security:user-service> <security:user name="1" authorities="ROLE_ADMIN" 

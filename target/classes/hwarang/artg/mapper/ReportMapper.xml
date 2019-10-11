@@ -19,6 +19,9 @@
 	<delete id="deleteReport" parameterType="int">
 		DELETE FROM REPORT_BOARD WHERE REPORT_NUM = #{num}
 	</delete>
+	<select id="selectReport_id" parameterType="String" resultMap="rMap">
+		SELECT * FROM REPORT_BOARD WHERE MEMBER_ID = #{memId}
+	</select>
 	<select id="selectReport" parameterType="int" resultMap="rMap">
 		SELECT * FROM REPORT_BOARD WHERE REPORT_NUM = #{num}
 	</select>

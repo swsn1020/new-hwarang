@@ -11,8 +11,11 @@
 			container : '#plusfriend-chat-button',
 			plusFriendId : '_xingBT' // 플러스친구 홈 URL에 명시된 id로 설정합니다.
 		});
+		
 	});
 </script>
+<<<<<<< HEAD
+=======
 </div>
 <div class="col-sm-2" style="padding: 0px;">
 	<ul class="nav ">
@@ -46,6 +49,7 @@
 	</ul>
 </div>
 </div>
+>>>>>>> refs/remotes/origin/hyeji2
 <div class="container"></div>
 <nav class="navbar navbar-collapse" id="myNavbar">
 	<ul class="nav navbar-nav navbar-right">
@@ -53,8 +57,10 @@
 		<li><a href="#">infomation</a></li>
 		<li><a href="#">help</a></li>
 		<li><a href="#">sitemap</a></li>
+		<li>
+		<div id="plusfriend-addfriend-button"></div>		
+		</li>
 	</ul>
-	<div id="plusfriend-addfriend-button"></div>
 	<div id="plusfriend-chat-button"></div>
 </nav>
 <p class="text-muted text-center">

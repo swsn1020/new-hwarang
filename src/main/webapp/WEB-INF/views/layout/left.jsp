@@ -117,10 +117,10 @@ function connect(){
                             <a href="/board/freeboard">자유게시판</a>
                         </li>
                         <li>
-                            <a href="#">정보공유</a>
+                            <a href="/review/reviewboard">관람후기</a>
                         </li>
                         <li>
-                            <a href="#">정보공유</a>
+                            <a href="/recommend/recommendboard">홍보게시판</a>
                         </li>
                     </ul>
 				</li>

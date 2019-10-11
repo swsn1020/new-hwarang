@@ -4,8 +4,8 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	<mapper namespace="hwarang.artg.mapper.ReviewReplyMapper">
 		<insert id="insertReview_Reply" parameterType="hwarang.artg.rrboard.model.ReviewReplyVO">
-			insert into review_reply(review_reply_num,review_num,member_id,review_reply_content)
-			values(seq_review_reply.nextval,#{review_num},#{member_id},#{review_reply_content})
+			insert into review_reply(review_reply_num,review_num,member_id,review_reply_content,review_reply_reg_date)
+			values(seq_review_reply.nextval,#{review_num},#{member_id},#{review_reply_content},sysdate + 9/24)
 		</insert>
 		<update id="updateReview_Reply" parameterType="hwarang.artg.rrboard.model.ReviewReplyVO">
 			update review_reply

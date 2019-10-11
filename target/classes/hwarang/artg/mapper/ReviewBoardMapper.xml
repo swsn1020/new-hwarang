@@ -8,8 +8,8 @@
 		<selectKey order="BEFORE" keyProperty="review_num" resultType="int">
 			select seq_review_board.nextval from dual
 		</selectKey>
-		insert into review_board(review_num,member_id,review_title,review_exh_name,review_content)
-		values(#{review_num},#{member_id},#{review_title},#{review_exh_name},#{review_content})
+		insert into review_board(review_num,member_id,review_title,review_exh_name,review_content,review_reg_date)
+		values(#{review_num},#{member_id},#{review_title},#{review_exh_name},#{review_content},sysdate + 9/24)
 	</insert>
 	<update id="updateReview_Board"
 		parameterType="hwarang.artg.rrboard.model.ReviewBoardVO">

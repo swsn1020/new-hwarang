@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ include file="../layout/left.jsp" %>
+<%@ include file="../layout/menu.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,8 +17,9 @@
 			<h1>관람 후기</h1>
 		</div>
 		<div class="table-responsive">
-			<!-- member_id : 아이디 -->
-			<button onclick="location.href='write?member_id=test'" class="btn btn-link">Write</button>
+			<sec:authorize access="hasRole('ROLE_USER')">	
+				<button onclick="location.href='/review/write'" class="btn btn-link">Write</button>
+			</sec:authorize>
 			<table class="table table-hover">
 				<thead>
 					<tr>

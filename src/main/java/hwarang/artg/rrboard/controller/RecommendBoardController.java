@@ -83,7 +83,7 @@ public class RecommendBoardController {
 	}
 	
 	@RequestMapping("/view")
-	public String showreview(Model model, int num,Principal principal) {
+	public String showview(Model model, int num,Principal principal) {
 		String id = principal.getName();
 		model.addAttribute("id", id);
 		model.addAttribute("recomm", rbservice.increasReadCnt(num));

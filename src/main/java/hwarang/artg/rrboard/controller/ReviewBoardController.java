@@ -3,6 +3,7 @@ package hwarang.artg.rrboard.controller;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.OutputStream;
+import java.security.Principal;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -18,7 +19,6 @@ import org.springframework.web.servlet.View;
 
 import hwarang.artg.common.model.CriteriaDTO;
 import hwarang.artg.common.model.PageDTO;
-import hwarang.artg.member.model.MemberVO;
 import hwarang.artg.member.service.MemberService;
 import hwarang.artg.rrboard.model.ReviewBoardVO;
 import hwarang.artg.rrboard.service.ReviewBoardService;
@@ -39,16 +39,20 @@ public class ReviewBoardController {
 	private ReviewReplyService replyservice;
 
 	@RequestMapping(value = "/reviewboard",method = RequestMethod.GET)
-	public String showreviewboard(Model model,CriteriaDTO cri) {
+	public String showreviewboard(Model model,CriteriaDTO cri,Principal principal) {
+		System.out.println("showreviewboard principal : " + principal.getName());
+		System.out.println("showreviewboard principal : " + principal.toString());
+		
 		PageDTO page = new PageDTO(cri, service.getTotalCount(cri));
 		model.addAttribute("pageMaker", page);
 		model.addAttribute("reviewList", service.pagingList(cri));
-		
+		model.addAttribute("principal", principal);
 		return "/review/reviewboardForm";
 	}
 
 	@RequestMapping(value = "/write", method = RequestMethod.GET)
-	public String showreviewwrite() {
+	public String showreviewwrite(Principal principal,Model model) {
+		model.addAttribute("principal", principal);
 		return "/review/reviewwriteForm";
 	}
 
@@ -81,42 +85,50 @@ public class ReviewBoardController {
 	}
 
 	@RequestMapping("/view")
-	public String showreview(Model model, int num) {
+	public String showreview(Model model, int num,Principal principal) {
+		String id = principal.getName();
+		model.addAttribute("id", id);
 		model.addAttribute("review", service.increasReadCnt(num));
 		model.addAttribute("imgs", imgservice.reviewimgGetImgList(num));
 		return "/review/review";
 	}
-	@RequestMapping(value = "/checkPw",method = RequestMethod.GET)
-	public String showcheck() {
-		return "/review/reviewPwForm";
-	}
-
-	@RequestMapping(value = "/checkPw",method = RequestMethod.POST)
-	public String showcheckPw(String button, String id, String pw, int num,Model model) {
-		String msg = "다시 시도해주세요.";
-		String url = "view?num=" + num;
-		ReviewBoardVO rb = service.reviewboardGetOne(num);
-		if (id.equals(rb.getMember_id())) {
-			MemberVO m = memberservice.memberGetOne(id);
-			if (pw.equals(m.getMember_password())) {
-				if (button.equals("modify")) {
-					url = "modify?num=" + num;
-					msg = "";
-				} else if (button.equals("remove")) {
-					replyservice.reviewreplysRemoves(num);
-					imgservice.reviewimgNumRemove(num);
-					service.reviewboardRemove(num);
-					
-					msg = "삭제되었습니다.";
-					url = "reviewboard";
-				}
-			}
-		}
-		model.addAttribute("url", url);
-		model.addAttribute("msg", msg);
+//	@RequestMapping(value = "/checkPw",method = RequestMethod.GET)
+//	public String showcheck() {
+//		return "/review/reviewPwForm";
+//	}
+//
+//	@RequestMapping(value = "/checkPw",method = RequestMethod.POST)
+//	public String showcheckPw(String button, String id, String pw, int num,Model model) {
+//		String msg = "다시 시도해주세요.";
+//		String url = "view?num=" + num;
+//		ReviewBoardVO rb = service.reviewboardGetOne(num);
+//		if (id.equals(rb.getMember_id())) {
+//			MemberVO m = memberservice.memberGetOne(id);
+//			if (pw.equals(m.getMember_password())) {
+//				if (button.equals("modify")) {
+//					url = "modify?num=" + num;
+//					msg = "";
+//				} else if (button.equals("remove")) {
+//					replyservice.reviewreplysRemoves(num);
+//					imgservice.reviewimgNumRemove(num);
+//					service.reviewboardRemove(num);
+//					
+//					msg = "삭제되었습니다.";
+//					url = "reviewboard";
+//				}
+//			}
+//		}
+//		model.addAttribute("url", url);
+//		model.addAttribute("msg", msg);
+//		return "/review/result";
+//	}
+	@RequestMapping("/remove")
+	public String showreviewremove(int num,Model model) {
+		service.reviewboardRemove(num);
+		model.addAttribute("msg", "삭제되었습니다.");
+		model.addAttribute("url", "reviewboard");
 		return "/review/result";
 	}
-
 	// 게시글의 글쓴이가 아닌경우 수정버튼 안보이도록 설정
 	@RequestMapping(value = "/modify", method = RequestMethod.GET)
 	public String showreviewmodify(Model model, int num) {
