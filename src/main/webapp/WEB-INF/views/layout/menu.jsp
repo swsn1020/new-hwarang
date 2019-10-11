@@ -47,20 +47,6 @@
 <!-- font -->
 <!-- <link href="https://fonts.googleapis.com/css?family=Prompt:400,500,700" rel="stylesheet"> -->
 <!-- kakao login -->
-<script type="text/javascript">
-	$(function() {
-		Kakao.init('f2ce3ae8264eed849df9ea6f9ad313b9');
-		Kakao.PlusFriend.createAddFriendButton({
-			container : '#plusfriend-addfriend-button',
-			plusFriendId : '_xingBT' // 플러스친구 홈 URL에 명시된 id로 설정합니다.
-		});
-		Kakao.PlusFriend.createChatButton({
-			container : '#plusfriend-chat-button',
-			plusFriendId : '_xingBT' // 플러스친구 홈 URL에 명시된 id로 설정합니다.
-		});
-		
-	});
-</script>
 <style>
 @font-face { font-family: 'Arita-dotum-Medium'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/Arita-dotum-Medium.woff') format('woff'); font-weight: normal; font-style: normal; }
 *{

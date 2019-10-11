@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ include file="../layout/left.jsp" %>
+<%@ include file="../layout/menu.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,12 +27,12 @@ $(function(){
 	Kakao.Auth.createLoginButton({
 		container : '#kakao-login-btn',
 		success : function(authObj) {
-			//var data = JSON.stringify(authObj);
+			var data = JSON.stringify(authObj);
 			//이메일과 성별 제공 동의를 했는지 확인
 			postLogin(authObj);				
 		},
 		fail : function(err) {
-			//alert(JSON.stringify(err));
+			alert(JSON.stringify(err));
 		}
 	});
 });

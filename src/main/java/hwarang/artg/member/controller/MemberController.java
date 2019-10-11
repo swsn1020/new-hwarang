@@ -375,7 +375,7 @@ public class MemberController {
 					    }
 					}
 					String password = randomPw.toString();
-					member.setMember_password(password);
+					member.setMember_password(pwencoder.encode(password));
 					service.memberPwModify(member);
 					email.setContent("임시 비밀번호는 "+ randomPw +" 입니다.");
 					email.setReceiver(member.getMember_email());
@@ -403,7 +403,8 @@ public class MemberController {
 	}
 	
 	@RequestMapping("/modifyForm")
-	public String showModifyForm(String id,Model model) {
+	public String showModifyForm(Principal principa,Model model) {
+		String id = principa.getName();
 		MemberVO member = service.memberGetOne(id);
 		model.addAttribute("member", member);
 		return "/member/modifyForm";
@@ -414,7 +415,7 @@ public class MemberController {
 		if(id.equals("간편 로그인")) {
 			MemberVO memberSnS = service.memberGetOne(SNSid);
 			memberSnS.setMember_id(SNSid);
-			memberSnS.setMember_password(password);
+			memberSnS.setMember_password(pwencoder.encode(password));
 			memberSnS.setMember_phonenum(tel1+"-"+tel2+"-"+tel3);
 			memberSnS.setMember_email(email1+"@"+email2);
 			memberSnS.setMember_address("["+zipNo+"]"+roadAddrPart1+","+addrDetail);

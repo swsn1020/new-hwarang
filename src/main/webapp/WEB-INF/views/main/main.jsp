@@ -94,10 +94,15 @@
 	font-weight: bold;
 }
 #div3{
-	min-width: 100%;
+	max-width: 100%;
 	height: 400px;
 	background-color: #f8fafc;
 	padding-top: 40px;
+	padding-left: 100px;
+}
+.div3-div{
+	max-width: 800px;
+	height: 400px;
 }
 </style>
 <!--  본문시작  -->
@@ -205,7 +210,7 @@
 </div>
 <!-- Nav Tabs HJ -->
 <section id='div3' class="container">
-        <div class="row">
+        <div class="div3-div row">
             <div class="col-md-12">
                 <ul id="tabsJustified" class="nav nav-tabs">
                     <li class="nav-item"><a href="" data-target="#notice" data-toggle="tab" class="nav-link active">공지사항</a></li>
@@ -236,7 +241,7 @@
                         	</table>
                         </div>
                     </div>
-                    <div id="faq" class="tab-pane fade">
+                    <div id="faq" class="tab-pane fade" style="padding: 1.5rem; text-align: center">
                         <div class="list-group">
                        		<ul>
 	                        	<c:forEach items="${faqList }" var="faq">
@@ -252,7 +257,7 @@
                        		</ul>
                        	</div>
                     </div>
-                    <div id="freeboard" class="tab-pane fade">
+                    <div id="freeboard" class="tab-pane fade" style="padding: 1.5rem; text-align: center">
                         <table class="table table-striped table-sm">
                         		<thead style="text-align: center">
                         			<tr>
@@ -262,19 +267,23 @@
                         				<th>Views</th>
                         			</tr>
                         		</thead>
-                        		<c:forEach items="${freeList }" var="free" varStatus="vs">
+                        		<c:forEach items="${freeList }" var="free" varStatus="vs2">
                         			<fmt:formatDate value="${free.regDate }" var="regDate" pattern="yyyy-MM-dd"/>
                         			<tr>
-                        				<td style="text-align: center">${free.index+1}</td>
-                        				<td><a href="/noctice/noticeView?num=${free.num}">${free.title }</a></td>
+                        				<td style="text-align: center">${vs2.index+1}</td>
+                        				<td><a href="/board/freeboardView?num=${free.num}">${free.title }</a></td>
                         				<td style="text-align: center">${regDate }</td>
-                        				<td style="text-align: center">${free.readCnt }</td>
+                        				<td style="text-align: center">${free.readCount }</td>
                         			</tr>
                         		</c:forEach>
                         </table>
                     </div>
                 </div>
             </div>
+        </div>
+        <div class='div3-div2'>
+        
+        
         </div>
  </section>
 

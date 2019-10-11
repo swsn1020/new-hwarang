@@ -36,7 +36,9 @@ public class FreeBoardService {
 	
 	@Autowired
 	private FreeImgMapper freeimgMapper;
-	
+	public List<FreeBoardVO> selectRecentFree(){
+		return freeboardMapper.selectRecentFree();
+	}
 	public List<FreeBoardVO> freeboardGetAllId(String id) {
 		return freeboardMapper.selectOne_id(id);
 	}

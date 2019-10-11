@@ -70,20 +70,13 @@
 		});
 		 
 	});
-<<<<<<< HEAD
-
-=======
 // 	var memberid = ${id};
->>>>>>> refs/remotes/origin/master
 	function ReplyView() {
 		var table = $("#replyTable");
 		$("#replyTable tr:gt(0)").remove();
 		var recommNum = ${recomm.recomm_num};
-<<<<<<< HEAD
-		var seqid = $("#seqid").val();
-=======
 		var memberid = $("#seqid").val();
->>>>>>> refs/remotes/origin/master
+
 		/* member_id 수정해야됨 */
 		$.ajax({
 					url : "/recommendreply/replyView?num=" + recommNum,
@@ -101,14 +94,10 @@
 							}
 							
 							var tr = $("<tr>");
-<<<<<<< HEAD
+
 							var modiText = $("<div id='mod"+i+"' class='collapse form-group'> <input type='hidden' name='num' value='"+data[i].recomm_reply_num+"'><br><textarea class='form-control' name='content' rows='3' cols='80'>"+data[i].recomm_reply_content+"</textarea></div>");
 							var remvText = $("<div id='modd"+i+"' class='collapse form-group'> <input type='hidden' id='replynum' name='num' value='"+data[i].recomm_reply_num+"'></div>");
-=======
-							var modiText = $("<div id='mod"+i+"' class='collapse form-group'> <input type='hidden' name='num' value='"+data[i].recomm_reply_num+"'><input type='hidden' name='id' value='"+data[i].member_id+"'><br><textarea class='form-control' name='content' rows='3' cols='80'>"+content+"</textarea></div>");
-							var remvText = $("<div id='modd"+i+"' class='collapse form-group'> <input type='hidden' name='num2' value='"+data[i].recomm_reply_num+"'><input type='hidden' name='id2' value='"+data[i].member_id+"'></div>");
->>>>>>> refs/remotes/origin/master
-							
+
 							var rbtnModify = $("<button type='button' class='btn btn-link' data-toggle='collapse' data-target='#mod"+i+"'>M</button>");
 							var rbtnRemove = $("<button type='button' class='btn btn-link' data-toggle='collapse' data-target='#modd"+i+"'>D</button>");
 
@@ -129,24 +118,15 @@
 							$("<td>").text(data[i].recomm_reply_reg_date)
 									.appendTo(tr);
 							
-<<<<<<< HEAD
-							if(seqid == data[i].member_id){		
-=======
 							if(memberid == data[i].member_id){		
->>>>>>> refs/remotes/origin/master
 								$("<td>").append(rbtnModify).append(rbtnRemove).appendTo(tr);
 							}
 							
-<<<<<<< HEAD
-							$("<td colspan='2'>").append(btnReport).appendTo(tr);
-=======
 							$("<td>").append(blockBtn).appendTo(tr);
 							
 							if(blockStatus == 'true'){
 								rbtnModify.attr("disabled", "disabled");
 							}
->>>>>>> refs/remotes/origin/master
-
 							tr.appendTo(table);
 
 							rbtnModify.on("click", function() {
@@ -156,6 +136,7 @@
 								} else {
 									removeBtn.attr('disabled', 'true');
 								}
+								
 							});
 
 							rbtnRemove.on("click", function() {
@@ -170,35 +151,7 @@
 								var replynum = $("#replynum").val();
 								/* alert(data); */
 								$.ajax({
-<<<<<<< HEAD
 									url : "/recommendreply/rdelete?num="+replynum,
-=======
-									url : "/rreply/rmodify",
-									data : data,
-									type : "post",
-									dataType : "json",
-									success : function(result) {
-										if (result) {
-											alert("수정되었습니다.");
-											ReplyView();
-										} else {
-											alert("다시 시도해주세요.");
-											ReplyView();
-										}
-									},
-									error : function() {
-										alert("replyModify error");
-									}
-								});
-								return false;
-							});
-							
-							btnSubmit2.on("click", function() {
-								var data = $(this).closest("form").serialize();
-								/* alert(data); */
-								$.ajax({
-									url : "/rreply/rdelete",
->>>>>>> refs/remotes/origin/master
 									data : data,
 									type : "post",
 									dataType : "json",
@@ -212,12 +165,12 @@
 										}
 									},
 									error : function() {
-										alert("recommendreplyDelete error");
+										alert("replyModify error");
 									}
 								});
 								return false;
-								
 							});
+							
 
 							btnSubmit.on("click", function() {
 								var data = $(this).closest("form").serialize();
@@ -242,9 +195,6 @@
 								});
 								return false;
 							});
-<<<<<<< HEAD
-
-=======
 							
 						////* 댓글 신고 method */
 							(function(m) {
@@ -267,7 +217,6 @@
 								blockForm.submit();
 								});
 							})(i)	// 댓글 해당 인덱스 보내기(클로저 방지)
->>>>>>> refs/remotes/origin/master
 						}
 
 					}
