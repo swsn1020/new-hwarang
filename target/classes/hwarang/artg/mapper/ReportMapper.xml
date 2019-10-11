@@ -13,12 +13,15 @@
 		WHERE REPORT_NUM = #{num}
 	</update>
 	<update id="updateReply">
-		UPDATE REPORT_BOARD SET REPORT_REPLY = #{reply}
+		UPDATE REPORT_BOARD SET REPORT_REPLY = #{reply}, REPORT_MODI_DATE = sysdate
 		WHERE REPORT_NUM = #{num}
 	</update>
 	<delete id="deleteReport" parameterType="int">
 		DELETE FROM REPORT_BOARD WHERE REPORT_NUM = #{num}
 	</delete>
+	<select id="selectReport_id" parameterType="String" resultMap="rMap">
+		SELECT * FROM REPORT_BOARD WHERE MEMBER_ID = #{memId}
+	</select>
 	<select id="selectReport" parameterType="int" resultMap="rMap">
 		SELECT * FROM REPORT_BOARD WHERE REPORT_NUM = #{num}
 	</select>

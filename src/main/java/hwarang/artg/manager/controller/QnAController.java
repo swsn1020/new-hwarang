@@ -3,11 +3,16 @@ package hwarang.artg.manager.controller;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.OutputStream;
+import java.security.Principal;
+import java.util.Collection;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,6 +29,9 @@ import hwarang.artg.common.model.PageDTO;
 import hwarang.artg.manager.model.QnAVO;
 import hwarang.artg.manager.service.QnAImgService;
 import hwarang.artg.manager.service.QnAService;
+import hwarang.artg.member.model.MemberVO;
+import hwarang.artg.member.service.MemberAuthService;
+import hwarang.artg.member.service.MemberService;
 import net.coobird.thumbnailator.Thumbnails;
 
 @Controller
@@ -31,28 +39,54 @@ import net.coobird.thumbnailator.Thumbnails;
 public class QnAController {
 	@Autowired
 	private QnAService service;
-	
 	@Autowired
 	private QnAImgService imgService;
+	@Autowired
+	private PasswordEncoder pwEncoder;
+	@Autowired
+	private MemberService memService;
+	@Autowired
+	private MemberAuthService memAuthService;
 	
 	@RequestMapping("/qnaListForManager")
-	public String showQnAList(CriteriaDTO cri, Model model) {
+	public String showQnAList(CriteriaDTO cri, Model model, Principal principal) {
 		System.out.println("qnaListForManager요청");
-		//페이징 처리 없는 list
+		
+		String id = principal.getName();
+		List<String> auths = memAuthService.memberAuthsById(id);
+		if(auths.contains("ROLE_ADMIN") || auths.contains("ROLE_MANAGER")) {
+			//페이징 처리 없는 list
 //		model.addAttribute("qnaList", service.qnaGetAll());
-		PageDTO page = new PageDTO(cri, service.getTotalCount());
-		model.addAttribute("pageMaker", page);
-		model.addAttribute("qnaList", service.pagingList(cri));
-		return "manager/qna/managerQnaList";
+			PageDTO page = new PageDTO(cri, service.getTotalCount());
+			model.addAttribute("pageMaker", page);
+			model.addAttribute("qnaList", service.pagingList(cri));
+			return "manager/qna/managerQnaList";
+		}else {
+			String msg = "접근 권한이 없는 페이지입니다.";
+			String url = "/";
+			model.addAttribute("msg", msg);
+			model.addAttribute("url", url);
+			return "manager/result";
+		}
+		
 	}
 	
 	@RequestMapping("/qnaListForUser")
-	public String showQnAListForUser(CriteriaDTO cri, String memId, Model model) {
+	public String showQnAListForUser(CriteriaDTO cri, String memId, Model model, Principal principal) {
 		System.out.println("qnaListForUser요청");
-		PageDTO page = new PageDTO(cri, service.getTotalCount(memId));
-		model.addAttribute("pageMaker", page);
-		model.addAttribute("qnaList", service.pagingList(cri, memId));
-		return "manager/qna/userQnaList";
+		String id = principal.getName();
+		if(memId.equals(id)) {
+			PageDTO page = new PageDTO(cri, service.getTotalCount(memId));
+			model.addAttribute("pageMaker", page);
+			model.addAttribute("qnaList", service.pagingList(cri, memId));
+			return "manager/qna/userQnaList";
+		}else {
+			String msg = "해당 Q&A 작성자만 열람 가능합니다.";
+			String url = "qnaListForUser?memId="+id;
+			model.addAttribute("msg", msg);
+			model.addAttribute("url", url);
+			return "manager/result";
+		}
 	}
 
 	@RequestMapping("/qnaWrite")
@@ -83,11 +117,24 @@ public class QnAController {
 	}
 	
 	@RequestMapping("/qnaView")
-	public String showQnAView(int num, Model model) {
+	public String showQnAView(int num, Model model, Principal principal) {
 		System.out.println("View 요청 들어옴");
-		model.addAttribute("qna", service.qnaGetOne(num));
-		model.addAttribute("qnaImgList", imgService.qnaImgGetByQNum(num));
-		return "manager/qna/qnaView";
+		String writer = service.qnaGetOne(num).getMemId();
+		String id = principal.getName();
+		List<String> auths = memAuthService.memberAuthsById(id);
+		System.out.println("현재로그인한 아이디:"+id);
+		if(writer.equals(id)||auths.contains("ROLE_ADMIN") || auths.contains("ROLE_MANAGER")) {
+			model.addAttribute("qna", service.qnaGetOne(num));
+			model.addAttribute("qnaImgList", imgService.qnaImgGetByQNum(num));
+			return "manager/qna/qnaView";
+		}else {
+			String msg = "해당 Q&A 작성자만 열람 가능합니다.";
+			String url = "qnaListForUser?memId="+id;
+			model.addAttribute("msg", msg);
+			model.addAttribute("url", url);
+			return "manager/result";
+		}
+		
 	}
 	
 	//사용자_문의 수정
@@ -98,8 +145,10 @@ public class QnAController {
 		return "manager/qna/qnaModifyForm";
 	}
 	@RequestMapping(value="/qnaModify", method=RequestMethod.POST)
-	public String doQnAModify(QnAVO QnA, Model model, MultipartHttpServletRequest request) {
+	public String doQnAModify(QnAVO QnA, String category, String subCategory, Model model, MultipartHttpServletRequest request) {
 		int qnaNum = QnA.getNum();
+		category = category+"_"+subCategory;
+		QnA.setCategory(subCategory);
 		String msg = "QnA 수정에 실패하였습니다. 다시 시도하세요.";
 		String url = "qnaView?num="+qnaNum;
 		List<MultipartFile> fileList = request.getFiles("file");
@@ -122,7 +171,7 @@ public class QnAController {
 	@RequestMapping(value="/replyModify", method=RequestMethod.POST)
 	public String doReplyModify(int num, String reply, Model model) {
 		String msg = "답글 등록에 실패하였습니다. 다시시도하세요.";
-		String url = "qnaList";
+		String url = "qnaListForManager";
 		if(service.qnaModify(num, reply)) {
 			msg = "답글이 등록되었습니다.";
 		}else {
@@ -134,12 +183,15 @@ public class QnAController {
 	}
 	
 	@RequestMapping(value="/checkPw", method=RequestMethod.POST)
-	public String doCheckPw(int num, String type, String password, Model model) {
+	public String doCheckPw(int num, String type, String password, Principal principal, Model model) {
 		System.out.println("checkPw요청들어옴 "+type);
-		String url = "qnaList";
+		String id = principal.getName();
 		String msg = "";
+		String url = "qnaListForUser?memId="+id;
+		MemberVO mem = memService.memberGetOne(id);
+		String originPw = mem.getMember_password();
 		QnAVO qna = service.qnaGetOne(num);
-		if(qna != null && password.equals("true")) {
+		if(qna != null && pwEncoder.matches(password, originPw)) {
 			//비밀번호 일치
 			if(type.equals("delete")) {
 				// 삭제요청
@@ -170,7 +222,7 @@ public class QnAController {
 	}
 	
 	//첨부 파일 저장(Thumbnail)
-	public static final String UPLOAD_PATH = "C:\\IMAGE\\QnA";
+	public static final String UPLOAD_PATH = "C:\\IMAGE\\Report";
 	@RequestMapping("/downloadThumb")
 	protected void download(String uuid, HttpServletResponse response) throws Exception {
 		OutputStream out = response.getOutputStream();

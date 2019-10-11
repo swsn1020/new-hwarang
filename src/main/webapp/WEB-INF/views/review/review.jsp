@@ -17,10 +17,11 @@
 	$(function() {
 
 		ReplyView();
+		var num = $("#num").val();
 		$("#rbtnWrite").on("click", function() {
 			var data = $("#rwriteForm").serialize();
 			$.ajax({
-				url : "/reply/rwrite",
+				url : "/reviewreply/rwrite?num="+num,
 				data : data,
 				type : "post",
 				dataType : "json",
@@ -34,7 +35,7 @@
 					ReplyView();
 				},
 				error : function() {
-					alert("replyWrtie error");
+					alert("reivewreplyWrtie error");
 				}
 			});
 			return false;
@@ -52,45 +53,82 @@
 		 $("#modalForm2 input[type='button']").on("click", function() {
 		 $("#modalDiv2").hide("slow");
 		 }); */
+		 
+		 
+		 //* 신고 처리 이벤트 등록 */
+		//신고 글 메서드
+		$("#btn-block").on("click", function(){
+			var category = $("#blockForm").find('input[name="category"]');
+			category.val("Review_Board");
+			var writer = '${review.member_id}';
+			var blockMemId = $("#blockForm").find('input[name="blockMemId"]');
+			blockMemId.val(writer);	//관리자의 경우 아이디 넣기(현재아이디)
+			var blockForm = document.blockForm;
+			var url = "../block/form";
+			window.open("", "Report", "width=400, height=500, top=300, left=300");
+			
+			blockForm.action = url;
+			blockForm.target = "Report";
+			blockForm.submit();
+		});
 	});
 
 	function ReplyView() {
 		var table = $("#replyTable");
 		$("#replyTable tr:gt(0)").remove();
 		var reviewNum = ${review.review_num};
+		var seqid = $("#seqid").val();
 		/* member_id 수정해야됨 */
 		$.ajax({
-					url : "/reply/replyView?num=" + reviewNum,
+					url : "/reviewreply/replyView?num=" + reviewNum,
 					type : "get",
 					dataType : "json",
 					success : function(data) {
 						for ( var i in data) {
+							console.log(data);
+							
+							var blockStatus = data[i].block;
+// 							alert(blockStatus);
+							if(blockStatus == 'true'){
+								var content = '관리자에 의해 삭제처리 된 댓글입니다.';
+							}else{
+								var content = data[i].review_reply_content;
+							}
+							
 							var tr = $("<tr>");
-							var modiText = $("<div id='mod"+i+"' class='collapse form-group'><input type='hidden' name='num' value='"+data[i].review_reply_num+"'><input type='hidden' name='id' value='"+data[i].member_id+"'> password <input class='form-control' type='text' name='pw'><br><textarea class='form-control' name='content' rows='3' cols='80'>"
-									+ data[i].review_reply_content + "</textarea></div>");
-							var remvText = $("<div id='modd"+i+"' class='collapse form-group'><input type='hidden' name='num2' value='"+data[i].review_reply_num+"'><input type='hidden' name='id2' value='"+data[i].member_id+"'> password <input class='form-control' type='text' name='pw2'></div>");
+
+							var modiText = $("<div id='mod"+i+"' class='collapse form-group'><input type='hidden' name='num' value='"+data[i].review_reply_num+"'><input type='hidden' name='id' value='"+data[i].member_id+"'><textarea class='form-control' name='content' rows='3' cols='80'>"+data[i].review_reply_content+"</textarea></div>");
+							var remvText = $("<div id='modd"+i+"' class='collapse form-group'><input type='hidden' id='replynum' name='num' value='"+data[i].review_reply_num+"'></div>");
 							
 							var rbtnModify = $("<button type='button' class='btn btn-link' data-toggle='collapse' data-target='#mod"+i+"'>M</button>");
 							var rbtnRemove = $("<button type='button' class='btn btn-link' data-toggle='collapse' data-target='#modd"+i+"'>D</button>");
-							var btnReport = $("<button type='button' class='btn btn-link' onclick='loction.href=report'>Report</button>");
+							
+							//댓글 신고 버튼
+							var blockBtn = $("<button type='button' class='btn btn-link btn-sm' style='color: red;'> 신고 </button>");
 							
 							var form = $("<form action='#'></form>");
 							var form2 = $("<form action='#'></form>");
 							var btnSubmit = $("<button type='button' class='btn btn-link'>ok</button>");
-							var btnSubmit2 = $("<button type='button' class='btn btn-link'>ok</button>");
 
 							$("<td>").text(data[i].member_id).appendTo(tr);
-							$("<td>").text(data[i].review_reply_content)
+							$("<td>").text(content)
 									.append(form.append(modiText.append(btnSubmit)))
 									.appendTo(tr);
-							$("<td>").append(form2.append(remvText.append(btnSubmit2)))
-									.appendTo(tr);
+							$("<td>").append(form2.append(remvText)).appendTo(tr);
 							$("<td>").text(data[i].review_reply_reg_date)
 									.appendTo(tr);
+							
+							if(seqid == data[i].member_id){
+								$("<td>").append(rbtnModify).append(rbtnRemove).appendTo(tr);								
+							}
+						
 							$("<td>").append(rbtnModify).append(rbtnRemove)
 									.appendTo(tr);
-							$("<td>").append(btnReport).appendTo(tr);
-
+							$("<td>").append(blockBtn).appendTo(tr);
+							
+							if(blockStatus == 'true'){
+								rbtnModify.attr("disabled", "disabled");
+							}
 							tr.appendTo(table);
 
 							rbtnModify.on("click", function() {
@@ -109,36 +147,12 @@
 								}else{
 									modifyBtn.attr('disabled','true');
 								}
-							});
-
-							btnSubmit.on("click", function() {
+								
 								var data = $(this).closest("form").serialize();
+								var replynum = $("#replynum").val();
 								/* alert(data); */
 								$.ajax({
-									url : "/reply/rmodify",
-									data : data,
-									type : "post",
-									dataType : "json",
-									success : function(result) {
-										if (result) {
-											alert("수정되었습니다.");
-											ReplyView();
-										} else {
-											alert("다시 시도해주세요.");
-											ReplyView();
-										}
-									},
-									error : function() {
-										alert("replyModify error");
-									}
-								});
-								return false;
-							});
-							btnSubmit2.on("click", function() {
-								var data = $(this).closest("form").serialize();
-								/* alert(data); */
-								$.ajax({
-									url : "/reply/rdelete",
+									url : "/reviewreply/rdelete?num="+replynum,
 									data : data,
 									type : "post",
 									dataType : "json",
@@ -152,11 +166,57 @@
 										}
 									},
 									error : function() {
-										alert("replyDelete error");
+										alert("reviewreplyDelete error");
 									}
 								});
 								return false;
 							});
+
+							btnSubmit.on("click", function() {
+								var data = $(this).closest("form").serialize();
+								/* alert(data); */
+								$.ajax({
+									url : "/reviewreply/rmodify",
+									data : data,
+									type : "post",
+									dataType : "json",
+									success : function(result) {
+										if (result) {
+											alert("수정되었습니다.");
+											ReplyView();
+										} else {
+											alert("다시 시도해주세요.");
+											ReplyView();
+										}
+									},
+									error : function() {
+										alert("reviewreplyModify error");
+									}
+								});
+								return false;
+							});
+							
+							////* 댓글 신고 method */
+							(function(m) {
+								blockBtn.on("click", function(){
+								var category = $("#blockForm").find('input[name="category"]');
+								category.val("Review_Reply");
+								var replyMemId = data[m].member_id;
+								var blockMemId = $("#blockForm").find('input[name="blockMemId"]');
+								blockMemId.val(replyMemId);
+								var replyNum = data[m].review_reply_num;
+								var rInput = $("#blockForm").find('input[name="replyNum"]');
+								rInput.val(replyNum);
+//		 						alert(rInput.val());
+								var blockForm = document.blockForm;
+								var url = "../block/form";
+								window.open("", "Report", "width=400, height=500, top=300, left=300");
+								
+								blockForm.action = url;
+								blockForm.target = "Report";
+								blockForm.submit();
+								});
+							})(i)	// 댓글 해당 인덱스 보내기(클로저 방지)
 						}
 
 					}
@@ -171,7 +231,7 @@
 			<h1>관람 후기</h1>
 		</div>
 		<div style='text-align: center;'>
-			<input type="hidden" name="num" value="${review.review_num}">
+			<input type="hidden" name="num" id="num" value="${review.review_num}">
 			<table class="table">
 				<tr>
 					<th>Program name</th>
@@ -209,14 +269,33 @@
 					</td>
 				</tr>
 				<tr>					
-					<td colspan="5">${review.review_content}</td>
+					<td colspan="5">
+						<div style="text-align: center;">
+							<c:choose>
+							<c:when test="${review.block eq true}">
+								<p>관리자에 의해 삭제처리된 게시글입니다.</p>
+							</c:when>
+							<c:otherwise>
+								<p>${review.review_content }</p>
+							</c:otherwise>
+						</c:choose>
+						</div>
+					</td>
 				</tr>
 				<tr align="right">
 					<td colspan="4">
-					<input type="button" onclick="location.href='reviewboard'" value="List" class="btn btn-link"> 
-					<input type="button" onclick="location.href='checkPw?id=${review.member_id}&num=${review.review_num}&button=modify'" value="Modify" class="btn btn-link"> 
-					<input type="button" onclick="location.href='checkPw?id=${review.member_id}&num=${review.review_num}&button=remove'" value="Remove" class="btn btn-link">
+					<input type="button" onclick="location.href='/review/reviewboard'" value="List" class="btn btn-link"> 
+					<input type="hidden" id="seqid" value="${id}"> 
+					<c:if test="${id eq review.member_id}">
+						<input type="button" onclick="location.href='/review/modify?num=${review.review_num}'" value="Modify" class="btn btn-link"> 
+						<input type="button" onclick="location.href='/review/remove?num=${review.review_num}'" value="Remove" class="btn btn-link">
+					</c:if>
 					<input type="button" onclick="location.href='report'" value="Report" class="btn btn-link">
+					<input type="button" onclick="location.href='reviewboard'" value="List" class="btn btn-link"> 
+					<!-- 신고처리(Board) -->
+					<c:if test="${review.block != true}">
+						<button id="btn-block" class="btn btn-outline-danger btn-sm">신고</button>
+					</c:if>
 					</td>
 				</tr>
 			</table>
@@ -224,8 +303,7 @@
 		<!-- 리뷰댓글등록 -->
 		<div class="form-group">
 			<form id="rwriteForm">
-				<!-- member_id 고치기 -->
-				<input type="hidden" name="member_id" value="test"> 
+				<input type="hidden" name="member_id" value="${id}"> 
 				<input type="hidden" name="review_num" value="${review.review_num}">
 				<table>
 					<tr>
@@ -244,6 +322,15 @@
 				<tr></tr>
 			</table>
 		</div>
+		
+	<!-- 신고pop에 보낼 내용 -->
+	<form id="blockForm" name="blockForm" method="post">
+		<input type="hidden" name="blockMemId" value="">
+		<input type="hidden" name="category" value="">
+		<input type="hidden" name="boardNum" value="${review.review_num }">
+		<input type="hidden" name="replyNum" value="">
+		<input type="hidden" name="boardTitle" value="${review.review_title}">
+	</form>
 <%@ include file="../layout/bottom.jsp"%>
 </body>
 </html>

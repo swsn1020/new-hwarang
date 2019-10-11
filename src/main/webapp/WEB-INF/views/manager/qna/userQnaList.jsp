@@ -2,13 +2,24 @@
     pageEncoding="UTF-8"%>
 <title>화랑-마이페이지-문의내역</title>
 <%@ include file="../../layout/left.jsp" %>
+<style>
+	.container{
+		margin: 10px 0px;
+		padding: 3px 0px;
+	}
+	th {
+		text-align: center;
+	}
+</style>
 <div class="container">
-	<h3>회원아이디- 내가 작성한 게시물</h3>
+	<h3>${param.memId }-작성한 문의</h3>
+	<div class="buttondiv" style="text-align: center; float: right; margin-bottom: 10px;">
+		<button type="button" class="btn btn-outline-secondary btn-sm" onclick="location.href='qnaWrite'">문의작성</button>
+	</div>
 	<table class="table table-hover">
 		<thead>
 			<tr>
 				<th>번호</th>
-				<th>카테고리</th>
 				<th>제목</th>
 				<th>작성일</th>
 				<th>답변상태</th>
@@ -19,18 +30,17 @@
 			<c:forEach items="${qnaList }" var="qna">
 				<fmt:formatDate value="${qna.regDate }" var="regDate" pattern="yyyy-MM-dd"/>
 				<tr>
-					<td>${rnum}</td>
-					<td>${qna.category }</td>
+					<td style="text-align: center;">${rnum}</td>
 					<td><a href="qnaView?num=${qna.num }">${qna.title }</a>
 						<span class="badge bg-teal"><i class="fa fa-lock fa-sm"></i></span>
 					</td>
-					<td>${regDate }</td>
+					<td style="text-align: center;">${regDate }</td>
 					<c:choose>
 						<c:when test="${qna.reply eq '미답변' || qna.reply eq null}">
-							<td style="color: red;">답변 대기중</td>
+							<td style="color: red; text-align: center;">답변 대기중</td>
 						</c:when>
 						<c:otherwise>
-							<td>답변 완료</td>
+							<td style="text-align: center;">답변 완료</td>
 						</c:otherwise>
 					</c:choose>
 				</tr>
@@ -38,9 +48,6 @@
 			</c:forEach>
 		</tbody>
 	</table>
-</div>
-<div class="buttondiv" align="center">
-	<button type="button" class="btn btn-outline-secondary" onclick="location.href='qnaWrite'">문의하기</button>
 </div>
 <br>
 

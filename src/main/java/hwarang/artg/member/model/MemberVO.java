@@ -1,10 +1,12 @@
 package hwarang.artg.member.model;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 
-public class MemberVO {
+public class MemberVO implements Serializable{
+	private static final long serialVersionUID = 1L;
 //	  member_id varchar2(50) PRIMARY KEY,
 //    member_name varchar2(50) NOT NULL,
 //    member_password varchar2(60) not null,
@@ -16,17 +18,17 @@ public class MemberVO {
 //    member_report_count number(10) default 0,
 //    member_status varchar2(20) default 'useable',  
 //    member_point number(10) default 0
-	public String member_id;
-	public String member_name;
-	public String member_password;
-	public String member_email;
-	public int member_gender;
-	public String member_phonenum;
-	public String member_address;
-	public Date member_reg_date;
-	public int member_report_count;
-	public String member_status;
-	public int member_point;
+	private String member_id;
+	private String member_name;
+	private String member_password;
+	private String member_email;
+	private int member_gender;
+	private String member_phonenum;
+	private String member_address;
+	private Date member_reg_date;
+	private int member_report_count;
+	private String member_status;
+	private int member_point;
 	
 	private List<MemberAuthVO> authList;
 	

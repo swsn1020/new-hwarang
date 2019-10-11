@@ -2,7 +2,12 @@
 	pageEncoding="utf-8"
 	isELIgnored="false"%> 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ include file="../layout/left.jsp"%>
+
+<head>
+
 <c:set var="contextPath"  value="${pageContext.request.contextPath}"  />
+
 </head>
 <BODY>
 	<H1>1.최종 주문 내역서</H1>
@@ -17,8 +22,8 @@
 				<td>예상적립금</td>
 				<td>주문금액합계</td>
 			</tr>
-			<TR>
 				<c:forEach var="item" items="${myOrderList }">
+			<TR>
 				    <td> ${item.order_id }</td>
 					<TD class="goods_image">
 					  <a href="${contextPath}/goods/goodsDetail.do?goods_id=${item.goods_id }">
@@ -167,6 +172,6 @@
 		</a>
 <DIV class="clear"></DIV>		
 	
-			
+<%@include file="../layout/bottom.jsp"%>
 			
 			

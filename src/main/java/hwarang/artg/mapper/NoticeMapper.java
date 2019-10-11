@@ -15,6 +15,10 @@ public interface NoticeMapper {
 	public NoticeVO selectNotice(int num);
 	public List<NoticeVO> selectAllNotices();
 	
+	// MAIN 화면에 띄울 공지사항 5개 가져오기
+	public List<NoticeVO> selectRecentNotices();
+	
+	
 	//'댓글'수 수정(게시글번호, 양)
 //	public int updateReplyCnt(@Param("num")int num, @Param("amount")int amount) throws Exception;
 	//'댓글' 수 가져오기

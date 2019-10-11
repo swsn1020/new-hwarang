@@ -7,8 +7,8 @@
 			<selectKey order="BEFORE" keyProperty="recomm_num" resultType="int">
 				select seq_recommend_board.nextval from dual
 			</selectKey>
-			insert into recommend_board(recomm_num,member_id,recomm_title,recomm_content)
-			values(#{recomm_num},#{member_id},#{recomm_title},#{recomm_content})
+			insert into recommend_board(recomm_num,member_id,recomm_title,recomm_content,recomm_reg_date)
+			values(#{recomm_num},#{member_id},#{recomm_title},#{recomm_content},sysdate + 9/24)
 		</insert>
 		<update id="updateRecommend_Board" parameterType="hwarang.artg.rrboard.model.RecommendBoardVO">
 			update recommend_board
@@ -91,5 +91,10 @@
 			<include refid="criteriaDTO"></include>
 			recomm_num > 0
 		</select>
+		
+		<!-- block 처리 -->
+	<update id="updateBlock">
+		UPDATE RECOMMEND_BOARD SET BLOCK = #{block} WHERE recomm_num = #{num}
+	</update>
 		
 	</mapper>

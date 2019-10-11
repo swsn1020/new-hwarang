@@ -60,7 +60,7 @@ form {
 			$("input[name='gender']").val("남자");
 		}else if(gender == 1){
 			$("input[name='gender']").val("여자");
-		}else{
+		}else if(gender == 3){//확인불가
 			//간편로그인에서 성별관련 정보 제공을 하지 않은 경우 값이 없다.
 			$("input[name='gender']").val("");
 		}

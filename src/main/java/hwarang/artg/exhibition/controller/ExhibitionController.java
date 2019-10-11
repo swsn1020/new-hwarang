@@ -26,9 +26,11 @@ import hwarang.artg.common.model.CriteriaDTO;
 import hwarang.artg.common.model.PageDTO;
 import hwarang.artg.exhibition.model.ExhibitionVO;
 import hwarang.artg.exhibition.model.FavoriteMarkVO;
+import hwarang.artg.exhibition.model.NaverBlogDTO;
 import hwarang.artg.exhibition.model.RecentlyViewVO;
 import hwarang.artg.exhibition.service.ExhibitionListService;
 import hwarang.artg.exhibition.service.FavoriteMarkService;
+import hwarang.artg.exhibition.service.NaverBlogService;
 import hwarang.artg.exhibition.service.RecentlyViewService;
 
 @Controller
@@ -40,6 +42,8 @@ public class ExhibitionController {
 	FavoriteMarkService fService;
 	@Autowired
 	RecentlyViewService rService;
+	@Autowired
+	NaverBlogService blogservice;
 
 	@GetMapping("")
 	public String exhibitionShow(Model model, CriteriaDTO cri, ExhibitionVO exh) throws Exception {
@@ -95,22 +99,24 @@ public class ExhibitionController {
 	@GetMapping(value = "/getPlaceInfo/{placeseq}", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
 	@ResponseBody
 	public ResponseEntity<ExhibitionVO> getPlace(@PathVariable("placeseq") String placeseq) {
-		System.out.println(placeseq);
 		return new ResponseEntity<>(service.showPlaceListByPseq(placeseq), HttpStatus.OK);
 	}
 	
-	@GetMapping(value = "/{placeseq}", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
+	@GetMapping(value = "/placeList/{placeseq}", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
 	@ResponseBody
 	public ResponseEntity<List<ExhibitionVO>> getExhibitionListByPlace(@PathVariable("placeseq") String placeseq) {
 		return new ResponseEntity<>(service.showListByPlace(placeseq), HttpStatus.OK); 
 	}
 	
 	@GetMapping("/view")
-	public void exhibitionDetail(Model model, int seq, Principal principal) {
+	public void exhibitionDetail(Model model, int seq, Principal principal) throws Exception {
 		String id = principal.getName();
 		rService.addRecentlyView(new RecentlyViewVO(seq, id));
 		model.addAttribute("group",fService.getGroup(id));
-		model.addAttribute("exh", service.getOne(seq));
+		ExhibitionVO exh = service.getOne(seq);
+		model.addAttribute("exh", exh);
+		List<NaverBlogDTO> blogReview = blogservice.naverurlapi(exh.getExh_title());
+		model.addAttribute("blogReview", blogReview);
 	}
 	
 	@GetMapping(value = "/{seq}", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})

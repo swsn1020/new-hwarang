@@ -16,16 +16,14 @@ import hwarang.artg.rrboard.service.RecommendReplyService;
 import hwarang.artg.rrboard.service.ReviewReplyService;
 
 @Controller
-@RequestMapping("/rreply")
+@RequestMapping("/recommendreply")
 public class RecommendReplyController {
 	@Autowired
 	private RecommendReplyService service;
-	@Autowired
-	private MemberService Mservice;
-	
+
 	@ResponseBody
 	@RequestMapping("/rwrite")
-	public boolean showRwrite(String member_id,int recomm_num,String rcontent) {
+	public boolean showRRegister(String member_id,int recomm_num,String rcontent) {
 		RecommendReplyVO rr = new RecommendReplyVO();
 		rr.setMember_id(member_id);
 		rr.setRecomm_num(recomm_num);
@@ -40,26 +38,16 @@ public class RecommendReplyController {
 	}
 	@ResponseBody
 	@RequestMapping("/rmodify")
-	public boolean showRmodify(int num,String id,String pw,String content) {
+	public boolean showRmodify(int num,String content) {
 		RecommendReplyVO rr = service.recommendreplyGetOne(num);
-		if(Mservice.memberCheckPw(rr.getMember_id(), pw)) {
-			rr.setRecomm_reply_content(content);
-			service.recommendreplyModify(rr);
-			return true;
-		}
-
-		return false;
+		rr.setRecomm_reply_content(content);
+		service.recommendreplyModify(rr);
+		return true;
 	}
 	@ResponseBody
 	@RequestMapping("/rdelete")
-	public boolean showRdelete(int num2,String id2,String pw2){
-		RecommendReplyVO rr = service.recommendreplyGetOne(num2);
-		if(id2.equals(rr.getMember_id())) {
-			if(Mservice.memberCheckPw(id2, pw2)) {
-				service.recommendreplyRemove(num2);
-				return true;
-			}
-		}
-		return false;
+	public boolean showRdelete(int num){
+		service.recommendreplyRemove(num);
+		return true;
 	}
 }

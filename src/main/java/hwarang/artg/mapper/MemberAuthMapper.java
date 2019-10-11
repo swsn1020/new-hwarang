@@ -10,4 +10,5 @@ public interface MemberAuthMapper {
 	public int deleteMember_Auth(MemberAuthVO ma);
 	public MemberAuthVO selectMember_Auth(String member_id);
 	public List<MemberAuthVO> selectAllMember_Auth();
+	public List<String> selectMemberAuthsById(String member_id);
 }

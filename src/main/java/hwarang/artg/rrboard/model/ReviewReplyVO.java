@@ -15,7 +15,6 @@ public class ReviewReplyVO {
 	private String review_reply_content;
 	private String review_reply_reg_date;
 	private Date review_reply_modi_date;
-	
 	/* 신고처리 -hj */
 	private String block;
 	public String getBlock() {

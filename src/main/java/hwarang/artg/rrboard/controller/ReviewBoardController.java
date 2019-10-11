@@ -1,30 +1,17 @@
 package hwarang.artg.rrboard.controller;
 
-import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.HashMap;
+import java.security.Principal;
 import java.util.List;
-import java.util.Map;
 
-import javax.print.attribute.standard.Severity;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.test.context.junit.jupiter.EnabledIfCondition;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -32,10 +19,8 @@ import org.springframework.web.servlet.View;
 
 import hwarang.artg.common.model.CriteriaDTO;
 import hwarang.artg.common.model.PageDTO;
-import hwarang.artg.member.model.MemberVO;
 import hwarang.artg.member.service.MemberService;
 import hwarang.artg.rrboard.model.ReviewBoardVO;
-import hwarang.artg.rrboard.model.ReviewImgVO;
 import hwarang.artg.rrboard.service.ReviewBoardService;
 import hwarang.artg.rrboard.service.ReviewImgService;
 import hwarang.artg.rrboard.service.ReviewReplyService;
@@ -54,21 +39,25 @@ public class ReviewBoardController {
 	private ReviewReplyService replyservice;
 
 	@RequestMapping(value = "/reviewboard",method = RequestMethod.GET)
-	public String showreviewboard(Model model,CriteriaDTO cri) {
+	public String showreviewboard(Model model,CriteriaDTO cri,Principal principal) {
+		System.out.println("showreviewboard principal : " + principal.getName());
+		System.out.println("showreviewboard principal : " + principal.toString());
+		
 		PageDTO page = new PageDTO(cri, service.getTotalCount(cri));
 		model.addAttribute("pageMaker", page);
 		model.addAttribute("reviewList", service.pagingList(cri));
-		
+		model.addAttribute("principal", principal);
 		return "/review/reviewboardForm";
 	}
 
 	@RequestMapping(value = "/write", method = RequestMethod.GET)
-	public String showreviewwrite() {
+	public String showreviewwrite(Principal principal,Model model) {
+		model.addAttribute("principal", principal);
 		return "/review/reviewwriteForm";
 	}
 
 	@RequestMapping(value = "/write", method = RequestMethod.POST)
-	public String showrwrite(String member_id, String review_exh_name, String review_title, String review_content,
+	public String showrRegister(String member_id, String review_exh_name, String review_title, String review_content,
 			 Model model,MultipartHttpServletRequest request){
 		// exh_name : 결제한 프로그램 명
 		List<MultipartFile> fileList =request.getFiles("file");
@@ -96,42 +85,50 @@ public class ReviewBoardController {
 	}
 
 	@RequestMapping("/view")
-	public String showreview(Model model, int num) {
+	public String showreview(Model model, int num,Principal principal) {
+		String id = principal.getName();
+		model.addAttribute("id", id);
 		model.addAttribute("review", service.increasReadCnt(num));
 		model.addAttribute("imgs", imgservice.reviewimgGetImgList(num));
 		return "/review/review";
 	}
-	@RequestMapping(value = "/checkPw",method = RequestMethod.GET)
-	public String showcheck() {
-		return "/review/reviewPwForm";
-	}
-
-	@RequestMapping(value = "/checkPw",method = RequestMethod.POST)
-	public String showcheckPw(String button, String id, String pw, int num,Model model) {
-		String msg = "다시 시도해주세요.";
-		String url = "view?num=" + num;
-		ReviewBoardVO rb = service.reviewboardGetOne(num);
-		if (id.equals(rb.getMember_id())) {
-			MemberVO m = memberservice.memberGetOne(id);
-			if (pw.equals(m.getMember_password())) {
-				if (button.equals("modify")) {
-					url = "modify?num=" + num;
-					msg = "";
-				} else if (button.equals("remove")) {
-					replyservice.reviewreplysRemoves(num);
-					imgservice.reviewimgNumRemove(num);
-					service.reviewboardRemove(num);
-					
-					msg = "삭제되었습니다.";
-					url = "reviewboard";
-				}
-			}
-		}
-		model.addAttribute("url", url);
-		model.addAttribute("msg", msg);
+//	@RequestMapping(value = "/checkPw",method = RequestMethod.GET)
+//	public String showcheck() {
+//		return "/review/reviewPwForm";
+//	}
+//
+//	@RequestMapping(value = "/checkPw",method = RequestMethod.POST)
+//	public String showcheckPw(String button, String id, String pw, int num,Model model) {
+//		String msg = "다시 시도해주세요.";
+//		String url = "view?num=" + num;
+//		ReviewBoardVO rb = service.reviewboardGetOne(num);
+//		if (id.equals(rb.getMember_id())) {
+//			MemberVO m = memberservice.memberGetOne(id);
+//			if (pw.equals(m.getMember_password())) {
+//				if (button.equals("modify")) {
+//					url = "modify?num=" + num;
+//					msg = "";
+//				} else if (button.equals("remove")) {
+//					replyservice.reviewreplysRemoves(num);
+//					imgservice.reviewimgNumRemove(num);
+//					service.reviewboardRemove(num);
+//					
+//					msg = "삭제되었습니다.";
+//					url = "reviewboard";
+//				}
+//			}
+//		}
+//		model.addAttribute("url", url);
+//		model.addAttribute("msg", msg);
+//		return "/review/result";
+//	}
+	@RequestMapping("/remove")
+	public String showreviewremove(int num,Model model) {
+		service.reviewboardRemove(num);
+		model.addAttribute("msg", "삭제되었습니다.");
+		model.addAttribute("url", "reviewboard");
 		return "/review/result";
 	}
-
 	// 게시글의 글쓴이가 아닌경우 수정버튼 안보이도록 설정
 	@RequestMapping(value = "/modify", method = RequestMethod.GET)
 	public String showreviewmodify(Model model, int num) {

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ include file="../layout/left.jsp" %>
+<%@ include file="../layout/menu.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,16 +23,16 @@ ul, ol, li {
 // 사용할 앱의 JavaScript 키를 설정해 주세요.
 $(function(){
 	document.domain = "localhost";
-	Kakao.init('2d9e59632a95ce30b56830828ea0f3ed');
+	Kakao.init('fb9aed23f848063a34eed98d2d7ea36b');
 	Kakao.Auth.createLoginButton({
 		container : '#kakao-login-btn',
 		success : function(authObj) {
-			//var data = JSON.stringify(authObj);
+			var data = JSON.stringify(authObj);
 			//이메일과 성별 제공 동의를 했는지 확인
 			postLogin(authObj);				
 		},
 		fail : function(err) {
-			//alert(JSON.stringify(err));
+			alert(JSON.stringify(err));
 		}
 	});
 });
@@ -44,11 +44,11 @@ function postLogin(authObj){
 		dataType: "json",
 		success: function(result){
 			if(result == true){
-				location.href = "/index?kakaoResult=success";
 				window.close();
+				window.location.href = "/";
 			}else{
-				location.href = "/member/loginForm";
 				window.close();
+				window.location.href = "/member/loginForm";
 			}
 		}
 	});
@@ -80,14 +80,13 @@ function goLogin(){
 <body>
 	<div class="container">
 
-		<div class="jumbotron text-center ">
-			<h1>HWARANG</h1>
-			<p>Your own exhibition</p>
-		</div>
+		<h1 align="center">로그인</h1>
+		<br>
+		<br>
 		<%-- ${sessionScope } --%>
 		<div class="" style="margin: 0 auto; width: 720px; overflow: hidden;">
 			<div class="form-group" style="float: left; width: 350px;">
-				<h3  align="center">HWARANG Login</h3>
+				<h3 align="center">화랑 ID 로그인</h3>
 				<fieldset>
 					<form name="loginForm" id="loginForm">
 						<input type="text" name="username" id="member_id" class="form-control" placeholder="아이디"><br>
@@ -112,7 +111,7 @@ function goLogin(){
 
 
 			<div class="" style=" width: 300px; height: 400px; float: left; padding-left: 60px; margin-left: 65px;">
-				<h3  align="center">SNS Simple Login</h3>
+				<h3  align="center">SNS 간편 로그인</h3>
 				<ul style="align-content: center;">
 					<li>
 						<br>
@@ -127,10 +126,10 @@ function goLogin(){
 						<a id="kakao-login-btn"></a>
 					</li>
 				</ul>
-<<<<<<< HEAD
-				<%-- <h2><c:out value="${param.error}"/>1</h2> --%>
+<%-- <<<<<<< HEAD
+				<h2><c:out value="${param.error}"/>1</h2>
 =======
->>>>>>> refs/remotes/origin/master
+>>>>>>> refs/remotes/origin/master --%>
 			</div>
 		</div>
 	</div>

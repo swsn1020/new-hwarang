@@ -14,8 +14,10 @@
 			container : '#plusfriend-chat-button',
 			plusFriendId : '_xingBT' // 플러스친구 홈 URL에 명시된 id로 설정합니다.
 		});
+		
 	});
 </script>
+<<<<<<< HEAD
 <c:if test="${ not empty pageContext.request.userPrincipal }">
 	<link rel="stylesheet" href="/resources/css/nav_notice.css"/>
 	<script src="/resources/js/nav_notice.js"></script>
@@ -40,14 +42,27 @@
 	});
 	</script>
 </c:if>
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> refs/remotes/origin/hyeji2
 </div>
 <div class="col-sm-2" style="padding: 0px;">
 	<ul class="nav ">
-		<li class="nav-item col-sm-12 alert alert-danger" id="side_item"><a
-			class="nav-link" href="#"> 멤버 페이지</a></li>
+		<li class="nav-item col-sm-12 alert alert-danger" id="side_item">
+			<a class="nav-link" href="#"> 멤버 페이지</a>
+		</li>
 		<sec:authorize access="isAuthenticated()">
-		<li class="nav-item col-sm-6" id="side_item"><a
-			class="nav-link fas fa-user-cog" href="/member/myPage">Detail</a></li>
+		<sec:authorize access="hasRole('ROLE_ADMIN')">
+		<li class="nav-item col-sm-6" id="side_item">
+			<a	class="nav-link fas fa-user-cog" href="/admin/main">관리자</a>
+		</li>
+		</sec:authorize>
+		<sec:authorize access="!hasRole('ROLE_ADMIN')">
+		<li class="nav-item col-sm-6" id="side_item">
+			<a	class="nav-link fas fa-user-cog" href="/member/myPage">Detail</a>
+		</li>
+		</sec:authorize>
 		<li class="nav-item col-sm-6" id="side_item"><a
 			class="nav-link fas fa-sign-out-alt" href="/logout">Logout</a></li>
 		<li class="nav-item col-sm-12" id="side_item"><a
@@ -91,6 +106,7 @@
 	</ul>
 </div>
 </div>
+>>>>>>> refs/remotes/origin/hyeji2
 <div class="container"></div>
 <nav class="navbar navbar-collapse" id="myNavbar">
 	<ul class="nav navbar-nav navbar-right">
@@ -98,8 +114,10 @@
 		<li><a href="#">infomation</a></li>
 		<li><a href="#">help</a></li>
 		<li><a href="#">sitemap</a></li>
+		<li>
+		<div id="plusfriend-addfriend-button"></div>		
+		</li>
 	</ul>
-	<div id="plusfriend-addfriend-button"></div>
 	<div id="plusfriend-chat-button"></div>
 </nav>
 <p class="text-muted text-center">s

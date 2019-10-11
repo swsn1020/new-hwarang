@@ -71,6 +71,7 @@ public class MemberService {
 		}
 		return false;
 	}
+	
 	//수정한것들\\
 	
 	public List<NoticeVO> getUserNotice(String member_id) {
@@ -84,4 +85,19 @@ public class MemberService {
 		return membermapper.selectNoticeCount(member_id);
 	}
 	
+	//Member block Count 처리
+	public boolean doMemberCountBlock(String id) {
+		if(membermapper.blockCountMember(id)>0) {
+			return true;
+		}
+		return false;
+	}
+	
+	//Member block Status 처리
+	public boolean doMemberStatusBlock(String id) {
+		if(membermapper.blockStatusMember(id)>0) {
+			return true;
+		}
+		return false;
+	}
 }

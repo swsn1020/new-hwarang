@@ -21,7 +21,15 @@ $(function(){ //전체선택 체크박스 클릭
 			e.preventDefault();
 		}	
 	});
+	$("#orderFav").click(function(e) {
+		if($("input[type=checkbox]:checked").length==0){
+			alert("결제할 공연을 체크해주세요!");
+			e.preventDefault();
+		}	
+	});
 }) 	
+
+
 </script>
 <div class="container mt-3 ">
 	<form action="" method="post">
@@ -49,6 +57,7 @@ $(function(){ //전체선택 체크박스 클릭
 				<th></th>
 				<th><button type="submit" id="deleteFav" class="btn btn-primary text-right">선택 삭제</button></th>
 			</tr>
+				
 		</thead>
 		<tbody>
 			<c:forEach items="${fList}" var="f">
@@ -68,6 +77,7 @@ $(function(){ //전체선택 체크박스 클릭
 							<li class="nav-item col-sm-12" id="side_item">${f.exh_price}</li>
 							<li class="nav-item col-sm-12" id="side_item">${fn:substring(f.exh_startDate, 0, 10)} ~ ${fn:substring(f.exh_endDate, 0, 10)}</li>
 						</ul>
+							<a href="/order/orderGoodsForm?seq=${f.exh_seq}">결제</a>
 					</td>
 				</tr>
 			</c:forEach>

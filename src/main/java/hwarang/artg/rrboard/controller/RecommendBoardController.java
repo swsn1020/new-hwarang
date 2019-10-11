@@ -56,7 +56,7 @@ public class RecommendBoardController {
 	}
 
 	@RequestMapping(value = "/write", method = RequestMethod.POST)
-	public String showrwrite(String username, String recomm_title, String recomm_content,
+	public String showrRegister(String username, String recomm_title, String recomm_content,
 			 Model model,MultipartHttpServletRequest request){
 		// exh_name : 결제한 프로그램 명
 		List<MultipartFile> fileList =request.getFiles("file");
@@ -83,8 +83,9 @@ public class RecommendBoardController {
 	}
 	
 	@RequestMapping("/view")
-	public String showreview(Model model, int num,Principal principal) {
-		model.addAttribute("principal", principal);
+	public String showview(Model model, int num,Principal principal) {
+		String id = principal.getName();
+		model.addAttribute("id", id);
 		model.addAttribute("recomm", rbservice.increasReadCnt(num));
 		model.addAttribute("imgs", riservice.recommendimgGetOne(num));
 		return "/recommend/recommend";

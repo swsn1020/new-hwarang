@@ -23,7 +23,9 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler{
 		auth.getAuthorities().forEach(authority -> {
 			roleNames.add(authority.getAuthority());
 		});
+		
 		request.setAttribute("role", roleNames);
+		//하던 곳으로 그대로 이동(아무것도 설정 안함)
 		response.sendRedirect("");
 	}
 

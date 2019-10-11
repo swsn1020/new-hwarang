@@ -170,7 +170,7 @@ $(function(){
 		                            <a href="/free/freeboard">자유게시판</a>
 		                        </li>
 		                        <li>
-		                            <a href="#">후기게시판</a>
+		                            <a href="/review/reviewboard">후기게시판</a>
 		                        </li>
 		                    </ul>
 		                 </div>

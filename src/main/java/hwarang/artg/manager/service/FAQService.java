@@ -44,6 +44,11 @@ public class FAQService {
 		return dao.selectAllFAQs();
 	}
 	
+	public List<FAQVO> fagRecentAll(){
+		return dao.selectRecentFAQs();
+	}
+	
+	
 	//페이징 처리한 list
 	public List<FAQVO> pagingList(CriteriaDTO cri){
 		return dao.getListWithPaging(cri);
