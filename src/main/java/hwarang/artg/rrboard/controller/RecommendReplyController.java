@@ -23,7 +23,7 @@ public class RecommendReplyController {
 
 	@ResponseBody
 	@RequestMapping("/rwrite")
-	public boolean showRwrite(String member_id,int recomm_num,String rcontent) {
+	public boolean showRRegister(String member_id,int recomm_num,String rcontent) {
 		RecommendReplyVO rr = new RecommendReplyVO();
 		rr.setMember_id(member_id);
 		rr.setRecomm_num(recomm_num);

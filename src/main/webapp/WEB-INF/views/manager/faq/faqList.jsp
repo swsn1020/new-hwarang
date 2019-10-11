@@ -14,7 +14,7 @@
 	<h3>자주하는 질문</h3>
 	<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')">
 	<div class="buttondiv" style="text-align: center; float: right; margin-bottom: 10px;">
-		<button type="button" class="btn btn-outline-secondary btn-sm" onclick="location.href='faqWrite'">공지작성</button>
+		<button type="button" class="btn btn-outline-secondary btn-sm" onclick="location.href='faqWrite'">질문작성</button>
 	</div>
 	</sec:authorize>
 	<table class="table table-hover">
@@ -31,7 +31,7 @@
 			</tr>
 			</thead>
 			<tbody>
-				<c:set var="rnum" value="${pageMaker.total - ((pageMaker.cri.pageNum-1)*12)}"/>
+				<c:set var="rnum" value="${pageMaker.total - ((pageMaker.cri.pageNum-1)*10)}"/>
 				<c:forEach items="${faqList }" var="faq" varStatus="vs">
 				<fmt:formatDate value="${faq.regDate }" var="regDate" pattern="yyyy-MM-dd"/>
 				<tr>

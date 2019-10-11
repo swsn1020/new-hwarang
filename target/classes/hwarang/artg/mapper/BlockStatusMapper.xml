@@ -5,8 +5,8 @@
 	<selectKey order="BEFORE" keyProperty="num" resultType="int">
 		select seq_block_status.nextval from dual
 	</selectKey>
-	INSERT INTO BLOCK_STATUS (BS_NUM, CATEGORY, BOARDNUM, B_MEMBER_ID, MEMBER_ID, BS_CONTENT)
-	VALUES (#{num}, #{category}, #{boardNum}, #{blockMemId}, #{memId}, #{content})
+	INSERT INTO BLOCK_STATUS (BS_NUM, CATEGORY, BOARDNUM, B_MEMBER_ID, MEMBER_ID, BS_CONTENT, BOARD_TITLE)
+	VALUES (#{num}, #{category}, #{boardNum}, #{blockMemId}, #{memId}, #{content}, #{boardTitle})
 </insert>
 <update id="updateBlock" parameterType="hwarang.artg.manager.model.BlockStatusVO">
 	UPDATE BLOCK_STATUS SET BS_CONTENT = #{content}
@@ -34,8 +34,8 @@
 </select>
 <select id="getListWithPaging" resultMap="bsMap">
 	<![CDATA[
- 			SELECT BS_NUM, CATEGORY, BOARDNUM, B_MEMBER_ID, MEMBER_ID, BS_CONTENT, BS_REPLY, B_REG_DATE, B_MANAGE_DATE
- 			  FROM (SELECT /*+INDEX_DESC(BLOCK_STATUS BLOCKNUM) */ rownum as rNum, BS_NUM, CATEGORY, BOARDNUM, B_MEMBER_ID, MEMBER_ID, BS_CONTENT, BS_REPLY, B_REG_DATE, B_MANAGE_DATE 
+ 			SELECT BS_NUM, CATEGORY, BOARDNUM, B_MEMBER_ID, MEMBER_ID, BS_CONTENT, BS_REPLY, B_REG_DATE, B_MANAGE_DATE, BOARD_TITLE
+ 			  FROM (SELECT /*+INDEX_DESC(BLOCK_STATUS BLOCKNUM) */ rownum as rNum, BS_NUM, CATEGORY, BOARDNUM, B_MEMBER_ID, MEMBER_ID, BS_CONTENT, BS_REPLY, B_REG_DATE, B_MANAGE_DATE, BOARD_TITLE 
  					  FROM BLOCK_STATUS 
  					 WHERE rownum <= #{pageNum} * #{amount}
  					 ORDER BY BS_NUM DESC)
@@ -48,8 +48,8 @@
 
 <select id="getPagingListById" resultMap="bsMap">
 	<![CDATA[
- 			SELECT BS_NUM, CATEGORY, BOARDNUM, B_MEMBER_ID, MEMBER_ID, BS_CONTENT, BS_REPLY, B_REG_DATE, B_MANAGE_DATE
- 			  FROM (SELECT /*+INDEX_DESC(BLOCK_STATUS BLOCKNUM) */ rownum as rNum, BS_NUM, CATEGORY, BOARDNUM, B_MEMBER_ID, MEMBER_ID, BS_CONTENT, BS_REPLY, B_REG_DATE, B_MANAGE_DATE 
+ 			SELECT BS_NUM, CATEGORY, BOARDNUM, B_MEMBER_ID, MEMBER_ID, BS_CONTENT, BS_REPLY, B_REG_DATE, B_MANAGE_DATE, BOARD_TITLE
+ 			  FROM (SELECT /*+INDEX_DESC(BLOCK_STATUS BLOCKNUM) */ rownum as rNum, BS_NUM, CATEGORY, BOARDNUM, B_MEMBER_ID, MEMBER_ID, BS_CONTENT, BS_REPLY, B_REG_DATE, B_MANAGE_DATE, BOARD_TITLE 
  					  FROM BLOCK_STATUS 
  					 WHERE rownum <= #{cri.pageNum} * #{cri.amount} AND MEMBER_ID = #{memId}
  					 ORDER BY BS_NUM DESC)
@@ -64,7 +64,7 @@
 <select id="getListByRegDate" resultMap="bsMap">
 	SELECT *
 	  FROM (
-		        SELECT BS_NUM, CATEGORY, BOARDNUM, B_MEMBER_ID, MEMBER_ID, BS_CONTENT, BS_REPLY, B_REG_DATE, B_MANAGE_DATE, ROW_NUMBER() OVER(ORDER BY BS_NUM ASC) rnum
+		        SELECT BS_NUM, CATEGORY, BOARDNUM, B_MEMBER_ID, MEMBER_ID, BS_CONTENT, BS_REPLY, B_REG_DATE, B_MANAGE_DATE, BOARD_TITLE, ROW_NUMBER() OVER(ORDER BY BS_NUM ASC) rnum
 		          FROM BLOCK_STATUS
 		         WHERE BS_REPLY = '미확인'
 		   )
@@ -88,5 +88,6 @@
 	<result column="BS_REPLY" property="reply"/>
 	<result column="B_REG_DATE" property="regDate"/>
 	<result column="B_MANAGE_DATE" property="manageDate"/>
-</resultMap>
+	<result column="BOARD_TITLE" property="boardTitle"/>
+ </resultMap>
 </mapper>

@@ -36,7 +36,7 @@
 			var category = $("#blockForm").find('input[name="category"]');
 			category.val("Notice_Board");
 			var blockMemId = $("#blockForm").find('input[name="blockMemId"]');
-			blockMemId.val('');	//관리자의 경우 아이디 넣기(현재아이디)
+			blockMemId.val('id1');	//관리자의 경우 아이디 넣기(현재아이디)
 			var blockForm = document.blockForm;
 			var url = "../block/form";
 			window.open("", "Report", "width=400, height=500, top=300, left=300");
@@ -407,5 +407,6 @@
 		<input type="hidden" name="category" value="">
 		<input type="hidden" name="boardNum" value="${notice.num }">
 		<input type="hidden" name="replyNum" value="">
+		<input type="hidden" name="boardTitle" value="${notice.title }">
 	</form>
 <%@ include file="../../layout/bottom.jsp"%>

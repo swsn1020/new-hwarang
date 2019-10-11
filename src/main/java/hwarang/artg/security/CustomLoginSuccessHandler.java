@@ -24,10 +24,8 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler{
 			roleNames.add(authority.getAuthority());
 		});
 		
-		//관리자 권한 --> 페이지이동 추가 **
-		
-		
 		request.setAttribute("role", roleNames);
+		//하던 곳으로 그대로 이동(아무것도 설정 안함)
 		response.sendRedirect("");
 	}
 

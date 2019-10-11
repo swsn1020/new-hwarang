@@ -57,7 +57,7 @@ public class ReviewBoardController {
 	}
 
 	@RequestMapping(value = "/write", method = RequestMethod.POST)
-	public String showrwrite(String member_id, String review_exh_name, String review_title, String review_content,
+	public String showrRegister(String member_id, String review_exh_name, String review_title, String review_content,
 			 Model model,MultipartHttpServletRequest request){
 		// exh_name : 결제한 프로그램 명
 		List<MultipartFile> fileList =request.getFiles("file");

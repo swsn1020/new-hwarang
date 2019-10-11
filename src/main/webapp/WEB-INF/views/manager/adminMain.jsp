@@ -5,8 +5,7 @@
 <%@ page import = "java.text.SimpleDateFormat" %>
 
 <!-- Google fonts - Poppins -->
-<script src="https://kit.fontawesome.com/1e1a69f988.js"></script>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,700">
+
 <script	src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
 <script type="text/javascript">
 $(function(){
@@ -88,8 +87,18 @@ $(function(){
 	background-color: #B2A49A;
 	}
 	.carousel-control-prev-icon {
-	color: black;
+	outline: black;
 	}
+ 	.carousel-item { 
+ 	  white-space: nowrap;  
+ 	  overflow: hidden; 
+ 	  text-overflow: ellipsis;  
+ 	} 
+	.carousel-inner .content {
+		width: 100%;
+   		height: 100%;
+	}
+	
 	
 </style>
 <!-- content-inner -->
@@ -180,15 +189,15 @@ $(function(){
           <div class="statistics col-lg-3 col-12">
             <div class="statistic d-flex align-items-center bg-white has-shadow">
               <div class="icon bg-red"><i class="fa fa-tasks fa-lg" style="padding-top: 10px;"></i></div>
-              <div class="text"><strong><a href="/admin/memberList?type=W">${newMemCount }</a></strong><br><small>New Members within a week</small><br></div>
+              <div class="text"><strong>${newMemCount }</strong><br><small>New Members within a week</small><br></div>
             </div>
             <div class="statistic d-flex align-items-center bg-white has-shadow">
               <div class="icon bg-green"><i class="fa fa-calendar-o fa-lg" style="padding-top: 10px;"></i></div>
-              <div class="text"><strong><a href="/exhibition">${ExhiCountMonth}</a></strong><br><small>EXHIBITION</small></div>
+              <div class="text"><strong>${ExhiCountMonth}</strong><br><small>This month Exhibition</small></div>
             </div>
             <div class="statistic d-flex align-items-center bg-white has-shadow">
               <div class="icon bg-orange"><i class="fa fa-paper-plane-o fa-lg" style="padding-top: 10px;"></i></div>
-              <div class="text"><strong><a href="/funding"><span class="counter"></span></a></strong><br><small>TOTAL FUNDING PRICE</small></div>
+              <div class="text"><strong><span class="counter"></span></strong><br><small>TOTAL FUNDING PRICE</small></div>
             </div>
           </div>
           <div class="chart col-lg-6 col-12">
@@ -218,14 +227,15 @@ $(function(){
 						     <li data-target="#img" data-slide-to="3"></li>
 						      <li data-target="#img" data-slide-to="4"></li>
 						  </ul>
-						  
+<!-- 						  style="width: 100%; height: 100%; padding-left: 30px; padding-right: 30px; padding-top: 20px; padding-bottom: 10px;" -->
 						  <!-- The slideshow -->
-						  <div class="carousel-inner" style="padding-left: 30px; padding-right: 30px; height: 80%;">
+						  <div class="carousel-inner" style="padding-left: 30px; padding-right: 30px;">
 						  	<c:forEach items="${reviewList }" var="review" varStatus="vs">
 							    <div class="carousel-item" id="review${vs.index }">
-							      <p><strong><a href="/review/view?num=${review.review_num}">${review.review_title }</a></strong></p>
-							      <br><br><br>
-							      <p>${review.review_content }</p>
+							      <div class="content">
+							      	<h5><a href="/review/view?num=${review.review_num}">${review.review_title }</a></h5>
+							      	<br><br><br><span> ${review.review_content }</span>
+							      </div>
 							    </div>
 						  	</c:forEach>
 						  </div>

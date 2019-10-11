@@ -544,7 +544,7 @@ nav.navbar .dropdown-menu {
   margin-top: 15px;
   margin-bottom: 0;
   padding: 15px 0;
-  max-width: 400px;
+  max-width: 600px;
   border-radius: 0;
   border: none;
   -webkit-box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1), -2px 0 2px rgba(0, 0, 0, 0.1);
@@ -822,9 +822,6 @@ section.dashboard-counts div[class*='col-']:last-of-type .item {
 
 
 
-
-
-
 /*  DASHBOARD HEADER  MEDIAQUERIES ------------------------*/
 @media (max-width: 991px) {
   section.dashboard-header div[class*='col-'] {
@@ -867,12 +864,24 @@ section.dashboard-counts div[class*='col-']:last-of-type .item {
 /*blockStauts, MemberList CSS 사용자 지정 */
 .project, #project3 a {
 	color: #80425A;
-	font-weight: bold;
+	font-weight: normal !important;
 }
 
 .project, #project3 a:hover {
 	color: #735D72;
 }
+
+.pagination, .page-item a {
+	color: #5C5A5C !important;
+	font-weight: normal !important;
+}
+
+.pagination li.active a{
+	color: #5C5A5C !important;
+	background-color: #E1DAD2 !important;
+	font-weight: bold !important;
+}
+
 
 .project div[class*='col-'] {
   border-right: 1px solid #eee;
@@ -2280,3 +2289,4 @@ a > code {
   padding-bottom: 0.375rem;
   font-size: 125%;
 }
+

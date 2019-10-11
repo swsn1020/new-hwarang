@@ -121,8 +121,9 @@ public class QnAController {
 		System.out.println("View 요청 들어옴");
 		String writer = service.qnaGetOne(num).getMemId();
 		String id = principal.getName();
+		List<String> auths = memAuthService.memberAuthsById(id);
 		System.out.println("현재로그인한 아이디:"+id);
-		if(writer.equals(id)) {
+		if(writer.equals(id)||auths.contains("ROLE_ADMIN") || auths.contains("ROLE_MANAGER")) {
 			model.addAttribute("qna", service.qnaGetOne(num));
 			model.addAttribute("qnaImgList", imgService.qnaImgGetByQNum(num));
 			return "manager/qna/qnaView";

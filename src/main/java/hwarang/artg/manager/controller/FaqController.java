@@ -36,16 +36,24 @@ public class FaqController {
 		return "manager/faq/faqList";
 	}
 	
+	@RequestMapping("/faqListForManager")
+	public String showFaqListM(CriteriaDTO cri, Model model) {
+		PageDTO page = new PageDTO(cri, service.getTotalCount(cri));
+		model.addAttribute("pageMaker", page);
+		model.addAttribute("faqList", service.pagingList(cri));
+		return "manager/faq/faqListM";
+	}
+	
 	@RequestMapping("/faqWrite")
 	public String showFaqWriteForm() {
 		return "manager/faq/faqWriteForm";
 	}
 	
 	@RequestMapping(value="/faqWrite", method=RequestMethod.POST)
-	public String doFaqWrite(FAQVO faq,String question,  Model model) {
-		System.out.println("question 값: "+question);
-		System.out.println(faq.getQuestion());
-		String url = "faqList";
+	public String doFaqRegister(FAQVO faq,String question,  Model model) {
+//		System.out.println("question 값: "+question);
+//		System.out.println(faq.getQuestion());
+		String url = "faqListForManager";
 		String msg = "FAQ작성에 실패하였습니다. 다시시도하세요";
 		if(service.faqRegister(faq)) {
 			msg = "FAQ가 등록되었습니다.";
@@ -69,7 +77,7 @@ public class FaqController {
 		System.out.println("답:"+ faq.getAnswer());
 		System.out.println("카테고리:"+ faq.getCategory());
 		int num = faq.getNum();
-		String url = "faqList";
+		String url = "faqListForManager";
 		String msg = "FAQ 수정 실패";
 		if(service.faqModify(faq)) {
 			msg = "FAQ 수정 성공";
@@ -84,7 +92,6 @@ public class FaqController {
 	
 	@RequestMapping(value="/checkPw", method=RequestMethod.POST)
 	public String doCheckPw(int num, String type, String password, Model model, Principal principal) {
-		String url = "faqList";
 		String msg = "";
 		String id = principal.getName();
 		MemberVO mem = memService.memberGetOne(id);
@@ -100,7 +107,6 @@ public class FaqController {
 					msg = "FAQ가 삭제되었습니다";
 				}else {
 					//삭제실패
-//					url = "noticeView?num="+num;
 					msg = "FAQ 삭제에 실패하였습니다.";
 					System.out.println("FAQ삭제 실패");
 				}
@@ -109,10 +115,9 @@ public class FaqController {
 			//비밀번호 불일치
 			System.out.println("비밀번호 오류");
 			msg = "비밀번호를 다시 확인하세요.";
-			url = "noticeView?num="+num;
 		}
 		model.addAttribute("msg", msg);
-		model.addAttribute("url", url);
+		model.addAttribute("url", "faqListForManager");
 		return "manager/result";
 	}
 

@@ -323,6 +323,7 @@
 		<input type="hidden" name="category" value="">
 		<input type="hidden" name="boardNum" value="${recomm.recomm_num}">
 		<input type="hidden" name="replyNum" value="">
+		<input type="hidden" name="boardTitle" value="${recomm.recomm_title}">
 	</form>
 <%@ include file="../layout/bottom.jsp"%>
 </body>

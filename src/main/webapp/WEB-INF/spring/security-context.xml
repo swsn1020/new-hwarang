@@ -24,16 +24,19 @@
 		<security:intercept-url pattern="/notice/noticeWrite" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')" />
 		<security:intercept-url pattern="/notice/noticeModify" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')" />
 		<security:intercept-url pattern="/notice/checkPw" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')" />
+		<security:intercept-url pattern="/notice/noticeListForManager" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')" />
 		
 		<security:intercept-url pattern="/faq/faqWrite" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')" />
 		<security:intercept-url pattern="/faq/faqModify" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')" />
 		<security:intercept-url pattern="/faq/checkPw" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')" />
+		<security:intercept-url pattern="/faq/faqListForManager" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')" />
 		
 		<security:intercept-url pattern="/qna/*" access="hasAnyRole('ROLE_USER')" />
 		<security:intercept-url pattern="/qna/qnaListForManager" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')" />
 		<security:intercept-url pattern="/qna/replyModify" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')" />
 		
 		<security:intercept-url pattern="/report/*" access="hasAnyRole('ROLE_USER')" />
+		<security:intercept-url pattern="/report/reportListForManager" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')" />
 		<security:intercept-url pattern="/report/replyModify" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')" />
 		
 		<security:intercept-url pattern="/block/*" access="hasAnyRole('ROLE_USER')" />

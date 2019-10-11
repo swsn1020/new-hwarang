@@ -20,10 +20,11 @@ public class ReviewReplyController {
 	
 	@ResponseBody
 	@RequestMapping("/rwrite")
-	public boolean showRwrite(String member_id,int num,String rcontent) {
+
+	public boolean showRRegister(String member_id,int review_num,String rcontent) {
 		ReviewReplyVO rr = new ReviewReplyVO();
 		rr.setMember_id(member_id);
-		rr.setReview_num(num);
+		rr.setReview_num(review_num);
 		rr.setReview_reply_content(rcontent);
 		return service.reviewreplyRegister(rr);
 	}

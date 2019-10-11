@@ -201,7 +201,7 @@
 						<p class="card-text">
 							${fn:substring(e.exh_startDate, 0, 10)} ~ ${fn:substring(e.exh_endDate, 0, 10)}
 						</p>
-						<i class="far fa-thumbs-up" style="color: blue;"></i>&nbsp&nbsp<i
+						<i class="far fa-thumbs-up" style="color: blue;"></i>&nbsp;&nbsp;<i
 							class="far fa-thumbs-down" style="color: gray;"></i>
 					</div>
 				</div>
