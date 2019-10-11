@@ -111,6 +111,10 @@ public class ExhibitionController {
 	@GetMapping("/view")
 	public void exhibitionDetail(Model model, int seq, Principal principal) throws Exception {
 		String id = principal.getName();
+		RecentlyViewVO rec = new RecentlyViewVO(seq, id);
+		if(rService.getIsViewd(rec)) {
+			rService.removeRecentlyView(rec);
+		}
 		rService.addRecentlyView(new RecentlyViewVO(seq, id));
 		model.addAttribute("group",fService.getGroup(id));
 		ExhibitionVO exh = service.getOne(seq);

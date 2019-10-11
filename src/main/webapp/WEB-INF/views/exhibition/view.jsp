@@ -120,9 +120,12 @@
 						return;
 					}
 					for (var i = 0, len = list.length || 0; i < len; i++) {
-						str += "<li class='list-group-item' data-rno='"+list[i].reply_num+"'><div class='col-sm-10'><strong style='color : #337ab7;'><i class='fas fa-user'>&nbsp&nbsp"+list[i].replyer+"..${pinfo.username}</i></strong></div>";
-						str += "<div col-sm-2  style='text-align: center;'>"+ replyService.displayTime(list[i].reply_reg_date)+"&nbsp&nbsp<a data-toggle='collapse' data-target='#modifyCol"+i+"'><i class='fas fa-tools replyModify'>&nbsp&nbsp</i></a><a href='#'><i class='fas fa-trash-alt replyDelete'></i></a></div>";
-						str += "<div col-sm-2></div><div col-sm-10><p class='text-uppercase'>&nbsp&nbsp"+ list[i].reply_content +"</p></div> <div id='modifyCol"+i+"' class='collapse'><textarea rows='4' cols='108' id='replyMod' name='replyMod' placeholder='수정할 댓글을 입력해주세요''></textarea><button type='button' class='btn btn-primary replyModifyBtn'>Reply Modify</button></div></li>";					
+						str += "<li class='list-group-item' data-rno='"+list[i].reply_num+"'><div class='col-sm-10'><strong style='color : #337ab7;'><i class='fas fa-user'>&nbsp&nbsp"+list[i].member_id+"</i></strong></div><div col-sm-2  style='text-align: center;'>"+ replyService.displayTime(list[i].reply_reg_date);
+						
+						if("${pinfo.username}"==list[i].member_id){
+							str += "&nbsp&nbsp<a data-toggle='collapse' data-target='#modifyCol"+i+"'><i class='fas fa-tools replyModify'>&nbsp&nbsp</i></a><a href='#'><i class='fas fa-trash-alt replyDelete'></i></a>";	
+						}
+						str += "</div><div col-sm-10><p class='text-uppercase'>&nbsp&nbsp댓글내용 : "+ list[i].reply_content +"</p></div> <div id='modifyCol"+i+"' class='collapse'><textarea rows='4' cols='108' id='replyMod' name='replyMod' placeholder='수정할 댓글을 입력해주세요''></textarea><button type='button' class='btn btn-primary replyModifyBtn'>Reply Modify</button></div></li>";					
 					}
 					replyUL.html(str);
 				});

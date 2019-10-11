@@ -43,8 +43,11 @@ public class ExhibitionService {
 					exh.setExh_seq(Integer.parseInt(xpp.getText()));
 				}
 				if (tag.equals("title")) {
-					exh.setExh_title(xpp.getText());
-
+					String x = xpp.getText();
+					if(x==null || x.equals(" ")) {
+						x= "정보없음";
+					}
+					exh.setExh_title(x);
 				}
 				if (tag.equals("startDate")) {
 					String x = xpp.getText();
@@ -59,23 +62,43 @@ public class ExhibitionService {
 
 				}
 				if (tag.equals("place")) {
-					exh.setExh_place(xpp.getText());
+					String x = xpp.getText();
+					if(x==null || x.equals(" ")) {
+						x= "정보없음";
+					}
+					exh.setExh_title(x);
 
 				}
 				if (tag.equals("realmName")) {
-					exh.setExh_realmName(xpp.getText());
+					String x = xpp.getText();
+					if(x==null || x.equals(" ")) {
+						x= "정보없음";
+					}
+					exh.setExh_title(x);
 
 				}
 				if (tag.equals("area")) {
-					exh.setExh_area(xpp.getText());
+					String x = xpp.getText();
+					if(x==null || x.equals(" ")) {
+						x= "정보없음";
+					}
+					exh.setExh_title(x);
 
 				}
 				if (tag.equals("subTitle")) {
-					exh.setExh_subTitle(xpp.getText());
+					String x = xpp.getText();
+					if(x==null || x.equals(" ")) {
+						x= "정보없음";
+					}
+					exh.setExh_title(x);
 
 				}
 				if (tag.equals("price")) {
-					exh.setExh_price(xpp.getText());
+					String x = xpp.getText();
+					if(x==null || x.equals(" ")) {
+						x= "정보없음";
+					}
+					exh.setExh_title(x);
 
 				}
 //				if (tag.equals("contents1")) {
@@ -101,33 +124,65 @@ public class ExhibitionService {
 //					}
 //				}
 				if (tag.equals("url")) {
-					exh.setExh_url(xpp.getText());
+					String x = xpp.getText();
+					if(x==null || x.equals(" ")) {
+						x= "정보없음";
+					}
+					exh.setExh_title(x);
 
 				}
 				if (tag.equals("phone")) {
-					exh.setExh_phone(xpp.getText());
+					String x = xpp.getText();
+					if(x==null || x.equals(" ")) {
+						x= "정보없음";
+					}
+					exh.setExh_title(x);
 				}
 				if (tag.equals("imgUrl")) {
-					exh.setExh_imgurl(xpp.getText());
+					String x = xpp.getText();
+					if(x==null || x.equals(" ")) {
+						x= "정보없음";
+					}
+					exh.setExh_title(x);
 				}
 				if (tag.equals("gpsX")) {
-					exh.setExh_gpsx(xpp.getText());
+					String x = xpp.getText();
+					if(x==null || x.equals(" ")) {
+						x= "정보없음";
+					}
+					exh.setExh_title(x);
 
 				}
 				if (tag.equals("gpsY")) {
-					exh.setExh_gpsy(xpp.getText());
+					String x = xpp.getText();
+					if(x==null || x.equals(" ")) {
+						x= "정보없음";
+					}
+					exh.setExh_title(x);
 
 				}
 				if (tag.equals("placeUrl")) {
-					exh.setExh_placeurl(xpp.getText());
+					String x = xpp.getText();
+					if(x==null || x.equals(" ")) {
+						x= "정보없음";
+					}
+					exh.setExh_title(x);
 
 				}
 				if (tag.equals("placeAddr")) {
-					exh.setExh_placeaddr(xpp.getText());
+					String x = xpp.getText();
+					if(x==null || x.equals(" ")) {
+						x= "정보없음";
+					}
+					exh.setExh_title(x);
 
 				}
 				if (tag.equals("placeSeq")) {
-					exh.setExh_placeseq(xpp.getText());
+					String x = xpp.getText();
+					if(x==null || x.equals(" ")) {
+						x= "정보없음";
+					}
+					exh.setExh_title(x);
 				}
 			} else if (event_type == XmlPullParser.END_TAG) {
 				tag = xpp.getName();
@@ -140,28 +195,5 @@ public class ExhibitionService {
 		return exh;
 	}
 
-	public Date transformDate(String date) {
-		SimpleDateFormat beforeFormat = new SimpleDateFormat("yyyymmdd");
-
-		// Date로 변경하기 위해서는 날짜 형식을 yyyy-mm-dd로 변경해야 한다.
-		SimpleDateFormat afterFormat = new SimpleDateFormat("yyyy-mm-dd");
-
-		java.util.Date tempDate = null;
-
-		try {
-			// 현재 yyyymmdd로된 날짜 형식으로 java.util.Date객체를 만든다.
-			tempDate = beforeFormat.parse(date);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-
-		// java.util.Date를 yyyy-mm-dd 형식으로 변경하여 String로 반환한다.
-		String transDate = afterFormat.format(tempDate);
-
-		// 반환된 String 값을 Date로 변경한다.
-		Date d = Date.valueOf(transDate);
-
-		return d;
-	}
 
 }
