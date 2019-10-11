@@ -9,7 +9,7 @@
 		VALUES (#{num}, #{category}, #{boardCategory}, #{boardNum})
 	</insert>
 	<update id="updateManagerAlarm" parameterType="hwarang.artg.manager.model.ManagerAlarmVO">
-		UPDATE MANAGER_ALARM SET AL_CHECKED = 'Y'
+		UPDATE MANAGER_ALARM SET AL_CHECKED = #{checked}
 		WHERE AL_NUM = #{num}
 	</update>
 	<delete id="deleteManagerAlarm" parameterType="int">
@@ -31,6 +31,19 @@
 		WHERE AL_CHECKED = 'N' AND rownum between 1 and 4
 		ORDER BY AL_NUM desc
 	</select>
+	<select id="getTotalCount" resultType="int">
+		SELECT count(*) FROM MANAGER_ALARM
+	</select>
+	<select id="getListWithPaging" resultMap="aMap">
+			 SELECT AL_NUM, AL_CATEGORY, AL_REG_DATE, AL_CHECKED, BOARD_CATEGORY, BOARD_NUM
+ 			  FROM (SELECT /*+INDEX_DESC(MANAGER_ALARM pk_alarm_num) */ rownum AS rNum, AL_NUM, AL_CATEGORY, AL_REG_DATE, AL_CHECKED, BOARD_CATEGORY, BOARD_NUM 
+ 					  FROM MANAGER_ALARM
+ 		<![CDATA[			  
+ 					 WHERE rownum <= #{pageNum} * #{amount})
+ 			 WHERE rNum > (#{pageNum} - 1) * #{amount}
+		]]>
+	</select>
+	
 	<resultMap type="hwarang.artg.manager.model.ManagerAlarmVO" id="aMap">
 		<result column="AL_NUM" property="num"/>
 		<result column="AL_CATEGORY" property="category"/>

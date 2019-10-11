@@ -8,6 +8,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import hwarang.artg.common.model.CriteriaDTO;
 import hwarang.artg.community.model.FreeBoardVO;
 import hwarang.artg.community.service.FreeBoardService;
 import hwarang.artg.manager.model.BlockStatusVO;
@@ -52,8 +53,8 @@ public class ManagerAlarmService {
 		return false;
 	}
 	
-	public boolean alarmModify(ManagerAlarmVO alarm) {
-		if(dao.updateManagerAlarm(alarm) > 0) {
+	public boolean alarmModify(int num, String checked) {
+		if(dao.updateManagerAlarm(num, checked) > 0) {
 			return true;
 		}
 		return false;
@@ -81,6 +82,14 @@ public class ManagerAlarmService {
 	
 	public List<Map<String, Object>> alarmGetAll() {
 		return checkAlarmCategory(dao.selectAllManagerAlarms());
+	}
+	
+	public List<Map<String, Object>> pagingList(CriteriaDTO cri){
+		return checkAlarmCategory(dao.getListWithPaging(cri));
+	}
+	
+	public int getTotalCount() {
+		return dao.getTotalCount();
 	}
 	
 	
@@ -135,7 +144,7 @@ public class ManagerAlarmService {
 			}
 			alMap.put("category", category);
 			alMap.put("subCategory", subCategory);
-			alMap.put("boardNum", boardNum);
+//			alMap.put("boardNum", boardNum);
 			params.add(alMap);
 		}
 		return params;

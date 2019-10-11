@@ -1,13 +1,5 @@
 package hwarang.artg.common.model;
 
-import java.security.Principal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.naming.NoInitialContextException;
-
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
@@ -82,7 +74,7 @@ public class MessageAspect{
 		}
 		if(params[0] instanceof BlockStatusVO) {
 			BlockStatusVO block = (BlockStatusVO)params[0];
-			alarm.setBoardCategory("Block");
+			alarm.setBoardCategory("Block_Board");
 			alarm.setBoardNum(block.getNum());
 		}
 		if(params[0] instanceof FreeBoardVO) {
@@ -112,11 +104,9 @@ public class MessageAspect{
 		}
 		if(params[0] instanceof ReviewReplyVO) {
 			ReviewReplyVO reviewReply = (ReviewReplyVO)params[0];
-			System.out.println("parms[0]"+reviewReply);
 			alarm.setBoardCategory("Review_Reply");
 			alarm.setBoardNum(reviewReply.getReview_num());
 		}
-		
 		if(alarmService.alarmRegister(alarm)) {
 			System.out.println("alarm 등록 성공");
 			//메시지 보내기

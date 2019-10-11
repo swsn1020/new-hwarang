@@ -65,15 +65,16 @@ $(function(){
 			stompClient.subscribe("/category/msg/id1", function(message){
 				console.log("message: "+JSON.stringify(message));
 				console.log("message: "+message.body);
+				addMsg(message.body);
 // 				alert(message.body);
 			});
 		})
 	}
 	function addMsg(message){
 // 		alert(message);
-		var txt = $(".notification-time").val();
-		alert(txt);
-		alert(txt+message);
+		var txt = $(".newAlarm");
+		alert(txt.val());
+		txt.text(message);
 	}
 	
 </script>
@@ -103,17 +104,18 @@ $(function(){
                     <li id="notification-item">
                     	<a rel="nofollow" href="#" class="dropdown-item"> 
 	                        <div class="notification">
-	                          <div class="notification-content"><i class="fa fa-envelope bg-green"></i>You have 6 new messages </div>
-	                          <textarea class="notification-time">알람넣을부분</textarea>
+	                          <div class="notification-content"><i class="fa fa-envelope bg-green"></i>New Alarms</div>
+	                          <div class="newAlarm"></div>
 	                        </div>
                         </a>
                     </li>
                     <c:forEach items="${alarmList }" var="alarm">
-                    	<li>
+                    	<fmt:formatDate value="${alarm.alarm.regDate }" var="regDate" pattern="yyyy-MM-dd" />
+                    	<li id="notification-item">
 	                    	<a rel="nofollow" href="${alarm.url }" class="dropdown-item"> 
 		                        <div class="notification">
 		                          <div class="notification-content"><i class="fa fa-twitter bg-blue"></i>${alarm.category }&nbsp;${alarm.subCategory }이 등록되었습니다.</div>
-		                          <div class="notification-time"><small></small></div>
+		                          <div class="notification-time"><small>${regDate }</small></div>
 		                        </div>
 	                        </a>
                         </li>
