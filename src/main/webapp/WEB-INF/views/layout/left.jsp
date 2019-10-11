@@ -33,6 +33,8 @@
 <script type="text/javascript" src="/resources/js/common_fn.js"></script>
 <script type="text/javascript" src="/resources/js/calendar.js"></script>
 <script type="text/javascript" src="/resources/js/layout.js"></script>
+<script type="text/javascript" src="/resources/js/sockjs.js"></script>
+<script type="text/javascript" src="/resources/js/stomp.js"></script>
 <style>
 .star {
 	color: #ffae00;
@@ -44,6 +46,28 @@
     margin-bottom: 20px;
     z-index: 11;
 </style>
+<script>
+/*
+$(function(){
+	connect();
+});
+var sock;
+var stompClient;
+function connect(){
+	console.log("연결됨.");
+	sock = new SockJS("/chat");
+	stompClient = Stomp.over(sock);
+	stompClient.connect({}, function(){
+		
+		stompClient.subscribe("/category/msg/id1", function(message){
+			console.log("message: "+JSON.stringify(message));
+			console.log("message: "+message.body);
+			alert(message.body);
+		});
+	});
+}
+*/
+</script>
 </head>
 <body>
 

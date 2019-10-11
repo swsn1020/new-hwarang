@@ -1,10 +1,9 @@
-<%@page import="java.security.Principal"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
+<%@page import="java.security.Principal"%>
 <sec:authentication property="principal" var="pinfo" />
 <!DOCTYPE html>
 <html lang="en">
@@ -24,8 +23,14 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="/resources/js/sockjs.js"></script>
+<script src="/resources/js/stomp.js"></script>
 <script>
 $(function(){
+	//websocket connect
+	connect();
+	
+	//dropdown
 	$(".sidebar-dropdown > a").click(function() {
 			$(".sidebar-submenu").slideUp(200);
 			if ($(this).parent().hasClass("active")) {
@@ -44,7 +49,33 @@ $(function(){
 		$("#show-sidebar").click(function() {
 			$(".page-wrapper").addClass("toggled");
 		});
-	});
+		
+		//알람 붙이기
+		
+		
+	}); //onload() End
+	
+	var sock;
+	var stompClient;
+	function connect(){
+		console.log("연결됨.");
+		sock = new SockJS("/chat");
+		stompClient = Stomp.over(sock);
+		stompClient.connect({}, function(){
+			stompClient.subscribe("/category/msg/id1", function(message){
+				console.log("message: "+JSON.stringify(message));
+				console.log("message: "+message.body);
+// 				alert(message.body);
+			});
+		})
+	}
+	function addMsg(message){
+// 		alert(message);
+		var txt = $(".notification-time").val();
+		alert(txt);
+		alert(txt+message);
+	}
+	
 </script>
 </head>
 <body>
@@ -67,29 +98,26 @@ $(function(){
               <!-- Navbar Menu -->
               <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
                 <!-- Notifications-->
-                <li class="nav-item dropdown"> <a id="notifications" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-bell-o fa-lg"></i><span class="badge bg-red badge-corner">12</span></a>
+                <li class="nav-item dropdown"> <a id="notifications" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-bell-o fa-lg"></i><span class="badge bg-red badge-corner">${alarmCnt }</span></a>
                   <ul aria-labelledby="notifications" class="dropdown-menu">
-                    <li><a rel="nofollow" href="#" class="dropdown-item"> 
-                        <div class="notification">
-                          <div class="notification-content"><i class="fa fa-envelope bg-green"></i>You have 6 new messages </div>
-                          <div class="notification-time"><small>4 minutes ago</small></div>
-                        </div></a></li>
-                    <li><a rel="nofollow" href="#" class="dropdown-item"> 
-                        <div class="notification">
-                          <div class="notification-content"><i class="fa fa-twitter bg-blue"></i>You have 2 followers</div>
-                          <div class="notification-time"><small>4 minutes ago</small></div>
-                        </div></a></li>
-                    <li><a rel="nofollow" href="#" class="dropdown-item"> 
-                        <div class="notification">
-                          <div class="notification-content"><i class="fa fa-upload bg-orange"></i>Server Rebooted</div>
-                          <div class="notification-time"><small>4 minutes ago</small></div>
-                        </div></a></li>
-                    <li><a rel="nofollow" href="#" class="dropdown-item"> 
-                        <div class="notification">
-                          <div class="notification-content"><i class="fa fa-twitter bg-blue"></i>You have 2 followers</div>
-                          <div class="notification-time"><small>10 minutes ago</small></div>
-                        </div></a></li>
-                    <li><a rel="nofollow" href="#" class="dropdown-item all-notifications text-center"> <strong>view all notifications                                            </strong></a></li>
+                    <li id="notification-item">
+                    	<a rel="nofollow" href="#" class="dropdown-item"> 
+	                        <div class="notification">
+	                          <div class="notification-content"><i class="fa fa-envelope bg-green"></i>You have 6 new messages </div>
+	                          <textarea class="notification-time">알람넣을부분</textarea>
+	                        </div>
+                        </a>
+                    </li>
+                    <c:forEach items="${alarmList }" var="alarm">
+                    	<li>
+	                    	<a rel="nofollow" href="${alarm.url }" class="dropdown-item"> 
+		                        <div class="notification">
+		                          <div class="notification-content"><i class="fa fa-twitter bg-blue"></i>${alarm.category }&nbsp;${alarm.subCategory }이 등록되었습니다.</div>
+		                          <div class="notification-time"><small></small></div>
+		                        </div>
+	                        </a>
+                        </li>
+                    </c:forEach>
                   </ul>
                 </li>
                 <!-- Logout    -->
@@ -114,8 +142,7 @@ $(function(){
 	      <div class="sidebar-header">
 	        <div class="user-info">
 	          <span class="user-name"> <!-- 아이디 불러오기 -->
-	          	<sec:authentication property="principal.username" var="memId"/>
-	            <strong>${memId }</strong>
+	            <strong>${memName}님 (${memId })</strong>
 	          </span>
 	          <span class="user-role">Administrator</span>
 	          <span class="user-status">
@@ -145,19 +172,17 @@ $(function(){
 	                  <a href="/faq/faqListForManager">FAQ Board</a>
 	                </li>
 	                <li>
-	                  <a href="/report/reportList">Report Board</a>
-	                </li>
-	                <li>
 	                  <a href="/qna/qnaListForManager">Q&amp;A Board</a>
 	                </li>
 	                <li>
-	                  <a href="/free/freeboard">Free Board</a>
+	                  <a href="/block/blockListForManager">Block Status <span class="badge badge-pill badge-danger">${blockCnt }</span>
+	                  </a>
 	                </li>
 	                <li>
-	                  <a href="/review/reviewboard">Review Board</a>
+	                  <a href="/report/reportListForManager">Report Board</a>
 	                </li>
-	                <li>
-	                  <a href="/recommend/recommendboard">Recommend Board</a>
+	                 <li>
+	                  <a href="/alarm/alarmList">Alarm Status<span class="badge badge-pill badge-success">${alarmCnt }</span></a>
 	                </li>
 	              </ul>
 	            </div>
@@ -175,10 +200,6 @@ $(function(){
 	                </li>
 	                <li>
 	                  <a href="#">Authorization Settings</a>
-	                </li>
-	                <li>
-	                  <a href="/block/blockListForManager">Block Status <span class="badge badge-pill badge-danger">${blockCnt }</span>
-	                  </a>
 	                </li>
 	              </ul>
 	            </div>

@@ -50,7 +50,7 @@ $(function(){
 						<div class="btnGroup" style="text-align: center;">
 							<input type="submit" class="btn btn-outline-primary btn-sm" value="작성"> 
 							<input type="reset" class="btn btn-outline-dark btn-sm" value="초기화"> 
-							<input type="button" class="btn btn-outline-info btn-sm" onclick="location.href='noticeList'" value="목록">
+							<input type="button" class="btn btn-outline-info btn-sm" onclick="location.href='noticeListForMananger'" value="목록">
 						</div>
 					</form>
 				</div>

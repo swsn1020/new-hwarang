@@ -38,20 +38,21 @@
 	<!-- 커뮤니티 -->
 	<context:component-scan base-package="hwarang.artg.community.controller"/>
 	
+	<!-- websocket -->
+	<!-- Stomp.js 이용한 WebScoket 연결 및 메시지 처리를 위한 설정 -->
+	<websocket:message-broker application-destination-prefix="/client">
+		<websocket:stomp-endpoint path="/chat">
+			<websocket:sockjs/>
+		</websocket:stomp-endpoint>
+		<websocket:simple-broker prefix="/category"/>
+	</websocket:message-broker>
+	
 	<!-- 다중파일 -->
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<beans:property value="5242880" name="maxUploadSize"/>
 		<beans:property value="1048576" name="maxInMemorySize"/>
 	</beans:bean>
 	
-	<!-- Stomp.js 이용한 WebScoket 연결 및 메시지 처리를 위한 설정 
-	<websocket:message-broker application-destination-prefix="/client">
-		<websocket:stomp-endpoint path="/chat">
-			<websocket:sockjs></websocket:sockjs>
-		</websocket:stomp-endpoint>
-		<websocket:simple-broker prefix="/category"/>
-	</websocket:message-broker>
-	-->
 	
 	<aop:aspectj-autoproxy/>
 	<beans:bean id="messageAspect" class="hwarang.artg.common.model.MessageAspect"></beans:bean>

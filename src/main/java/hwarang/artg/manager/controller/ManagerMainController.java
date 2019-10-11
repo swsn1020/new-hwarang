@@ -1,28 +1,25 @@
 package hwarang.artg.manager.controller;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.OutputStream;
 import java.security.Principal;
 
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import hwarang.artg.common.model.CriteriaDTO;
 import hwarang.artg.common.model.PageDTO;
 import hwarang.artg.manager.service.BlockStatusService;
+import hwarang.artg.manager.service.ManagerAlarmService;
 import hwarang.artg.manager.service.ManagerMainService;
 import hwarang.artg.manager.service.QnAService;
-import hwarang.artg.member.model.MemberVO;
 import hwarang.artg.member.service.MemberService;
-import hwarang.artg.rrboard.service.ReviewImgService;
-import net.coobird.thumbnailator.Thumbnails;
 
 @Controller
 @RequestMapping("/admin")
@@ -35,9 +32,12 @@ public class ManagerMainController {
 	private ManagerMainService managerService;
 	@Autowired
 	private MemberService memberService;
+	@Autowired
+	private ManagerAlarmService alarmService;
+	
 	
 	@RequestMapping("/main")
-	public String showMainPage(Model model) {
+	public String showMainPage(Model model, HttpSession session, Principal principal) {
 		System.out.println("Manager Main 요청들어옴");
 		/* 총 멤버 수, 총 게시글 수, 총 댓글 수 */
 		model.addAttribute("totalMembers", managerService.memberCounts());
@@ -62,10 +62,22 @@ public class ManagerMainController {
 		model.addAttribute("reviewBTC", managerService.reviewBTodayCount());
 		model.addAttribute("freeBTC", managerService.freeBTodayCount());
 		model.addAttribute("recommBTC", managerService.RecommBTodayCount());
-		model.addAttribute("blockCnt", blockService.getBlockCountNotChecked());
+		
+		//sidebar에 저장될 내용
+		String id = principal.getName();
+		session.setAttribute("memName", memberService.memberGetOne(id).getMember_name());
+		session.setAttribute("memId", id);
+		session.setAttribute("blockCnt", blockService.getBlockCountNotChecked());
 		
 		/* Review 게시판 불러오기 */
 		model.addAttribute("reviewList", managerService.getReviewsTop());
+		
+		//알람 등록
+		session.setAttribute("alarmCnt", alarmService.unReadAlarmCount());
+		//알람리스트
+		session.setAttribute("alarmList", alarmService.getFourAlarms());
+		System.out.println("manager controller alarmList: "+alarmService.getFourAlarms());
+		
 		return "manager/adminMain";
 	}
 	
@@ -91,6 +103,15 @@ public class ManagerMainController {
 		return "result";
 	}
 	
+	@MessageMapping("/client/send/{var}")
+	@SendTo("/category/msg/{var}")
+	public String chatMessage(String message, @DestinationVariable(value ="var") String variable) {
+		System.out.println("var : " + variable);
+		System.out.println("managerController message: "+message);
+		return message;
+	}
+	
+
 	
 
 }

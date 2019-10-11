@@ -86,15 +86,15 @@
 			<!-- Pagination -->
 			<ul class="pagination justify-content-center">
 				<li class='${pageMaker.prev == true ? "page-item" : "page-item disabled" }'>
-					<a class="page-link" href="qnaList?pageNum=${pageMaker.startPage-1 }">&laquo;</a>
+					<a class="page-link" href="qnaListForManager?pageNum=${pageMaker.startPage-1 }">&laquo;</a>
 				</li>
 				<c:forEach var="num" begin="${pageMaker.startPage }" end="${pageMaker.endPage}">
 					<li class='${pageMaker.cri.pageNum == num ? "active" : "page-item"}'>
-						<a class="page-link" href="qnaList?pageNum=${num}">${num}</a>
+						<a class="page-link" href="qnaListForManager?pageNum=${num}">${num}</a>
 					</li>
 				</c:forEach>
 				<li class='${pageMaker.next == true ? "page-item" : "page-item disabled" }'>
-					<a class="page-link" href="qnaList?pageNum=${pageMaker.endPage+1 }">&raquo;</a>
+					<a class="page-link" href="qnaListForManager?pageNum=${pageMaker.endPage+1 }">&raquo;</a>
 				</li>
 			</ul>
           	</div>

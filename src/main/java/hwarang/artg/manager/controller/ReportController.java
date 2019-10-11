@@ -55,6 +55,15 @@ public class ReportController {
 		return "manager/report/reportList";
 	}
 	
+	@RequestMapping("/reportListForManager")
+	public String showReportListM(CriteriaDTO cri, Model model) {
+		System.out.println("reportListForManager 요청");
+		PageDTO page = new PageDTO(cri, service.getTotalCount());
+		model.addAttribute("pageMaker", page);
+		model.addAttribute("reportList", service.pagingList(cri));
+		return "manager/report/reportListM";
+	}
+	
 	@RequestMapping("/reportWrite")
 	public String showReportWriteForm() {
 		return "manager/report/reportWriteForm";
@@ -130,7 +139,7 @@ public class ReportController {
 	@RequestMapping(value="/replyModify", method=RequestMethod.POST)
 	public String doReplyModify(int num, String reply, Model model) {
 		String msg = "답변 등록에 실패하였습니다. 다시 시도하세요.";
-		String url = "reportList";
+		String url = "reportListForManager";
 		if(service.replyModify(num, reply)) {
 			msg = "답변이 등록되었습니다.";
 		}else {
