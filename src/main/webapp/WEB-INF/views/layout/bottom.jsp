@@ -17,7 +17,6 @@
 		
 	});
 </script>
-<<<<<<< HEAD
 <c:if test="${ not empty pageContext.request.userPrincipal }">
 	<link rel="stylesheet" href="/resources/css/nav_notice.css"/>
 	<script src="/resources/js/nav_notice.js"></script>
@@ -42,71 +41,7 @@
 	});
 	</script>
 </c:if>
-=======
-<<<<<<< HEAD
-=======
->>>>>>> refs/remotes/origin/hyeji2
 </div>
-<div class="col-sm-2" style="padding: 0px;">
-	<ul class="nav ">
-		<li class="nav-item col-sm-12 alert alert-danger" id="side_item">
-			<a class="nav-link" href="#"> 멤버 페이지</a>
-		</li>
-		<sec:authorize access="isAuthenticated()">
-		<sec:authorize access="hasRole('ROLE_ADMIN')">
-		<li class="nav-item col-sm-6" id="side_item">
-			<a	class="nav-link fas fa-user-cog" href="/admin/main">관리자</a>
-		</li>
-		</sec:authorize>
-		<sec:authorize access="!hasRole('ROLE_ADMIN')">
-		<li class="nav-item col-sm-6" id="side_item">
-			<a	class="nav-link fas fa-user-cog" href="/member/myPage">Detail</a>
-		</li>
-		</sec:authorize>
-		<li class="nav-item col-sm-6" id="side_item"><a
-			class="nav-link fas fa-sign-out-alt" href="/logout">Logout</a></li>
-		<li class="nav-item col-sm-12" id="side_item"><a
-			class="nav-link fas fa-star" href="/exhibition/favoriteList">즐겨찾기</a></li>	
-		<li class="nav-item col-sm-12" id="side_item"><a
-			class="nav-link fas fa-eye" href="/exhibition/recentlyView">최근본상품</a><div></div></li>
-			<input id="userid" type="hidden" value='<sec:authentication property="principal.Username"/>'>
-				<li class="nav-item dropdown">
-					<a class="nav-link" id="dLabel" role="button" data-toggle="dropdown" data-target="#"
-						href="/page.html"> 
-						<i class="fas fa-bell"></i>알림
-						<span class="label label-warning" style="color:white">0</span>
-					</a>
-					<ul class="dropdown-menu notifications" role="menu"
-						aria-labelledby="dLabel" style="left: -200px; position: absolute;">
-
-						<div class="notification-heading">
-							<h2 class="tm-block-title" style="margin-bottom: 0px;">알림</h2>
-						</div>
-						<li class="divider"></li>
-
-						<div id="notifications-current" class="notifications-wrapper">
-						</div>
-						
-						<div id="notifications-past" class="notifications-wrapper" style="display: none">
-						</div>
-						
-						<li class="divider"></li>
-						<div class="notification-footer">
-							<p id="change-notice" class="notice-current" style="float: right; cursor: pointer; margin: 0">지난 알림보기</p>
-						</div>
-					</ul>
-			</li>		
-		</sec:authorize>
-		<sec:authorize access="isAnonymous()">
-		<li class="nav-item col-sm-6" id="side_item"><a
-			class="nav-link fas fa-user-plus" href="/member/joinForm">Sign Up</a></li>
-		<li class="nav-item col-sm-6" id="side_item"><a
-			class="nav-link fas fa-sign-in-alt" href="/member/loginForm">Login</a></li>
-		</sec:authorize>
-	</ul>
-</div>
-</div>
->>>>>>> refs/remotes/origin/hyeji2
 <div class="container"></div>
 <nav class="navbar navbar-collapse" id="myNavbar">
 	<ul class="nav navbar-nav navbar-right">

@@ -15,8 +15,10 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 
+import hwarang.artg.community.model.AlarmVO;
 import hwarang.artg.community.model.FreeBoardVO;
 import hwarang.artg.community.model.FreeReplyVO;
+import hwarang.artg.community.service.AlarmService;
 import hwarang.artg.manager.model.BlockStatusVO;
 import hwarang.artg.manager.model.FAQVO;
 import hwarang.artg.manager.model.ManagerAlarmVO;
@@ -36,7 +38,7 @@ public class MessageAspect{
 	private SimpMessagingTemplate template;
 	@Autowired
 	private ManagerAlarmService alarmService;
-
+	
 	
 	@Pointcut("execution(* hwarang.artg..controller.*.*Register(..))")
 	public void registerAlarmpt() {}
@@ -119,9 +121,12 @@ public class MessageAspect{
 		
 		if(alarmService.alarmRegister(alarm)) {
 			System.out.println("alarm 등록 성공");
+			
 			//메시지 보내기
 			String text = alarm+" 새로운 글이 등록되었습니다.";
+		
 			this.template.convertAndSend("/category/msg/id1", text);
+			
 		}else {
 			System.out.println("alarm 등록 실패");
 		}

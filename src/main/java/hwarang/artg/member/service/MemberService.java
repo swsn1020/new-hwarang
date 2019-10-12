@@ -71,7 +71,6 @@ public class MemberService {
 		}
 		return false;
 	}
-	
 	//수정한것들\\
 	
 	public List<NoticeVO> getUserNotice(String member_id) {
@@ -84,7 +83,6 @@ public class MemberService {
 	public int getNoticeCount(String member_id) throws Exception{
 		return membermapper.selectNoticeCount(member_id);
 	}
-	
 	//Member block Count 처리
 	public boolean doMemberCountBlock(String id) {
 		if(membermapper.blockCountMember(id)>0) {
@@ -92,7 +90,6 @@ public class MemberService {
 		}
 		return false;
 	}
-	
 	//Member block Status 처리
 	public boolean doMemberStatusBlock(String id) {
 		if(membermapper.blockStatusMember(id)>0) {

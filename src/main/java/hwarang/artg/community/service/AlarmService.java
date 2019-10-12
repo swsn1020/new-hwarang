@@ -1,4 +1,4 @@
-package hwarang.artg.manager.service;
+package hwarang.artg.community.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,25 +8,21 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import hwarang.artg.community.model.FreeBoardVO;
-import hwarang.artg.community.service.FreeBoardService;
-import hwarang.artg.manager.model.BlockStatusVO;
-import hwarang.artg.manager.model.FAQVO;
+import hwarang.artg.community.model.AlarmVO;
 import hwarang.artg.manager.model.ManagerAlarmVO;
-import hwarang.artg.manager.model.NoticeVO;
-import hwarang.artg.manager.model.QnAVO;
-import hwarang.artg.manager.model.ReportVO;
-import hwarang.artg.mapper.ManagerAlarmMapper;
-import hwarang.artg.mapper.ReportMapper;
-import hwarang.artg.rrboard.model.RecommendBoardVO;
-import hwarang.artg.rrboard.model.ReviewBoardVO;
+import hwarang.artg.manager.service.BlockStatusService;
+import hwarang.artg.manager.service.FAQService;
+import hwarang.artg.manager.service.NoticeService;
+import hwarang.artg.manager.service.QnAService;
+import hwarang.artg.manager.service.ReportService;
+import hwarang.artg.mapper.AlarmMapper;
 import hwarang.artg.rrboard.service.RecommendBoardService;
 import hwarang.artg.rrboard.service.ReviewBoardService;
 
 @Service
-public class ManagerAlarmService {
+public class AlarmService {
 	@Autowired
-	private ManagerAlarmMapper dao;
+	private AlarmMapper mapper;
 	
 	@Autowired
 	private QnAService qnaService;
@@ -44,60 +40,36 @@ public class ManagerAlarmService {
 	private ReviewBoardService reviewBoardService;
 	@Autowired
 	private RecommendBoardService recommBoardService;
-	
-	
-	public boolean alarmRegister(ManagerAlarmVO alarm) {
-		if(dao.insertManagerAlarm(alarm) > 0) {
+	public boolean alarmRegister(AlarmVO alarm) {
+		if(mapper.insertAlarm(alarm) > 0) {
 			return true;
 		}
 		return false;
 	}
-	
-	public boolean alarmModify(ManagerAlarmVO alarm) {
-		if(dao.updateManagerAlarm(alarm) > 0) {
-			return true;
-		}
-		return false;
+	public AlarmVO alarmGetOne(int alarm_num) {
+		return mapper.selectAlarm(alarm_num);
 	}
-	
-	public boolean alarmRemove(int num) {
-		if(dao.deleteManagerAlarm(num) > 0) {
-			return true;
-		}
-		return false;
-	}
-	
-	public ManagerAlarmVO alarmGetOne(int num) {
-		return dao.selectManagerAlarm(num);
-	}
-	
-	
 	public int unReadAlarmCount() {
-		return dao.unReadAlarmCount();
+		return mapper.unReadAlarmCount();
 	}
-	
 	public List<Map<String, Object>> getFourAlarms(){
-		return checkAlarmCategory(dao.selectFourAlarms());
+		return checkAlarmCategory(mapper.selectFourAlarms());
 	}
-	
-	public List<Map<String, Object>> alarmGetAll() {
-		return checkAlarmCategory(dao.selectAllManagerAlarms());
-	}
-	
-	public List<Map<String, Object>> checkAlarmCategory(List<ManagerAlarmVO> alarmList) {
-		List<Map<String, Object>> params = new ArrayList<Map<String,Object>>();
-		for(ManagerAlarmVO alarm : alarmList) {
+	public List<Map<String, Object>> checkAlarmCategory(List<AlarmVO> alarmList) {
+		List<Map<String,Object>> params = new ArrayList<Map<String,Object>>();
+		for(AlarmVO alarm: alarmList) {
 			Map<String, Object> alMap = new HashMap<String, Object>();
-			alMap.put("alarm", alarm);
-			String originCategory = alarm.getBoardCategory();
+			alMap.put("alarm",alarm);
+			String originCategory = alarm.getBoard_Category();
 			String category = originCategory.substring(0, (originCategory.indexOf("_")));
 			String subCategory = originCategory.substring((originCategory.indexOf("_")+1));
+			
 			if(subCategory.equals("Reply")) {
 				subCategory = "댓글";
 			}else {
-				subCategory = "게시글";
+				
 			}
-			int boardNum = alarm.getBoardNum();
+			int boardNum = alarm.getBoard_num();
 			
 			switch(category) {
 			case "Notice" :
@@ -140,5 +112,4 @@ public class ManagerAlarmService {
 		}
 		return params;
 	}
-
 }

@@ -52,7 +52,6 @@ $(function(){
 		
 		//알람 붙이기
 		
-		
 	}); //onload() End
 	
 	var sock;
@@ -98,7 +97,7 @@ $(function(){
               <!-- Navbar Menu -->
               <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
                 <!-- Notifications-->
-                <li class="nav-item dropdown"> <a id="notifications" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-bell-o fa-lg"></i><span class="badge bg-red badge-corner">${alarmCnt }</span></a>
+                <li class="nav-item dropdown"> <a id="notifications" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-bell-o fa-lg"></i><span class="badge bg-red badge-corner">${alarmCnt}</span></a>
                   <ul aria-labelledby="notifications" class="dropdown-menu">
                     <li id="notification-item">
                     	<a rel="nofollow" href="#" class="dropdown-item"> 
@@ -108,7 +107,7 @@ $(function(){
 	                        </div>
                         </a>
                     </li>
-                    <c:forEach items="${alarmList }" var="alarm">
+                    <c:forEach items="${alarmList}" var="alarm">
                     	<li>
 	                    	<a rel="nofollow" href="${alarm.url }" class="dropdown-item"> 
 		                        <div class="notification">

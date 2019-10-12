@@ -1,12 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib uri="http://www.springframework.org/security/tags"
 	prefix="sec"%>
 <sec:authentication property="principal" var="pinfo" />
-<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -42,11 +42,64 @@
 <script type="text/javascript" src="/resources/js/common_fn.js"></script>
 <script type="text/javascript" src="/resources/js/calendar.js"></script>
 <script type="text/javascript" src="/resources/js/layout.js"></script>
+<script src="/resources/js/sockjs.js"></script>
+<script src="/resources/js/stomp.js"></script>
 <!-- menu css -->
 <!-- <link href="http://www.blueb.co.kr/data/201010/IJ12873478039948/style.css" media="all" rel="stylesheet" type="text/css" /> -->
 <!-- font -->
 <!-- <link href="https://fonts.googleapis.com/css?family=Prompt:400,500,700" rel="stylesheet"> -->
 <!-- kakao login -->
+<script>
+$(function(){
+	//websocket connect
+	connect();
+	
+	//dropdown
+	$(".sidebar-dropdown > a").click(function() {
+			$(".sidebar-submenu").slideUp(200);
+			if ($(this).parent().hasClass("active")) {
+				$(".sidebar-dropdown").removeClass("active");
+				$(this).parent().removeClass("active");
+			} else {
+				$(".sidebar-dropdown").removeClass("active");
+				$(this).next(".sidebar-submenu").slideDown(200);
+				$(this).parent().addClass("active");
+			}
+		});
+
+		$("#close-sidebar").click(function() {
+			$(".page-wrapper").removeClass("toggled");
+		});
+		$("#show-sidebar").click(function() {
+			$(".page-wrapper").addClass("toggled");
+		});
+		
+		//알람 붙이기
+		
+	}); //onload() End
+	var sock;
+	
+	var stompClient;
+	function connect(){
+		console.log("연결됨.");
+		sock = new SockJS("/chat");
+		stompClient = Stomp.over(sock);
+		var memId = $("#userid").val();
+		stompClient.connect({}, function(){
+			stompClient.subscribe("/category/msg/"+memId, function(message){
+				console.log("message: "+JSON.stringify(message));
+				console.log("message: "+message.body);
+// 				alert(message.body);
+			});
+		})
+	}
+	function addMsg(message){
+// 		alert(message);
+		var txt = $(".notification-time").val();
+		alert(txt);
+		alert(txt+message);
+	}
+</script>
 <style>
 @font-face { font-family: 'Arita-dotum-Medium'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/Arita-dotum-Medium.woff') format('woff'); font-weight: normal; font-style: normal; }
 *{
@@ -79,7 +132,6 @@
 </style>
 </head>
 <body>
-
 	<header>
 		<div class='header'>
 			<div class='header-title'>
@@ -100,6 +152,30 @@
 						class="nav-link" href="/exhibition/favoriteList">즐겨찾기</a></li>	
 					<li class="nav-item" id="side_item"><a
 						class="nav-link" href="/exhibition/recentlyView">최근본상품</a><div></div></li>
+					<input id="userid" type="hidden" value='<sec:authentication property="principal.Username"/>'>
+					<ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
+                <!-- Notifications-->
+                <li class="nav-item dropdown"> <a id="notifications" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-bell-o fa-lg"></i><span class="badge bg-red badge-corner">${alarmCnt}</span></a>
+                  <ul aria-labelledby="notifications" class="dropdown-menu">
+                    <li id="notification-item">
+                    	<a rel="nofollow" href="#" class="dropdown-item"> 
+	                        <div class="notification">
+	                          <div class="notification-content"><i class="fa fa-envelope bg-green"></i>You have 6 new messages </div>
+	                          <textarea class="notification-time">알람넣을부분</textarea>
+	                        </div>
+                        </a>
+                    </li>
+                    <c:forEach items="${alarmList}" var="useralarm">
+                    	<li>
+	                    	<a rel="nofollow" href="${useralarm.url }" class="dropdown-item"> 
+		                        <div class="notification">
+		                          <div class="notification-content"><i class="fa fa-twitter bg-blue"></i>${useralarm.category }&nbsp;${useralarm.subCategory }이 등록되었습니다.</div>
+		                          <div class="notification-time"><small></small></div>
+		                        </div>
+	                        </a>
+                        </li>
+                    </c:forEach>
+                  </ul>
 					</sec:authorize>
 					<sec:authorize access="isAnonymous()">
 					<li class="nav-item" id="side_item"><a
@@ -153,9 +229,30 @@
 			</nav>
 		</div>
 </header>
-	<!-- 
-
-<div class="row">
-
+<c:if test="${ not empty pageContext.request.userPrincipal }">
+	<link rel="stylesheet" href="/resources/css/nav_notice.css"/>
+	<script src="/resources/js/nav_notice.js"></script>
+	<script>
+// 	$(function() {
+// 		var login_member_id = $("#userid").val();
+// 	getNoticeCount(login_member_id);
+// 	setInterval(function() {
+// 		getNoticeCount(login_member_id)
+// 	}, 40000)
+// 	$(".nav-link").on("click",function()){
+// 		$.ajax({
+// 			url :"getUserNotice"
+// 			dataType:"json",
+// 			cache: false,
+// 			data : {member_id : login_member_id},
+// 			success : function(ret){
+// 			}
+// 		})					
+// 		}
+// 	}
+// 	});
 	
-	<div class="col-sm-8"> -->
+
+
+	</script>
+</c:if>
