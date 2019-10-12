@@ -12,11 +12,21 @@ $(function(){
 	});
 });
 </script>
+<style>
+	h1{
+		color: #3E404B;
+	}
+	.form-control:focus {
+		border-color: #6C908A;
+		-webkit-box-shadow: 0 0 0 0.2rem rgba(108, 144, 138, 0.25);
+  		box-shadow: 0 0 0 0.2rem rgba(108, 144, 138, 0.25);
+	}
+</style>
 <div class="content-inner" style="padding-bottom: 59px;">
 	<section class="projects no-padding-top">
 		<div class="contianer-fluid">
 			<div style="width: 100%; padding-top: 50px; margin-bottom: 10px; text-align: center;">
-				<h1 style="color: #74655F"><strong>FAQ 작성</strong></h1>
+				<h1><strong>FAQ 작성</strong></h1>
 			</div>
 		</div>
 		<div class="project" id="project3">

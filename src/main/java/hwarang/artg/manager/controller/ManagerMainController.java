@@ -36,6 +36,7 @@ public class ManagerMainController {
 	private ManagerAlarmService alarmService;
 	
 	
+	
 	@RequestMapping("/main")
 	public String showMainPage(Model model, HttpSession session, Principal principal) {
 		System.out.println("Manager Main 요청들어옴");
@@ -75,8 +76,8 @@ public class ManagerMainController {
 		//알람 등록
 		session.setAttribute("alarmCnt", alarmService.unReadAlarmCount());
 		//알람리스트
-		session.setAttribute("alarmList", alarmService.getFourAlarms());
-		System.out.println("manager controller alarmList: "+alarmService.getFourAlarms());
+//		session.setAttribute("alarmList", alarmService.getFourAlarms());
+//		System.out.println("manager controller alarmList: "+alarmService.getFourAlarms());
 		
 		return "manager/adminMain";
 	}

@@ -12,11 +12,22 @@ $(function(){
 	});
 });
 </script>
+<style>
+	h1{
+		color: #725974;
+	}
+	.form-control:focus {
+		border-color: #9C869C;
+		-webkit-box-shadow: 0 0 0 0.2rem rgba(156, 134, 156, 0.25);
+  		box-shadow: 0 0 0 0.2rem rgba(156, 134, 156, 0.25);
+		
+	}
+</style>
 <div class="content-inner" style="padding-bottom: 59px;">
 	<section class="projects no-padding-top">
 		<div class="contianer-fluid">
 			<div style="width: 100%; padding-top: 50px; margin-bottom: 10px; text-align: center;">
-				<h1 style="color: #74655F"><strong>공지 작성</strong></h1>
+				<h1><strong>공지 작성</strong></h1>
 			</div>
 		</div>
 		<div class="project" id="project3">
@@ -50,7 +61,7 @@ $(function(){
 						<div class="btnGroup" style="text-align: center;">
 							<input type="submit" class="btn btn-outline-primary btn-sm" value="작성"> 
 							<input type="reset" class="btn btn-outline-dark btn-sm" value="초기화"> 
-							<input type="button" class="btn btn-outline-info btn-sm" onclick="location.href='noticeListForMananger'" value="목록">
+							<input type="button" class="btn btn-outline-info btn-sm" onclick="location.href='noticeListForManager'" value="목록">
 						</div>
 					</form>
 				</div>

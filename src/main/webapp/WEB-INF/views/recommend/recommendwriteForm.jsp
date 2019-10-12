@@ -30,7 +30,7 @@ $(function(){
 		<div class="form-group">
 		<form action="write" method="post" id="writeForm" enctype="multipart/form-data">
 			<sec:authentication property="principal.username" var="id"/>
-			<input type="hidden" name="username" value="${id}">
+			<input type="hidden" name="member_id" value="${id}">
 			<table class="table">
 				<tr>
 					<th>Title</th>

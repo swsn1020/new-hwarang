@@ -57,28 +57,23 @@ public class ReviewBoardController {
 	}
 
 	@RequestMapping(value = "/write", method = RequestMethod.POST)
-	public String showrRegister(String member_id, String review_exh_name, String review_title, String review_content,
+	public String showrRegister(ReviewBoardVO reviewBoard,
 			 Model model,MultipartHttpServletRequest request){
 		// exh_name : 결제한 프로그램 명
 		List<MultipartFile> fileList =request.getFiles("file");
-		ReviewBoardVO rb = new ReviewBoardVO();
-		rb.setMember_id(member_id);
-		rb.setReview_title(review_title);
-		rb.setReview_exh_name(review_exh_name);
-		rb.setReview_content(review_content);
 		String msg = "";
 		String url = "";
 
 //		boolean result = service.reviewboardRegister_file(rb, file);
-		boolean result = service.reviewboardRegister_files(rb, fileList);
+		boolean result = service.reviewboardRegister_files(reviewBoard, fileList);
 		if (result) {
 			msg = "작성되었습니다.";
-			url = "view?num=" + rb.getReview_num();
+			url = "view?num=" + reviewBoard.getReview_num();
 		} else {
 			msg = "다시 작성해주세요.";
 			url = "write";
 		}
-		model.addAttribute("review", service.reviewboardGetOne(rb.getReview_num()));
+		model.addAttribute("review", service.reviewboardGetOne(reviewBoard.getReview_num()));
 		model.addAttribute("msg", msg);
 		model.addAttribute("url", url);
 		return "/review/result";

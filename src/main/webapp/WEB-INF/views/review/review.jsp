@@ -307,7 +307,7 @@
 				<input type="hidden" name="review_num" value="${review.review_num}">
 				<table>
 					<tr>
-						<td><textarea class="form-control" id="rcontent" name="rcontent" rows="3"
+						<td><textarea class="form-control" id="rcontent" name="review_reply_content" rows="3"
 								cols="100"></textarea></td>
 						<td>
 							<button class="btn btn-link" id="rbtnWrite">Write</button>

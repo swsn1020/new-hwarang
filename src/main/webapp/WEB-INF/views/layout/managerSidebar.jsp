@@ -50,8 +50,6 @@ $(function(){
 			$(".page-wrapper").addClass("toggled");
 		});
 		
-		//알람 붙이기
-		
 		
 	}); //onload() End
 	
@@ -65,15 +63,42 @@ $(function(){
 			stompClient.subscribe("/category/msg/id1", function(message){
 				console.log("message: "+JSON.stringify(message));
 				console.log("message: "+message.body);
+				addMsg(JSON.parse(message.body));
 // 				alert(message.body);
 			});
 		})
 	}
+	var alCnt = 0;
 	function addMsg(message){
-// 		alert(message);
-		var txt = $(".notification-time").val();
-		alert(txt);
-		alert(txt+message);
+		alCnt += 1;
+// 		alert("alCnt: "+ alCnt);
+		$("#alCnt").text(alCnt);
+		var url = message.url;
+		var category = message.category;
+		var subCategory = message.subCategory;
+		var num = message.alarm.num;
+// 		alert(boardNum);
+		var msg = "새로운 "+category+"_"+subCategory+"이 등록되었습니다.";
+// 		alert(msg);
+		var li = "<li id='notification-item'><a href='"+url+"' class='link dropdown-item' data-num='"+num+"'><div class='notification'><div class='notification-content'><i class='fa fa-envelope bg-green'></i>"+msg+"</div></div></a></li>";
+		$("#alarmlist").append(li);
+		
+		$(".link").on("click", function(){
+			$.ajax({
+				url: "/alarm/alarmCheck",
+				type: "post",  
+				data: {"num": num},
+				success: function(result){
+					if(result){
+						alert("알림 확인");
+					}
+				},
+				error: function(result){
+					alert("알람 확인 에러");
+				}
+			});
+		});
+		
 	}
 	
 </script>
@@ -98,26 +123,15 @@ $(function(){
               <!-- Navbar Menu -->
               <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
                 <!-- Notifications-->
-                <li class="nav-item dropdown"> <a id="notifications" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-bell-o fa-lg"></i><span class="badge bg-red badge-corner">${alarmCnt }</span></a>
-                  <ul aria-labelledby="notifications" class="dropdown-menu">
+                <li class="nav-item dropdown"> <a id="notifications" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-bell-o fa-lg"></i><span class="badge bg-red badge-corner" id="alCnt"></span></a>
+                  <ul id="alarmlist" aria-labelledby="notifications" class="dropdown-menu">
                     <li id="notification-item">
-                    	<a rel="nofollow" href="#" class="dropdown-item"> 
+                    	<a rel="nofollow" href="/alarm/alarmList" class="dropdown-item"> 
 	                        <div class="notification">
-	                          <div class="notification-content"><i class="fa fa-envelope bg-green"></i>You have 6 new messages </div>
-	                          <textarea class="notification-time">알람넣을부분</textarea>
+	                          <div class="notification-content"><i class="fa fa-inbox bg-orange"></i>Alarm Box</div>
 	                        </div>
                         </a>
                     </li>
-                    <c:forEach items="${alarmList }" var="alarm">
-                    	<li>
-	                    	<a rel="nofollow" href="${alarm.url }" class="dropdown-item"> 
-		                        <div class="notification">
-		                          <div class="notification-content"><i class="fa fa-twitter bg-blue"></i>${alarm.category }&nbsp;${alarm.subCategory }이 등록되었습니다.</div>
-		                          <div class="notification-time"><small></small></div>
-		                        </div>
-	                        </a>
-                        </li>
-                    </c:forEach>
                   </ul>
                 </li>
                 <!-- Logout    -->
