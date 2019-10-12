@@ -16,11 +16,6 @@
 </style>
 <div class="faq-div container" style="padding-left: 50px; padding-right: 50px;">
 	<h3>FAQ</h3>
-	<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')">
-	<div class="buttondiv" style="text-align: center; float: right; margin-bottom: 10px;">
-		<button type="button" class="btn btn-outline-secondary btn-sm" onclick="location.href='faqWrite'">질문작성</button>
-	</div>
-	</sec:authorize>
 	<div style="border-top: 2px solid black;"></div>
 	<table class="table table-hover">
 		<thead>
@@ -107,7 +102,7 @@
 			<input type="text" name="keyword" placeholder="검색어를 입력하세요." value="<c:out value="${pageMaker.cri.keyword }"/>">
 			<input type="hidden" name="pageNum" value="<c:out value="${pageMaker.cri.pageNum }"/>">
 			<input type="hidden" name="amount" value="<c:out value="${pageMaker.cri.amount }"/>">
-			<button class="btn btn-outline-dark">검색</button>
+			<button class="btn btn-outline-dark btn-sm">검색</button>
 		</form>
 	</div>		
 	

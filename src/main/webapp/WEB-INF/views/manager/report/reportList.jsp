@@ -1,20 +1,20 @@
 ${mem }<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <title>화랑-신고게시판</title>
-<%@ include file="../../layout/left.jsp" %>
+<%@ include file="../../layout/menu.jsp" %>
 <style>
 	.container{
-		margin: 10px 0px;
-		padding: 3px 0px;
+		margin: 0 20% 0 20%;
+		padding-left: 50px;
+		padding-right: 50px;
 	}
 	th {
 		text-align: center;
 	}
 </style>
 	<div class="container">
-		<h3>신고게시판</h3>
-		<div class="buttondiv" style="text-align: center; float: right; margin-bottom: 10px;">
-			<button type="button" class="btn btn-outline-secondary btn-sm" onclick="location.href='reportWrite'">신고글 작성</button>
-		</div>
+		<h3 style="display: inline-block;">신고게시판</h3>
+		
+		<div style="border-top: 2px solid black;"></div>
 		<table class="table table-hover">
 			<thead>
 				<tr>
@@ -46,7 +46,10 @@ ${mem }<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncod
 				</tr>
 			</c:forEach>
 		</table>
+		<div style="border-top: 2px solid black;"></div>
 	</div>
+	<br>
+		
 		
 		<!-- Pagination -->
 		<div class="container">
@@ -63,5 +66,8 @@ ${mem }<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncod
 					<a class="page-link" href="reportList?pageNum=${pageMaker.endPage+1 }">&raquo;</a>
 				</li>
 			</ul>
+		</div>
+		<div class="container" style="text-align: right;">
+		<button type="button" class="btn btn-outline-secondary btn-sm" onclick="location.href='reportWrite'">신고글 작성</button>
 		</div>
 <%@ include file="../../layout/bottom.jsp"%>

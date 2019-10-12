@@ -66,7 +66,7 @@
 			<input type="text" name="keyword" placeholder="검색어를 입력하세요." value="<c:out value="${pageMaker.cri.keyword }"/>">
 			<input type="hidden" name="pageNum" value="<c:out value="${pageMaker.cri.pageNum }"/>">
 			<input type="hidden" name="amount" value="<c:out value="${pageMaker.cri.amount }"/>">
-			<button class="btn btn-outline-dark">검색</button>
+			<button class="btn btn-outline-dark btn-sm">검색</button>
 		</form>
 	</div>
 	<!-- Pagination -->
