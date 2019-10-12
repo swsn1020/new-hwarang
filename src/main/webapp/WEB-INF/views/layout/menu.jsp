@@ -144,8 +144,14 @@ $(function(){
 			<div class="header-login">
 				<ul class="nav justify-content-center">
 					<sec:authorize access="isAuthenticated()">
-					<li class="nav-item" id="side_item"><a
-						class="nav-link" href="/member/myPage">나의 페이지</a></li>
+						<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')">
+							<li class="nav-item" id="side_item"><a
+							class="nav-link" href="/admin/main">관리자 페이지</a></li>
+						</sec:authorize>
+						<sec:authorize access="!hasRole('ROLE_ADMIN')">
+							<li class="nav-item" id="side_item"><a
+								class="nav-link" href="/member/myPage">나의 페이지</a></li>
+						</sec:authorize>
 					<li class="nav-item" id="side_item"><a
 						class="nav-link" href="/logout">로그아웃</a></li>
 					<li class="nav-item" id="side_item"><a
@@ -197,8 +203,7 @@ $(function(){
 								<a class="dropdown-item" href="#">화랑안내</a> 
 								<a class="dropdown-item" href="/notice/noticeList">공지사항</a> 
 								<a class="dropdown-item" href="/faq/faqList">FAQ</a>
-								<a class="dropdown-item" href="/qna/qnaListForUser?memId=haddie">Q&amp;A</a>
-								<a class="dropdown-item" href="/report/reportList">신고</a>
+<!-- 								<a class="dropdown-item" href="/qna/qnaListForUser?memId=haddie">Q&amp;A</a> -->
 							</div>
 						</li>
 						<li class="nav-item dropdown"><a
@@ -218,6 +223,7 @@ $(function(){
 							<div class="dropdown-menu" aria-labelledby="dropdown03">
 								<a class="dropdown-item" href="/board/freeboard">자유게시판</a>
 								<a class="dropdown-item" href="/recommend/recommendboard">홍보</a>
+								<a class="dropdown-item" href="/report/reportList">신고</a>
 							</div>
 						</li>
         				<li class="nav-item">

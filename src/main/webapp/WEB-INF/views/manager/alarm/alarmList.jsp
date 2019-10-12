@@ -10,7 +10,79 @@
 	table {
 		text-align: center;
 	}
+	.fa-check {
+		color: red;
+	}
+	
 </style>
+<script>
+	$(function(){
+		$(".link").on("click", function(){
+			var num = $(this).data("num");
+			$.ajax({
+				url: "alarmCheck",
+				type: "post",  
+				data: {"num": num},
+				success: function(result){
+					if(result){
+						alert("알림 확인");
+					}
+				},
+				error: function(result){
+					alert("알람 확인 에러");
+				}
+			});
+		});
+		
+		
+		$(".check").on("click", function(){
+			var num = $(this).data("num");
+			$(this).find("i").css("color", "green");
+// 			var checked = $(this).data("check");
+			/*
+			$(this).find("i").toggleClass("green-bg");
+			if($(this).find("i").hasClass("green-bg")){
+				alert("확인됨");
+				checked = "Y";
+			}*/
+			$.ajax({
+				url: "alarmCheck",
+				type: "post",  
+				data: {"num": num},
+				success: function(result){
+					if(result){
+						alert("알림 확인");
+					}
+				},
+				error: function(result){
+					alert("알람 확인 에러");
+				}
+			});
+		});
+		
+		$(".del").on("click", function(){
+			var num = $(this).data("num");
+			alert(num);
+			$.ajax({
+				url: "removeAlarm",
+				type: "post",
+				data: {"num": num},
+				success: function(result){
+					if(result){
+						alert("알림 삭제 성공");
+						location.reload();
+					}else{
+						alert("알림 삭제 실패");
+					}
+				},
+				error: function(){
+					alert("알림 삭제 오류");
+				}
+			});
+		});
+	});
+</script>
+
 <div class="content-inner" style="padding-bottom: 59px;">
 	<section class="projects no-padding-top">
 		<div class="contianer-fluid">
@@ -26,54 +98,39 @@
 					<thead>
 						<tr>
 							<th style="width: 10%;">번호</th>
-							<th style="width: 10%;">카테고리</th> 
-							<th style="width: 50%">질문</th>
+							<th style="width: 20%;">알람 카테고리</th> 
+							<th style="width: 40%">알람 내용</th>
 							<th style="width: 15%;">등록일</th>
-							<!-- 관리자 권한 -->
-							<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')">
-								<th>편집</th>
-							</sec:authorize>
+							<th style="width: 15%;">CHECKED</th>
 						</tr>
 						</thead>
 						<tbody>
-							<c:forEach items="${faqList }" var="faq" varStatus="vs">
-							<fmt:formatDate value="${faq.regDate }" var="regDate" pattern="yyyy-MM-dd"/>
+							<c:forEach items="${alarmList }" var="alarm" varStatus="vs">
+							<fmt:formatDate value="${alarm.alarm.regDate }" var="regDate" pattern="yyyy-MM-dd" />
 							<tr>
-								<td>${faq.num }</td>
-								<td>${faq.category }</td>
+								<td>${alarm.alarm.num }</td>
+								<c:choose>
+									<c:when test="${alarm.alarm.category eq 'New_Board'}">
+										<td>새로운 게시글</td>
+									</c:when>
+									<c:otherwise>
+										<td>새로운 회원</td>
+									</c:otherwise>
+								</c:choose>
 								<td>
-									<div id="accordion">
-										<div><a data-toggle="collapse" href="#content${vs.index }">${faq.question }</a></div>
-										<div id="content${vs.index }" class="collapse"  data-parent="#accordion">${faq.answer }</div>
-									</div>
+									<a href="${alarm.url }" class="link" data-num="${alarm.alarm.num }">새로운 ${alarm.category }_${alarm.subCategory }이 등록되었습니다.</a>
 								</td>
 								<td>${regDate}</td>
 								<td>
-									<button type="button" class="btn btn-outline-primary btn-sm" onclick="location.href='faqModify?num=${faq.num}'">수정</button>
-									<button type="button" class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#checkPwModal${vs.index }">삭제</button>
-									<!-- checkPw Modal -->
-								  	<div class="modal fade" id="checkPwModal${vs.index }" style="text-align: center;">
-								    	<div class="modal-dialog modal-dialog-centered">
-								      		<div class="modal-content">
-									        <!-- Modal Header -->
-									        <div class="modal-header">
-									          <h4 class="modal-title">비밀번호 확인</h4>
-									          <button type="button" class="close" data-dismiss="modal">&times;</button>
-									        </div>
-									        <!-- Modal body -->
-									        <div class="modal-body">
-									          <form action="checkPw" method="post">
-									          	<input type="hidden" name="num" value="${faq.num }">
-									          	<input type="hidden" name="type" value="delete">
-									          	<p>비밀번호를 입력하세요</p>
-									          	<input type="password" name="password"> <br><br>
-									          	<input type="submit" class="btn btn-outline-primary btn-sm" value="확인">
-									          	<button type="button" class="btn btn-outline-secondary btn-sm" data-dismiss="modal">닫기</button>
-									          </form>
-									        </div>
-								      	</div>
-								    </div>
-								  </div>
+									<c:choose>
+										<c:when test="${alarm.alarm.checked eq 'N' }">
+											<span><a class="check" href="#" data-num="${alarm.alarm.num }" data-check="N"><i class="fas fa-check"></i></a></span>
+										</c:when>
+										<c:otherwise>
+											<span><i class="fas fa-check" style="color: green;"></i></span>
+										</c:otherwise>
+									</c:choose>
+									&nbsp;&nbsp;<span><a class="del" data-num="${alarm.alarm.num }" href=""><i class="fas fa-trash-alt" style="color: black;"></i></a></span>
 								</td>
 							</tr>
 						</c:forEach>
@@ -83,15 +140,15 @@
            	<!-- Pagination -->
 			<ul class="pagination justify-content-center">
 				<li class='${ pageMaker.prev == true ? "page-item" : "page-item disabled" }'>
-					<a class="page-link" href="?pageNum=${pageMaker.startPage-1 }&type=${param.type}&keyword=${param.keyword}">&laquo;</a>
+					<a class="page-link" href="alarmList?pageNum=${pageMaker.startPage-1 }&type=${param.type}&keyword=${param.keyword}">&laquo;</a>
 				</li>
 				<c:forEach var="num" begin="${pageMaker.startPage }" end="${pageMaker.endPage}">
 					<li class='${pageMaker.cri.pageNum == num ? "active" : "page-item"}'>
-						<a class="page-link" href="?pageNum=${num}&type=${param.type}&keyword=${param.keyword}">${num}</a>
+						<a class="page-link" href="alarmList?pageNum=${num}&type=${param.type}&keyword=${param.keyword}">${num}</a>
 					</li>
 				</c:forEach>
 				<li class='${pageMaker.next == true ? "page-item" : "page-item disabled" }'>
-					<a class="page-link" href="?pageNum=${pageMaker.endPage+1 }&type=${param.type}&keyword=${param.keyword}">&raquo;</a>
+					<a class="page-link" href="alarmList?pageNum=${pageMaker.endPage+1 }&type=${param.type}&keyword=${param.keyword}">&raquo;</a>
 				</li>
 			</ul>
            </div>

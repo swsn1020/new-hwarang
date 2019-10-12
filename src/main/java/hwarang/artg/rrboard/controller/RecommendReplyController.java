@@ -23,13 +23,10 @@ public class RecommendReplyController {
 
 	@ResponseBody
 	@RequestMapping("/rwrite")
-	public boolean showRRegister(String member_id,int recomm_num,String rcontent) {
-		RecommendReplyVO rr = new RecommendReplyVO();
-		rr.setMember_id(member_id);
-		rr.setRecomm_num(recomm_num);
-		rr.setRecomm_reply_content(rcontent);
-		return service.recommendreplyRegister(rr);
+	public boolean showRRegister(RecommendReplyVO recommendReply) {
+		return service.recommendreplyRegister(recommendReply);
 	}
+	
 	@ResponseBody
 	@RequestMapping("/replyView")
 	public List<RecommendReplyVO> showReplyView(int num) {
