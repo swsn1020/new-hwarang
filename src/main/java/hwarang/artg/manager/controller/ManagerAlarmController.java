@@ -28,9 +28,10 @@ public class ManagerAlarmController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="/alarmChecking", method=RequestMethod.POST)
-	public boolean checkingAlarm(int num, String checked) {
-		return service.alarmModify(num, checked);
+	@RequestMapping(value="/alarmCheck", method=RequestMethod.POST)
+	public boolean checkAlarm(int num) {
+		System.out.println("alarmCheck 요청 들어옴");
+		return service.alarmModify(num);
 	}
 	
 	@ResponseBody

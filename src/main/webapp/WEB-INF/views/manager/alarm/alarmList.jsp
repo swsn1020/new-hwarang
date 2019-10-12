@@ -13,28 +13,51 @@
 	.fa-check {
 		color: red;
 	}
-	.green-bg{
-		color: green;
-	}
 	
 </style>
 <script>
 	$(function(){
+		$(".link").on("click", function(){
+			var num = $(this).data("num");
+			$.ajax({
+				url: "alarmCheck",
+				type: "post",  
+				data: {"num": num},
+				success: function(result){
+					if(result){
+						alert("알림 확인");
+					}
+				},
+				error: function(result){
+					alert("알람 확인 에러");
+				}
+			});
+		});
+		
+		
 		$(".check").on("click", function(){
 			var num = $(this).data("num");
-			var checked = $(this).data("check");
+			$(this).find("i").css("color", "green");
+// 			var checked = $(this).data("check");
+			/*
 			$(this).find("i").toggleClass("green-bg");
 			if($(this).find("i").hasClass("green-bg")){
 				alert("확인됨");
 				checked = "Y";
-			}
-// 			alert(num);
-// 			$.ajax({
-// 				url: "../alarmChecking",
-// 				type: "post",  
-// 				data: {"num": num, "checked"},
-				
-// 			});
+			}*/
+			$.ajax({
+				url: "alarmCheck",
+				type: "post",  
+				data: {"num": num},
+				success: function(result){
+					if(result){
+						alert("알림 확인");
+					}
+				},
+				error: function(result){
+					alert("알람 확인 에러");
+				}
+			});
 		});
 		
 		$(".del").on("click", function(){
@@ -95,16 +118,16 @@
 									</c:otherwise>
 								</c:choose>
 								<td>
-									<a href="${alarm.url }">새로운 ${alarm.category }_${alarm.subCategory }이 등록되었습니다.</a>
+									<a href="${alarm.url }" class="link" data-num="${alarm.alarm.num }">새로운 ${alarm.category }_${alarm.subCategory }이 등록되었습니다.</a>
 								</td>
 								<td>${regDate}</td>
 								<td>
 									<c:choose>
 										<c:when test="${alarm.alarm.checked eq 'N' }">
-											<span><a class="check" href="#" data-num="${alarm.alarm.num }" data-check="N"><i class="fas fa-check" ></i></a></span>
+											<span><a class="check" href="#" data-num="${alarm.alarm.num }" data-check="N"><i class="fas fa-check"></i></a></span>
 										</c:when>
 										<c:otherwise>
-											<span><a class="check" href="#" data-num="${alarm.alarm.num }" data-check="Y"><i class="fas fa-check" ></i></a></span>
+											<span><i class="fas fa-check" style="color: green;"></i></span>
 										</c:otherwise>
 									</c:choose>
 									&nbsp;&nbsp;<span><a class="del" data-num="${alarm.alarm.num }" href=""><i class="fas fa-trash-alt" style="color: black;"></i></a></span>

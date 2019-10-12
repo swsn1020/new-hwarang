@@ -83,6 +83,7 @@
 			dataType: "json",
 			success: function(data){
 				//data는 list
+				console.log(data);
 				var rnum = (Number(num) * 10 ) - 9;
 				var rPager = data.rPager;
 				console.log(rPager);

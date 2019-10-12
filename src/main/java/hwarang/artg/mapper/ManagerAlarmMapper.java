@@ -10,7 +10,7 @@ import hwarang.artg.manager.model.ManagerAlarmVO;
 
 public interface ManagerAlarmMapper {
 	public int insertManagerAlarm(ManagerAlarmVO alarm);
-	public int updateManagerAlarm(@RequestParam("num")int num, @RequestParam("checked")String checked);
+	public int updateManagerAlarm(int num);
 	public int deleteManagerAlarm(int num);
 	public ManagerAlarmVO selectManagerAlarm(int num);
 	public List<ManagerAlarmVO> selectAllManagerAlarms();

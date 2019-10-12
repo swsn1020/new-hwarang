@@ -9,7 +9,7 @@
 		VALUES (#{num}, #{category}, #{boardCategory}, #{boardNum})
 	</insert>
 	<update id="updateManagerAlarm" parameterType="hwarang.artg.manager.model.ManagerAlarmVO">
-		UPDATE MANAGER_ALARM SET AL_CHECKED = #{checked}
+		UPDATE MANAGER_ALARM SET AL_CHECKED = 'Y'
 		WHERE AL_NUM = #{num}
 	</update>
 	<delete id="deleteManagerAlarm" parameterType="int">

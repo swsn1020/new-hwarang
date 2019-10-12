@@ -1,5 +1,7 @@
 package hwarang.artg.common.model;
 
+import java.util.Map;
+
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
@@ -109,9 +111,11 @@ public class MessageAspect{
 		}
 		if(alarmService.alarmRegister(alarm)) {
 			System.out.println("alarm 등록 성공");
+			Map<String, Object> alMap = alarmService.checkAlarmCategory(alarm);
 			//메시지 보내기
-			String text = alarm+" 새로운 글이 등록되었습니다.";
-			this.template.convertAndSend("/category/msg/id1", text);
+//			String text = alMap+" 새로운 글이 등록되었습니다.";
+			
+			this.template.convertAndSend("/category/msg/id1", alMap);
 		}else {
 			System.out.println("alarm 등록 실패");
 		}
