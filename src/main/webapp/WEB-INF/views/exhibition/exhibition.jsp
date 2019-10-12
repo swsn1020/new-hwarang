@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <title>화랑 - 전시회/공연 리스트</title>
-<%@include file="../layout/left.jsp"%>
+<%@include file="../layout/menu.jsp"%>
 <script type="text/javascript">
 $(function() {
 	$('.disabled').click(function(e) {
@@ -61,8 +61,13 @@ function addFavGroup(seq) {
 	alert(addGroupVal+" 이 입력 되었습니다.");
 };
 </script>
-
-<div class="container mt-3 ">
+<style>
+.exh-list{
+    padding-right: 10%;
+    padding-left: 10%;
+}
+</style>
+<div class="container mt-3 " style="text-align: center;">
 	<form action="#">
 		<input type="hidden" name="amount" placeholder="검색어를 입력하세요." value="${pageMaker.cri.amount}"> 
 		<select name="exh_realmName">
@@ -99,21 +104,22 @@ function addFavGroup(seq) {
 			<option value="p" <c:out value="${pageMaker.cri.type eq 'p' ?'selected':''}"/>>장소</option>
 		</select>
 		<input type="text" name="keyword" placeholder="검색어를 입력하세요." value="${param.keyword}"> 
-		<button type="submit" class="btn btn-primary">검색</button>
+		<button type="submit" class="btn btn-outline-dark">검색</button>
 	</form>
-	<p>	검색 결과 : 총 ${pageMaker.total} 건</p>
+	<div style="border-top: 2px solid black; margin: 20px 0 20px 0;"></div>
+	<p style="text-align: left;">	검색 결과 : 총 ${pageMaker.total} 건</p>
 </div>
-<div class="album py-5 bg-light">
+<div class="exh-list album py-5 bg-light">
 	<div class="row">
 		<c:forEach items="${eList}" var="e">
-			<div class="col-sm-3" style="height: 600px;">
+			<div class="col-sm-3" style="height: 600px; margin: 0 0 20px 0;">
 				<div class="card mb-3 shadow-sm">
 					<a href="/exhibition/view?seq=${e.exh_seq}"><img
-						class="card-img-top" style="width: 100%; height: 350px;"
+						class="card-img-top" style="width: 100%; height: 400px;"
 						alt="item image" role="img" src="${e.exh_imgurl}"></a>
 				</div>
 				<div class="card-body">
-					<h5 class="card-title">
+					<h5 class="card-title" style="font-weight: bold;">
 						<a href="/exhibition/view?seq=${e.exh_seq}">${e.exh_title}</a><span class="badge badge-primary">${e.exh_realmName}</span>
 					</h5>
 					<p class="card-text">
@@ -126,7 +132,6 @@ function addFavGroup(seq) {
 							data-toggle="modal"
 							data-target='${e.favorite_status == 0 ? "#fav-AddModal":"#fav-RemoveModal"}${e.exh_seq}'></i></a>
 					</p>
-
 				</div>
 			</div>
 			<!-- 관심추가  Modal -->
@@ -139,11 +144,11 @@ function addFavGroup(seq) {
 							<button type="button" class="close" data-dismiss="modal">&times;</button>
 						</div>
 						<!-- Modal body -->
-						<div class="content">
+						<div class="content" style="margin: 10px;">
 							<div>
 								<input id="addFavGroup${e.exh_seq}" type="text"
 									placeholder="새로운 그룹 이름  추가"> <a
-									class="btn btn-secondary" onclick="addFavGroup(${e.exh_seq})">그룹추가</a>
+									class="btn btn-outline-dark" onclick="addFavGroup(${e.exh_seq})">그룹추가</a>
 							</div>
 							<select name="group" id="favGroup${e.exh_seq}">
 								<option selected value="찜 목록" id="basic-group${e.exh_seq}">기본
@@ -158,11 +163,8 @@ function addFavGroup(seq) {
 						</div>
 						<!-- Modal footer -->
 						<div class="modal-footer">
-							<a onclick="addFavorite(${e.exh_seq})"><img
-								src="http://img.echosting.cafe24.com/skin/base_ko_KR/link/btn_add.gif"
-								alt="추가하기"></a> <a data-dismiss="modal"><img
-								src="http://img.echosting.cafe24.com/skin/base_ko_KR/link/btn_cancel.gif"
-								alt="취소하기"></a>
+							<a onclick="addFavorite(${e.exh_seq})" class="btn btn-outline-dark">추가하기</a> 
+							<a data-dismiss="modal" class="btn btn-outline-dark">취소하기</a>
 						</div>
 					</div>
 				</div>
@@ -177,18 +179,16 @@ function addFavGroup(seq) {
 							<button type="button" class="close" data-dismiss="modal">&times;</button>
 						</div>
 						<!-- Modal body -->
-						<div class="content">
-							<p class="info">
+						<div class="content" >
+							<p class="info" style="margin: 10px;">
 								<strong>${e.exh_title}</strong> (가)이 삭제됩니다. <br />정말로 삭제
 								하시겠습니까?
 							</p>
 						</div>
 						<!-- Modal footer -->
 						<div class="modal-footer">
-							<a class="btn btn-primary" onclick="removeFavorite(${e.exh_seq})">삭제하기</a>
-							<a data-dismiss="modal"><img
-								src="http://img.echosting.cafe24.com/skin/base_ko_KR/link/btn_cancel.gif"
-								alt="취소하기"></a>
+							<a class="btn btn-outline-dark" onclick="removeFavorite(${e.exh_seq})">삭제하기</a>
+							<a data-dismiss="modal" class="btn btn-outline-dark">취소하기</a>
 						</div>
 					</div>
 				</div>
@@ -221,7 +221,7 @@ function addFavGroup(seq) {
 				<option value="20" <c:out value="${pageMaker.cri.amount  eq 20 ?'selected':''}"/>>20개</option>
 				<option value="40" <c:out value="${pageMaker.cri.amount  eq 40 ?'selected':''}"/>>40개</option>
 			</select>
-			<button type="submit" class="btn btn-primary">모아보기</button>	 
+			<button type="submit" class="btn btn-outline-dark">모아보기</button>	 
 			<input type="hidden" name="exh_realmName"  value="${param.keyword}">
 			<input type="hidden" name="exh_area" value="${param.keyword}">
 			<input type="hidden" name="exh_startDate" value="${param.keyword}">

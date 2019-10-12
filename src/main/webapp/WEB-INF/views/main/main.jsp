@@ -83,7 +83,7 @@
 	max-width: 100%;
 	width: inherit;
 	height: 500px;
-	margin-left: 40px;
+	margin-left: 50px;
 }
 .div2-img-top{
 	max-width: 100%;
@@ -118,64 +118,64 @@
 	<!-- The slideshow -->
 	<div class="carousel-inner">
 		<div class="carousel-item active">
-			<a href="/exhibition/view?seq=154311"> <img class="div1-img"
-				alt="item image" role="img"
-				src="http://www.culture.go.kr/upload/rdf/19/09/rdf_201909271124527236.gif">
-			</a>
-			<div class="carousel-caption">
-				<h1>
-					<a href="/exhibition/view?seq=154311"
-						style="font-weight: bolder; font-size: xx-large;"> 
-						한글의 날을 위한 전시</a>
-				</h1>
-				<br>
-				<h2 style="font-weight: bold;">개관 5주년 국립한글박물관</h2>
-				<br>
-				<h4>기획특별전 '한글의 큰 스승'</h4>
-				<h4>제3회 한글실험프로젝트 '한글디자인:형태의 전환'</h4>
-				<h4>상설전시실 테마전 '한글 타자기 전성시대'</h4>
-				<p>
-			</div>
-		</div>
-		<div class="carousel-item">
-			<a href="/exhibition/view?seq=153132"> <img id='img'
-				class="div1-img" alt="item image" role="img"
-				src="http://www.culture.go.kr/upload/rdf/19/08/show_2019082813544465163.jpg">
-			</a>
-			<div class="carousel-caption">
-				<p class="card-title">
-				<h2 style="font-weight: bold;">정오시간에 듣기 좋은 음악</h2>
-				<br>
-				<h1>
-					<a href="/exhibition/view?seq=154311"
-						style="font-weight: bold; font-size: xx-large;"> '정오의 음악회'</a>
-				</h1>
-				<p>
+				<a href="/exhibition/view?seq=154311"> <img class="div1-img"
+					alt="item image" role="img"
+					src="http://www.culture.go.kr/upload/rdf/19/09/rdf_201909271124527236.gif">
+				</a>
+				<div class="carousel-caption">
+					<h1>
+						<a href="/exhibition/view?seq=154311"
+							style="font-weight: bolder; font-size: xx-large;"> 
+							한글의 날을 위한 전시</a>
+					</h1>
 					<br>
-				<h3>국립극장의 대표적인 스테디셀러 공연</h3>
-				<br>
-				<h5>한해도 빠지지 않고 공연되어 지금도 매회 만석을 기록하며 관객들의 사랑을 받고 있는 고품격 국악 브런치
-					콘서트</h5>
+					<h2 style="font-weight: bold;">개관 5주년 국립한글박물관</h2>
+					<br>
+					<h4>기획특별전 '한글의 큰 스승'</h4>
+					<h4>제3회 한글실험프로젝트 '한글디자인:형태의 전환'</h4>
+					<h4>상설전시실 테마전 '한글 타자기 전성시대'</h4>
+					<p>
+				</div>
+		</div>
+		<div class="carousel-item">
+				<a href="/exhibition/view?seq=153132"> <img id='img'
+					class="div1-img" alt="item image" role="img"
+					src="http://www.culture.go.kr/upload/rdf/19/08/show_2019082813544465163.jpg">
+				</a>
+				<div class="carousel-caption">
+					<p class="card-title">
+					<h2 style="font-weight: bold;">정오시간에 듣기 좋은 음악</h2>
+					<br>
+					<h1>
+						<a href="/exhibition/view?seq=154311"
+							style="font-weight: bold; font-size: xx-large;"> '정오의 음악회'</a>
+					</h1>
+					<p>
+						<br>
+					<h3>국립극장의 대표적인 스테디셀러 공연</h3>
+					<br>
+					<h5>한해도 빠지지 않고 공연되어 지금도 매회 만석을 기록하며 관객들의 사랑을 받고 있는 고품격 국악 브런치
+						콘서트</h5>
+				</div>
 			</div>
 		</div>
 		<div class="carousel-item">
-			<a href="/exhibition/view?seq=154323"> <img id='img'
-				class="div1-img" alt="item image" role="img"
-				src="http://www.culture.go.kr/upload/rdf/19/09/rdf_2019093022424023261.jpg">
-			</a>
-			<div class="carousel-caption">
-				<p class="card-title">
-				<h2>
-					<a href="/exhibition/view?seq=154311" style="font-weight: bold;">
-					공연 예술을 느끼고 싶다면</a>
-				</h2>
-				<p>
-				<h1 style="font-weight: bold;">'스푸트니크'</h1>
-				<br>
-				<h5>누구도 어디에건 속해있지 않고 정착하지 못하는,<br>모두가 부유하고 흔들리는 풍경을 담다.</h5>
-			</div>
+				<a href="/exhibition/view?seq=154323"> <img id='img'
+					class="div1-img" alt="item image" role="img"
+					src="http://www.culture.go.kr/upload/rdf/19/09/rdf_2019093022424023261.jpg">
+				</a>
+				<div class="carousel-caption">
+					<p class="card-title">
+					<h2>
+						<a href="/exhibition/view?seq=154311" style="font-weight: bold;">
+						공연 예술을 느끼고 싶다면</a>
+					</h2>
+					<p>
+					<h1 style="font-weight: bold;">'스푸트니크'</h1>
+					<br>
+					<h5>누구도 어디에건 속해있지 않고 정착하지 못하는,<br>모두가 부유하고 흔들리는 풍경을 담다.</h5>
+				</div>
 		</div>
-	</div>
 	<!-- Left and right controls -->
 	<a class="carousel-control-prev" href="#div1" data-slide="prev"> 
 	<img class='div1-img-pattern' src='/resources/img/pattern.jpg'> <span class="carousel-control-prev-icon"></span>
@@ -184,12 +184,13 @@
 	<img class='div1-img-pattern' src='/resources/img/pattern.jpg'> <span class="carousel-control-next-icon"></span>
 	</a>
 </div>
+</div>
 <div id="div2">
-	<h2 class='div2-title'> NEW 화랑</h2>
+	<h2 class='div2-title'> NOW 화랑</h2>
 	<div class="row">
 			<c:forEach items="${eList}" var="e">
-				<div class="div2-img">
-					<div class="card">
+				<div class="div2-img col-sm-3">
+					<div class="card mb-3 shadow-sm">
 						<a href="/exhibition/view?seq=${e.exh_seq}"><img
 							class="div2-img-top" alt="item image"
 							role="img" src="${e.exh_imgurl}"></a>

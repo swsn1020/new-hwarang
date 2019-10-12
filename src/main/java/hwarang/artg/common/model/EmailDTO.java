@@ -5,9 +5,7 @@ public class EmailDTO {
 		private String subject;
 	    private String content;
 	    private String receiver;
-	    
-
-	     
+	    	     
 	    public String getReceiver() {
 	        return receiver;
 	    }

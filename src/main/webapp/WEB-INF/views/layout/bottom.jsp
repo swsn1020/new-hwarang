@@ -14,42 +14,6 @@
 		
 	});
 </script>
-<<<<<<< HEAD
-=======
-</div>
-<div class="col-sm-2" style="padding: 0px;">
-	<ul class="nav ">
-		<li class="nav-item col-sm-12 alert alert-danger" id="side_item">
-			<a class="nav-link" href="#"> 멤버 페이지</a>
-		</li>
-		<sec:authorize access="isAuthenticated()">
-		<sec:authorize access="hasRole('ROLE_ADMIN')">
-		<li class="nav-item col-sm-6" id="side_item">
-			<a	class="nav-link fas fa-user-cog" href="/admin/main">관리자</a>
-		</li>
-		</sec:authorize>
-		<sec:authorize access="!hasRole('ROLE_ADMIN')">
-		<li class="nav-item col-sm-6" id="side_item">
-			<a	class="nav-link fas fa-user-cog" href="/member/myPage">Detail</a>
-		</li>
-		</sec:authorize>
-		<li class="nav-item col-sm-6" id="side_item"><a
-			class="nav-link fas fa-sign-out-alt" href="/logout">Logout</a></li>
-		<li class="nav-item col-sm-12" id="side_item"><a
-			class="nav-link fas fa-star" href="/exhibition/favoriteList">즐겨찾기</a></li>	
-		<li class="nav-item col-sm-12" id="side_item"><a
-			class="nav-link fas fa-eye" href="/exhibition/recentlyView">최근본상품</a><div></div></li>
-		</sec:authorize>
-		<sec:authorize access="isAnonymous()">
-		<li class="nav-item col-sm-6" id="side_item"><a
-			class="nav-link fas fa-user-plus" href="/member/joinForm">Sign Up</a></li>
-		<li class="nav-item col-sm-6" id="side_item"><a
-			class="nav-link fas fa-sign-in-alt" href="/member/loginForm">Login</a></li>
-		</sec:authorize>
-	</ul>
-</div>
-</div>
->>>>>>> refs/remotes/origin/hyeji2
 <div class="container"></div>
 <nav class="navbar navbar-collapse" id="myNavbar">
 	<ul class="nav navbar-nav navbar-right">

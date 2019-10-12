@@ -53,6 +53,7 @@
 	font-family: 'Arita-dotum-Medium';
 }
 .header{
+	float: left;
 	/* font-family: 'Prompt', 'Noto Sans KR',dotum,'돋움',vernade,arial,sans-serif; */
 	font-family: 'Arita-dotum-Medium';
 	display: flex;
@@ -61,6 +62,7 @@
 	border: 1px solid none;
 }
 .header-title{
+	display: block;
 	padding-top: 10px;
 }
 .header-login{
@@ -69,7 +71,8 @@
 	margin-left: 300px;
 }
 .header-menu{
-	display: list-item;
+
+	display: flex;
 	border-bottom: 1px solid nono;
 	font-family: 'Arita-dotum-Medium';
 	padding-left: 33%;
@@ -97,7 +100,7 @@
 					<li class="nav-item" id="side_item"><a
 						class="nav-link" href="/logout">로그아웃</a></li>
 					<li class="nav-item" id="side_item"><a
-						class="nav-link" href="/exhibition/favoriteList">즐겨찾기</a></li>	
+						class="nav-link" href="/exhibition/favoriteList">관심목록</a></li>	
 					<li class="nav-item" id="side_item"><a
 						class="nav-link" href="/exhibition/recentlyView">최근본상품</a><div></div></li>
 					</sec:authorize>
@@ -121,8 +124,6 @@
 								<a class="dropdown-item" href="#">화랑안내</a> 
 								<a class="dropdown-item" href="/notice/noticeList">공지사항</a> 
 								<a class="dropdown-item" href="/faq/faqList">FAQ</a>
-								<a class="dropdown-item" href="/qna/qnaListForUser?memId=haddie">Q&amp;A</a>
-								<a class="dropdown-item" href="/report/reportList">신고</a>
 							</div>
 						</li>
 						<li class="nav-item dropdown"><a
@@ -142,6 +143,7 @@
 							<div class="dropdown-menu" aria-labelledby="dropdown03">
 								<a class="dropdown-item" href="/board/freeboard">자유게시판</a>
 								<a class="dropdown-item" href="/recommend/recommendboard">홍보</a>
+								<a class="dropdown-item" href="/report/reportList">신고</a>
 							</div>
 						</li>
         				<li class="nav-item">
