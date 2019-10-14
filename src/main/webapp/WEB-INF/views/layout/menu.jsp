@@ -153,7 +153,7 @@
 							</div>
 						</li>
         				<li class="nav-item">
-        					<a class="nav-link" href="funding/fundingList">&nbsp;크라우드펀딩&nbsp;</a>
+        					<a class="nav-link" href="/funding/fundingList">&nbsp;크라우드펀딩&nbsp;</a>
         				</li>
 					</ul>
 				</div>

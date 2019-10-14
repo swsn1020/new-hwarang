@@ -179,12 +179,6 @@
 							<input type="hidden" id="order_price" name="order_price" value="${order.order_qty * order.order_price}" />
 						</td>
 				</tr>
-				<%-- <c:set var="final_total_order_price"
-					value="${final_total_order_price+ item.goods_sales_price* item.order_goods_qty}" />
-				<c:set var="total_order_price"
-					value="${total_order_price+ item.goods_sales_price* item.order_goods_qty}" />
-				<c:set var="total_order_goods_qty"
-					value="${total_order_goods_qty+item.order_goods_qty }" /> --%>
 			</tbody>
 		</table>
 		<div class="clear"></div>

@@ -19,8 +19,6 @@
 		var s = Math.floor((distance % (1000 * 60)) / 1000); 
 		//id가 d-day인 HTML코드에 내용 삽입 
 		document.getElementById("d-day").innerHTML = "펀딩까지 "+ d +"일 " + h + "시간 " + m + "분 " + s + "초 남았습니다."; });
-	
-	
 </script>
 
 <head>
@@ -91,8 +89,8 @@
                 <div class="state-box">
                       <p class="remaining-day"><div style="font-size: 20px;" id="d-day"></div></p>
                     <p class="rate-bar"><em style="width:2952%"></em></p>
-                  <p class="achievement-rate"><strong>89</strong>% 달성</p>
-                  <p class="total-amount"><strong>${funding.funding_price}</strong>원  펀딩</p>
+                  <p class="achievement-rate"><strong>${(funding.funding_price/funding.funding_target_amount)*100}</strong>% 달성</p>
+                  <p class="total-amount"><strong>${funding.funding_target_amount}</strong>원  펀딩</p>
                 </div>
                   <div class="btn-wrap funding">
                      <a href="/order/orderFundingForm?funding_num=${funding.funding_num}" class="btn btn-outline-info" >펀딩하기</a>

@@ -9,12 +9,12 @@
 		</selectKey>
 		INSERT INTO CROWDFUNDING (FUNDING_NUM,FUNDING_PRICE,FUNDING_SUBJECT, FUNDING_CONTENT,
 		funding_created_date ,funding_target_date,
-		funding_target_amount,funding_hit,funding_writer,funding_video,funding_hashtag,funding_news,funding_image,
+		funding_target_amount,funding_video,funding_hashtag,funding_news,funding_image,
 		maker_name,maker_facebook,maker_insta,maker_logo,maker_homepage,
 		reward_title,reward_title2,reward_shippingCost,reward_startDay,reward_Total)
 		VALUES
 		(seq_crowdfunding.nextval, #{funding_price},#{funding_subject},#{funding_content},#{funding_created_date},#{funding_target_date}
-		,#{funding_target_amount},#{funding_hit},#{funding_writer},#{funding_video},#{funding_hashtag},#{funding_news},#{funding_image},
+		,#{funding_target_amount},#{funding_video},#{funding_hashtag},#{funding_news},#{funding_image},
 		#{maker_name},#{maker_facebook},#{maker_insta},#{maker_logo},#{maker_homepage},
 		#{reward_title},#{reward_title2},#{reward_shippingCost},#{reward_startDay},#{reward_Total})
 	</insert>
@@ -71,10 +71,10 @@
 		<!-- 검색기능 추가 동적쿼리 -->
 		<![CDATA[
  			SELECT funding_num , funding_price , funding_subject , funding_content , funding_created_date , funding_target_date , funding_target_amount,
-           		 funding_hit ,funding_writer,funding_video,funding_hashtag,funding_news,funding_image, maker_name,maker_facebook,maker_insta,maker_logo,maker_homepage,
+           		 funding_video,funding_hashtag,funding_news,funding_image, maker_name,maker_facebook,maker_insta,maker_logo,maker_homepage,
          		 reward_title,reward_title2,reward_shippingCost,reward_startDay,reward_Total
           	FROM (SELECT /*+INDEX_DESC(CROWDFUNDING pk_funding_num)*/ rownum rn, funding_num , funding_price , funding_subject , funding_content , funding_created_date , funding_target_date , funding_target_amount,
-            funding_hit ,funding_writer,funding_video,funding_hashtag,funding_news,funding_image, maker_name,maker_facebook,maker_insta,maker_logo,maker_homepage,
+             funding_video,funding_hashtag,funding_news,funding_image, maker_name,maker_facebook,maker_insta,maker_logo,maker_homepage,
             reward_title,reward_title2,reward_shippingCost,reward_startDay,reward_Total
            			 FROM crowdfunding
            			 WHERE

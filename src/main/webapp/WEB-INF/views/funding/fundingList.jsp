@@ -2,8 +2,56 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ include file="../layout/left.jsp"%>
+<%@include file="../layout/menu.jsp"%>
 <title>펀딩 게시판</title>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var result = '<c:out value="${result}" />';
+        checkModal(result);
+        history.replaceState({}, null, null);
+        function checkModal(result) {
+            if(result === '' || history.state) return;
+            if(parseInt(result) > 0) {
+                $(".modal-body").html("게시글 " + parseInt(result) + " 번이 등록되었습니다.");
+            }
+            $("#myModal").modal("show");
+        }
+        $('#regBtn').on("click", function () {
+            self.location = "fundingWrite";
+        });
+        var actionForm = $("#actionform");
+        $(".paginate_button a").on("click", function (e) {
+            e.preventDefault();
+            console.log('click');
+            actionForm.find("input[name='pageNum']").val($(this).attr("href"));
+            actionForm.submit();
+        });
+       		  $(".move").on("click", function (e) {
+         	 e.preventDefault();
+             actionForm.append("<input type='hidden' name='funding_num' value='"
+              + $(this).attr("href") + "'>");
+             actionForm.attr("action", "/funding/get");
+             actionForm.submit();
+         });  
+        var searchForm = $("#searchForm");
+        $("#searchForm button").on("click", function (e) {
+            e.preventDefault();
+            console.log('click search form');
+            if(!searchForm.find("option:selected").val()) {
+                alert("검색 종류를 선택해 주세요");
+                return false;
+            }
+            if(!searchForm.find("input[name='keyword']").val()) {
+                console.log('hihi');
+                alert("키워드를 입력하세요");
+                return false;
+            }
+            searchForm.find("input[name='pageNum']").val("1");
+            searchForm.submit();
+        });
+    });
+</script>
+
 <div class="row">
             <div class="col-lg-12">
                 <h1 class="page-header">펀딩 게시판</h1>
@@ -16,32 +64,21 @@
                 <div class="panel panel-default">
                     
                 
-                    <!-- /.panel-heading -->
-                    <div class="panel-body">
-                        <table class="table table-striped table-bordered table-hover">
-                            <thead>
-                            <tr>
-                                <th>#펀딩번호</th>
-                                <th>제목</th>
-                                <th>작성자</th>
-                                <th>펀딩시작일</th>
-                                <th>펀딩마감일</th>
-                            </tr>
-                            </thead>
-                            <c:forEach items="${fundingList}" var="funding">
-                                <tr>
-                                    <td><c:out value="${funding.funding_num}" /></td>
-                                    <td><a href="/funding/fundingView?funding_num=<c:out value='${funding.funding_num}' />" >
-                                            <c:out value="${funding.funding_subject}" />
-                                        </a>
-                                    </td>
-                                    <td><c:out value="${funding.funding_writer}" /></td>
-                                    <td><fmt:formatDate value="${funding.funding_created_date}" pattern="yyyy-MM-dd" /></td>
-                                    <td><fmt:formatDate value="${funding.funding_target_date}" pattern="yyyy-MM-dd" /></td>
-                                </tr>
-                            </c:forEach>
-                        </table>
-                        <!-- /.table-responsive -->
+                   <div class="exh-list album py-5 bg-light">
+	<div class="row">
+		<c:forEach items="${fundingList}" var="funding">
+			<div class="col-sm-3" style="height: 600px; margin: 0 0 20px 0;">
+				<div class="card mb-3 shadow-sm">
+					<a href="/funding/fundingView?funding_num=${funding.funding_num}"><img
+						class="card-img-top" style="width: 100%; height: 400px;"
+						alt="item image" role="img" src="${funding.funding_image}"></a>
+				</div>
+				<div class="card-body">
+					<p class="card-title" style="font-weight: bold; font-size: 18px">
+						<a href="/funding/fundingView?funding_num=${funding.funding_num}">${funding.funding_subject}</a><span class="badge badge-primary">${funding.maker_name}</span>&nbsp;
+					</p>
+				</div>
+			</div></c:forEach>
                          <!-- Search-Bar -->
                         <div class="row">
                             <div class="col-lg-12">
@@ -119,53 +156,7 @@
 	    <input type="hidden" name="type" value="<c:out value='${pageMaker.cri.type}'/>">
 	    <input type="hidden" name="keyword" value="<c:out value='${pageMaker.cri.keyword}'/>"> 
 		</form>
-	<script type="text/javascript">
-    $(document).ready(function () {
-        var result = '<c:out value="${result}" />';
-        checkModal(result);
-        history.replaceState({}, null, null);
-        function checkModal(result) {
-            if(result === '' || history.state) return;
-            if(parseInt(result) > 0) {
-                $(".modal-body").html("게시글 " + parseInt(result) + " 번이 등록되었습니다.");
-            }
-            $("#myModal").modal("show");
-        }
-        $('#regBtn').on("click", function () {
-            self.location = "fundingWrite";
-        });
-        var actionForm = $("#actionform");
-        $(".paginate_button a").on("click", function (e) {
-            e.preventDefault();
-            console.log('click');
-            actionForm.find("input[name='pageNum']").val($(this).attr("href"));
-            actionForm.submit();
-        });
-       		  $(".move").on("click", function (e) {
-         	 e.preventDefault();
-             actionForm.append("<input type='hidden' name='funding_num' value='"
-              + $(this).attr("href") + "'>");
-             actionForm.attr("action", "/funding/get");
-             actionForm.submit();
-         });  
-        var searchForm = $("#searchForm");
-        $("#searchForm button").on("click", function (e) {
-            e.preventDefault();
-            console.log('click search form');
-            if(!searchForm.find("option:selected").val()) {
-                alert("검색 종류를 선택해 주세요");
-                return false;
-            }
-            if(!searchForm.find("input[name='keyword']").val()) {
-                console.log('hihi');
-                alert("키워드를 입력하세요");
-                return false;
-            }
-            searchForm.find("input[name='pageNum']").val("1");
-            searchForm.submit();
-        });
-    });
-</script>
+
 
 
 	<%@include file="../layout/bottom.jsp"%>
