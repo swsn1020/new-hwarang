@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <title>화랑-공지사항</title>
-<%@ include file="../../layout/left.jsp" %>
+<%@ include file="../../layout/menu.jsp" %>
 <script>
 	$(function(){
 		replyList(1);
@@ -36,7 +36,7 @@
 			var category = $("#blockForm").find('input[name="category"]');
 			category.val("Notice_Board");
 			var blockMemId = $("#blockForm").find('input[name="blockMemId"]');
-			blockMemId.val('');	//관리자의 경우 아이디 넣기(현재아이디)
+			blockMemId.val('id1');	//관리자의 경우 아이디 넣기(현재아이디)
 			var blockForm = document.blockForm;
 			var url = "../block/form";
 			window.open("", "Report", "width=400, height=500, top=300, left=300");
@@ -83,6 +83,7 @@
 			dataType: "json",
 			success: function(data){
 				//data는 list
+				console.log(data);
 				var rnum = (Number(num) * 10 ) - 9;
 				var rPager = data.rPager;
 				console.log(rPager);
@@ -273,9 +274,15 @@
 		});
 	}
 </script>
+<style>
+	.notice-div{
+			margin: 0 20% 0 20%;
+	}
+</style>
 	<fmt:formatDate value="${notice.regDate }" var="regDate" pattern="yyyy-MM-dd"/>
+	<div class="notice-div container" style="padding-left: 50px; padding-right: 50px;">
 	<h3>공지사항</h3>
-	<div class="container">
+	<div style="border-top: 2px solid black;"></div>
 		<div class="table-responsive">
 			<table class="table">
 				<tr>
@@ -316,7 +323,8 @@
 				</tr>
 			</table>
 		</div>
-		<hr>
+		<br><br><br>
+		<div style="border-top: 2px solid black;"></div>
 	</div>
 	
 		<!-- checkPw Modal -->
@@ -342,7 +350,7 @@
 		      </div>
 		    </div>
 		  </div><!-- Modal End -->
-	
+	<br>
 	<div class="btnGroup" style="text-align: center;">
 		<button onclick="location.href='noticeList'" class="btn btn-outline-dark btn-sm">목록</button>
 		<c:if test="${notice.block != true}">
@@ -352,7 +360,7 @@
 	<br>
 	
 	<!-- 댓글 목록 div -->
-	<div class="container">
+	<div class="notice-div container" style="padding-left: 50px; padding-right: 50px;">
 		<sec:authorize access="isAnonymous()">
 			<input type="hidden" name="currId" value="anonymous"/>
 		</sec:authorize>	
@@ -360,13 +368,13 @@
 			<input type="hidden" name="currId" value="<sec:authentication property="principal.Username"/>">
 		</sec:authorize>
 		
-		<table class="table table-hover" id="replies">
+		<table class="table" id="replies">
 			<thead></thead>
 		</table>
 	</div>
 	
 	<!-- Pagination -->
-	<div class="container">
+	<div class="notice-div container" style="padding-left: 50px; padding-right: 50px;">
 		<ul class="pagination justify-content-center">
 			<li id="left" class="page-item disabled">
 				<a class="page-link" href="javascript:replyList(1)">&laquo;</a>
@@ -386,7 +394,8 @@
 	<br>
 	<sec:authorize access="isAuthenticated()">
 	<!-- 댓글입력div -->
-	<div class="container">
+	<div class="notice-div container" style="padding-left: 50px; padding-right: 50px;">
+		<div style="border-top: 2px solid black;"></div>
 		<form id="replyForm">
 			<input type="hidden" name="boardNum" value="${notice.num}">
 			<input type="hidden" name="memId" value='<sec:authentication property="principal.Username"/>'>
@@ -394,7 +403,7 @@
 				<tr>
 					<th>댓글쓰기</th>
 					<td colspan="3"><textarea class="form-control" name="content" rows="3" placeholder="댓글을 입력하세요" style="resize: none;"></textarea></td>
-					<td><input type="submit" class="btn btn-outline-primary btn-sm" value="작성"></td>
+					<td><input type="submit" class="btn btn-outline-dark btn-sm" value="작성"></td>
 				</tr>
 			</table>
 		</form>
@@ -407,5 +416,6 @@
 		<input type="hidden" name="category" value="">
 		<input type="hidden" name="boardNum" value="${notice.num }">
 		<input type="hidden" name="replyNum" value="">
+		<input type="hidden" name="boardTitle" value="${notice.title }">
 	</form>
 <%@ include file="../../layout/bottom.jsp"%>

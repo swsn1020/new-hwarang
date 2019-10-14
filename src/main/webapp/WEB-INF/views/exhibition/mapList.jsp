@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@include file="../layout/left.jsp"%>
+<%@include file="../layout/menu.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -36,7 +36,7 @@
 	            });
 			
 				getPlaceInfo(p, function(exh){
-		    		var iwContent = '<div style="padding:5px;"><p><a href="'+exh.exh_placeurl+'">'+exh.exh_place+'</a></p><div><table class="table"><tbody><tr><td>'+exh.exh_placeaddr+'</td><td><a href="https://map.kakao.com/link/to/'+exh.exh_placeaddr+','+y+','+x+'" target="_blank"><i class="fas fa-map-marked-alt"></i></a></td></tr><tr><td><a class="btn btn-primary" onclick="getList('+p+')">해당 장소의 공연보기</a></td></tr></tbody></table></div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+		    		var iwContent = '<div style="padding:5px;"><p><a href="'+exh.exh_placeurl+'">'+exh.exh_place+'</a></p><div><table class="table"><tbody><tr><td>'+exh.exh_placeaddr+'</td><td><a href="https://map.kakao.com/link/to/'+exh.exh_placeaddr+','+y+','+x+'" target="_blank"><i class="fas fa-map-marked-alt"></i></a></td></tr><tr><td><a class="btn btn-outline-dark" onclick="getList('+p+')">해당 장소의 공연보기</a></td></tr></tbody></table></div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
 		    	    iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
 		    	    // 인포윈도우를 생성합니다
 		    		var infowindow = new kakao.maps.InfoWindow({
@@ -98,7 +98,7 @@
 			var exhibition = $("#exhibition");			
 			for(var i=0; i<eList.length; i++){
 				console.log(eList[i]);
-				str += "<tr><td>"+eList[i].exh_title+"</td><td>"+eList[i].exh_startDate.substring(0,10)+" ~ "+eList[i].exh_endDate.substring(0,10)+"</td><td><a class='btn btn-primary' href='/exhibition/view?seq="+eList[i].exh_seq+"'>공연 페이지</a></td></tr>"
+				str += "<tr><td>"+eList[i].exh_title+"</td><td>"+eList[i].exh_startDate.substring(0,10)+" ~ "+eList[i].exh_endDate.substring(0,10)+"</td><td><a class='btn btn-outline-dark' href='/exhibition/view?seq="+eList[i].exh_seq+"'>공연 페이지</a></td></tr>"
 			};
 			exhibition.html(str);
 		});	
@@ -109,20 +109,22 @@
 </head>
 <body>
 	<div class="container">
-		<form action="#">
+		<form action="#" style="margin: 10px;">
 			<select name="area">
-				<option value="" <c:out value="${param.area == null ?'selected':''}"/>>서울</option>
+				<option value="" <c:out value="${param.area == null ?'selected':''}"/>>--기본--</option>
 				<c:forEach items="${area}" var="a">
 					<option value="${a}" <c:out value="${param.area  eq a ?'selected':''}"/>>${a}</option>			
 				</c:forEach>
 			</select>
-			<button type="submit" class="btn btn-primary">검색</button>
+			<button type="submit" class="btn btn-outline-dark">검색</button>
 		</form>
+		<div style="border-top: 2px solid black; padding: 10px;"></div>
 		<!-- 카카오 지도 부분 -->
 		<div id="map" style="width: 1100px; height: 500px;"></div>
-
+		
 		<!-- 공연정보 부분  -->
 		<br>
+		<div style="border-top: 2px solid black; padding: 10px;"></div>
 		<div>
 			<table class="table table-hover">
 			    <thead  style="text-align: center;">
@@ -132,7 +134,7 @@
 			        <th>상세페이지</th>
 			      </tr>
 			    </thead>
-			    <tbody id="exhibition">
+			    <tbody id="exhibition"  style="text-align: center;">
 	
 			    </tbody>
 			  </table>

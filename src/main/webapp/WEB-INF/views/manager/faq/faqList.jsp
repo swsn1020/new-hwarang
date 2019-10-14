@@ -1,22 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <title>화랑-FAQ</title>
-<%@ include file="../../layout/left.jsp" %>
+<%@ include file="../../layout/menu.jsp" %>
 <style>
-	.container{
-		margin: 10px 0px;
-		padding: 3px 0px;
+	.faq-div{
+		margin: 0 20% 0 20%;
+		padding-left: 50px; 
+		padding-right: 50px;
+	}
+	h3{
+		font-weight: bold;
 	}
 	table {
 		text-align: center;
 	}
 </style>
-<div class="container" style="padding-left: 50px; padding-right: 50px;">
-	<h3>자주하는 질문</h3>
-	<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')">
-	<div class="buttondiv" style="text-align: center; float: right; margin-bottom: 10px;">
-		<button type="button" class="btn btn-outline-secondary btn-sm" onclick="location.href='faqWrite'">공지작성</button>
-	</div>
-	</sec:authorize>
+<div class="faq-div container" style="padding-left: 50px; padding-right: 50px;">
+	<h3>FAQ</h3>
+	<div style="border-top: 2px solid black;"></div>
 	<table class="table table-hover">
 		<thead>
 			<tr>
@@ -31,7 +31,7 @@
 			</tr>
 			</thead>
 			<tbody>
-				<c:set var="rnum" value="${pageMaker.total - ((pageMaker.cri.pageNum-1)*12)}"/>
+				<c:set var="rnum" value="${pageMaker.total - ((pageMaker.cri.pageNum-1)*10)}"/>
 				<c:forEach items="${faqList }" var="faq" varStatus="vs">
 				<fmt:formatDate value="${faq.regDate }" var="regDate" pattern="yyyy-MM-dd"/>
 				<tr>
@@ -79,9 +79,10 @@
 			</c:forEach>
 		</tbody>
 	</table>
-	</div>
-	<div class="container" style="text-align: center;">
-		<form id="searchForm" action="faqList" method="get">
+	<div style="border-top: 2px solid black;"></div>
+	
+	<div class="container" style="margin: 10px;">
+		<form id="searchForm" action="faqList" method="get"  style="text-align: center;">
 			<select name="type">
 			<option value="" <c:out value="${pageMaker.cri.type eq null ? 'selected' : ''}"/>>검색
 			</option>
@@ -101,24 +102,25 @@
 			<input type="text" name="keyword" placeholder="검색어를 입력하세요." value="<c:out value="${pageMaker.cri.keyword }"/>">
 			<input type="hidden" name="pageNum" value="<c:out value="${pageMaker.cri.pageNum }"/>">
 			<input type="hidden" name="amount" value="<c:out value="${pageMaker.cri.amount }"/>">
-			<button class="btn btn-primary">검색</button>
+			<button class="btn btn-outline-dark btn-sm">검색</button>
 		</form>
 	</div>		
 	
 	<!-- Pagination -->
-	<div class="container">
+	<div class="container" style="margin-top: 10px;">
 		<ul class="pagination justify-content-center">
 			<li class='${ pageMaker.prev == true ? "page-item" : "page-item disabled" }'>
 				<a class="page-link" href="faqList?pageNum=${pageMaker.startPage-1 }&type=${param.type}&keyword=${param.keyword}">&laquo;</a>
 			</li>
 			<c:forEach var="num" begin="${pageMaker.startPage }" end="${pageMaker.endPage}">
 				<li class='${pageMaker.cri.pageNum == num ? "active" : "page-item"}'>
-					<a class="page-link" href="faqList?pageNum=${num}&type=${param.type}&keyword=${param.keyword}">[${num}]</a>
+					<a class="page-link" href="faqList?pageNum=${num}&type=${param.type}&keyword=${param.keyword}">${num}</a>
 				</li>
 			</c:forEach>
 			<li class='${pageMaker.next == true ? "page-item" : "page-item disabled" }'>
 				<a class="page-link" href="faqList?pageNum=${pageMaker.endPage+1 }&type=${param.type}&keyword=${param.keyword}">&raquo;</a>
 			</li>
 		</ul>
+	</div>
 	</div>
 <%@ include file="../../layout/bottom.jsp"%>

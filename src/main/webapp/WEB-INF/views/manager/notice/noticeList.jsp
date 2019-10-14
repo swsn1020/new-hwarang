@@ -1,10 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <title>화랑-공지사항</title>
-<%@ include file="../../layout/logoleft2.jsp" %>
+<%@ include file="../../layout/menu.jsp" %>
 <style>
-	.container{
-		margin: 10px 0px;
-		padding: 3px 0px;
+	.notice-div{
+		margin: 0 20% 0 20%;
 	}
 	th {
 		text-align: center;
@@ -12,13 +11,16 @@
 </style>
 <script type="text/javascript">
 </script>
-	<div class="container" style="padding-left: 50px; padding-right: 50px;">
-	<h3>공지사항</h3>
+	<div class="notice-div container" style="padding-left: 50px; padding-right: 50px;">
+	<h3 style="font-weight: bold;">공지사항</h3>
+	<!-- 
 	<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')">
 	<div class="buttondiv" style="text-align: center; float: right; margin-bottom: 10px;">
 		<button type="button" class="btn btn-outline-secondary btn-sm" onclick="location.href='noticeWrite'">공지작성</button>
 	</div>
 	</sec:authorize>
+	-->
+	<div style="border-top: 2px solid black;"></div>
 	<table class="table table-hover">
 		<thead>
 			<tr>
@@ -42,8 +44,9 @@
 			</c:forEach>
 		</tbody>
 	</table>
-	<div class="container" style="text-align: center;">
-		<form id="searchForm" action="noticeList" method="get">
+	<div style="border-top: 2px solid black;"></div>
+	<div class="container" style="margin: 10px;">
+		<form id="searchForm" action="noticeList" method="get" style="text-align: center;">
 			<select name="type">
 				<option value="" <c:out value="${pageMaker.cri.type eq null ? 'selected' : ''}"/>>검색
 				</option>
@@ -63,19 +66,18 @@
 			<input type="text" name="keyword" placeholder="검색어를 입력하세요." value="<c:out value="${pageMaker.cri.keyword }"/>">
 			<input type="hidden" name="pageNum" value="<c:out value="${pageMaker.cri.pageNum }"/>">
 			<input type="hidden" name="amount" value="<c:out value="${pageMaker.cri.amount }"/>">
-			<button class="btn btn-primary">검색</button>
+			<button class="btn btn-outline-dark btn-sm">검색</button>
 		</form>
 	</div>
-	</div>
 	<!-- Pagination -->
-	<div class="container">
-		<ul class="pagination justify-content-center">
+	<div class="container" style="margin-top: 10px;">
+		<ul class="pagination justify-content-center" style="text-align: center;">
 			<li class='${ pageMaker.prev == true ? "page-item" : "page-item disabled" }'>
 				<a class="page-link" href="noticeList?pageNum=${pageMaker.startPage-1 }&type=${param.type}&keyword=${param.keyword}">&laquo;</a>
 			</li>
 			<c:forEach var="num" begin="${pageMaker.startPage }" end="${pageMaker.endPage}">
 				<li class='${pageMaker.cri.pageNum == num ? "active" : "page-item"}'>
-					<a class="page-link" href="noticeList?pageNum=${num}&type=${param.type}&keyword=${param.keyword}">[${num}]</a>
+					<a class="page-link" href="noticeList?pageNum=${num}&type=${param.type}&keyword=${param.keyword}">${num}</a>
 				</li>
 			</c:forEach>
 			<li class='${pageMaker.next == true ? "page-item" : "page-item disabled" }'>
@@ -83,4 +85,5 @@
 			</li>
 		</ul>
 	</div>
+</div>
 <%@ include file="../../layout/bottom.jsp"%>

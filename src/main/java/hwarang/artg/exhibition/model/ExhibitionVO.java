@@ -31,4 +31,6 @@ public class ExhibitionVO {
 	private int co_num;
 	private String exh_memo;
 	private int exh_recomm_cnt;
+	private int exh_like;
+	private int exh_unlike;
 }

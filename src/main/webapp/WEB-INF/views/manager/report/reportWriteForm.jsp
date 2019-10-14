@@ -57,7 +57,7 @@ function removeAll(e){
 		<h3>신고게시판</h3>
 		<div class="form-group">
 			<form id="reportForm" action="reportWrite" method="post" enctype="multipart/form-data">
-				<input type="text" name="memId" value="<sec:authentication property="principal.Username"/>">
+				<input type="hidden" name="memId" value="<sec:authentication property="principal.Username"/>">
 				<div class="table-responsive">
 					<table class="table">
 						<tr>

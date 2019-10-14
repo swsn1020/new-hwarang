@@ -34,7 +34,7 @@ public class ReplyController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public boolean registerfreeReply(FreeReplyVO freereply,Principal principal,Model model) {
+	public boolean freeReplyRegister(FreeReplyVO freereply,Principal principal,Model model) {
 		model.addAttribute("principal",principal);
 		return freereplyservice.freereplyRegister(freereply);
 	}

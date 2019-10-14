@@ -272,8 +272,8 @@ function replyList(num){
 					<input type="button" class="btn btn-primary" value="수정" onclick="location.href='modify?num=${fboard.num }'"> 
 					<input type="button" class="btn btn-primary" value="삭제" onclick="location.href='remove?num=${fboard.num }'"> 
 					<input type="button" class="btn btn-primary" value="새글쓰기" onclick="location.href='register'">
-					<button id="btn-block" class="btn btn-outline-danger btn-sm">신고</button>
 				</c:if>
+				<button id="btn-block" class="btn btn-outline-danger btn-sm">신고</button>
 	<div class="table-responsive">
 		<table class="table">
 			<tr>
@@ -384,5 +384,6 @@ function replyList(num){
 		<input type="hidden" name="category" value="">
 		<input type="hidden" name="boardNum" value="${fboard.num }">
 		<input type="hidden" name="replyNum" value="">
+		<input type="hidden" name="boardTitle" value="${fboard.title }">
 	</form>
 <%@include file="../layout/bottom.jsp"%>		

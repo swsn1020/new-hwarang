@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ include file="../layout/left.jsp"%>
+<%@ include file="../layout/menu.jsp"%>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -10,7 +10,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style type="text/css">
 #popup { width:450px; }
-.header h1 { height:45px; padding:0 0 0 20px; color:#fff; font-size:14px; line-height:45px; background-color:#495164; }
+/* .header h1 { height:45px; padding:0 0 0 20px; color:#fff; font-size:14px; line-height:45px; background-color:#495164; } */
 .content { padding:20px; min-height:250px; }
 .btnArea { position:fixed; bottom:0; left:0; width:100%; padding:10px 0; border-top:1px solid #d7d5d5; text-align:center; background-color:#fbfafa; }
 .xans-link-bookmark .info { padding:153px 0 20px 0; text-align:center; font-size:12px; line-height:1.8em; background:url("http://img.echosting.cafe24.com/skin/base_ko_KR/link/bg_bookmark.gif") center 33px no-repeat; }
@@ -19,6 +19,13 @@
 <!-- <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script> -->
 <script type="text/javascript">
 	$(function() {
+		//추천,비추천
+		$('.disabled').click(function(e) {
+			alert("이미 추천한 게시글입니다.");
+			e.preventDefault();
+			return false;
+		});
+		//지도
 		var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
 		var options = { //지도를 생성할 때 필요한 기본 옵션
 				center: new kakao.maps.LatLng(${exh.exh_gpsy}, ${exh.exh_gpsx}),
@@ -34,8 +41,8 @@
 		});
 		// 마커가 지도 위에 표시되도록 설정합니다
 		marker.setMap(map);	
-		
-		var iwContent = '<div style="padding:5px;"><div>${exh.exh_title}<div><table class="table"><tbody><tr><td>홈페이지</td><td><a href="${exh.exh_url}"><i class="fas fa-home"></i></a></td></tr><tr><td>주소</td><td><a href="${exh.exh_placeurl}">${exh.exh_place}</a></td></tr><tr><td>전화번호</td><td>${exh.exh_phone}</td></tr></tbody></table></div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+		var title = "${exh.exh_title}".replace(/'/gi,'"');
+		var iwContent = '<div style="padding:5px; width: 105%;"><div>'+title+'<div><table class="table"><tbody><tr><td>홈페이지</td><td><a href="${exh.exh_url}"><i class="fas fa-home"></i></a></td></tr><tr><td>주소</td><td><a href="${exh.exh_placeurl}">${exh.exh_place}</a></td></tr><tr><td>전화번호</td><td>${exh.exh_phone}</td></tr></tbody></table></div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
 	    iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
 		// 인포윈도우를 생성합니다
 		var infowindow = new kakao.maps.InfoWindow({
@@ -160,45 +167,84 @@
 		alert(addGroupVal+" 이 입력 되었습니다.");
 	};
 </script>
-
+<style type="text/css">
+.exh-title{
+	margin: 20px;
+	text-align: center;
+}
+.exh-div{
+	margin-top: 30px;
+}
+.exh-img{
+	border-top: 2px solid black;
+	text-align: center;
+}
+.exh-img2{
+	margin-top: 20px;
+}
+.exh-table{
+	margin-top: 30px;
+}
+.exh-tabs{
+	border-top: 2px solid black;
+	margin: 20px 0 30px 0;
+}
+.exh-tab{
+	margin-top: 20px;
+}
+.exh-reply{
+	border-top: 2px solid black;
+}
+</style>
+</head>
 <div class="table-responsive">
-	<div class="container">
-		<h3>${exh.exh_title}
-			<span class="badge badge-primary">${exh.exh_realmName}</span>
-		</h3>
-		<img class="card-img-top" style="width: 20%; height: 280px;"
-			alt="item image" role="img" src="${exh.exh_imgurl}"> 
-			<a class="btn btn-primary" data-toggle="modal" data-target="#favModal">관심목록 추가</a> 
-			<a class="btn btn-primary" data-toggle="modal" data-target="#buyModal" onclick="">공연 예매</a>
-		<table class="table table-hover">
-			<tbody>
-				<tr>
-					<th>공연기간</th>
-					<td>${fn:substring(exh.exh_startDate, 0, 10)} ~ ${fn:substring(exh.exh_endDate, 0, 10)}</td>
-				</tr>
-				<tr>
-					<th>공연장소</th>
-					<td>${exh.exh_area}|<a href="${exh.exh_placeurl}" target="_blank">${exh.exh_place}</a></td>
-				</tr>
-				<tr>
-					<th>가격정보</th>
-					<td>${exh.exh_price}</td>
-				</tr>
-				<tr>
-					<th>상세주소</th>
-					<td><a href="${exh.exh_placeurl}" target="_blank">${exh.exh_placeaddr}</a></td>
-				</tr>
-				<tr>
-					<th>사이트주소</th>
-					<td><a href="${exh.exh_url}" target="_blank">${exh.exh_url}</a></td>
-				</tr>
-				<tr>
-					<th>전화번호</th>
-					<td>${exh.exh_phone}</td>
-				</tr>
-
-			</tbody>
-		</table>
+	<div class="container" >
+		<div class="exh-title">
+			<h3 style="font-weight: bold;">${exh.exh_title}
+				<span class="badge badge-primary">${exh.exh_realmName}</span>
+			</h3>	
+		</div>
+		<div class="exh-div">
+			<div class="exh-img">
+				<img class="exh-img2 card-img-top" style="width: 400px; height: 500px;" alt="item image" role="img" src="${exh.exh_imgurl}"> 
+			</div>
+			<br>
+			<div style="text-align: center;">
+				<a class="btn btn-outline-dark" href="/exhibiton/like?seq=${exh.exh_seq}" style="color: blue;">&nbsp;추천(${exh.exh_like})&nbsp;</a>
+				<a class="btn btn-outline-dark" href="/exhibiton/unlike?seq=${exh.exh_seq}" style="color: gray;">비추천(${exh.exh_unlike})</a>
+			</div>
+			<table class="exh-table table table-hover">
+				<tbody>
+					<tr>
+						<th>공연기간</th>
+						<td>${fn:substring(exh.exh_startDate, 0, 10)} ~ ${fn:substring(exh.exh_endDate, 0, 10)}</td>
+					</tr>
+					<tr>
+						<th>공연장소</th>
+						<td>${exh.exh_area}|<a href="${exh.exh_placeurl}" target="_blank">${exh.exh_place}</a></td>
+					</tr>
+					<tr>
+						<th>가격정보</th>
+						<td>${exh.exh_price}</td>
+					</tr>
+					<tr>
+						<th>상세주소</th>
+						<td><a href="${exh.exh_placeurl}" target="_blank">${exh.exh_placeaddr}</a></td>
+					</tr>
+					<tr>
+						<th>사이트주소</th>
+						<td><a href="${exh.exh_url}" target="_blank">${exh.exh_url}</a></td>
+					</tr>
+					<tr>
+						<th>전화번호</th>
+						<td>${exh.exh_phone}</td>
+					</tr>
+	
+				</tbody>
+			</table>
+			<a class="btn btn-outline-dark" data-toggle="modal" data-target="#favModal">관심목록 추가</a> 
+			<a class="btn btn-outline-dark" data-toggle="modal" data-target="#buyModal" onclick="">공연 예매</a>
+		</div>
 		<!-- 관심추가  Modal -->
 		<div class="modal" id="favModal">
 			<div class="modal-dialog">
@@ -215,7 +261,7 @@
 					<div class="content">
 						<div>
 							<input id="addFavGroup" type="text" placeholder="새로운 그룹 이름  추가">
-							<a class="btn btn-secondary" onclick="addFavGroup()">그룹추가</a>
+							<a class="btn btn-outline-dark" onclick="addFavGroup()">그룹추가</a>
 						</div>
 						<select name="group" id="favGroup">
 							<option selected value="찜 목록" id="basic-group">기본 - 찜 목록</option>
@@ -228,8 +274,8 @@
 
 					<!-- Modal footer -->
 					<div class="modal-footer">
-						<a onclick="addFavorite()"><img src="http://img.echosting.cafe24.com/skin/base_ko_KR/link/btn_add.gif" alt="추가하기"></a>
-	            		<a data-dismiss="modal" id ="modal-close"><img src="http://img.echosting.cafe24.com/skin/base_ko_KR/link/btn_cancel.gif" alt="취소하기"></a>
+						<a onclick="addFavorite()" class="btn btn-outline-dark">추가하기</a>
+	            		<a data-dismiss="modal" id="modal-close" class="btn btn-outline-dark">취소하기</a>
 					</div>
 
 				</div>
@@ -254,16 +300,16 @@
 
 					<!-- Modal footer -->
 					<div class="modal-footer">
-						<a class="btn btn-primary">장바구니 이동</a>
-	            		<a class="btn btn-primary" data-dismiss="modal" id ="modal-close">쇼핑 계속하기</a>
+						<a class="btn btn-outline-dark">장바구니 이동</a>
+	            		<a class="btn btn-outline-dark" data-dismiss="modal" id ="modal-close">쇼핑 계속하기</a>
 					</div>
 
 				</div>
 			</div>
 		</div>
 		<!--  탭 구현 부분 -->
-		<div class="container">
-			<ul class="nav nav-tabs" role="tablist">
+		<div class="exh-tabs container">
+			<ul class="exh-tab nav nav-tabs" role="tablist">
 			    <li class="nav-item">
 			      <a class="nav-link active" data-toggle="tab" href="#home">지도</a>
 			    </li>
@@ -286,12 +332,11 @@
 		      <div>
 		      	<table class="table">
 					<c:forEach items="${blogReview}" var="blog">
-						<tr>
-							<td><a href="${blog.link}" >${blog.title}</a></td>
-						</tr>
-						<tr>
-							<td>${blog.description}</td>				
-						</tr>
+					<tr>
+						<td><h5 style="font-weight: bold;"><a href="${blog.link}" >${blog.title}</a></h5>
+						${blog.description}				
+						</td>
+					</tr>
 					</c:forEach>
 				</table>
 		      </div>
@@ -303,7 +348,7 @@
 		  </div>
 		</div>
 		<!-- 댓글 구현 부분 -->
-		<div class="container">
+		<div class="exh-reply container">
 			<form action="#" id="replyForm" method="get">
 				<input type="hidden" class="alert alert-secondary" id="replyer"
 					name="member_id" value="<sec:authentication property="principal.Username"/>">
@@ -311,15 +356,15 @@
 					class="alert alert-secondary" id="seq" name="exh_seq"
 					value="${exh.exh_seq}">
 				<div class="form-group">
-					<label for="comment">Comment:</label>
+					<label for="comment"></label>
 					<textarea class="form-control" rows="5" id="reply_content"
-						name="reply_content" placeholder="게시판이 더 훈훈해지는 댓글 부탁드립니다."></textarea>
+						name="reply_content" placeholder="훈훈해지는 댓글 부탁드립니다."></textarea>
 				</div>
-				<button type="submit" id="addReply" class="btn btn-primary">입력</button>
+				<button type="submit" id="addReply" class="btn btn-outline-dark">입력</button>
 			</form>
 			<div class="panel-heading">
-				<i class="fa fa-comments fa-fw" style='color: #337ab7;'></i> Reply
-				List
+				<!-- <i class="fa fa-comments fa-fw" style='color: #337ab7;'></i> Reply
+				List -->
 			</div>
 			<ul class="list-group list-group-flush col-sm-10" id="chat"></ul>
 		</div>

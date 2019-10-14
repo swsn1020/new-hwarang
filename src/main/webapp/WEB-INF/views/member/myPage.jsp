@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
     <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
     <%@taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
-    <%@ include file="../layout/left.jsp" %>
+    <%@ include file="../layout/menu.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,10 +13,11 @@
 </script>
 </head>
 <body>
-		<div align="center">
-			<h1>나의 페이지</h1>
+		<div align="center" style="margin-top: 10px;">
+			<h3 style="font-weight: bold;">나의 페이지</h3>
 		</div>
-		<div id="containers" style="width: 720px; margin: 0 auto;">
+		<div id="containers" style="width: 70%; margin: 0 auto;">
+			<div style="border-top: 2px solid black;"></div>
 			<!-- 회원의 기본정보 -->
 			<div>
 				<table class="table">
@@ -125,7 +126,8 @@
 					</tbody>
 				</table>
 			</div>
+			<div style="border-top: 2px solid black;"></div>
 		</div>
-<%@ include file="../layout/bottom.jsp"%>
 </body>
 </html>
+<%@ include file="../layout/bottom.jsp"%>

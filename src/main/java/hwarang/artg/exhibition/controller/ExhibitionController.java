@@ -196,5 +196,15 @@ public class ExhibitionController {
 		return fService.removeFavorite(vo) == true ? new ResponseEntity<>("success", HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
+	@RequestMapping("/like")
+	public String like() {
+		return "/view";
+	}
+	
+	@RequestMapping("/unlike")
+	public String unLike() {
+		return "/view";
+	}
+	
 	
 }

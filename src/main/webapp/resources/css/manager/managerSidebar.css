@@ -96,6 +96,8 @@ body {
   border-radius: 0 4px 4px 0px;
   width: 35px;
   transition-delay: 0.3s;
+  background-color: white;
+  border-color: gray;
 }
 .page-wrapper.toggled #show-sidebar {
   left: -40px;

@@ -17,7 +17,7 @@
 	$(function() {
 
 		ReplyView();
-		var num = ${review.review_num};
+		var num = $("#num").val();
 		$("#rbtnWrite").on("click", function() {
 			var data = $("#rwriteForm").serialize();
 			$.ajax({
@@ -96,14 +96,9 @@
 							}
 							
 							var tr = $("<tr>");
-<<<<<<< HEAD
+
 							var modiText = $("<div id='mod"+i+"' class='collapse form-group'><input type='hidden' name='num' value='"+data[i].review_reply_num+"'><input type='hidden' name='id' value='"+data[i].member_id+"'><textarea class='form-control' name='content' rows='3' cols='80'>"+data[i].review_reply_content+"</textarea></div>");
 							var remvText = $("<div id='modd"+i+"' class='collapse form-group'><input type='hidden' id='replynum' name='num' value='"+data[i].review_reply_num+"'></div>");
-=======
-							var modiText = $("<div id='mod"+i+"' class='collapse form-group'><input type='hidden' name='num' value='"+data[i].review_reply_num+"'><input type='hidden' name='id' value='"+data[i].member_id+"'> password <input class='form-control' type='text' name='pw'><br><textarea class='form-control' name='content' rows='3' cols='80'>"
-									+ content + "</textarea></div>");
-							var remvText = $("<div id='modd"+i+"' class='collapse form-group'><input type='hidden' name='num2' value='"+data[i].review_reply_num+"'><input type='hidden' name='id2' value='"+data[i].member_id+"'> password <input class='form-control' type='text' name='pw2'></div>");
->>>>>>> refs/remotes/origin/master
 							
 							var rbtnModify = $("<button type='button' class='btn btn-link' data-toggle='collapse' data-target='#mod"+i+"'>M</button>");
 							var rbtnRemove = $("<button type='button' class='btn btn-link' data-toggle='collapse' data-target='#modd"+i+"'>D</button>");
@@ -122,14 +117,11 @@
 							$("<td>").append(form2.append(remvText)).appendTo(tr);
 							$("<td>").text(data[i].review_reply_reg_date)
 									.appendTo(tr);
-<<<<<<< HEAD
 							
 							if(seqid == data[i].member_id){
 								$("<td>").append(rbtnModify).append(rbtnRemove).appendTo(tr);								
 							}
 						
-							$("<td colspan='2'>").append(btnReport).appendTo(tr);
-=======
 							$("<td>").append(rbtnModify).append(rbtnRemove)
 									.appendTo(tr);
 							$("<td>").append(blockBtn).appendTo(tr);
@@ -137,8 +129,6 @@
 							if(blockStatus == 'true'){
 								rbtnModify.attr("disabled", "disabled");
 							}
->>>>>>> refs/remotes/origin/master
-
 							tr.appendTo(table);
 
 							rbtnModify.on("click", function() {
@@ -241,7 +231,7 @@
 			<h1>관람 후기</h1>
 		</div>
 		<div style='text-align: center;'>
-			<input type="hidden" name="num" value="${review.review_num}">
+			<input type="hidden" name="num" id="num" value="${review.review_num}">
 			<table class="table">
 				<tr>
 					<th>Program name</th>
@@ -294,7 +284,6 @@
 				</tr>
 				<tr align="right">
 					<td colspan="4">
-<<<<<<< HEAD
 					<input type="button" onclick="location.href='/review/reviewboard'" value="List" class="btn btn-link"> 
 					<input type="hidden" id="seqid" value="${id}"> 
 					<c:if test="${id eq review.member_id}">
@@ -302,15 +291,11 @@
 						<input type="button" onclick="location.href='/review/remove?num=${review.review_num}'" value="Remove" class="btn btn-link">
 					</c:if>
 					<input type="button" onclick="location.href='report'" value="Report" class="btn btn-link">
-=======
 					<input type="button" onclick="location.href='reviewboard'" value="List" class="btn btn-link"> 
-					<input type="button" onclick="location.href='checkPw?id=${review.member_id}&num=${review.review_num}&button=modify'" value="Modify" class="btn btn-link"> 
-					<input type="button" onclick="location.href='checkPw?id=${review.member_id}&num=${review.review_num}&button=remove'" value="Remove" class="btn btn-link">
 					<!-- 신고처리(Board) -->
 					<c:if test="${review.block != true}">
 						<button id="btn-block" class="btn btn-outline-danger btn-sm">신고</button>
 					</c:if>
->>>>>>> refs/remotes/origin/master
 					</td>
 				</tr>
 			</table>
@@ -322,7 +307,7 @@
 				<input type="hidden" name="review_num" value="${review.review_num}">
 				<table>
 					<tr>
-						<td><textarea class="form-control" id="rcontent" name="rcontent" rows="3"
+						<td><textarea class="form-control" id="rcontent" name="review_reply_content" rows="3"
 								cols="100"></textarea></td>
 						<td>
 							<button class="btn btn-link" id="rbtnWrite">Write</button>
@@ -344,6 +329,7 @@
 		<input type="hidden" name="category" value="">
 		<input type="hidden" name="boardNum" value="${review.review_num }">
 		<input type="hidden" name="replyNum" value="">
+		<input type="hidden" name="boardTitle" value="${review.review_title}">
 	</form>
 <%@ include file="../layout/bottom.jsp"%>
 </body>

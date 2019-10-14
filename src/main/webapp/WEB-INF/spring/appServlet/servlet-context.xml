@@ -3,9 +3,13 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.3.xsd
+		http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
@@ -34,12 +38,24 @@
 	<!-- 커뮤니티 -->
 	<context:component-scan base-package="hwarang.artg.community.controller"/>
 	
+	<!-- websocket -->
+	<!-- Stomp.js 이용한 WebScoket 연결 및 메시지 처리를 위한 설정 -->
+	<websocket:message-broker application-destination-prefix="/client">
+		<websocket:stomp-endpoint path="/chat">
+			<websocket:sockjs/>
+		</websocket:stomp-endpoint>
+		<websocket:simple-broker prefix="/category"/>
+	</websocket:message-broker>
+	
 	<!-- 다중파일 -->
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<beans:property value="5242880" name="maxUploadSize"/>
 		<beans:property value="1048576" name="maxInMemorySize"/>
 	</beans:bean>
 	
+	
+	<aop:aspectj-autoproxy/>
+	<beans:bean id="messageAspect" class="hwarang.artg.common.model.MessageAspect"></beans:bean>
 	
 </beans:beans>
 

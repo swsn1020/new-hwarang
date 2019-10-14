@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <title>화랑 - 최근본공연</title>
-<%@include file="../layout/left.jsp"%>
+<%@include file="../layout/menu.jsp"%>
 <script type="text/javascript">
 $(function(){ //전체선택 체크박스 클릭
 	$("#allCheck").click(function(){ 
@@ -25,35 +25,37 @@ $(function(){ //전체선택 체크박스 클릭
 </script>
 
 <div class="container">
-	<h2>나의 최근본공연 목록</h2>
+	<h2 style="font-weight: bold;">최근 본 상품</h2>
 	<form action="/exhibition/removeRecentlyView" method="post">
+	<div style="border-top: 2px solid black;"></div>
 	<table class="table">
 		<thead>
 			<tr>
-				<th><div class="form-check">
+				<th style="padding: 20px;"><div class="form-check">
 						<label class="form-check-label">
-							<input type="checkbox" class="form-check-input" id="allCheck">전체 선택
+							<input type="checkbox" class="form-check-input" id="allCheck">&nbsp;&nbsp;
 						</label>
 					</div></th>
 				<th></th>
-				<th><button type="submit" class="btn btn-primary text-right">선택 삭제</button></th>
+				<th><button type="submit" class="btn btn-outline-dark">선택 삭제</button></th>
 			</tr>
 		</thead>
 		<tbody>
 			<c:forEach items="${rList}" var="r">
 				<tr>
-					<td>
+					<td style="padding: 20px;">
 						<div class="form-check">
 							<label class="form-check-label"> <input type="checkbox"	class="form-check-input" name="seq" value="${r.exh_seq}">
 							</label>
 						</div>
 					</td>
-					<td><a href="/exhibition/view?seq=${r.exh_seq}"><img src="${r.exh_imgurl}" style="height: 280px;"></a></td>
+					<td><a href="/exhibition/view?seq=${r.exh_seq}"><img src="${r.exh_imgurl}" style="width:300; height: 400px;"></a></td>
 					<td>
-						<ul class="nav ">							
+						<ul class="nav ">
 							<li class="nav-item col-sm-12" id="side_item" style="text-align: center">
-								<h5><a class="nav-link" href="/exhibition/view?seq=${r.exh_seq}">${r.exh_title}<span class="badge badge-primary">${r.exh_realmName}</span></a></h5></li>
-							<li class="nav-item col-sm-12" id="side_item" style="font-weight : bold; ">&nbsp;본 일시 : <fmt:formatDate pattern="MM월 dd일 kk시mm분ss초" value="${r.recently_date}" timeZone="Asia/Seoul" /></li>
+								<h5 style="font-weight : bold; "><a class="nav-link" href="/exhibition/view?seq=${r.exh_seq}">${r.exh_title}<span class="badge badge-primary">${r.exh_realmName}</span></a></h5></li>
+							<li class="nav-item col-sm-12" id="side_item" style="font-weight : bold;">&nbsp;본 일시 : <fmt:formatDate pattern="MM월 dd일 kk시mm분ss초" value="${r.recently_date}" timeZone="Asia/Seoul" /></li>
+							<li class="nav-item col-sm-12" id="side_item"><br></li>
 							<li class="nav-item col-sm-12" id="side_item">${r.exh_place}</li>
 							<li class="nav-item col-sm-12" id="side_item">${r.exh_price}</li>
 							<li class="nav-item col-sm-12" id="side_item"><fmt:formatDate pattern="yyyy-MM-dd" value="${r.exh_startDate}" timeZone="Asia/Seoul"/> ~ <fmt:formatDate pattern="yyyy-MM-dd" value="${r.exh_endDate}" timeZone="Asia/Seoul"/></li>

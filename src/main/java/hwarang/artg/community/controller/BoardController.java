@@ -128,7 +128,7 @@ public class BoardController {
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String RegisterfreeBoard(FreeBoardVO freeboard, Model model, MultipartHttpServletRequest request) {
+	public String freeBoardRegister(FreeBoardVO freeboard, Model model, MultipartHttpServletRequest request) {
 		System.out.println("test");
 		List<MultipartFile> fileList = request.getFiles("file");
 		boolean result = fservice.freeboardRegister(freeboard, fileList);

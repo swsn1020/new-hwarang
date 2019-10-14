@@ -5,18 +5,21 @@
 	$(function(){
 		
 	});
-
+/*
 	function replyRegister(modalId){
 		var blockNum = $("#"+modalId).find('input[name="bsNum"]').val();
 		var reply = $("#"+modalId).find('textarea').val();
-		var blockMemId = $("#"+modalId).find('input[name="blockMemId"]');
+// 		var blockMemId = $("#"+modalId).find('input[name="blockMemId"]');
 	//		alert(reply);
-		var d = {"num": blockNum, "reply": reply, "blockMemId": blockMemId};
+		var d = {"num": blockNum, "reply": reply};
+		console.log(d);
 		$.ajax({
 			url: "replyModify",
 			data: d,
 			type: "post",
 			dataType: "json",
+			processData: false,
+			contentType: false,
 			success: function(result){
 				if(result){
 					alert("답변이 등록되었습니다.");
@@ -30,6 +33,7 @@
 			}
 		});
 	}
+	*/
 </script>
 <style>
 	.container{
@@ -53,7 +57,7 @@
 	<section class="projects no-padding-top">
 		<div class="contianer-fluid">
 			<div style="width: 100%; padding-top: 50px; margin-bottom: 10px; text-align: center;">
-				<h1 style="color: #80425A"><strong>Block Status</strong></h1>
+				<h1 style="color: #74655F"><strong>Block Status</strong></h1>
 			</div>
 		</div>
 		<div class="project" id="project3">
@@ -74,7 +78,7 @@
 					<c:forEach items="${blockList }" var="block" varStatus="vs">
 						<fmt:formatDate value="${block.regDate }" var="regDate"	pattern="yyyy-MM-dd" />
 						<tr>
-							<td><a href="/block/blockView?num=${block.num}">${block.num }</a></td>
+							<td>${block.num }</td>
 							<td>${block.category }</td>
 							<td>${block.boardNum }</td>
 							<td>${block.memId }</td>
@@ -82,7 +86,7 @@
 							<td>
 							<c:choose>
 								<c:when test="${block.reply eq '미확인' }">
-									<button type="button" id="btn-reply" class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#replyModal${vs.index }">답변하기</button>
+									<button type="button" id="btn-reply" class="btn btn-outline-danger btn-sm" onclick="location.href='/block/blockView?num=${block.num}'">답변하기</button>
 								</c:when>
 								<c:otherwise>
 									<button type="button" id="btn-reply" class="btn btn-outline-dark btn-sm" data-toggle="modal" data-target="#replyModal${vs.index }">답변완료</button>
@@ -116,11 +120,9 @@
 											</div>
 											<!-- Modal footer -->
 											<div class="modal-footer">
-												<input type="hidden" name="bsNum" value="${block.num }">
-												<input type="hidden" name="blockMemId" value="${block.blockMemId }">
-												<c:if test="${block.reply eq  '미확인'}">
-													<button type="button" class="btn btn-outline-primary btn-sm" onclick="replyRegister('replyModal${vs.index }');">답변등록</button>
-												</c:if>
+<%-- 												<input type="hidden" name="bsNum" value="${block.num }"> --%>
+<%-- 												<input type="hidden" name="blockMemId" value="${block.blockMemId }"> --%>
+<%-- 												<button type="button" class="btn btn-outline-primary btn-sm" onclick="replyRegister('replyModal${vs.index }');">답변등록</button> --%>
 												<button type="button" class="btn btn-outline-dark btn-sm" data-dismiss="modal">닫기</button>
 											</div>
 										</div>

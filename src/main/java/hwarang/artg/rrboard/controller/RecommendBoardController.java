@@ -56,27 +56,23 @@ public class RecommendBoardController {
 	}
 
 	@RequestMapping(value = "/write", method = RequestMethod.POST)
-	public String showrwrite(String username, String recomm_title, String recomm_content,
+	public String showrRegister(RecommendBoardVO recommBoard,
 			 Model model,MultipartHttpServletRequest request){
 		// exh_name : 결제한 프로그램 명
 		List<MultipartFile> fileList =request.getFiles("file");
-		RecommendBoardVO rb = new RecommendBoardVO();
-		rb.setMember_id(username);
-		rb.setRecomm_title(recomm_title);
-		rb.setRecomm_content(recomm_content);
 		String msg = "";
 		String url = "";
 
 //		boolean result = service.reviewboardRegister_file(rb, file);
-		boolean result = rbservice.recommboardRegister_files(rb, fileList);
+		boolean result = rbservice.recommboardRegister_files(recommBoard, fileList);
 		if (result) {
 			msg = "작성되었습니다.";
-			url = "view?num=" + rb.getRecomm_num();
+			url = "view?num=" + recommBoard.getRecomm_num();
 		} else {
 			msg = "다시 작성해주세요.";
 			url = "write";
 		}
-		model.addAttribute("recommend", rbservice.recommendboardGetOne(rb.getRecomm_num()));
+		model.addAttribute("recommend", rbservice.recommendboardGetOne(recommBoard.getRecomm_num()));
 		model.addAttribute("msg", msg);
 		model.addAttribute("url", url);
 		return "/recommend/result";

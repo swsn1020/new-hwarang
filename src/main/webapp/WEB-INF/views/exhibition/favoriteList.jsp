@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <title>화랑 - 관심목록</title>
-<%@include file="../layout/left.jsp"%>
+<%@include file="../layout/menu.jsp"%>
 <script type="text/javascript">
 $(function(){ //전체선택 체크박스 클릭
 	$("#allCheck").click(function(){ 
@@ -39,50 +39,53 @@ $(function(){ //전체선택 체크박스 클릭
 				<option value="${g}">${g}</option>			
 			</c:forEach>
 		</select>
-		<button type="submit" class="btn btn-primary">Submit</button>
+		<button type="submit" class="btn btn-outline-dark">Submit</button>
 	</form>
 </div>
+
 <div class="container">
-	<h2>나의 관심 목록</h2>
+	<h2 style="font-weight: bold; margin: 10px;">나의 관심 목록</h2>
 	<form action="/exhibition/removeFavorite" method="post">
 	<input type="hidden" name="group" value="${param.group}">
+	<div style="border-top: 2px solid black;"></div>
 	<table class="table">
 		<thead>
 			<tr>
-				<th><div class="form-check">
+				<th style="padding: 20px;"><div class="form-check">
 						<label class="form-check-label">
-							<input type="checkbox" class="form-check-input" id="allCheck">전체 선택
+							<input type="checkbox" class="form-check-input" id="allCheck">&nbsp;&nbsp;
 						</label>
 					</div></th>
 				<th></th>
-				<th><button type="submit" id="deleteFav" class="btn btn-primary text-right">선택 삭제</button></th>
+				<th><button type="submit" id="deleteFav" class="btn btn-outline-dark">선택 삭제</button></th>
 			</tr>
 				
 		</thead>
 		<tbody>
 			<c:forEach items="${fList}" var="f">
 				<tr>
-					<td>
+					<td style="padding: 20px;">
 						<div class="form-check">
 							<label class="form-check-label"> <input type="checkbox"	class="form-check-input" name="seq" value="${f.exh_seq}">
 							</label>
 						</div>
 					</td>
-					<td><a href="/exhibition/view?seq=${f.exh_seq}"><img src="${f.exh_imgurl}" style="height: 280px;"></a></td>
+					<td><a href="/exhibition/view?seq=${f.exh_seq}"><img src="${f.exh_imgurl}" style="width:300; height: 400px;"></a></td>
 					<td>
 						<ul class="nav ">
 							<li class="nav-item col-sm-12" id="side_item">
-								<h5><a class="nav-link" href="/exhibition/view?seq=${f.exh_seq}">${f.exh_title}<span class="badge badge-primary">${f.exh_realmName}</span></a></h5></li>
+								<h5 style="font-weight: bold;"><a class="nav-link" style="padding: 0px;" href="/exhibition/view?seq=${f.exh_seq}">${f.exh_title}<span class="badge badge-primary">${f.exh_realmName}</span></a></h5></li>
 							<li class="nav-item col-sm-12" id="side_item">${f.exh_place}</li>
 							<li class="nav-item col-sm-12" id="side_item">${f.exh_price}</li>
 							<li class="nav-item col-sm-12" id="side_item"><fmt:formatDate pattern="yyyy-MM-dd" value="${f.exh_startDate}" timeZone="Asia/Seoul"/> ~ <fmt:formatDate pattern="yyyy-MM-dd" value="${f.exh_endDate}" timeZone="Asia/Seoul"/></li>
 						</ul>
-							<a href="/order/orderGoodsForm?seq=${f.exh_seq}">결제</a>
+							<a class="btn btn-outline-dark" style="float: right;" href="/order/orderGoodsForm?seq=${f.exh_seq}">결제</a>
 					</td>
 				</tr>
 			</c:forEach>
 		</tbody>
 	</table>
+	<div style="border-top: 2px solid black;"></div>
 	</form>
 		<ul class="pagination justify-content-center" style="margin:20px 0"> 
 			<li class='page-item ${pageMaker.prev == true ? "":"disabled"}'>

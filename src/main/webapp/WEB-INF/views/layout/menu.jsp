@@ -42,71 +42,122 @@
 <script type="text/javascript" src="/resources/js/common_fn.js"></script>
 <script type="text/javascript" src="/resources/js/calendar.js"></script>
 <script type="text/javascript" src="/resources/js/layout.js"></script>
+<!-- menu css -->
+<!-- <link href="http://www.blueb.co.kr/data/201010/IJ12873478039948/style.css" media="all" rel="stylesheet" type="text/css" /> -->
+<!-- font -->
+<!-- <link href="https://fonts.googleapis.com/css?family=Prompt:400,500,700" rel="stylesheet"> -->
+<!-- kakao login -->
 <style>
-.header{
-	text-align: center;
+@font-face { font-family: 'Arita-dotum-Medium'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/Arita-dotum-Medium.woff') format('woff'); font-weight: normal; font-style: normal; }
+*{
+	font-family: 'Arita-dotum-Medium';
 }
-.header_menu{
-	font-size: x-large;
-	padding-left: 45%;
-	padding-right: 45%;
+.header{
+	float: left;
+	/* font-family: 'Prompt', 'Noto Sans KR',dotum,'돋움',vernade,arial,sans-serif; */
+	font-family: 'Arita-dotum-Medium';
+	display: flex;
+	padding-left: 42%;
+	margin: 0 auto;
+	border: 1px solid none;
+}
+.header-title{
+	display: block;
+	padding-top: 10px;
+}
+.header-login{
+	padding-top: 50px;
+	justify-content: flex-end;
+	margin-left: 300px;
+}
+.header-menu{
+
+	display: flex;
+	border-bottom: 1px solid nono;
+	font-family: 'Arita-dotum-Medium';
+	padding-left: 33%;
+	margin-left: 15px;
+	font-size: 20px;
 }
 </style>
 </head>
 <body>
-	<header class='header'>
-		<div>
-			<h1 class="header_img">
-				<a href="/"><img class="header_img title"
-					src="https://trello-attachments.s3.amazonaws.com/5d6613e9716d6e23f5e579bb/312x140/3f52467f9d01dd9ce0a0f28eacece66e/%EB%A1%9C%EA%B3%A0.png"
-					alt="Cinque Terre"></a>
-			</h1>
+
+	<header>
+		<div class='header'>
+			<div class='header-title'>
+				<h1>
+					<a href="/"><img class="header_img maintitle"
+						src="https://trello-attachments.s3.amazonaws.com/5d6613e9716d6e23f5e579bb/312x140/3f52467f9d01dd9ce0a0f28eacece66e/%EB%A1%9C%EA%B3%A0.png"
+						alt="Cinque Terre"></a>
+				</h1>
+			</div>
+			<div class="header-login">
+				<ul class="nav justify-content-center">
+					<sec:authorize access="isAuthenticated()">
+						<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')">
+							<li class="nav-item" id="side_item"><a
+							class="nav-link" href="/admin/main">관리자 페이지</a></li>
+						</sec:authorize>
+						<sec:authorize access="!hasRole('ROLE_ADMIN')">
+							<li class="nav-item" id="side_item"><a
+								class="nav-link" href="/member/myPage">나의 페이지</a></li>
+						</sec:authorize>
+					<li class="nav-item" id="side_item"><a
+						class="nav-link" href="/logout">로그아웃</a></li>
+					<li class="nav-item" id="side_item"><a
+						class="nav-link" href="/exhibition/favoriteList">관심목록</a></li>	
+					<li class="nav-item" id="side_item"><a
+						class="nav-link" href="/exhibition/recentlyView">최근본상품</a><div></div></li>
+					</sec:authorize>
+					<sec:authorize access="isAnonymous()">
+					<li class="nav-item" id="side_item"><a
+						class="nav-link" href="/member/joinForm">회원가입</a></li>
+					<li class="nav-item" id="side_item"><a
+						class="nav-link" href="/member/loginForm">로그인</a></li>
+					</sec:authorize>
+				</ul>
+			</div>
 		</div>
-		<div class="header_menu">
+		<div class="header-menu">
 			<nav class="navbar navbar-expand-sm">
 				<div class="collapse navbar-collapse" id="navbarsExample03">
-					<ul class="navbar-nav mr-auto">
+					<ul class="navbar-nav justify-content-center">
 						<li class="nav-item dropdown"><a
 							class="nav-link dropdown-toggle" href="#" id="dropdown03"
-							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">이용안내</a>
+							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&nbsp;이용안내&nbsp;</a>
 							<div class="dropdown-menu" aria-labelledby="dropdown03">
 								<a class="dropdown-item" href="#">화랑안내</a> 
 								<a class="dropdown-item" href="/notice/noticeList">공지사항</a> 
 								<a class="dropdown-item" href="/faq/faqList">FAQ</a>
-								<a class="dropdown-item" href="/qna/qnaListForUser?memId=haddie">Q&amp;A</a>
-								<a class="dropdown-item" href="/report/reportList">신고</a>
 							</div>
 						</li>
 						<li class="nav-item dropdown"><a
 							class="nav-link dropdown-toggle" href="#" id="dropdown03"
-							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">공연·전시</a>
+							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&nbsp;&nbsp;화랑&nbsp;</a>
 							<div class="dropdown-menu" aria-labelledby="dropdown03">
+								<a class="dropdown-item" href="/exhibition">공연·전시</a>
 								<a class="dropdown-item" href="/exhibition/mapList">네비게이션</a>
 							</div>
 						</li>
 						<li class="nav-item">
-        					<a class="nav-link" href="#">관람&amp;후기</a>
+        					<a class="nav-link" href="/review/reviewboard">&nbsp;관람후기&nbsp;</a>
         				</li>
         				<li class="nav-item dropdown"><a
 							class="nav-link dropdown-toggle" href="#" id="dropdown03"
-							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">커뮤니티</a>
+							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&nbsp;커뮤니티&nbsp;</a>
 							<div class="dropdown-menu" aria-labelledby="dropdown03">
+								<a class="dropdown-item" href="/board/freeboard">자유게시판</a>
 								<a class="dropdown-item" href="/recommend/recommendboard">홍보</a>
+								<a class="dropdown-item" href="/report/reportList">신고</a>
 							</div>
 						</li>
         				<li class="nav-item">
-        					<a class="nav-link" href="#">크라우드&amp;펀딩</a>
+        					<a class="nav-link" href="/funding/list">&nbsp;크라우드펀딩&nbsp;</a>
         				</li>
 					</ul>
 				</div>
 
 			</nav>
 		</div>
-
-	</header>
-	<!-- 
-
-<div class="row">
-
-	
-	<div class="col-sm-8"> -->
+</header>
