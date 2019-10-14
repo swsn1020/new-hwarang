@@ -137,9 +137,27 @@
 			    <tbody id="exhibition"  style="text-align: center;">
 	
 			    </tbody>
-			  </table>
+			</table>
 		</div>
-
+		<!-- 공연장 부분 -->
+		<div>
+			<table class="table table-hover">
+			    <thead  style="text-align: center;">
+			      <tr>
+			        <th>공연장명</th>
+			        <th>바로가기</th>
+			      </tr>
+			    </thead>
+			    <tbody style="text-align: center;">
+					<c:forEach items="${pcList}" var="p">
+						<tr>
+							<td>${p}</td>
+							<td><a class="btn btn-outline-dark"></a></td>
+						</tr>
+					</c:forEach>
+			    </tbody>
+			</table>
+		</div>
 	</div>
 <%@include file="../layout/bottom.jsp"%>
 </body>

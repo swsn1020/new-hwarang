@@ -82,10 +82,12 @@ public class ExhibitionController {
 		List<String> yList = new ArrayList<String>();
 		List<String> xList = new ArrayList<String>();
 		List<String> pList = new ArrayList<String>();
+		List<String> pcList = new ArrayList<String>();
 		for(int i =0;i<list.size();i++) {
 			String x = list.get(i).getExh_gpsx();				
 			String y = list.get(i).getExh_gpsy();
 			String p = list.get(i).getExh_placeseq();
+			String pc = list.get(i).getExh_place();
 			if(!x.equals("정보없음")) {
 				if(!y.equals("정보없음")) {
 					xList.add(x);
