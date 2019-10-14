@@ -42,7 +42,7 @@ function connect(){
 	
 	ws.onopen = function(){
 		console.log('Info.connection opened');
-		setTimeout(function(){connect(); },1000);
+// 		setTimeout(function(){connect(); },1000);
 		
 	};
 	

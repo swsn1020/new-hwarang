@@ -24,7 +24,7 @@ public class ReplyEchoHandler extends TextWebSocketHandler{
 	
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception{
-		System.out.println("afterConnectionEstablished:" + session);
+//		System.out.println("afterConnectionEstablished:" + session);
 		String senderId = getId(session);
 		userSessions.put(senderId,session);
 		
