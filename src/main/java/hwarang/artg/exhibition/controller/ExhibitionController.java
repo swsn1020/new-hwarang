@@ -121,7 +121,7 @@ public class ExhibitionController {
 		}
 		rService.addRecentlyView(new RecentlyViewVO(seq, id));
 		model.addAttribute("group",fService.getGroup(id));
-		ExhibitionVO exh = service.getOne(seq);
+		ExhibitionVO exh = service.getOneView(seq,id);
 		model.addAttribute("exh", exh);
 		List<NaverBlogDTO> blogReview = blogservice.naverurlapi(exh.getExh_title());
 		model.addAttribute("blogReview", blogReview);
@@ -202,20 +202,35 @@ public class ExhibitionController {
 	
 	@RequestMapping("/like/add")
 	public String likeAdd(Principal principal, int seq) {
-		System.out.println(seq);
 		ExhLikeVO like = new ExhLikeVO(principal.getName(), seq, 1);
 		lService.addLikeStatus(like);
+		service.updateLike(seq);
 		return "redirect:/exhibition/view?seq="+seq;
 	}
-	@RequestMapping("/like/delete")
-	public String like() {
-		return "redirect:/exhibition/view";
+	
+	@RequestMapping("/like/modify")
+	public String likeModi(Principal principal, int seq, int status) {
+		System.out.println(seq+"번 추천 수정요청!");
+		ExhLikeVO like = new ExhLikeVO(principal.getName(), seq, status);
+		lService.modifyLikeStatus(like);
+		service.updateLike(seq);
+		return "redirect:/exhibition/view?seq="+seq;
 	}
 	
 	@RequestMapping("/unlike/add")
-	public String unLike(Principal principal, int seq) {
+	public String unLikeAdd(Principal principal, int seq) {
 		ExhLikeVO like = new ExhLikeVO(principal.getName(), seq, 2);
 		lService.addLikeStatus(like);
+		service.updateLike(seq);
+		return "redirect:/exhibition/view?seq="+seq;
+	}
+	
+	@RequestMapping("/unlike/modify")
+	public String unLikeModi(Principal principal,int seq, int status) {
+		System.out.println(seq+"번 비추천 수정요청!");
+		ExhLikeVO like = new ExhLikeVO(principal.getName(), seq, status);
+		lService.modifyLikeStatus(like);
+		service.updateLike(seq);
 		return "redirect:/exhibition/view?seq="+seq;
 	}
 	

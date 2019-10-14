@@ -44,7 +44,7 @@ public class ExhibitionService {
 				}
 				if (tag.equals("title")) {
 					String x = xpp.getText();
-					if(x==null || x.equals(" ")) {
+					if(x==null || x=="") {
 						x= "정보없음";
 					}
 					exh.setExh_title(x);
@@ -63,42 +63,42 @@ public class ExhibitionService {
 				}
 				if (tag.equals("place")) {
 					String x = xpp.getText();
-					if(x==null || x.equals(" ")) {
+					if(x==null || x=="") {
 						x= "정보없음";
-					}
-					exh.setExh_title(x);
+					}				
+					exh.setExh_place(x);
 
 				}
 				if (tag.equals("realmName")) {
 					String x = xpp.getText();
-					if(x==null || x.equals(" ")) {
+					if(x==null || x=="") {
 						x= "정보없음";
 					}
-					exh.setExh_title(x);
+					exh.setExh_realmName(x);
 
 				}
 				if (tag.equals("area")) {
 					String x = xpp.getText();
-					if(x==null || x.equals(" ")) {
+					if(x==null || x=="") {
 						x= "정보없음";
 					}
-					exh.setExh_title(x);
+					exh.setExh_area(x);
 
 				}
 				if (tag.equals("subTitle")) {
 					String x = xpp.getText();
-					if(x==null || x.equals(" ")) {
+					if(x==null || x=="") {
 						x= "정보없음";
 					}
-					exh.setExh_title(x);
+					exh.setExh_subTitle(x);
 
 				}
 				if (tag.equals("price")) {
 					String x = xpp.getText();
-					if(x==null || x.equals(" ")) {
+					if(x==null || x=="") {
 						x= "정보없음";
 					}
-					exh.setExh_title(x);
+					exh.setExh_price(x);
 
 				}
 //				if (tag.equals("contents1")) {
@@ -125,64 +125,63 @@ public class ExhibitionService {
 //				}
 				if (tag.equals("url")) {
 					String x = xpp.getText();
-					if(x==null || x.equals(" ")) {
+					if(x==null || x=="") {
 						x= "정보없음";
 					}
-					exh.setExh_title(x);
+					exh.setExh_url(x);
 
 				}
 				if (tag.equals("phone")) {
 					String x = xpp.getText();
-					if(x==null || x.equals(" ")) {
+					if(x==null || x=="") {
 						x= "정보없음";
 					}
-					exh.setExh_title(x);
+					exh.setExh_phone(x);
 				}
 				if (tag.equals("imgUrl")) {
 					String x = xpp.getText();
-					if(x==null || x.equals(" ")) {
+					if(x==null || x=="") {
 						x= "정보없음";
 					}
-					exh.setExh_title(x);
+					exh.setExh_imgurl(x);
 				}
 				if (tag.equals("gpsX")) {
 					String x = xpp.getText();
-					if(x==null || x.equals(" ")) {
+					if(x==null || x=="") {
 						x= "정보없음";
 					}
-					exh.setExh_title(x);
+					exh.setExh_gpsx(x);
 
 				}
 				if (tag.equals("gpsY")) {
 					String x = xpp.getText();
-					if(x==null || x.equals(" ")) {
+					if(x==null || x=="") {
 						x= "정보없음";
 					}
-					exh.setExh_title(x);
+					exh.setExh_gpsy(x);
 
 				}
 				if (tag.equals("placeUrl")) {
 					String x = xpp.getText();
-					if(x==null || x.equals(" ")) {
+					if(x==null || x=="") {
 						x= "정보없음";
 					}
-					exh.setExh_title(x);
-
+					exh.setExh_placeurl(x);
 				}
 				if (tag.equals("placeAddr")) {
 					String x = xpp.getText();
-					if(x==null || x.equals(" ")) {
+					if(x==null || x=="") {
 						x= "정보없음";
 					}
-					exh.setExh_title(x);
+					exh.setExh_placeaddr(x);
 
 				}
 				if (tag.equals("placeSeq")) {
 					String x = xpp.getText();
-					if(x==null || x.equals(" ")) {
+					if(x==null || x=="") {
 						x= "정보없음";
 					}
-					exh.setExh_title(x);
+					exh.setExh_placeseq(x);
 				}
 			} else if (event_type == XmlPullParser.END_TAG) {
 				tag = xpp.getName();

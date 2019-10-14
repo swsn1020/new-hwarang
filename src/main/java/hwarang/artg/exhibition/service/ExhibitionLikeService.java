@@ -24,4 +24,11 @@ public class ExhibitionLikeService {
 		}
 		return false;
 	}
+	
+	public boolean modifyLikeStatus(ExhLikeVO like) {
+		if(mapper.update(like)>0) {
+			return true;
+		}
+		return false;
+	}
 }
