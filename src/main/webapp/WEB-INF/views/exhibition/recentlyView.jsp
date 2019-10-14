@@ -51,13 +51,14 @@ $(function(){ //전체선택 체크박스 클릭
 					</td>
 					<td><a href="/exhibition/view?seq=${r.exh_seq}"><img src="${r.exh_imgurl}" style="width:300; height: 400px;"></a></td>
 					<td>
-						<ul class="nav ">							
-							<li class="nav-item col-sm-12" id="side_item">
-								<h5 style="font-weight: bold;"><a class="nav-link"  style="padding: 0px;"  href="/exhibition/view?seq=${r.exh_seq}">${r.exh_title}<span class="badge badge-primary">${r.exh_realmName}</span></a></h5></li>
-							<li class="nav-item col-sm-12" id="side_item" style="font-weight : bold; ">본 일시 ${r.recently_date}</li>
+						<ul class="nav ">
+							<li class="nav-item col-sm-12" id="side_item" style="text-align: center">
+								<h5 style="font-weight : bold; "><a class="nav-link" href="/exhibition/view?seq=${r.exh_seq}">${r.exh_title}<span class="badge badge-primary">${r.exh_realmName}</span></a></h5></li>
+							<li class="nav-item col-sm-12" id="side_item" style="font-weight : bold;">&nbsp;본 일시 : <fmt:formatDate pattern="MM월 dd일 kk시mm분ss초" value="${r.recently_date}" timeZone="Asia/Seoul" /></li>
+							<li class="nav-item col-sm-12" id="side_item"><br></li>
 							<li class="nav-item col-sm-12" id="side_item">${r.exh_place}</li>
 							<li class="nav-item col-sm-12" id="side_item">${r.exh_price}</li>
-							<li class="nav-item col-sm-12" id="side_item">${fn:substring(r.exh_startDate, 0, 10)} ~ ${fn:substring(r.exh_endDate, 0, 10)}</li>
+							<li class="nav-item col-sm-12" id="side_item"><fmt:formatDate pattern="yyyy-MM-dd" value="${r.exh_startDate}" timeZone="Asia/Seoul"/> ~ <fmt:formatDate pattern="yyyy-MM-dd" value="${r.exh_endDate}" timeZone="Asia/Seoul"/></li>
 						</ul>
 					</td>
 				</tr>

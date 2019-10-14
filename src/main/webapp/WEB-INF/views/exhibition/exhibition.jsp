@@ -63,8 +63,11 @@ function addFavGroup(seq) {
 </script>
 <style>
 .exh-list{
-    padding-right: 10%;
-    padding-left: 10%;
+    padding-right: 15%;
+    padding-left: 15%;
+}
+.star{
+  color: #f0d90e;
 }
 </style>
 <div class="container mt-3 " style="text-align: center;">
@@ -97,6 +100,8 @@ function addFavGroup(seq) {
 			<option value="6" <c:out value="${param.sort  eq 6 ?'selected':''}"/>>빠른 시작일</option>
 			<option value="7" <c:out value="${param.sort  eq 7 ?'selected':''}"/>>늦은 종료일</option>
 			<option value="8" <c:out value="${param.sort  eq 8 ?'selected':''}"/>>빠른 종료일</option>
+			<option value="9" <c:out value="${param.sort  eq 9 ?'selected':''}"/>>높은 추천수</option>
+			<option value="10" <c:out value="${param.sort  eq 10 ?'selected':''}"/>>높은 비추천수</option>
 		</select>
 		<select name="type">
 			<option value="" <c:out value="${pageMaker.cri.type == null?'selected':''}"/>>----</option>
@@ -119,18 +124,20 @@ function addFavGroup(seq) {
 						alt="item image" role="img" src="${e.exh_imgurl}"></a>
 				</div>
 				<div class="card-body">
-					<h5 class="card-title" style="font-weight: bold;">
-						<a href="/exhibition/view?seq=${e.exh_seq}">${e.exh_title}</a><span class="badge badge-primary">${e.exh_realmName}</span>
-					</h5>
-					<p class="card-text">
-						${fn:substring(e.exh_startDate, 0, 10)} ~ ${fn:substring(e.exh_endDate, 0, 10)}
+					<p class="card-title" style="font-weight: bold; font-size: 18px">
+						<a href="/exhibition/view?seq=${e.exh_seq}">${e.exh_title}</a><span class="badge badge-primary">${e.exh_realmName}</span>&nbsp;[${e.exh_recomm_cnt}]
 					</p>
-					<p class="card-text">${e.exh_area}</p>
-					<p class="card-text">${e.exh_place}
-						<a><i id="favStatus${e.exh_seq}"
-							class='${e.favorite_status == 0 ? "far ":"star fas "}fa-star'
-							data-toggle="modal"
-							data-target='${e.favorite_status == 0 ? "#fav-AddModal":"#fav-RemoveModal"}${e.exh_seq}'></i></a>
+					
+					<p class="card-text">
+						${fn:substring(e.exh_startDate, 0, 10)} ~ ${fn:substring(e.exh_endDate, 0, 10)}<br>${e.exh_area}&nbsp;/&nbsp;${e.exh_place}
+					</p>
+					
+					<p class="card-text">
+						<i class="far fa-thumbs-up" style="color: blue;">${e.exh_like}</i>&nbsp;/&nbsp;<i class="far fa-thumbs-down" style="color: gray;">${e.exh_unlike}</i>
+						&nbsp;&nbsp;&nbsp;&nbsp;<span>즐겨찾기&nbsp;<a><i id="favStatus${e.exh_seq}" class='${e.favorite_status == 0 ? "far ":"star fas "}fa-star' data-toggle="modal" data-target='${e.favorite_status == 0 ? "#fav-AddModal":"#fav-RemoveModal"}${e.exh_seq}'></i></a></span>
+					</p>
+					<p class="card-text">
+						
 					</p>
 				</div>
 			</div>

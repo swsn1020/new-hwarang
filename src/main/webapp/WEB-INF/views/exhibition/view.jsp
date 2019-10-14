@@ -19,6 +19,49 @@
 <!-- <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script> -->
 <script type="text/javascript">
 	$(function() {
+		//추천,비추천
+		$('.like').click(function(e) {
+			e.preventDefault();
+			if("${exh.exh_like_status}"==0){
+				alert("등록요청");
+				location.replace('/exhibition/like/add?seq=${exh.exh_seq}'); 
+			}
+			if("${exh.exh_like_status}"==1){
+				alert("추천 삭제");
+				location.replace('/exhibition/like/modify?seq=${exh.exh_seq}&status=3'); 
+			}
+			if("${exh.exh_like_status}"==2){
+				alert("이미 비추천을 누르셨습니다.");
+				return false;
+			}
+			if("${exh.exh_like_status}"==3){
+				alert("등록요청");
+				location.replace('/exhibition/like/modify?seq=${exh.exh_seq}&status=1'); 
+			}
+		});
+		
+		$('.unlike').click(function(e) {
+			e.preventDefault();
+			if("${exh.exh_like_status}"==0){
+				alert("등록요청");
+				location.replace('/exhibition/unlike/add?seq=${exh.exh_seq}'); 
+			}
+			if("${exh.exh_like_status}"==1){
+				alert("이미 추천을 누르셨습니다.");
+				return false;
+			}
+			if("${exh.exh_like_status}"==2){
+				alert("비추천 삭제");
+				location.replace('/exhibition/unlike/modify?seq=${exh.exh_seq}&status=3'); 
+			}
+			if("${exh.exh_like_status}"==3){
+				alert("등록요청");
+				location.replace('/exhibition/unlike/modify?seq=${exh.exh_seq}&status=2'); 
+			}
+			
+		});
+
+		//지도
 		var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
 		var options = { //지도를 생성할 때 필요한 기본 옵션
 				center: new kakao.maps.LatLng(${exh.exh_gpsy}, ${exh.exh_gpsx}),
@@ -34,8 +77,8 @@
 		});
 		// 마커가 지도 위에 표시되도록 설정합니다
 		marker.setMap(map);	
-		
-		var iwContent = '<div style="padding:5px;"><div>${exh.exh_title}<div><table class="table"><tbody><tr><td>홈페이지</td><td><a href="${exh.exh_url}"><i class="fas fa-home"></i></a></td></tr><tr><td>주소</td><td><a href="${exh.exh_placeurl}">${exh.exh_place}</a></td></tr><tr><td>전화번호</td><td>${exh.exh_phone}</td></tr></tbody></table></div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+		var title = "${exh.exh_title}".replace(/'/gi,'"');
+		var iwContent = '<div style="padding:5px; width: 105%;"><div>'+title+'<div><table class="table"><tbody><tr><td>홈페이지</td><td><a href="${exh.exh_url}"><i class="fas fa-home"></i></a></td></tr><tr><td>주소</td><td><a href="${exh.exh_placeurl}">${exh.exh_place}</a></td></tr><tr><td>전화번호</td><td>${exh.exh_phone}</td></tr></tbody></table></div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
 	    iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
 		// 인포윈도우를 생성합니다
 		var infowindow = new kakao.maps.InfoWindow({
@@ -120,9 +163,12 @@
 						return;
 					}
 					for (var i = 0, len = list.length || 0; i < len; i++) {
-						str += "<li class='list-group-item' data-rno='"+list[i].reply_num+"'><div class='col-sm-10'><strong style='color : #337ab7;'><i class='fas fa-user'>&nbsp&nbsp"+list[i].replyer+"..${pinfo.username}</i></strong></div>";
-						str += "<div col-sm-2  style='text-align: center;'>"+ replyService.displayTime(list[i].reply_reg_date)+"&nbsp&nbsp<a data-toggle='collapse' data-target='#modifyCol"+i+"'><i class='fas fa-tools replyModify'>&nbsp&nbsp</i></a><a href='#'><i class='fas fa-trash-alt replyDelete'></i></a></div>";
-						str += "<div col-sm-2></div><div col-sm-10><p class='text-uppercase'>&nbsp&nbsp"+ list[i].reply_content +"</p></div> <div id='modifyCol"+i+"' class='collapse'><textarea rows='4' cols='108' id='replyMod' name='replyMod' placeholder='수정할 댓글을 입력해주세요''></textarea><button type='button' class='btn btn-primary replyModifyBtn'>Reply Modify</button></div></li>";					
+						str += "<li class='list-group-item' data-rno='"+list[i].reply_num+"'><div class='col-sm-10'><strong style='color : #337ab7;'><i class='fas fa-user'>&nbsp&nbsp"+list[i].member_id+"</i></strong></div><div col-sm-2  style='text-align: center;'>"+ replyService.displayTime(list[i].reply_reg_date);
+						
+						if("${pinfo.username}"==list[i].member_id){
+							str += "&nbsp&nbsp<a data-toggle='collapse' data-target='#modifyCol"+i+"'><i class='fas fa-tools replyModify'>&nbsp&nbsp</i></a><a href='#'><i class='fas fa-trash-alt replyDelete'></i></a>";	
+						}
+						str += "</div><div col-sm-10><p class='text-uppercase'>&nbsp&nbsp댓글내용 : "+ list[i].reply_content +"</p></div> <div id='modifyCol"+i+"' class='collapse'><textarea rows='4' cols='108' id='replyMod' name='replyMod' placeholder='수정할 댓글을 입력해주세요''></textarea><button type='button' class='btn btn-primary replyModifyBtn'>Reply Modify</button></div></li>";					
 					}
 					replyUL.html(str);
 				});
@@ -196,8 +242,12 @@
 		</div>
 		<div class="exh-div">
 			<div class="exh-img">
-				<img class="exh-img2 card-img-top" style="width: 400px; height: 500px;"
-					alt="item image" role="img" src="${exh.exh_imgurl}"> 
+				<img class="exh-img2 card-img-top" style="width: 400px; height: 500px;" alt="item image" role="img" src="${exh.exh_imgurl}"> 
+			</div>
+			<br>
+			<div style="text-align: center;">
+				<a class="btn btn-outline-dark like" href="" style="color: blue;">&nbsp;추천(${exh.exh_like})&nbsp;</a>
+				<a class="btn btn-outline-dark unlike" href="" style="color: gray;">비추천(${exh.exh_unlike})</a>
 			</div>
 			<table class="exh-table table table-hover">
 				<tbody>

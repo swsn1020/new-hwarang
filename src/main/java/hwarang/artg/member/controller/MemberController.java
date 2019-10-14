@@ -91,18 +91,7 @@ public class MemberController {
 		return "/member/loginForm";
 	}
 	
-	@RequestMapping("/login")
-	public String showLogin(String member_id,String member_password,Model model) {
-		MemberVO member = service.memberGetOne(member_id);
-		if(member!=null) {
-			if(member_password.equals(member.getMember_password())) {
-				return "redirect:/index?result=success&id="+member_id;
-			}
-		}
-		model.addAttribute("msg", "아이디 또는 비밀번호를 잘못 입력하셨습니다.");
-		model.addAttribute("url", "loginForm");
-		return "/member/result";			
-	}
+
 	
 	@RequestMapping("/naverLogin")
 	public String showMain(Model model,HttpSession session,HttpServletRequest request) {
@@ -391,20 +380,19 @@ public class MemberController {
 		return "/member/result";
 	}
 	@RequestMapping("/myPage")
-	public String showMyPage(Principal principa,Model model) {
-		String id = principa.getName();
+	public String showMyPage(Principal principal,Model model) {
+		String id = principal.getName();
 		model.addAttribute("member", service.memberGetOne(id));
 		model.addAttribute("points", pservice.pointGetOne(id));
 		model.addAttribute("review", reviewservice.reviewboardGetIdAll(id));
 		model.addAttribute("recommend", recommendservice.recommendboardGetAll_Id(id));
 		model.addAttribute("free", freeservice.freeboardGetAllId(id));
-		model.addAttribute("id", id);
 		return "/member/myPage";
 	}
 	
 	@RequestMapping("/modifyForm")
-	public String showModifyForm(Principal principa,Model model) {
-		String id = principa.getName();
+	public String showModifyForm(Model model, Principal principal) {
+		String id = principal.getName();
 		MemberVO member = service.memberGetOne(id);
 		model.addAttribute("member", member);
 		return "/member/modifyForm";

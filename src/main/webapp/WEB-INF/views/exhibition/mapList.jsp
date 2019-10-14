@@ -111,7 +111,7 @@
 	<div class="container">
 		<form action="#" style="margin: 10px;">
 			<select name="area">
-				<option value="" <c:out value="${param.area == null ?'selected':''}"/>>서울</option>
+				<option value="" <c:out value="${param.area == null ?'selected':''}"/>>--기본--</option>
 				<c:forEach items="${area}" var="a">
 					<option value="${a}" <c:out value="${param.area  eq a ?'selected':''}"/>>${a}</option>			
 				</c:forEach>

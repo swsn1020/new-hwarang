@@ -24,10 +24,12 @@ import com.google.gson.Gson;
 
 import hwarang.artg.common.model.CriteriaDTO;
 import hwarang.artg.common.model.PageDTO;
+import hwarang.artg.exhibition.model.ExhLikeVO;
 import hwarang.artg.exhibition.model.ExhibitionVO;
 import hwarang.artg.exhibition.model.FavoriteMarkVO;
 import hwarang.artg.exhibition.model.NaverBlogDTO;
 import hwarang.artg.exhibition.model.RecentlyViewVO;
+import hwarang.artg.exhibition.service.ExhibitionLikeService;
 import hwarang.artg.exhibition.service.ExhibitionListService;
 import hwarang.artg.exhibition.service.FavoriteMarkService;
 import hwarang.artg.exhibition.service.NaverBlogService;
@@ -44,6 +46,8 @@ public class ExhibitionController {
 	RecentlyViewService rService;
 	@Autowired
 	NaverBlogService blogservice;
+	@Autowired
+	ExhibitionLikeService lService;
 
 	@GetMapping("")
 	public String exhibitionShow(Model model, CriteriaDTO cri, ExhibitionVO exh) throws Exception {
@@ -111,9 +115,13 @@ public class ExhibitionController {
 	@GetMapping("/view")
 	public void exhibitionDetail(Model model, int seq, Principal principal) throws Exception {
 		String id = principal.getName();
+		RecentlyViewVO rec = new RecentlyViewVO(seq, id);
+		if(rService.getIsViewd(rec)) {
+			rService.removeRecentlyView(rec);
+		}
 		rService.addRecentlyView(new RecentlyViewVO(seq, id));
 		model.addAttribute("group",fService.getGroup(id));
-		ExhibitionVO exh = service.getOne(seq);
+		ExhibitionVO exh = service.getOneView(seq,id);
 		model.addAttribute("exh", exh);
 		List<NaverBlogDTO> blogReview = blogservice.naverurlapi(exh.getExh_title());
 		model.addAttribute("blogReview", blogReview);
@@ -190,6 +198,40 @@ public class ExhibitionController {
 	public ResponseEntity<String> removeFav(@RequestBody FavoriteMarkVO vo) {
 		vo.setMember_id(SecurityContextHolder.getContext().getAuthentication().getName());
 		return fService.removeFavorite(vo) == true ? new ResponseEntity<>("success", HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	
+	@RequestMapping("/like/add")
+	public String likeAdd(Principal principal, int seq) {
+		ExhLikeVO like = new ExhLikeVO(principal.getName(), seq, 1);
+		lService.addLikeStatus(like);
+		service.updateLike(seq);
+		return "redirect:/exhibition/view?seq="+seq;
+	}
+	
+	@RequestMapping("/like/modify")
+	public String likeModi(Principal principal, int seq, int status) {
+		System.out.println(seq+"번 추천 수정요청!");
+		ExhLikeVO like = new ExhLikeVO(principal.getName(), seq, status);
+		lService.modifyLikeStatus(like);
+		service.updateLike(seq);
+		return "redirect:/exhibition/view?seq="+seq;
+	}
+	
+	@RequestMapping("/unlike/add")
+	public String unLikeAdd(Principal principal, int seq) {
+		ExhLikeVO like = new ExhLikeVO(principal.getName(), seq, 2);
+		lService.addLikeStatus(like);
+		service.updateLike(seq);
+		return "redirect:/exhibition/view?seq="+seq;
+	}
+	
+	@RequestMapping("/unlike/modify")
+	public String unLikeModi(Principal principal,int seq, int status) {
+		System.out.println(seq+"번 비추천 수정요청!");
+		ExhLikeVO like = new ExhLikeVO(principal.getName(), seq, status);
+		lService.modifyLikeStatus(like);
+		service.updateLike(seq);
+		return "redirect:/exhibition/view?seq="+seq;
 	}
 	
 	

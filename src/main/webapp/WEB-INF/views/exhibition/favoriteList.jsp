@@ -77,7 +77,7 @@ $(function(){ //전체선택 체크박스 클릭
 								<h5 style="font-weight: bold;"><a class="nav-link" style="padding: 0px;" href="/exhibition/view?seq=${f.exh_seq}">${f.exh_title}<span class="badge badge-primary">${f.exh_realmName}</span></a></h5></li>
 							<li class="nav-item col-sm-12" id="side_item">${f.exh_place}</li>
 							<li class="nav-item col-sm-12" id="side_item">${f.exh_price}</li>
-							<li class="nav-item col-sm-12" id="side_item">${fn:substring(f.exh_startDate, 0, 10)} ~ ${fn:substring(f.exh_endDate, 0, 10)}</li>
+							<li class="nav-item col-sm-12" id="side_item"><fmt:formatDate pattern="yyyy-MM-dd" value="${f.exh_startDate}" timeZone="Asia/Seoul"/> ~ <fmt:formatDate pattern="yyyy-MM-dd" value="${f.exh_endDate}" timeZone="Asia/Seoul"/></li>
 						</ul>
 							<a class="btn btn-outline-dark" style="float: right;" href="/order/orderGoodsForm?seq=${f.exh_seq}">결제</a>
 					</td>
