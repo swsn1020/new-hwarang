@@ -35,4 +35,6 @@ public interface QnAMapper {
 	//최근 게시물로 불러오기(날짜 정렬)
 	public List<QnAVO> getListByRegDate();
 	
+	
+	
 }	

@@ -164,7 +164,7 @@ public class BlockController {
 		return "manager/result";
 	}
 	
-	@RequestMapping(value="blockMember", method=RequestMethod.POST)
+	@RequestMapping(value="/blockMember", method=RequestMethod.POST)
 	public String doBlockMember(@RequestParam("member_id")String id, Model model) {
 		String msg = id+"님의 계정차단에 실패하였습니다.";
 		String url = "/admin/memberList";
@@ -178,4 +178,9 @@ public class BlockController {
 		return "manager/result";
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="/unCheckBlocks")
+	public int getUnCheckBlocks() {
+		return service.getBlockCountNotChecked();
+	}
 }

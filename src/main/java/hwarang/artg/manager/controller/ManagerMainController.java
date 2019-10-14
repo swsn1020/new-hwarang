@@ -32,10 +32,6 @@ public class ManagerMainController {
 	private ManagerMainService managerService;
 	@Autowired
 	private MemberService memberService;
-	@Autowired
-	private ManagerAlarmService alarmService;
-	
-	
 	
 	@RequestMapping("/main")
 	public String showMainPage(Model model, HttpSession session, Principal principal) {
@@ -68,16 +64,9 @@ public class ManagerMainController {
 		String id = principal.getName();
 		session.setAttribute("memName", memberService.memberGetOne(id).getMember_name());
 		session.setAttribute("memId", id);
-		session.setAttribute("blockCnt", blockService.getBlockCountNotChecked());
 		
 		/* Review 게시판 불러오기 */
 		model.addAttribute("reviewList", managerService.getReviewsTop());
-		
-		//알람 등록
-		session.setAttribute("alarmCnt", alarmService.unReadAlarmCount());
-		//알람리스트
-//		session.setAttribute("alarmList", alarmService.getFourAlarms());
-//		System.out.println("manager controller alarmList: "+alarmService.getFourAlarms());
 		
 		return "manager/adminMain";
 	}

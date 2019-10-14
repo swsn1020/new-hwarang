@@ -29,8 +29,8 @@ $(function(){
  	            	barThickness: 1,
  	                ticks: {
  	                    min: 0,
- 	                    max: 90,
- 	                    stepSize: 15
+ 	                    max: 20,
+ 	                    stepSize: 5
  	                }
                 }],
             },
@@ -39,7 +39,7 @@ $(function(){
             }
         },
         data: {
-            labels: ["NOTICE", "FREE", "REPORT", "BLOCK", "REVIEW", "RECOMMEND"],
+            labels: ["Q&A", "FREE", "REPORT", "BLOCK", "REVIEW", "RECOMMEND"],
             datasets: [
                 {
                     label: "Posted today each board",

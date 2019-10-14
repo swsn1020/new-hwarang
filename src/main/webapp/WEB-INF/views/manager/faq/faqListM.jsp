@@ -12,11 +12,6 @@
 	h1{
 		color: #3E404B;
 	}
-	a {
-		border-color: #6C908A;
-		-webkit-box-shadow: 0 0 0 0.2rem rgba(108, 144, 138, 0.25);
-  		box-shadow: 0 0 0 0.2rem rgba(108, 144, 138, 0.25);
-	}
 </style>
 <div class="content-inner" style="padding-bottom: 59px;">
 	<section class="projects no-padding-top">
