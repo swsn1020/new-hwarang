@@ -1,92 +1,78 @@
 package hwarang.artg.funding.controller;
 
-
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import com.google.gson.Gson;
 
 import hwarang.artg.common.model.CriteriaDTO;
+import hwarang.artg.common.model.PageDTO;
 import hwarang.artg.funding.model.CrowdfundingVO;
 import hwarang.artg.funding.service.CrowdfundingService;
-import lombok.AllArgsConstructor;
+import hwarang.artg.member.service.MemberService;
 
 @Controller
-@RequestMapping("/funding/*")
-@AllArgsConstructor
+@RequestMapping("/funding")
 public class CrowdfundingController {
 
 	@Autowired
-	CrowdfundingService service;
-	
-	@GetMapping("/list")
-    public void list(CriteriaDTO cri, Model model) {
-        model.addAttribute("list", service.getList(cri));
+	private CrowdfundingService service;
+	@Autowired
+	private MemberService mService;
 
-        int total = service.getTotal(cri);
-        model.addAttribute("pageMaker", new hwarang.artg.common.model.PageDTO(cri, total));
-    }
+	@RequestMapping("/fundingList")
+	public String showFundingList(CriteriaDTO cri, Model model) {
+		// 페이징 처리 List
+		PageDTO page = new PageDTO(cri, service.getTotalCount(cri));
+		model.addAttribute("pageMaker", page);
+		System.out.println(page);
+		model.addAttribute("fundingList", service.pagingList(cri));
+		System.out.println(service.pagingList(cri));
+		return "funding/fundingList";
+	}
 
-    @GetMapping("/register")
-    public void register() {    }
+	@RequestMapping("/fundingWrite")
+	public String showFundingWriteForm() {
+		return "funding/fundingWrite";
+	}
 
-    @PostMapping("/register")
-    public String register(CrowdfundingVO funding, RedirectAttributes rttr) {
-        service.register(funding);
-        rttr.addFlashAttribute("result", funding.getFunding_num());
-        return "redirect:/funding/list";
-    }
+	@RequestMapping(value = "/fundingWrite", method = RequestMethod.POST)
+	public String doFundingRegister(CrowdfundingVO funding, Model model) {
+		String msg = "펀딩 등록에 실패하였습니다.";
+		String url = "fundingList";
+		if (service.noticeRegister(funding)) {
+			msg = "펀딩이 등록되었습니다.";
+		} else {
+			url = "funding/fundingWrite";
+		}
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		return "funding/fundingList";
+	}
 
-    @GetMapping({"/get", "/modify"})
-    public void get(@RequestParam("funding_num") int funding_num, @ModelAttribute("cri") CriteriaDTO cri, Model model) {
-        model.addAttribute("funding", service.get(funding_num));
-    }
+	 @GetMapping("/fundingView")
+	    public void get(@RequestParam("funding_num") int funding_num, Model model) {
+	        model.addAttribute("funding", service.fundingGetOne(funding_num));
+	    }
 
-    @PostMapping("/modify")
-    public String modify(CrowdfundingVO funding, @ModelAttribute("cri") CriteriaDTO cri, RedirectAttributes rttr) {
-        if(service.modify(funding)) {
-            rttr.addFlashAttribute("result", "success");
-        }
-        rttr.addAttribute("pageNum", cri.getPageNum());
-        rttr.addAttribute("amount", cri.getAmount());
-        rttr.addAttribute("type", cri.getType());
-        rttr.addAttribute("keyword", cri.getKeyword());
+	@RequestMapping("/fundingModify")
+	public String showNoticeModifyForm(int funding_num, Model model) {
+		model.addAttribute("funding", service.fundingGetOne(funding_num));
+		return "funding/modify";
+	}
 
-        return "redirect:/funding/list";
-    }
-
-    @PostMapping("remove")
-    public String remove(@RequestParam("funding_num") int num, @ModelAttribute("cri") CriteriaDTO cri, RedirectAttributes rttr) {
-        if(service.remove(num)) {
-            rttr.addFlashAttribute("result", "success");
-        }
-        rttr.addAttribute("pageNum", cri.getPageNum());
-        rttr.addAttribute("amount", cri.getAmount());
-        rttr.addAttribute("type", cri.getType());
-        rttr.addAttribute("keyword", cri.getKeyword());
-
-        return "redirect:/funding/list";
-    }
-    
-    @RequestMapping(value = "/payment", method = {RequestMethod.GET,RequestMethod.POST})
-    public String payment(@RequestParam("funding_num") int funding_num, @ModelAttribute("cri") CriteriaDTO cri, Model model) {
-    	model.addAttribute("payment", service.payment(funding_num));
-    	return "/funding/payment";
-    }
-    
-   
-
+	@RequestMapping(value = "/fundingModify", method = RequestMethod.POST)
+	public String doNoticeModify(CrowdfundingVO funding, Model model) {
+		String msg = "펀딩 수정에 실패하였습니다.";
+		String url = "fundingView?funding_num=" + funding.getFunding_num();
+		if (service.fundingModify(funding)) {
+			msg = "공지사항 수정에 성공하였습니다.";
+		}
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		return "funding/result";
+	}
 }

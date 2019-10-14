@@ -1,17 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper
-  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="hwarang.artg.mapper.CrowdfundingMapper">
 
-	<select id="getList" resultType="hwarang.artg.funding.model.CrowdfundingVO">
-		SELECT * FROM CROWDFUNDING
-		order by FUNDING_NUM desc
-	</select>
-
-	<insert id="insert" >
+	<insert id="insertFunding" parameterType="hwarang.artg.funding.model.CrowdfundingVO">
+		 <selectKey keyProperty="funding_num" order="BEFORE" resultType="int">
+			SELECT seq_funding_num.nextVal
+            FROM dual
+		</selectKey>
 		INSERT INTO CROWDFUNDING (FUNDING_NUM,FUNDING_PRICE,FUNDING_SUBJECT, FUNDING_CONTENT,
-		funding_created_date ,funding_target_date ,
+		funding_created_date ,funding_target_date,
 		funding_target_amount,funding_hit,funding_writer,funding_video,funding_hashtag,funding_news,funding_image,
 		maker_name,maker_facebook,maker_insta,maker_logo,maker_homepage,
 		reward_title,reward_title2,reward_shippingCost,reward_startDay,reward_Total)
@@ -21,55 +18,46 @@
 		#{maker_name},#{maker_facebook},#{maker_insta},#{maker_logo},#{maker_homepage},
 		#{reward_title},#{reward_title2},#{reward_shippingCost},#{reward_startDay},#{reward_Total})
 	</insert>
-
- 	<insert id="insertSelectKey">
-        <selectKey keyProperty="funding_num" order="BEFORE" resultType="int">
-            SELECT seq_crowdfunding.nextval
-            FROM dual
-        </selectKey>
-        INSERT INTO CROWDFUNDING (FUNDING_NUM,FUNDING_PRICE,
-		FUNDING_SUBJECT, FUNDING_CONTENT,
-		funding_target_amount,funding_hit,funding_writer,funding_video,funding_hashtag,funding_news,funding_image,
-		maker_name,maker_facebook,maker_insta,maker_logo,maker_homepage,
-		reward_title,reward_title2,reward_shippingCost,reward_startDay,reward_Total)
-		VALUES
-		(seq_crowdfunding.nextval, #{funding_price},
-		#{funding_subject},#{funding_content},#{funding_target_amount},#{funding_hit},#{funding_writer},#{funding_video},#{funding_hashtag},#{funding_news},#{funding_image},
-		#{maker_name},#{maker_facebook},#{maker_insta},#{maker_logo},#{maker_homepage},#{reward_title},#{reward_title2},#{reward_shippingCost},#{reward_startDay},#{reward_Total})
-    </insert>
-
-	<select id="read" resultType="hwarang.artg.funding.model.CrowdfundingVO">
-		SELECT * FROM
-		CROWDFUNDING WHERE FUNDING_NUM = #{funding_num}
-	</select>
-
-	<delete id="delete" >
-		DELETE FROM CROWDFUNDING WHERE
-		FUNDING_NUM = #{funm}
-	</delete>
-
-	<update id="update">
+	
+	<update id="updateFunding" parameterType="hwarang.artg.funding.model.CrowdfundingVO">
 		UPDATE CROWDFUNDING SET 
 		FUNDING_SUBJECT = #{funding_subject},
 		FUNDING_CONTENT = #{funding_content},
 		funding_target_amount = #{funding_target_amount},
 		funding_price =#{funding_price}
-		WHERE FUNDING_NUM = #{funm}
+		WHERE FUNDING_NUM = #{funding_num}
 	</update>
-
-	<sql id="criteria">
+	
+	<delete id="deleteFunding" parameterType="int">
+		DELETE FROM CROWDFUNDING WHERE
+		FUNDING_NUM = #{funm}
+	</delete>
+	
+	<select id="selectFunding" resultType="hwarang.artg.funding.model.CrowdfundingVO">
+		SELECT * FROM
+		CROWDFUNDING WHERE FUNDING_NUM = #{funding_num}
+	</select>
+	
+	<select id="selectAllFunding" resultType="hwarang.artg.funding.model.CrowdfundingVO">
+		SELECT * FROM CROWDFUNDING
+		order by FUNDING_NUM desc
+	</select>
+	
+	
+	<!-- 검색기능 위한 sql(다른 쿼리에서 반복될 때 사용, 나중에 include -->
+	<sql id="criteriaDTO">
 		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
-			<foreach item="type" collection="typeArr">
+			<foreach collection="typeArr" item="type">
 				<trim prefix="OR">
 					<choose>
 						<when test="type == 'T'.toString()">
-							FUNDING_SUBJECT LIKE '%'||#{keyword}||'%'
+							funding_subject like '%'||#{keyword}||'%'
 						</when>
 						<when test="type == 'C'.toString()">
-							FUNDING_CONTENT LIKE '%'||#{keyword}||'%'
+							funding_subject like '%'||#{keyword}||'%'
 						</when>
-						<when test="type == 'W'.toString()">
-							funding_writer LIKE '%'||#{keyword}||'%'
+						<when test="type == 'A'.toString()">
+							funding_subject like '%'||#{keyword}||'%'
 						</when>
 					</choose>
 				</trim>
@@ -77,39 +65,34 @@
 		</trim>
 	</sql>
 	
-	<select id="getListWithPaging" resultType="hwarang.artg.funding.model.CrowdfundingVO">
-        <![CDATA[
-          SELECT funding_num , funding_price , funding_subject , funding_content , funding_created_date , funding_target_date , funding_target_amount,
+	
+	<!-- 페이징 처리 (파라미터 pageNum, amount)-->
+	<select id="getListWithPaging"  resultType="hwarang.artg.funding.model.CrowdfundingVO">
+		<!-- 검색기능 추가 동적쿼리 -->
+		<![CDATA[
+ 			SELECT funding_num , funding_price , funding_subject , funding_content , funding_created_date , funding_target_date , funding_target_amount,
+           		 funding_hit ,funding_writer,funding_video,funding_hashtag,funding_news,funding_image, maker_name,maker_facebook,maker_insta,maker_logo,maker_homepage,
+         		 reward_title,reward_title2,reward_shippingCost,reward_startDay,reward_Total
+          	FROM (SELECT /*+INDEX_DESC(CROWDFUNDING pk_funding_num)*/ rownum rn, funding_num , funding_price , funding_subject , funding_content , funding_created_date , funding_target_date , funding_target_amount,
             funding_hit ,funding_writer,funding_video,funding_hashtag,funding_news,funding_image, maker_name,maker_facebook,maker_insta,maker_logo,maker_homepage,
             reward_title,reward_title2,reward_shippingCost,reward_startDay,reward_Total
-          FROM (
-            SELECT 
-              rownum rn, funding_num , funding_price , funding_subject , funding_content , funding_created_date , funding_target_date , funding_target_amount,
-            funding_hit ,funding_writer,funding_video,funding_hashtag,funding_news,funding_image, maker_name,maker_facebook,maker_insta,maker_logo,maker_homepage,
-            reward_title,reward_title2,reward_shippingCost,reward_startDay,reward_Total
-            FROM crowdfunding
-            WHERE
-        ]]>
-            <include refid="criteria"></include>
-        <![CDATA[
-              rownum <= #{pageNum} * #{amount}
-          )
+           			 FROM crowdfunding
+           			 WHERE
+ 		]]>
+ 			<include refid="criteriaDTO"></include>
+ 		<![CDATA[ 
+ 			 rownum <= #{pageNum} * #{amount})
           WHERE rn > (#{pageNum} - 1) * #{amount}
-        ]]>
-    </select>
-    
-    <select id="getTotalCount" resultType="int">
+ 		]]>
+	</select>
+		
+	<!-- 총 페이지 구하기(검색기능 추가) -->
+	 <select id="getTotalCount" resultType="int">
        select count(*) from CROWDFUNDING
-		where <include refid="criteria"></include>
+		where 
+		<include refid="criteriaDTO"></include>
 		FUNDING_NUM > 0
     </select> 
-
-	<update id="updateReadCount"
-		parameterType="hwarang.artg.funding.model.CrowdfundingVO">
-		UPDATE CROWDFUNDING
-		SET funding_hit = funding_hit+1
-		WHERE
-		FUNDING_NUM = #{funding_num}
-	</update>
+  
 	
 </mapper>

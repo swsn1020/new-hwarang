@@ -3,9 +3,24 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ include file="../layout/left.jsp"%>
+<script>
+	//디데이 종료 일자 설정
+	var countDownDate = new Date("October 22, 2019 06:00:00").getTime(); 
+	//1초마다 갱신되도록 함수 생성,실행 
+	var x = setInterval(function() { 
+		// 오늘 날짜 등록
+		var now = new Date().getTime(); 
+		// 종료일자에서 현재일자를 뺀 시간
+		var distance = countDownDate - now; 
+		// 각 변수에 일, 시, 분, 초를 등록
+		var d = Math.floor(distance / (1000 * 60 * 60 * 24)); 
+		var h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)); 
+		var m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)); 
+		var s = Math.floor((distance % (1000 * 60)) / 1000); 
+		//id가 d-day인 HTML코드에 내용 삽입 
+		document.getElementById("d-day").innerHTML = "펀딩까지 "+ d +"일 " + h + "시간 " + m + "분 " + s + "초 남았습니다."; });
+</script>
 
-<!-- <!doctype html> -->
-<!-- <html lang="ko"> -->
 <head>
 
 <title>[화랑펀딩] ${funding.funding_subject}</title>
@@ -28,8 +43,6 @@
 <link href="https://cdn.wadiz.kr/resources/Content/Site.css" rel="stylesheet">
 <script type="text/javascript" src="https://cdn.wadiz.kr/resources/static/js/wMotion.js?v=20190222"></script>
 </head>
-
-
 <!-- <body> -->
 <div id="page-container">
 
@@ -51,15 +64,15 @@
         <button type="button" class="wz button icon campaign-cheer-btn" onclick="postFeedMyFacebook()">
        	<i class="icon campaign-cheer-o"></i></button>
        	
-         <button type="button" class="wz button primary block btn-reward-funding" onclick="backMoney('backing', 'false');">펀딩하기</button>
+        
       </div>
       <!-- E : 캠페인 액션바 -->
       
       <!-- S : 리워드 헤더 -->
       <div class="reward-header">
-        <div class="bg" style="background-image:"></div>
+        <!-- <div class="bg" style="background-color: white;"></div> -->
         <p class="title-info"><em>전시회</em> <strong>#${funding.funding_hashtag}</strong> </p>
-        <h2 class="title"><a href="/funding/list"> ${funding.funding_subject}</a></h2>
+        <h2 class="title"><a href=fundingList> ${funding.funding_subject}</a></h2>
       </div>
       <div class="reward-body-wrap">
       
@@ -70,18 +83,17 @@
             <!-- S : 우측 캠페인 관련 정보 -->
             <div class="wd-ui-sub-opener-info" style="padding-top: 0;">
             
-              <!-- S : 프로젝트 정보  -->
+              <!-- S : 프로젝트 정보  --> 
               <h3 class="text-hidden">프로젝트 정보</h3>
               <div class="project-state-info">
                 <div class="state-box">
-                      <p class="remaining-day">${funding.funding_num}일 남음</p>
+                      <p class="remaining-day"><div style="font-size: 20px;" id="d-day"></div></p>
                     <p class="rate-bar"><em style="width:2952%"></em></p>
-                  <p class="achievement-rate"><strong> ${funding.funding_current_collection}</strong>% 달성</p>
+                  <p class="achievement-rate"><strong>89</strong>% 달성</p>
                   <p class="total-amount"><strong>${funding.funding_price}</strong>원  펀딩</p>
                 </div>
-                
                   <div class="btn-wrap funding">
-                    <button onclick="backMoney('backing', 'false');" class="wz button primary block btn-reward-funding">펀딩하기</button>
+                     <a href="/order/orderFundingForm?funding_num=${funding.funding_num}" class="btn btn-outline-info" >펀딩하기</a>
                   </div>
                
                 <div class="btn-wrap share">
@@ -171,7 +183,7 @@
                 <div class="wd-ui-gift">
                   <h3 class="project-right-title">리워드 선택</h3>
                   
-                  <button class="rightinfo-reward-list soldout ing" onclick="backMoney('105422', 'true')" >
+                  <button class="rightinfo-reward-list soldout ing" onclick="location.href='/order/orderFundingForm?funding_num=${funding.funding_num}'" >
                   <div class="top-info">
                     <dl class="reward-info">
                       <dt>
@@ -220,7 +232,7 @@
                   
                   <div class="item">
                     <div class="number">1</div>
-                    <div class="text"><a href="/web/campaign/detail/40706">고니를 아냐구요?</a></div>
+                    <div class="text"><a href="/web/campaign/detail/40706">	한글날을 위해 태어난 훈민정음 여권케이스</a></div>
                   </div>
                   
                   <div class="item">
@@ -282,10 +294,6 @@
                 <!-- S : 탭 주요 콘텐츠 -->
                 <div class="wd-ui-tab-contents">
                   
-    
-  
-    
-  
   <h3 class="text-hidden">프로젝트 스토리</h3>
   <!-- 이미지가 아닌 동영상 URL이 넘어오는 경우 iframe에 동영상을 보여줘야 함 -->
 
@@ -308,8 +316,8 @@
     </li>
   </ul>
   
+       
   <div class="campaign-summary" style="background-color: #ffffff;"> 펀딩 요약페이지</div>
-   	 
   <script>
   jQuery(function($) {
     $('.view-slide-big.image-slide').show().slick({
@@ -336,9 +344,7 @@
           <p class="total-supporter"><strong>960</strong>명의 서포터</p>
         </div>
 
-        <div class="btn-wrap funding">
-          <button onclick="backMoney('backing', 'false');" class="wz button primary block btn-reward-funding">펀딩하기</button>
-        </div>
+      <%--  <a href="/order/orderFundingForm?seq=${funding.funding_num}" class="btn btn-primary text-right">펀딩하기</a> --%>
 
         <div class="btn-wrap share">
           <div class="btn-wrap-flex">
@@ -365,8 +371,8 @@
       <div>
         <div style="padding:20px;background:#eafbf7;background:rgba(0, 204, 163, 0.1)">
           <p style="color:#00cca3;font-size:13px;line-height:20px;margin-bottom:10px;"><strong>목표 금액</strong> ${funding.funding_target_amount}원 &nbsp; &nbsp; 
-          <strong>펀딩기간</strong> ${funding.funding_created_date} ~ ${funding.funding_target_date}</p>
-          
+          <strong>펀딩기간</strong> <fmt:formatDate value="${funding.funding_created_date}" pattern="yyyy-MM-dd"/> ~ <fmt:formatDate value="${funding.funding_target_date}" pattern="yyyy-MM-dd"/></p>
+           
           
           <p style="color:#4a4a4a;font-size:12px;line-height:19px;"><strong>100% 이상 모이면 펀딩이 성공되는 프로젝트</strong><br>
          	 이 프로젝트는 펀딩 마감일까지 목표 금액이 100% 모이지 않으면 결제가 진행되지 않습니다.</p>

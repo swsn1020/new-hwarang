@@ -127,7 +127,7 @@ function connect(){
 				<li class="nav-item"><a class="nav-link" href="#FundSubMenu" data-toggle="collapse" aria-expanded="false">펀딩</a>
 					<ul class="collapse list-unstyled" id="FundSubMenu">
                         <li>
-                            <a href="/funding/list">크라우드펀딩</a>
+                            <a href="funding/fundingList">크라우드펀딩</a>
                         </li>
 					</ul>
 				</li>
