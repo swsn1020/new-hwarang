@@ -294,7 +294,6 @@ $('#btnSend').on('click',function(evt){
 		ws.send(msg);
 	
 });
-	
 </script>
 	<fmt:formatDate value="${fboard.regDate }" var="regDate" pattern="yyyy-MM-dd"/>
 		<div class="container">
