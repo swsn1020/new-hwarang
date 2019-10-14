@@ -264,6 +264,38 @@ function replyList(num){
 	});
 }
 </script>
+
+<script>
+function connect(){
+	
+	var ws = new WebSocket("ws://localhost:8081/replyEcho?bno=1234");
+	
+	ws.onopen = function(){
+		console.log('Info.connection opened');
+		setTimeout(function(){connect(); },1000);
+		
+	};
+	
+	ws.onmessage = function(event){
+		console.log(event.data+'\n');
+	};
+	
+	ws.onclose = function(event){
+		console.log('Info:connection closed.');
+		//setTimeout(function(){connect(); },1000);
+	};
+	ws.onerror = function(err) {console.log('Errror:, err');};
+	
+}
+$('#btnSend').on('click',function(evt){
+	evt.preventDefault();
+	if(socket.readyState!==1) return;
+		let msg = $('input#msg').val();
+		ws.send(msg);
+	
+});
+	
+</script>
 	<fmt:formatDate value="${fboard.regDate }" var="regDate" pattern="yyyy-MM-dd"/>
 		<div class="container">
 				<input type="button" class="btn btn-primary" value="목록" onclick="location.href='freeboard'">

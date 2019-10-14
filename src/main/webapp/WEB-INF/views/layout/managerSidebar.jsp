@@ -50,10 +50,8 @@ $(function(){
 			$(".page-wrapper").addClass("toggled");
 		});
 		
-<<<<<<< HEAD
 		//알람 붙이기
-=======
->>>>>>> refs/remotes/origin/hyeji2
+
 		
 	}); //onload() End
 	
@@ -127,13 +125,13 @@ $(function(){
               <!-- Navbar Menu -->
               <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
                 <!-- Notifications-->
-<<<<<<< HEAD
+
                 <li class="nav-item dropdown"> <a id="notifications" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-bell-o fa-lg"></i><span class="badge bg-red badge-corner">${alarmCnt}</span></a>
                   <ul aria-labelledby="notifications" class="dropdown-menu">
-=======
+
                 <li class="nav-item dropdown"> <a id="notifications" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-bell-o fa-lg"></i><span class="badge bg-red badge-corner" id="alCnt"></span></a>
                   <ul id="alarmlist" aria-labelledby="notifications" class="dropdown-menu">
->>>>>>> refs/remotes/origin/hyeji2
+
                     <li id="notification-item">
                     	<a rel="nofollow" href="/alarm/alarmList" class="dropdown-item"> 
 	                        <div class="notification">
@@ -141,7 +139,7 @@ $(function(){
 	                        </div>
                         </a>
                     </li>
-<<<<<<< HEAD
+
                     <c:forEach items="${alarmList}" var="alarm">
                     	<li>
 	                    	<a rel="nofollow" href="${alarm.url }" class="dropdown-item"> 
@@ -152,8 +150,6 @@ $(function(){
 	                        </a>
                         </li>
                     </c:forEach>
-=======
->>>>>>> refs/remotes/origin/hyeji2
                   </ul>
                 </li>
                 <!-- Logout    -->

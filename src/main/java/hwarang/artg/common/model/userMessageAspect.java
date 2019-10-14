@@ -1,5 +1,7 @@
 package hwarang.artg.common.model;
 
+import java.util.Map;
+
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
@@ -35,31 +37,42 @@ public class userMessageAspect {
 		
 		if(params[0] instanceof NoticeReplyVO) {
 			NoticeReplyVO noticeReply = (NoticeReplyVO)params[0];
+			String memId = noticeReply.getMemId();
 			alarm.setBoard_Category("Notice_Reply");
 			//해당 게시판으로 이동(댓글의 경우)
 			alarm.setBoard_num(noticeReply.getBoardNum());
 		}
 		if(params[0] instanceof FreeReplyVO) {
 			FreeReplyVO freeReply = (FreeReplyVO)params[0];
+			String memId = freeReply.getUserid();
 			alarm.setBoard_Category("Free_Reply");
 			alarm.setBoard_num(freeReply.getBoardNum());
 		}
 		if(params[0] instanceof RecommendReplyVO) {
 			RecommendReplyVO recommendReply = (RecommendReplyVO)params[0];
+			String memId = recommendReply.getMember_id();
 			alarm.setBoard_Category("Recommend_Reply");
 			alarm.setBoard_num(recommendReply.getRecomm_num());
 		}
 		if(params[0] instanceof ReviewReplyVO) {
 			ReviewReplyVO reviewReply = (ReviewReplyVO)params[0];
+			String memId = reviewReply.getMember_id();
 			System.out.println("parms[0]"+reviewReply);
 			alarm.setBoard_Category("Review_Reply");
 			alarm.setBoard_num(reviewReply.getReview_num());
 		}
 		if(service.alarmRegister(alarm)) {
-			System.out.println("재근 alarm 등록 성공");
+			System.out.println("alarm 등록 성공");
+			Map<String, Object> alMap = service.checkAlarmCategory(alarm);
+
 			//메시지 보내기
+
 			String text = alarm+" 새로운 글이 등록되었습니다.";
+		
 			this.template.convertAndSend("/category/msg/id1", text);
+//			String text = alMap+" 새로운 글이 등록되었습니다.";
+			
+			this.template.convertAndSend("/category/msg/id1", alMap);
 		}else {
 			System.out.println("alarm 등록 실패");
 		}

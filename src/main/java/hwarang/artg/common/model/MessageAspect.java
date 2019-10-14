@@ -55,8 +55,9 @@ public class MessageAspect{
 			alarm.setBoardCategory("Notice_Board");
 			alarm.setBoardNum(notice.getNum());
 		}
-		if(params[0] instanceof NoticeReplyVO) {
+		if(params[0] instanceof NoticeReplyVO) { 
 			NoticeReplyVO noticeReply = (NoticeReplyVO)params[0];
+			String memId = noticeReply.getMemId();
 			alarm.setBoardCategory("Notice_Reply");
 			//해당 게시판으로 이동(댓글의 경우)
 			alarm.setBoardNum(noticeReply.getBoardNum());
@@ -88,6 +89,7 @@ public class MessageAspect{
 		}
 		if(params[0] instanceof FreeReplyVO) {
 			FreeReplyVO freeReply = (FreeReplyVO)params[0];
+			String memId = freeReply.getUserid();
 			alarm.setBoardCategory("Free_Reply");
 			alarm.setBoardNum(freeReply.getBoardNum());
 		}
@@ -98,6 +100,7 @@ public class MessageAspect{
 		}
 		if(params[0] instanceof RecommendReplyVO) {
 			RecommendReplyVO recommendReply = (RecommendReplyVO)params[0];
+			String memId = recommendReply.getMember_id();
 			alarm.setBoardCategory("Recommend_Reply");
 			alarm.setBoardNum(recommendReply.getRecomm_num());
 		}
@@ -108,12 +111,12 @@ public class MessageAspect{
 		}
 		if(params[0] instanceof ReviewReplyVO) {
 			ReviewReplyVO reviewReply = (ReviewReplyVO)params[0];
+			String memId = reviewReply.getMember_id();
 			alarm.setBoardCategory("Review_Reply");
 			alarm.setBoardNum(reviewReply.getReview_num());
 		}
 		if(alarmService.alarmRegister(alarm)) {
 			System.out.println("alarm 등록 성공");
-
 			Map<String, Object> alMap = alarmService.checkAlarmCategory(alarm);
 
 			//메시지 보내기

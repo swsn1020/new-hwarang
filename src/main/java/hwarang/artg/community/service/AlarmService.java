@@ -55,9 +55,24 @@ public class AlarmService {
 	public List<Map<String, Object>> getFourAlarms(){
 		return checkAlarmCategory(mapper.selectFourAlarms());
 	}
-	public List<Map<String, Object>> checkAlarmCategory(List<AlarmVO> alarmList) {
-		List<Map<String,Object>> params = new ArrayList<Map<String,Object>>();
-		for(AlarmVO alarm: alarmList) {
+	public List<Map<String, Object>> alarmGetAll() {
+		return checkAlarmCategory(mapper.selectAllAlarms());
+	}
+	public int getTotalCount() {
+		return mapper.getTotalCount();
+	}
+	//Alarm Map만들기
+		public List<Map<String, Object>> checkAlarmCategory(List<AlarmVO> alarmList) {
+			List<Map<String, Object>> params = new ArrayList<Map<String,Object>>();
+			for(AlarmVO alarm : alarmList) {
+				Map<String, Object> alMap = checkAlarmCategory(alarm);
+				params.add(alMap);
+			}
+			return params;
+		}
+		
+	public Map<String, Object> checkAlarmCategory(AlarmVO alarm) {
+		//alarm 한개 처리
 			Map<String, Object> alMap = new HashMap<String, Object>();
 			alMap.put("alarm",alarm);
 			String originCategory = alarm.getBoard_Category();
@@ -66,8 +81,6 @@ public class AlarmService {
 			
 			if(subCategory.equals("Reply")) {
 				subCategory = "댓글";
-			}else {
-				
 			}
 			int boardNum = alarm.getBoard_num();
 			
@@ -107,9 +120,6 @@ public class AlarmService {
 			}
 			alMap.put("category", category);
 			alMap.put("subCategory", subCategory);
-			alMap.put("boardNum", boardNum);
-			params.add(alMap);
-		}
-		return params;
+			return alMap;
 	}
 }

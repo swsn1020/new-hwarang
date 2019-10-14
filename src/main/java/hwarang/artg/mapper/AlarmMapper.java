@@ -12,4 +12,6 @@ public interface AlarmMapper {
 	public List<AlarmVO> selectAllAlarms();
 	public List<AlarmVO> selectFourAlarms();
 	public int unReadAlarmCount();
+	public int getTotalCount();
+	
 }

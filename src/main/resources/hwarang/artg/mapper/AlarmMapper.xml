@@ -30,4 +30,8 @@ select * from user_alarm
 <select id="unReadAlarmCount">
 select count(*) from user_alarm where alarm_checked = "n"
 </select>
+
+<select id="getTotalCount" resultType="int">
+		SELECT count(*) from user_alarm
+</select>
 </mapper>
