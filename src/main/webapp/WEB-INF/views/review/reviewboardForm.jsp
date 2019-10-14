@@ -7,48 +7,62 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>reviewboardFrom</title>
-<script type="text/javascript">
-
-</script>
+<title>화랑 - 관람후기</title>
+<style type="text/css">
+.reivew-div{
+	margin: 0 20% 0 20%;
+}
+th {
+	text-align: center;
+}
+.review-ul{
+	display: block;
+    list-style-type: disc;
+    padding: 20px;
+    width: 100%;
+}
+</style>
 </head>
 <body>
-		<div align="center">
-			<h1>관람 후기</h1>
+<div class="reivew-div container">
+		<div>
+			<h3 style="font-weight: bold;">관람 후기</h3>
+			<sec:authorize access="hasRole('ROLE_USER')">	
+				<button onclick="location.href='/review/write'" style="margin: 10px;" class="btn btn-outline-dark">글쓰기</button>
+			</sec:authorize>
 		</div>
 		<div class="table-responsive">
-			<sec:authorize access="hasRole('ROLE_USER')">	
-				<button onclick="location.href='/review/write'" class="btn btn-link">Write</button>
-			</sec:authorize>
-			<table class="table table-hover">
-				<thead>
-					<tr>
-						<th>No</th>
-						<th>Title</th>
-						<th>Writer</th>
-						<th>Date</th>
-						<th>Count</th>
-					</tr>
-				</thead>
-				<tbody>
+			<div style="border-top: 2px solid black; margin: 10px;"></div>
+			<ul class="review-ul">
 					<c:forEach items="${reviewList}" var="review">
-						<tr align="center">
-							<td>${review.review_num}</td>
-							<td><a href="view?num=${review.review_num}">${review.review_title}</a>
-								<c:if test="${review.reply_count != 0}">
-									<span class="badge">${review.reply_count }</span>
-								</c:if>
-							</td><!-- 댓글수 -->
-							<td>${review.member_id}</td>
-							<td><fmt:formatDate value="${review.review_reg_date}" pattern="yyyy-MM-dd"/></td>
-							<td>${review.review_read_count}</td>
-						</tr>
+						<li style=" width:100%; height: 200px; padding: 20px; margin: 20px 0 20px 0; border: 1px solid gray;">
+							<!-- 관람한 포스터 이미지 -->
+							<a href="view?num=${review.review_num}">
+							<p style="float: right;"><i class="fas fa-eye"></i>&nbsp;${review.review_read_count}</p>
+							<dl>
+								<dt>${review.review_num}<br>
+									<br>
+									${review.review_title}
+									<c:if test="${review.reply_count != 0}">
+										<span class="badge badge-secondary">${review.reply_count }</span>
+									</c:if>
+								</dt>
+								<dd style="width:100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin: 0;">
+									<p>${review.review_content}</p><br><br>
+									<!-- 댓글수 -->
+									<div style="text-align: right;">
+										${review.member_id}&nbsp;&nbsp;
+										<fmt:formatDate value="${review.review_reg_date}" pattern="yyyy-MM-dd"/>
+									</div>
+								</dd>
+							</dl>	
+							</a>
+						</li>
 					</c:forEach>
-				</tbody>
-			</table>
+			</ul>
+			<div style="border-top: 2px solid black; margin: 10px;"></div>
 		</div>
-		
-		<div style="text-align: center;">
+		<div style="text-align: center; margin: 10px;">
 				<form id="searchForm" action="/review/reviewboard" method="get">
 					<select name="type">
 						<option value="" 
@@ -80,25 +94,26 @@
 					<%-- <c:out value="${pageMaker.cri.pageNum }"/> --%>
 					
 					<input type="hidden" name="amount" value="<c:out value="${pageMaker.cri.amount }"/>">
-					<button class="btn btn-primary">검색</button>
+					<button class="btn btn-outline-dark">검색</button>
 				</form>
 		</div> 
 		<%-- 네비게이션 표시 --%>
-		<div class="container" align="center">
+		<div class="container" align="center" style="margin-top: 10px;">
 			<ul class="pagination justify-content-center">
 				<li class='${pageMaker.prev == true ? "page-item ":"page-item disabled"}'>
-					<a class="page-link" href="reviewboard?pageNum=${pageMaker.startPage-1}&type=${param.type}&keyword=${param.keyword}">이전</a>
+					<a class="page-link" href="reviewboard?pageNum=${pageMaker.startPage-1}&type=${param.type}&keyword=${param.keyword}">&laquo;</a>
 				</li>
 				<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
 					<li class='${pageMaker.cri.pageNum == num ? "page-item":"page-item active"}'>
 						<a class="page-link" href="reviewboard?pageNum=${num}&type=${param.type}&keyword=${param.keyword}">${num}</a>
 					</li>
 				</c:forEach>
-				<li class=' ${pageMaker.next == true ? "page-item":"page-item disabled"}'>
-					<a class="page-link" href="reviewboard?pageNum=${pageMaker.endPage+1}&type=${param.type}&keyword=${param.keyword}">다음</a>
+				<li class='${pageMaker.next == true ? "page-item":"page-item disabled"}'>
+					<a class="page-link" href="reviewboard?pageNum=${pageMaker.endPage+1}&type=${param.type}&keyword=${param.keyword}">&raquo;</a>
 				</li>
 			</ul>
 		</div>
+</div>
 <%@ include file="../layout/bottom.jsp"%>
 </body>
 </html>

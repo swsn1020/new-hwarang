@@ -21,6 +21,7 @@ public class ReviewReplyController {
 	
 	@ResponseBody
 	@RequestMapping("/rwrite")
+
 	public boolean showRRegister(ReviewReplyVO reviewReply) {
 //		ReviewReplyVO rr = new ReviewReplyVO();
 //		rr.setMember_id(member_id);

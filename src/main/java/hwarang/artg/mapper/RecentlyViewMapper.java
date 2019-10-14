@@ -14,4 +14,5 @@ public interface RecentlyViewMapper {
 	public List<RecentlyViewVO> selectList(@Param("cri")CriteriaDTO cri, @Param("member_id") String member_id);
 	public List<RecentlyViewVO> selectAll();
 	public int getTotalCount(String member_id);
+	public int isViewd(RecentlyViewVO rec);
 }

@@ -17,6 +17,7 @@
 		
 	});
 </script>
+<<<<<<< HEAD
 <c:if test="${ not empty pageContext.request.userPrincipal }">
 	<link rel="stylesheet" href="/resources/css/nav_notice.css"/>
 	<script src="/resources/js/nav_notice.js"></script>
@@ -42,6 +43,8 @@
 	</script>
 </c:if>
 </div>
+=======
+>>>>>>> refs/remotes/origin/master
 <div class="container"></div>
 <nav class="navbar navbar-collapse" id="myNavbar">
 	<ul class="nav navbar-nav navbar-right">

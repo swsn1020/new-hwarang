@@ -65,7 +65,10 @@
 	</select>
 	
 	<select id="selectOne"	resultType="hwarang.artg.exhibition.model.ExhibitionVO">
-		select exh_seq, exh_title, exh_startDate,exh_enddate,exh_place,exh_realmName,exh_area,exh_subTitle, exh_price,exh_contents,exh_contents1,exh_contents2,exh_url,exh_phone,exh_imgurl,exh_gpsx,exh_gpsy,exh_placeurl,exh_placeaddr,exh_placeseq,(select count(*) from favorite_mark where member_id = #{member_id} and exh_seq = #{exh_seq}) favorite_status from exhibition where exh_seq = #{exh_seq}
+		select exh_seq, exh_title, exh_startDate,exh_enddate,exh_place,exh_realmName,exh_area,exh_subTitle, exh_price,exh_contents,exh_contents1,exh_contents2,exh_url,exh_phone,exh_imgurl,exh_gpsx,exh_gpsy,exh_placeurl,exh_placeaddr,exh_placeseq,(select count(*) from favorite_mark where member_id = #{member_id} and exh_seq = #{exh_seq}) favorite_status,
+		(select count(*)from exhibition_like where exh_seq = #{exh_seq} and exh_like_status = 1) exh_like, (select count(*)from exhibition_like where exh_seq = #{exh_seq} and exh_like_status = 2)exh_unlike,
+		(select exh_like_status from exhibition_like where member_id = #{member_id} and exh_seq = #{exh_seq}) exh_like_status
+		from exhibition where exh_seq = #{exh_seq}
 	</select>
 
 
@@ -77,7 +80,8 @@
 	<select id="getListMain" resultType="hwarang.artg.exhibition.model.ExhibitionVO">
 	  <![CDATA[
 	  select 
-	    seq exh_seq, exh_title, exh_startDate,exh_enddate,exh_place,exh_realmName,exh_area,exh_subTitle, exh_price,exh_contents,exh_contents1,exh_contents2,exh_url,exh_phone,exh_imgurl,exh_gpsx,exh_gpsy,exh_placeurl,exh_placeaddr,exh_placeseq,(select count(*) from favorite_mark where member_id = #{member_id} and exh_seq = seq) favorite_status
+	    seq exh_seq, exh_title, exh_startDate,exh_enddate,exh_place,exh_realmName,exh_area,exh_subTitle, exh_price,exh_contents,exh_contents1,exh_contents2,exh_url,exh_phone,exh_imgurl,exh_gpsx,exh_gpsy,exh_placeurl,exh_placeaddr,exh_placeseq,(select count(*) from favorite_mark where member_id = #{member_id} and exh_seq = seq) favorite_status,
+	    (select count(*)from exhibition_like where exh_seq = seq and exh_like_status = 1) exh_like, (select count(*)from exhibition_like where exh_seq = seq and exh_like_status = 2)exh_unlike
 	  from 
 	      (select rownum rn,exh_seq seq, exh_title,exh_startDate,exh_enddate,exh_place,exh_realmName,exh_area,exh_subTitle,exh_price,exh_contents,exh_contents1,exh_contents2,exh_url,exh_phone,exh_imgurl,exh_gpsx,exh_gpsy,exh_placeurl,exh_placeaddr,exh_placeseq
 	      from exhibition where  
@@ -87,7 +91,8 @@
 
 	<select id="getListWithPaging" resultType="hwarang.artg.exhibition.model.ExhibitionVO">
   <![CDATA[
-  select seq exh_seq, exh_title, exh_startDate,exh_enddate,exh_place,exh_realmName,exh_area,exh_subTitle, exh_price,exh_contents,exh_contents1,exh_contents2,exh_url,exh_phone,exh_imgurl,exh_gpsx,exh_gpsy,exh_placeurl,exh_placeaddr,exh_placeseq,(select count(*) from favorite_mark where member_id = #{member_id} and exh_seq = seq) favorite_status
+  select seq exh_seq, exh_title, exh_startDate,exh_enddate,exh_place,exh_realmName,exh_area,exh_subTitle, exh_price,exh_contents,exh_contents1,exh_contents2,exh_url,exh_phone,exh_imgurl,exh_gpsx,exh_gpsy,exh_placeurl,exh_placeaddr,exh_placeseq,(select count(*) from favorite_mark where member_id = #{member_id} and exh_seq = seq) favorite_status,
+    (select count(*) from exhibition_reply where exh_seq = seq)exh_recomm_cnt,(select count(*)from exhibition_like where exh_seq = seq and exh_like_status = 1) exh_like, (select count(*)from exhibition_like where exh_seq = seq and exh_like_status = 2)exh_unlike
   from (select  
   ]]>
   <include refid="sortcri"></include>

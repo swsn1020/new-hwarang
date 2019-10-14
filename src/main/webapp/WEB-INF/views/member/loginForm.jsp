@@ -17,7 +17,7 @@ ul, ol, li {
 }
 </style>
 <meta charset="UTF-8">
-<title>loginForm</title>
+<title>화랑 - 로그인</title>
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 <script type="text/javascript">
 // 사용할 앱의 JavaScript 키를 설정해 주세요.
@@ -80,7 +80,8 @@ function goLogin(){
 <body>
 	<div class="container">
 
-		<h1 align="center">로그인</h1>
+		<h1 align="center" style="font-weight: bold; margin-top: 10px;">로그인</h1>
+		<div style="border: 2px solid black;"></div>
 		<br>
 		<br>
 		<%-- ${sessionScope } --%>
@@ -92,11 +93,13 @@ function goLogin(){
 						<input type="text" name="username" id="member_id" class="form-control" placeholder="아이디"><br>
 						<input type="password" name="password" id="member_password" class="form-control" placeholder="비밀번호"><br>
 						<button type="button" id="checkLogin" onclick="javascript:goLogin();" class="btn btn-primary" style="height: 50px; width: 350px; ">Login</button><br><br>
+						<p style="color: red;"><c:if test="${not empty SPRING_SECURITY_LAST_EXCEPTION}">아이디 또는 비밀번호를 잘못 입력하셨습니다.<br>
+						아이디 찾기 / 비밀번호 찾기를 이용하여 개인정보를 확인해 주세요.</c:if></p>
 						<div class="checkbox">
 							<label><input type="checkbox" name="remember-me">자동 로그인</label>
 						</div>
 					</form>
-				</fieldset>
+				</fieldset> 
 
 				<div style="margin: 20px auto 0; overflow: hidden; width: 280px;">
 					<ul>
@@ -126,10 +129,6 @@ function goLogin(){
 						<a id="kakao-login-btn"></a>
 					</li>
 				</ul>
-<%-- <<<<<<< HEAD
-				<h2><c:out value="${param.error}"/>1</h2>
-=======
->>>>>>> refs/remotes/origin/master --%>
 			</div>
 		</div>
 	</div>

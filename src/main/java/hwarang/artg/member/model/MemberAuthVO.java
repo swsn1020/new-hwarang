@@ -1,6 +1,9 @@
 package hwarang.artg.member.model;
 
-public class MemberAuthVO {
+import java.io.Serializable;
+
+public class MemberAuthVO implements Serializable{
+	private static final long serialVersionUID = 1L;
 	private String member_id;
 	private String member_auth;
 	

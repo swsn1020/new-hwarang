@@ -135,6 +135,7 @@ $('#btnSend').on('click',function(evt){
 	font-family: 'Arita-dotum-Medium';
 }
 .header{
+	float: left;
 	/* font-family: 'Prompt', 'Noto Sans KR',dotum,'돋움',vernade,arial,sans-serif; */
 	font-family: 'Arita-dotum-Medium';
 	display: flex;
@@ -143,6 +144,7 @@ $('#btnSend').on('click',function(evt){
 	border: 1px solid none;
 }
 .header-title{
+	display: block;
 	padding-top: 10px;
 }
 .header-login{
@@ -151,7 +153,8 @@ $('#btnSend').on('click',function(evt){
 	margin-left: 300px;
 }
 .header-menu{
-	display: list-item;
+
+	display: flex;
 	border-bottom: 1px solid nono;
 	font-family: 'Arita-dotum-Medium';
 	padding-left: 33%;
@@ -184,7 +187,7 @@ $('#btnSend').on('click',function(evt){
 					<li class="nav-item" id="side_item"><a
 						class="nav-link" href="/logout">로그아웃</a></li>
 					<li class="nav-item" id="side_item"><a
-						class="nav-link" href="/exhibition/favoriteList">즐겨찾기</a></li>	
+						class="nav-link" href="/exhibition/favoriteList">관심목록</a></li>	
 					<li class="nav-item" id="side_item"><a
 						class="nav-link" href="/exhibition/recentlyView">최근본상품</a><div></div></li>
 					<input id="userid" type="hidden" value='<sec:authentication property="principal.Username"/>'>
@@ -232,7 +235,6 @@ $('#btnSend').on('click',function(evt){
 								<a class="dropdown-item" href="#">화랑안내</a> 
 								<a class="dropdown-item" href="/notice/noticeList">공지사항</a> 
 								<a class="dropdown-item" href="/faq/faqList">FAQ</a>
-<!-- 								<a class="dropdown-item" href="/qna/qnaListForUser?memId=haddie">Q&amp;A</a> -->
 							</div>
 						</li>
 						<li class="nav-item dropdown"><a
@@ -264,6 +266,7 @@ $('#btnSend').on('click',function(evt){
 			</nav>
 		</div>
 </header>
+<<<<<<< HEAD
 <c:if test="${ not empty pageContext.request.userPrincipal }">
 	<link rel="stylesheet" href="/resources/css/nav_notice.css"/>
 	<script src="/resources/js/nav_notice.js"></script>
@@ -291,3 +294,5 @@ $('#btnSend').on('click',function(evt){
 
 	</script>
 </c:if>
+=======
+>>>>>>> refs/remotes/origin/master

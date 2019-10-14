@@ -41,4 +41,8 @@ public class RecentlyViewService {
 		return mapper.selectList(cri, member_id);
 	}
 	
+	public boolean getIsViewd(RecentlyViewVO rec) {
+		return mapper.isViewd(rec)>0;
+	}
+	
 }
