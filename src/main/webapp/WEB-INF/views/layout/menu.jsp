@@ -130,10 +130,6 @@
 								<a class="dropdown-item" href="#">화랑안내</a> 
 								<a class="dropdown-item" href="/notice/noticeList">공지사항</a> 
 								<a class="dropdown-item" href="/faq/faqList">FAQ</a>
-<<<<<<< HEAD
-=======
-<!-- 								<a class="dropdown-item" href="/qna/qnaListForUser?memId=haddie">Q&amp;A</a> -->
->>>>>>> refs/remotes/origin/hyeji2
 							</div>
 						</li>
 						<li class="nav-item dropdown"><a
@@ -165,9 +161,3 @@
 			</nav>
 		</div>
 </header>
-	<!-- 
-
-<div class="row">
-
-	
-	<div class="col-sm-8"> -->

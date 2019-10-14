@@ -207,6 +207,6 @@ public class KakaoService {
 		}
 		return kakaoInfo;
 	}
-	
+
 	
 }

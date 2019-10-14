@@ -7,10 +7,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-<script type="text/javascript">
-
-</script>
+<title>화랑 - 나의 페이지</title>
+<style type="text/css">
+h1,h2,h3,h4,h5{
+	font-weight: bold;
+}
+</style>
 </head>
 <body>
 		<div align="center" style="margin-top: 10px;">
@@ -29,17 +31,17 @@
 						<tr align="right">
 							<!-- 개인정보 수정 -->
 							<td>
-								<button type="button" onclick="location.href='/member/modifyForm?id=${id}'">개인정보 수정</button>
+								<button type="button" class="btn btn-outline-dark btn-sm" onclick="location.href='/member/modifyForm?id=${id}'">개인정보 수정</button>
 							<!-- 회원 탈퇴 -->
-								<button type="button" onclick="location.href='/member/deleteForm?id=${id}'">회원탈퇴</button>						
+								<button type="button" class="btn btn-outline-dark btn-sm" onclick="location.href='/member/deleteForm?id=${id}'">회원탈퇴</button>						
 							</td>
 						</tr>
 						<tr align="right">
 							<!-- 신고 -->
 							<td>
-								<button type="button" onclick="location.href='/block/blockListForUser?memId=${id}'">신고내역</button>
+								<button type="button" class="btn btn-outline-dark btn-sm" onclick="location.href='/block/blockListForUser?memId=${id}'">신고내역</button>
 							<!-- 1:1 -->
-								<button type="button" onclick="location.href='/qna/qnaListForUser?memId=${id}'">1:1 문의</button>
+								<button type="button" class="btn btn-outline-dark btn-sm" onclick="location.href='/qna/qnaListForUser?memId=${id}'">1:1 문의</button>
 							</td>
 						</tr>
 					</tbody>
@@ -49,7 +51,7 @@
 			<div>
 				<h3>예매 내역</h3>
 				<table class="table">
-					<tbody>
+					<tbody style="border-top: 2px solid black;">
 					<tr align="center"> 
 						<th>전시명</th>
 						<th>날짜</th>
@@ -62,7 +64,7 @@
 			<div>
 				<h3>포인트 내역</h3>
 				<table class="table" >
-					<tbody>
+					<tbody style="border-top: 2px solid black;">
 					<tr align="center"> 
 						<th>번호</th>
 						<th>날짜</th>
@@ -96,7 +98,7 @@
 			<div>
 				<h3>나의 게시글</h3>
 				<table class="table">
-					<tbody align="center">
+					<tbody align="center" style="border-top: 2px solid black;">
 						<tr> 
 							<th>구분</th>
 							<th>제목</th>

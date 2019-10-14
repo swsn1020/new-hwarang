@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-    <%@ include file="../layout/left.jsp" %>
+    <%@ include file="../layout/menu.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,7 +17,7 @@ ul, ol, li {
 }
 </style>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>화랑 - 아이디찾기</title>
 <script type="text/javascript">
 </script>
 <script type="text/javascript">
@@ -39,8 +39,8 @@ function findId(){
 </script>
 </head>
 <body>
-		<div align="center">
-			<h1>아이디 찾기</h1>
+		<div align="center" style="margin-top: 20px;">
+			<h3 style="font-weight: bold;">아이디 찾기</h3>
 		</div>
 			
 		<div id="containers" class="div" align="center">
@@ -49,7 +49,7 @@ function findId(){
 						<input type="text" id="member_name" name="member_name" class="form-control" placeholder="이름">
 						<br>
 						<input type="email" id="member_email" name="member_email" class="form-control" placeholder="이메일">
-						<br><button type="button" id="checkId"  onclick="javascript:findId();" class="btn btn-primary" style="height: 50px; width: 350px; ">확인</button>
+						<br><button type="button" id="checkId"  onclick="javascript:findId();" class="btn btn-outline-dark" style="height: 50px; width: 350px; ">확인</button>
 					</form>
 				</div>
 				<c:if test="${param.findResult eq 'success'}">
@@ -57,8 +57,8 @@ function findId(){
 						<br>
 						<h4>ID : ${param.member_id}</h4>
 						<br>
-						<button type="button" onclick="location.href='/member/loginForm'" class="btn btn-primary">로그인</button>
-						<button type="button" onclick="location.href='/member/findpwForm'" class="btn btn-primary">비밀번호 찾기</button>
+						<button type="button" onclick="location.href='/member/loginForm'" class="btn btn-outline-dark">로그인</button>
+						<button type="button" onclick="location.href='/member/findpwForm'" class="btn btn-outline-dark">비밀번호 찾기</button>
 					</div>
 				</c:if>
 			
