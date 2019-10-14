@@ -21,10 +21,11 @@
 	$(function() {
 		//추천,비추천
 		$('.disabled').click(function(e) {
-			alert("이미 추천한 게시글입니다.");
+			alert("구매자만 투표할 수 있습니다.");
 			e.preventDefault();
 			return false;
 		});
+
 		//지도
 		var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
 		var options = { //지도를 생성할 때 필요한 기본 옵션
@@ -210,8 +211,8 @@
 			</div>
 			<br>
 			<div style="text-align: center;">
-				<a class="btn btn-outline-dark" href="/exhibiton/like?seq=${exh.exh_seq}" style="color: blue;">&nbsp;추천(${exh.exh_like})&nbsp;</a>
-				<a class="btn btn-outline-dark" href="/exhibiton/unlike?seq=${exh.exh_seq}" style="color: gray;">비추천(${exh.exh_unlike})</a>
+				<a class="btn btn-outline-dark" id="like" href="/exhibition/like/add?seq=${exh.exh_seq}" style="color: blue;">&nbsp;추천(${exh.exh_like})&nbsp;</a>
+				<a class="btn btn-outline-dark" id="unlike" href="/exhibition/unlike/add?seq=${exh.exh_seq}" style="color: gray;">비추천(${exh.exh_unlike})</a>
 			</div>
 			<table class="exh-table table table-hover">
 				<tbody>
