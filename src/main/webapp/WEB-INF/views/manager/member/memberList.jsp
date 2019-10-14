@@ -9,7 +9,9 @@
 <script	src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
 <script>
 $(function(){
-	
+	if($("#selBox").val() == 'I'){
+		$("#search").removeAttr("disabled");
+	}
 });
 	function selectFunc() {
 		var state = $("#selBox option:selected").val();
@@ -22,6 +24,11 @@ $(function(){
 		}
 	}
 </script>
+<style>
+	th {
+		text-align: center;
+	}
+</style>
 <div class="content-inner" style="padding-bottom: 59px;">
 	<section class="projects no-padding-top">
 		<div class="contianer-fluid">
@@ -55,7 +62,7 @@ $(function(){
 					<table class="table table-hover">
 						<thead>
 							<tr>
-								<th style="width: 10%;">No</th>
+								<th style="width: 5%;">No</th>
 								<th>ID</th>
 								<th>NAME</th>
 								<th>EMAIL</th>
@@ -70,13 +77,13 @@ $(function(){
 							<c:forEach items="${memberList }" var="member" varStatus="vs">
 								<fmt:formatDate value="${member.member_reg_date }" var="regDate" pattern="yyyy-MM-dd"/>
 								<tr>
-									<td>${rnum }</td>
+									<td style="text-align: center;">${rnum }</td>
 									<td id="memId">${member.member_id }</td>
-									<td>${member.member_name }</td>
+									<td style="text-align: center;">${member.member_name }</td>
 									<td>${member.member_email }</td>
-									<td>${regDate }</td>
+									<td style="text-align: center;">${regDate }</td>
 									<td>${member.member_address }
-									<td>
+									<td style="text-align: center;">
 										<button id="memInfo" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#memModal${vs.index }">회원정보</button>
 										<!-- The Modal -->
 										  <div class="modal" id="memModal${vs.index }">
@@ -122,7 +129,9 @@ $(function(){
 										    			</tr>
 										    			<tr>
 										    				<th>신고수</th>
-										    				<td>${member.member_report_count }</td>
+										    				<td colspan="3">${member.member_report_count }</td>
+										    			</tr>
+										    			<tr>
 										    				<th>계정 상태</th>
 										    				<td>${member.member_status }</td>
 										    			</tr>

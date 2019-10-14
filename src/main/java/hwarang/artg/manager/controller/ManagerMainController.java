@@ -77,13 +77,15 @@ public class ManagerMainController {
 		PageDTO page = new PageDTO(cri, managerService.totalMemCount(cri));
 		model.addAttribute("pageMaker", page);
 		model.addAttribute("memberList", managerService.pagingList(cri));
-		model.addAttribute("blockCnt", blockService.getBlockCountNotChecked());
 		return "manager/member/memberList";
 	}
 	
 	@RequestMapping("/memberAuth")
 	public String setMemberAuths(CriteriaDTO cri, Model model) {
 		System.out.println("member Auth Settings 요청");
+		PageDTO page = new PageDTO(cri, managerService.totalMemCount(cri));
+		model.addAttribute("pageMaker", page);
+		model.addAttribute("memberList", managerService.pagingList(cri));
 		return "manager/member/memberSettings";
 	}
 	

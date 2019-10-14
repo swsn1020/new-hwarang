@@ -41,16 +41,7 @@
 					</tr>
 					<tr>
 						<th>신고 대상 ID</th>
-						<td>${block.blockMemId }</td>
-						<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_ADMIN')">
-							<td>
-								<form id="blockForm" action="blockMember" method="post">
-									<input type="hidden" name="member_id" value="${block.blockMemId }">
-									<input type="submit" value="차단설정" class="btn btn-outline-danger btn-sm">
-								</form>
-							</td>
-						</sec:authorize>
-							
+						<td colspan="2">${block.blockMemId }</td>
 						<th>신고 대상 게시글 번호</th>
 						<td>${block.boardNum }</td>
 					</tr>
@@ -81,11 +72,11 @@
 				</table>
 				<!-- 답변 등록 Form -->
 				<div id="replyForm" class="form-group collapse">
-					<form action="replyModify" method="post">
+					<form action="replyModify" method="post" style="text-align: center;">
 						<input type="hidden" name="num" value="${block.num }">
-						<textarea class="form-control" rows="5" name="reply" placeholder="${block.reply }" style="resize: none;" disabled="disabled"></textarea>
+						<textarea class="form-control" rows="5" name="reply" placeholder="${block.reply }" style="resize: none;"></textarea>
 						<br>
-						<input class="btn btn-outline-primary btn-sm" type="submit" value="답변등록" style="float: right;">
+						<input class="btn btn-outline-primary btn-sm" type="submit" value="답변등록">
 					</form>
 				</div>
 				<br><br>

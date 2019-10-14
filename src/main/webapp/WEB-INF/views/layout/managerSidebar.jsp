@@ -289,7 +289,7 @@ $(function(){
 	                  <a href="/report/reportList">Report Board</a>
 	                </li>
 	                <li>
-	                  <a href="/free/freeboard">Free Board</a>
+	                  <a href="/board/freeboard">Free Board</a>
 	                </li>
 	                <li>
 	                  <a href="/review/reviewboard">Review Board</a>
@@ -298,7 +298,7 @@ $(function(){
 	                  <a href="/recommend/recommendboard">Recommend Board</a>
 	                </li>
 	                <li>
-	                  <a href="#">Funding Board</a>
+	                  <a href="/funding/fundingList">Funding Board</a>
 	                </li>
 	              </ul>
 	            </div>

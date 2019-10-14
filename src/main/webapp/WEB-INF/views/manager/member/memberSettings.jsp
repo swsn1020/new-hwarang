@@ -9,7 +9,9 @@
 <script	src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
 <script>
 $(function(){
-	
+	if($("#selBox").val() == 'I'){
+		$("#search").removeAttr("disabled");
+	}
 });
 	function selectFunc() {
 		var state = $("#selBox option:selected").val();
@@ -26,7 +28,7 @@ $(function(){
 	<section class="projects no-padding-top">
 		<div class="contianer-fluid">
 			<div style="width: 100%; padding-top: 50px; margin-bottom: 10px; text-align: center;">
-				<h1 style="color: #80425A"><strong>Member List</strong></h1>
+				<h1 style="color: #80425A"><strong>Member Authentication Settings</strong></h1>
 			</div>
 		</div>
 		<div class="project" id="project3">
@@ -35,12 +37,9 @@ $(function(){
           	<div class="left-col col-lg-6 d-flex align-items-center justify-content-between">
               <div class="project-title d-flex align-items-center">
                 <div class="text">
-               		<form id="sortForm" action="memberList" method="get">
+               		<form id="sortForm" action="memberAuth" method="get">
 						<select class="form-control-sm" name="type" id="selBox" onchange="selectFunc();">
 							<option value="" <c:out value="${pageMaker.cri.type eq null ? 'selected' : ''}"/>>TOTAL</option>
-							<option value="W" <c:out value="${pageMaker.cri.type eq 'W' ? 'selected' : ''}"/>>WEEK</option>
-							<option value="M" <c:out value="${pageMaker.cri.type eq 'M' ? 'selected' : ''}"/>>MONTH</option>
-							<option value="Y" <c:out value="${pageMaker.cri.type eq 'Y' ? 'selected' : ''}"/>>YEAR</option>
 							<option value="I" <c:out value="${pageMaker.cri.type eq 'I' ? 'selected' : ''}"/>>ID</option>
 						</select>
 						<input type="text" name="keyword" id="search" disabled="disabled" value="<c:out value="${pageMaker.cri.keyword }"/>">
@@ -58,7 +57,6 @@ $(function(){
 								<th style="width: 10%;">No</th>
 								<th>ID</th>
 								<th>NAME</th>
-								<th>EMAIL</th>
 								<th>REGISTER DATE</th>
 								<th style="width: 10%;">BLOCK COUNT</th>
 								<th>STATUS</th>
@@ -66,14 +64,13 @@ $(function(){
 							</tr>
 						</thead>
 						<tbody>
-							<c:set var="rnum" value="${pageMaker.total - ((pageMaker.cri.pageNum-1)*10)}"/>
+							<c:set var="rnum" value="${((pageMaker.cri.pageNum-1)*10) +1}"/>
 							<c:forEach items="${memberList }" var="member" varStatus="vs">
 								<fmt:formatDate value="${member.member_reg_date }" var="regDate" pattern="yyyy-MM-dd"/>
 								<tr>
 									<td>${rnum }</td>
 									<td id="memId">${member.member_id }</td>
 									<td>${member.member_name }</td>
-									<td>${member.member_email }</td>
 									<td>${regDate }</td>
 									<td>${member.member_report_count }</td>
 									<c:choose>
@@ -134,22 +131,22 @@ $(function(){
 									  </div>
 									</td>
 								</tr>
-								<c:set var="rnum" value="${rnum-1 }"></c:set>
+								<c:set var="rnum" value="${rnum+1 }"></c:set>
 							</c:forEach>
 						</tbody>
 					</table>
 				</div>
 				<ul class="pagination justify-content-center">
 					<li class='${ pageMaker.prev == true ? "page-item" : "page-item disabled" }'>
-						<a class="page-link" href="memberList?pageNum=${pageMaker.startPage-1 }&type=${param.type}&keyword=${param.keyword}">&laquo;</a>
+						<a class="page-link" href="memberAuth?pageNum=${pageMaker.startPage-1 }&type=${param.type}&keyword=${param.keyword}">&laquo;</a>
 					</li>
 					<c:forEach var="num" begin="${pageMaker.startPage }" end="${pageMaker.endPage}">
 						<li class='${pageMaker.cri.pageNum == num ? "active" : "page-item"}'>
-							<a class="page-link" href="memberList?pageNum=${num}&type=${param.type}&keyword=${param.keyword}">${num}</a>
+							<a class="page-link" href="memberAuth?pageNum=${num}&type=${param.type}&keyword=${param.keyword}">${num}</a>
 						</li>
 					</c:forEach>
 					<li class='${pageMaker.next == true ? "page-item" : "page-item disabled" }'>
-						<a class="page-link" href="memberList?pageNum=${pageMaker.endPage+1 }&type=${param.type}&keyword=${param.keyword}">&raquo;</a>
+						<a class="page-link" href="memberAuth?pageNum=${pageMaker.endPage+1 }&type=${param.type}&keyword=${param.keyword}">&raquo;</a>
 					</li>
 				</ul>
             </div>
