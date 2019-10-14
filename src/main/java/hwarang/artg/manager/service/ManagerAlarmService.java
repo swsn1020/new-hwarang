@@ -9,18 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import hwarang.artg.common.model.CriteriaDTO;
-import hwarang.artg.community.model.FreeBoardVO;
 import hwarang.artg.community.service.FreeBoardService;
-import hwarang.artg.manager.model.BlockStatusVO;
-import hwarang.artg.manager.model.FAQVO;
 import hwarang.artg.manager.model.ManagerAlarmVO;
-import hwarang.artg.manager.model.NoticeVO;
-import hwarang.artg.manager.model.QnAVO;
-import hwarang.artg.manager.model.ReportVO;
 import hwarang.artg.mapper.ManagerAlarmMapper;
-import hwarang.artg.mapper.ReportMapper;
-import hwarang.artg.rrboard.model.RecommendBoardVO;
-import hwarang.artg.rrboard.model.ReviewBoardVO;
 import hwarang.artg.rrboard.service.RecommendBoardService;
 import hwarang.artg.rrboard.service.ReviewBoardService;
 
@@ -28,22 +19,6 @@ import hwarang.artg.rrboard.service.ReviewBoardService;
 public class ManagerAlarmService {
 	@Autowired
 	private ManagerAlarmMapper dao;
-	@Autowired
-	private QnAService qnaService;
-	@Autowired
-	private ReportService reportService;
-	@Autowired
-	private BlockStatusService blockService;
-	@Autowired
-	private FAQService faqService;
-	@Autowired
-	private NoticeService noticeService;
-	@Autowired
-	private FreeBoardService freeBoardService;
-	@Autowired
-	private ReviewBoardService reviewBoardService;
-	@Autowired
-	private RecommendBoardService recommBoardService;
 	
 	
 	public boolean alarmRegister(ManagerAlarmVO alarm) {

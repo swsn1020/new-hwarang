@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <title>1:1 질문</title>
-<%@ include file="../../layout/left.jsp" %>
+<%@ include file="../../layout/menu.jsp" %>
 <script type="text/javascript" src="/resources/js/manager/validationCheck.js"></script>
 <script>
 $(function(){
@@ -63,12 +63,20 @@ function removeAll(e){
     }
 }
 </script>
+<style>
+	.container{
+		margin: 0 20% 0 20%;
+		padding-left: 50px;
+		padding-right: 50px;
+	}
+</style>
 <!-- 사용자에게 보여질 1:1 질문 작성 Form -->
 	<div class="container">
-		<h3>화랑에 문의하기</h3>
+		<h3>1:1 문의하기</h3>
+		<div style="border-top: 2px solid black;"></div>
 		<div class="form-group">
 			<form id="qnaForm" action="qnaWrite" method="post" enctype="multipart/form-data">
-				<input type="hidden" name="memId" value='<sec:authentication property="principal.Username"/>'>
+				<input type="hidden" name="memId" value="<sec:authentication property='principal.username'/>">
 				<div class="table-responsive">
 					<table class="table">
 						<tr>
@@ -103,10 +111,12 @@ function removeAll(e){
 						</tr>
 					</table>
 				</div>
+				<div style="border-top: 2px solid black;"></div>
+				<br><br>
 				<div class="btnGroup" style="text-align: center;">
 					<input type="submit" value="문의 작성" class="btn btn-outline-primary btn-sm">
 					<input type="reset" value="초기화" class="btn btn-outline-dark btn-sm">
-					<input type="button" value="목록" onclick="location.href='qnaListForUser?memId=haddie" class="btn btn-outline-info btn-sm">
+					<input type="button" value="목록" onclick="location.href='qnaListForUser?memId=<sec:authentication property='principal.username'/>'" class="btn btn-outline-info btn-sm">
 				</div>
 			</form>
 		</div>

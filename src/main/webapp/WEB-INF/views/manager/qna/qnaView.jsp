@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <title>화랑-나의 질문내역</title>
-<%@ include file="../../layout/left.jsp" %>
+<%@ include file="../../layout/menu.jsp" %>
 <script>
 $(function(){
 	$(".btn").click(function(){
@@ -24,9 +24,17 @@ $(function(){
 		return fullName.substring(idx);
 	}
 </script>
+<style>
+	.container{
+		margin: 0 20% 0 20%;
+		padding-left: 50px;
+		padding-right: 50px;
+	}
+</style>
 	<fmt:formatDate value="${qna.regDate }" var="regDate" pattern="yyyy-MM-dd"/>
 	<div class="container">
-		<h3>Q&amp;A 글</h3>
+		<h3>내가 문의 글</h3>
+		<div style="border-top: 2px solid black;"></div>
 		<table class="table">
 			<tr>
 				<th style="width: 17%;">문의분류</th>
@@ -94,6 +102,28 @@ $(function(){
 				</td>
 			</tr>
 		</table>
+		<div style="border-top: 2px solid black;"></div>
+		<br>
+		<table class="table">
+			<tr>
+				<th style="width: 17%; border-top: none;" rowspan="3">답변 내용</th>
+				<td colspan="3" rowspan="3" style="border-top: none;">${qna.reply }</td>
+			</tr>
+			<tr>
+				<!-- 답변등록Form -->
+				<td colspan="4">
+					<div class="form-group collapse" id="replyForm" style="text-align: center;">
+						<form action="replyModify" method="post">
+							<input type="hidden" name="num" value="${qna.num }">
+							<textarea class="form-control" rows="5" cols="30" name="reply" placeholder="${report.reply }" style="resize: none;"></textarea><br>
+							<input class="btn btn-outline-primary btn-sm" type="submit" value="답변등록" style="text-align: right;">
+						</form>
+					</div>
+				</td>
+			</tr>
+		</table>
+		<br>
+		<div style="border-top: 2px solid black;"></div>
 		
 		<div class="btnGroup" style="text-align: center; margin: 5px; padding: 10px;">
 			<sec:authorize access="!hasRole('ROLE_ADMIN') && !hasRole('ROLE_MANAGER')">
@@ -104,27 +134,8 @@ $(function(){
 			</sec:authorize>
 			<button type="button" class="btn btn-outline-dark btn-sm" onclick="history.go(-1);">목록</button>
 		</div>
-		
-		<div class="container" style="text-align: center;">
-			<table class="table">
-				<tr>
-					<th style="width: 17%">답변 내용</th>
-					<td colspan="3">${qna.reply }</td>
-				</tr>
-				<tr>
-					<!-- 답변등록Form -->
-					<td colspan="4">
-						<div class="form-group collapse" id="replyForm" style="text-align: center;">
-							<form action="replyModify" method="post">
-								<input type="hidden" name="num" value="${qna.num }">
-								<textarea class="form-control" rows="5" cols="30" name="reply" placeholder="${report.reply }" style="resize: none;"></textarea><br>
-								<input class="btn btn-outline-primary btn-sm" type="submit" value="답변등록" style="text-align: right;">
-							</form>
-						</div>
-					</td>
-				</tr>
-			</table>
-		</div>
+	</div><!-- container -->
+			
 	
 	
 		
@@ -152,6 +163,6 @@ $(function(){
 		    </div>
 		  </div>
 		  
-	</div><!-- container -->
+	
 	
 <%@ include file="../../layout/bottom.jsp"%>

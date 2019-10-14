@@ -3,18 +3,15 @@
     <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
     <%@taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
     <%@ include file="../layout/menu.jsp" %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
+
+
 <title>화랑 - 나의 페이지</title>
 <style type="text/css">
 h1,h2,h3,h4,h5{
 	font-weight: bold;
 }
 </style>
-</head>
-<body>
+
 		<div align="center" style="margin-top: 10px;">
 			<h3 style="font-weight: bold;">나의 페이지</h3>
 		</div>
@@ -130,6 +127,5 @@ h1,h2,h3,h4,h5{
 			</div>
 			<div style="border-top: 2px solid black;"></div>
 		</div>
-</body>
-</html>
+
 <%@ include file="../layout/bottom.jsp"%>

@@ -28,7 +28,7 @@
 						alert("알림 확인");
 					}
 				},
-				error: function(result){
+				error: function(){
 					alert("알람 확인 에러");
 				}
 			});
@@ -52,9 +52,10 @@
 				success: function(result){
 					if(result){
 						alert("알림 확인");
+						location.reload();
 					}
 				},
-				error: function(result){
+				error: function(){
 					alert("알람 확인 에러");
 				}
 			});

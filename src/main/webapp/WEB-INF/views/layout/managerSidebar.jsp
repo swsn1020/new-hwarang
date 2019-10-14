@@ -42,7 +42,6 @@ $(function(){
 				$(this).parent().addClass("active");
 			}
 		});
-
 		$("#close-sidebar").click(function() {
 			$(".page-wrapper").removeClass("toggled");
 		});
@@ -50,6 +49,57 @@ $(function(){
 			$(".page-wrapper").addClass("toggled");
 		});
 		
+		//차단 개수 가져오기
+		$.ajax({
+			url: "/block/unCheckBlocks",
+			type: "get",
+			dataType: "json",
+			success: function(result){
+				var blockCnt = result;
+				$(".blockCnt").text(blockCnt);
+			}
+		});
+		
+		var unReadCnt = 0;
+		//안 읽은 알람 갯수 불러오기
+		$.ajax({
+			url: "/alarm/unReadCnt",
+			type: "get",
+			dataType: "json",
+			success: function(result){
+				unReadCnt = result;
+// 				alert(result);
+				$("#alCnt").text(unReadCnt);
+				$(".alCnt").text(unReadCnt);
+			},
+			error: function(){
+				alert("unReadCnt ajax 불러오기 에러");
+			}
+		});
+		
+		//기존 안 읽은 알람 4개 불러오기
+		$.ajax({
+			url: "/alarm/unReadAlarms",
+			type: "get",
+			dataType: "json",
+			success: function(data){
+				console.log("data: "+data);
+				for(var i in data){
+					var url = data[i].url;
+					var category = data[i].category;
+					var subCategory = data[i].subCategory;
+					var num = data[i].alarm.num;
+	//		 		alert(boardNum);
+					var msg = "새로운 "+category+"_"+subCategory+"이 등록되었습니다.";
+	//		 		alert(msg);
+					var li = "<li id='notification-item'><a href='"+url+"' class='link dropdown-item' data-num='"+num+"'><div class='notification'><div class='notification-content'><i class='fa fa-envelope bg-green'></i>"+msg+"</div></div></a></li>";
+					$("#alarmlist").append(li);
+				}
+			},
+			error: function(){
+				alert("알람리스트 불러오기 ajax 에러");
+			}
+		});
 		
 	}); //onload() End
 	
@@ -68,11 +118,12 @@ $(function(){
 			});
 		})
 	}
-	var alCnt = 0;
+	
 	function addMsg(message){
-		alCnt += 1;
-// 		alert("alCnt: "+ alCnt);
-		$("#alCnt").text(alCnt);
+		var unReadCnt = Number($("#alCnt").text());
+		unReadCnt += 1;
+// 		alert("안읽은 알람갯수: "+unReadCnt);
+		$("#alCnt").text(unReadCnt);
 		var url = message.url;
 		var category = message.category;
 		var subCategory = message.subCategory;
@@ -114,7 +165,7 @@ $(function(){
               <div class="navbar-header">
                 <!-- Navbar Brand -->
                 <a href="/admin/main" class="navbar-brand d-none d-sm-inline-block">
-                  <div class="brand-text d-none d-lg-inline-block"><span>Hwarang&nbsp; </span><strong>Artground</strong></div>
+                  <div class="brand-text d-none d-lg-inline-block" style="font-weight: 1000;"><span>Hwarang&nbsp; </span><strong>Artground</strong></div>
                   <div class="brand-text d-none d-sm-inline-block d-lg-none"><strong>HD</strong></div>
                 </a>
                 <!-- Toggle Button-->
@@ -123,7 +174,7 @@ $(function(){
               <!-- Navbar Menu -->
               <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
                 <!-- Notifications-->
-                <li class="nav-item dropdown"> <a id="notifications" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-bell-o fa-lg"></i><span class="badge bg-red badge-corner" id="alCnt"></span></a>
+                <li class="nav-item dropdown"> <a id="notifications" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-bell-o fa-lg"></i><span class="badge badge-danger badge-corner" id="alCnt"></span></a>
                   <ul id="alarmlist" aria-labelledby="notifications" class="dropdown-menu">
                     <li id="notification-item">
                     	<a rel="nofollow" href="/alarm/alarmList" class="dropdown-item"> 
@@ -179,24 +230,24 @@ $(function(){
 	            <div class="sidebar-submenu">
 	              <ul>
 	                <li>
-	                  <a href="/notice/noticeListForManager">Notice Board <span class="badge badge-pill badge-warning">New</span>
+	                  <a href="/notice/noticeListForManager">Notice Board<span class="badge badge-pill badge-warning">New</span>
 	                  </a>
 	                </li>
 	                <li>
 	                  <a href="/faq/faqListForManager">FAQ Board</a>
 	                </li>
 	                <li>
-	                  <a href="/qna/qnaListForManager">Q&amp;A Board</a>
+	                  <a href="/qna/qnaListForManager">Q&amp;A Board </a>
 	                </li>
 	                <li>
-	                  <a href="/block/blockListForManager">Block Status <span class="badge badge-pill badge-danger">${blockCnt }</span>
+	                  <a href="/block/blockListForManager">Block Status <span class="badge badge-pill badge-danger blockCnt"></span>
 	                  </a>
 	                </li>
 	                <li>
 	                  <a href="/report/reportListForManager">Report Board</a>
 	                </li>
 	                 <li>
-	                  <a href="/alarm/alarmList">Alarm Status<span class="badge badge-pill badge-success">${alarmCnt }</span></a>
+	                  <a href="/alarm/alarmList">Alarm Status<span class="badge badge-pill badge-success alCnt"></span></a>
 	                </li>
 	              </ul>
 	            </div>
@@ -213,7 +264,7 @@ $(function(){
 	                  <a href="/admin/memberList">All Members</a>
 	                </li>
 	                <li>
-	                  <a href="#">Authorization Settings</a>
+	                  <a href="/admin/memberAuth">Authorization Settings</a>
 	                </li>
 	              </ul>
 	            </div>
@@ -238,10 +289,7 @@ $(function(){
 	                  <a href="/report/reportList">Report Board</a>
 	                </li>
 	                <li>
-	                  <a href="/qna/qnaList">Q&amp;A Board</a>
-	                </li>
-	                <li>
-	                  <a href="/free/freeboard">Free Board</a>
+	                  <a href="/board/freeboard">Free Board</a>
 	                </li>
 	                <li>
 	                  <a href="/review/reviewboard">Review Board</a>
@@ -250,7 +298,7 @@ $(function(){
 	                  <a href="/recommend/recommendboard">Recommend Board</a>
 	                </li>
 	                <li>
-	                  <a href="#">Funding Board</a>
+	                  <a href="/funding/fundingList">Funding Board</a>
 	                </li>
 	              </ul>
 	            </div>
