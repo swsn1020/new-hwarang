@@ -63,8 +63,8 @@ function addFavGroup(seq) {
 </script>
 <style>
 .exh-list{
-    padding-right: 10%;
-    padding-left: 10%;
+    padding-right: 15%;
+    padding-left: 15%;
 }
 .star{
   color: #f0d90e;
@@ -100,6 +100,8 @@ function addFavGroup(seq) {
 			<option value="6" <c:out value="${param.sort  eq 6 ?'selected':''}"/>>빠른 시작일</option>
 			<option value="7" <c:out value="${param.sort  eq 7 ?'selected':''}"/>>늦은 종료일</option>
 			<option value="8" <c:out value="${param.sort  eq 8 ?'selected':''}"/>>빠른 종료일</option>
+			<option value="9" <c:out value="${param.sort  eq 9 ?'selected':''}"/>>높은 추천수</option>
+			<option value="10" <c:out value="${param.sort  eq 10 ?'selected':''}"/>>높은 비추천수</option>
 		</select>
 		<select name="type">
 			<option value="" <c:out value="${pageMaker.cri.type == null?'selected':''}"/>>----</option>

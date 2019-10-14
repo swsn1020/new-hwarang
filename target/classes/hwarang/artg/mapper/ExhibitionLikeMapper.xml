@@ -12,4 +12,8 @@
 	<delete id="delete">
 		delete exhibition_like where exh_seq = #{exh_seq} and member_id = #{member_id}
 	</delete>
+	
+	<update id="update">
+		update exhibition_like set exh_like_status = #{exh_like_status} where exh_seq = #{exh_seq} and member_id = #{member_id}
+	</update>
 </mapper>

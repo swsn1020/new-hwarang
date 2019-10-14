@@ -20,10 +20,45 @@
 <script type="text/javascript">
 	$(function() {
 		//추천,비추천
-		$('.disabled').click(function(e) {
-			alert("구매자만 투표할 수 있습니다.");
+		$('.like').click(function(e) {
 			e.preventDefault();
-			return false;
+			if("${exh.exh_like_status}"==0){
+				alert("등록요청");
+				location.replace('/exhibition/like/add?seq=${exh.exh_seq}'); 
+			}
+			if("${exh.exh_like_status}"==1){
+				alert("추천 삭제");
+				location.replace('/exhibition/like/modify?seq=${exh.exh_seq}&status=3'); 
+			}
+			if("${exh.exh_like_status}"==2){
+				alert("이미 비추천을 누르셨습니다.");
+				return false;
+			}
+			if("${exh.exh_like_status}"==3){
+				alert("등록요청");
+				location.replace('/exhibition/like/modify?seq=${exh.exh_seq}&status=1'); 
+			}
+		});
+		
+		$('.unlike').click(function(e) {
+			e.preventDefault();
+			if("${exh.exh_like_status}"==0){
+				alert("등록요청");
+				location.replace('/exhibition/unlike/add?seq=${exh.exh_seq}'); 
+			}
+			if("${exh.exh_like_status}"==1){
+				alert("이미 추천을 누르셨습니다.");
+				return false;
+			}
+			if("${exh.exh_like_status}"==2){
+				alert("비추천 삭제");
+				location.replace('/exhibition/unlike/modify?seq=${exh.exh_seq}&status=3'); 
+			}
+			if("${exh.exh_like_status}"==3){
+				alert("등록요청");
+				location.replace('/exhibition/unlike/modify?seq=${exh.exh_seq}&status=2'); 
+			}
+			
 		});
 
 		//지도
@@ -211,8 +246,8 @@
 			</div>
 			<br>
 			<div style="text-align: center;">
-				<a class="btn btn-outline-dark" id="like" href="/exhibition/like/add?seq=${exh.exh_seq}" style="color: blue;">&nbsp;추천(${exh.exh_like})&nbsp;</a>
-				<a class="btn btn-outline-dark" id="unlike" href="/exhibition/unlike/add?seq=${exh.exh_seq}" style="color: gray;">비추천(${exh.exh_unlike})</a>
+				<a class="btn btn-outline-dark like" href="" style="color: blue;">&nbsp;추천(${exh.exh_like})&nbsp;</a>
+				<a class="btn btn-outline-dark unlike" href="" style="color: gray;">비추천(${exh.exh_unlike})</a>
 			</div>
 			<table class="exh-table table table-hover">
 				<tbody>
