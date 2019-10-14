@@ -79,6 +79,20 @@
 	margin-left: 15px;
 	font-size: 20px;
 }
+.pagination, .page-item a {
+	color: #5C5A5C ;
+	font-weight: normal ;
+}
+
+.pagination li.active a{
+	color: #5C5A5C ;
+	background-color: #E1DAD2;
+	font-weight: bold;
+}
+.dropdown-item:hover {
+	background-color: #E1DAD2;
+}
+
 </style>
 </head>
 <body>

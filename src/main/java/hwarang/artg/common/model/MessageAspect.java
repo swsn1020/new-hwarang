@@ -1,5 +1,6 @@
 package hwarang.artg.common.model;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.aspectj.lang.JoinPoint;
@@ -122,4 +123,26 @@ public class MessageAspect{
 		
 	}
 
+	@Pointcut("execution(* hwarang.artg.member.controller.MemberController.showJoin(..))")
+	public void joinAlarmpt() {}
+	
+	@AfterReturning("joinAlarmpt()")
+	public void afterJoin(JoinPoint jp) {
+		System.out.println("회원가입 알람 AOP 작동!!! ");
+		Object[] params = jp.getArgs();
+		//params[0] == id
+		ManagerAlarmVO alarm = new ManagerAlarmVO();
+		alarm.setCategory("New_Member");
+		alarm.setBoardCategory(params[0]+"_Member");
+		System.out.println(alarm.getBoardCategory());
+		alarm.setBoardNum(0);
+		if(alarmService.alarmRegister(alarm)) {
+			System.out.println("alarm 등록 성공");
+			Map<String, Object> alMap = alarmService.checkAlarmCategory(alarm);
+			this.template.convertAndSend("/category/msg/id1", alMap);
+		}else {
+			System.out.println("Alarm 등록 실패");
+		}
+	}
+	
 }

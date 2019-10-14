@@ -138,9 +138,12 @@ public class ManagerAlarmService {
 		String subCategory = originCategory.substring((originCategory.indexOf("_")+1));
 		if(subCategory.equals("Reply")) {
 			subCategory = "댓글";
-		}else {
+		}else if(subCategory.equals("Board")) {
 			subCategory = "게시글";
+		}else {
+			subCategory = "회원";
 		}
+		
 		int boardNum = alarm.getBoardNum();
 		
 		switch(category) {
@@ -176,6 +179,9 @@ public class ManagerAlarmService {
 			category = "후기게시판";
 			alMap.put("url", "/review/view?num="+boardNum);
 			break;
+		default :
+			alMap.put("url", "/admin/memberList");
+			
 		}
 		alMap.put("category", category);
 		alMap.put("subCategory", subCategory);
