@@ -11,16 +11,16 @@
 </style>
 <script type="text/javascript">
 </script>
-	<div class="notice-div container" style="padding-left: 50px; padding-right: 50px;">
-	<h3 style="font-weight: bold;">공지사항</h3>
-	<!-- 
-	<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')">
-	<div class="buttondiv" style="text-align: center; float: right; margin-bottom: 10px;">
-		<button type="button" class="btn btn-outline-secondary btn-sm" onclick="location.href='noticeWrite'">공지작성</button>
-	</div>
-	</sec:authorize>
-	-->
-	<div style="border-top: 2px solid black;"></div>
+	<br><br><br>
+	<div class="notice-div container">
+		<div class="button-div">
+			<h3 style="float: left;">공지사항</h3>
+			<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')">
+				<button type="button" class="btn btn-outline-secondary btn-sm" onclick="location.href='noticeWrite'" style="float: right;">공지작성</button>
+			</sec:authorize>
+		</div>
+		<br>
+	<div style="border-top: 2px solid black; margin-top: 20px;"></div>
 	<table class="table table-hover">
 		<thead>
 			<tr>

@@ -14,6 +14,7 @@
 		text-align: center;
 	}
 </style>
+<br><br><br>
 <div class="faq-div container" style="padding-left: 50px; padding-right: 50px;">
 	<h3>FAQ</h3>
 	<div style="border-top: 2px solid black;"></div>

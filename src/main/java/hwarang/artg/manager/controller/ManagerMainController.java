@@ -81,6 +81,12 @@ public class ManagerMainController {
 		return "manager/member/memberList";
 	}
 	
+	@RequestMapping("/memberAuth")
+	public String setMemberAuths(CriteriaDTO cri, Model model) {
+		System.out.println("member Auth Settings 요청");
+		return "manager/member/memberSettings";
+	}
+	
 	@RequestMapping("/delMember")
 	public String deleteAccount(String member_id, Model model) {
 		System.out.println("delMember 요청 들어옴");

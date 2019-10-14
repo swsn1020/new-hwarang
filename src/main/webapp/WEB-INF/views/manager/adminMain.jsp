@@ -218,7 +218,7 @@ $(function(){
 			<div class="images col-lg-3 col-12" style="text-align: center;">
 				<div class="image d-flex align-items-center bg-white has-shadow">
 					<div id="img" class="carousel slide" data-ride="carousel" style="width: 100%; height: 100%;">
-						<p><strong class="text-red">REVIEW BOARD</strong></p>
+						<p><strong class="text-red">REVIEW BOARD</strong></p><br>
 						 <!-- Indicators -->
 						  <ul class="carousel-indicators">
 						    <li data-target="#img" data-slide-to="0" class="active"></li>
@@ -234,7 +234,7 @@ $(function(){
 							    <div class="carousel-item" id="review${vs.index }">
 							      <div class="content">
 							      	<h5><a href="/review/view?num=${review.review_num}">${review.review_title }</a></h5>
-							      	<br><br><br><span> ${review.review_content }</span>
+							      	<br><br><br><div> ${review.review_content }</div>
 							      </div>
 							    </div>
 						  	</c:forEach>

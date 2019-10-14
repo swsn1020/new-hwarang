@@ -174,7 +174,7 @@ $(function(){
               <!-- Navbar Menu -->
               <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
                 <!-- Notifications-->
-                <li class="nav-item dropdown"> <a id="notifications" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-bell-o fa-lg"></i><span class="badge bg-red badge-corner" id="alCnt"></span></a>
+                <li class="nav-item dropdown"> <a id="notifications" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-bell-o fa-lg"></i><span class="badge badge-danger badge-corner" id="alCnt"></span></a>
                   <ul id="alarmlist" aria-labelledby="notifications" class="dropdown-menu">
                     <li id="notification-item">
                     	<a rel="nofollow" href="/alarm/alarmList" class="dropdown-item"> 
@@ -230,14 +230,14 @@ $(function(){
 	            <div class="sidebar-submenu">
 	              <ul>
 	                <li>
-	                  <a href="/notice/noticeListForManager">Notice Board
+	                  <a href="/notice/noticeListForManager">Notice Board<span class="badge badge-pill badge-warning">New</span>
 	                  </a>
 	                </li>
 	                <li>
 	                  <a href="/faq/faqListForManager">FAQ Board</a>
 	                </li>
 	                <li>
-	                  <a href="/qna/qnaListForManager">Q&amp;A Board <span class="badge badge-pill badge-warning">New</span></a>
+	                  <a href="/qna/qnaListForManager">Q&amp;A Board </a>
 	                </li>
 	                <li>
 	                  <a href="/block/blockListForManager">Block Status <span class="badge badge-pill badge-danger blockCnt"></span>
@@ -264,7 +264,7 @@ $(function(){
 	                  <a href="/admin/memberList">All Members</a>
 	                </li>
 	                <li>
-	                  <a href="#">Authorization Settings</a>
+	                  <a href="/admin/memberAuth">Authorization Settings</a>
 	                </li>
 	              </ul>
 	            </div>
@@ -287,9 +287,6 @@ $(function(){
 	                </li>
 	                <li>
 	                  <a href="/report/reportList">Report Board</a>
-	                </li>
-	                <li>
-	                  <a href="/qna/qnaList">Q&amp;A Board</a>
 	                </li>
 	                <li>
 	                  <a href="/free/freeboard">Free Board</a>

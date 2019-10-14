@@ -3,16 +3,6 @@
     <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
     <%@taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
     <%@ include file="../layout/menu.jsp" %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<script type="text/javascript">
-
-</script>
-</head>
-<body>
 		<div align="center" style="margin-top: 10px;">
 			<h3 style="font-weight: bold;">나의 페이지</h3>
 		</div>
