@@ -19,6 +19,8 @@
 		var s = Math.floor((distance % (1000 * 60)) / 1000); 
 		//id가 d-day인 HTML코드에 내용 삽입 
 		document.getElementById("d-day").innerHTML = "펀딩까지 "+ d +"일 " + h + "시간 " + m + "분 " + s + "초 남았습니다."; });
+	
+	
 </script>
 
 <head>

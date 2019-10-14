@@ -209,7 +209,7 @@ $(function(){
 						<div class="sidebar-submenu">
 							<ul>
 		                        <li>
-		                            <a href="funding/fundingList">크라우드펀딩</a>
+		                            <a href="#">크라우드펀딩</a>
 		                        </li>
 							</ul>
 						</div>

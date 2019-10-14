@@ -13,5 +13,10 @@
 	<select id="selectAll" resultType="hwarang.artg.funding.model.OrderVO">
 		select * from funding_order
 	</select>
-	
+	<select id="DayCount" >
+		select trunc(startDate) - to_date('20171110', 'YYYYMMDD')from dual
+	</select>
+	<select id="getFunding">
+		select * from crowdfunding
+	</select>
 </mapper>

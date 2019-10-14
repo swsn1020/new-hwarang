@@ -32,11 +32,6 @@
                     <div class="form-group">
                         <label>제목</label> <input type="text" class="form-control" name="funding_subject">
                     </div>
-                    <div class="form-group">
-                        <label>작성자</label>
-                        <input type="text" class="form-control" name="funding_writer">
-                    </div>
-                    
 					<div class="form-group">
                         <label>펀딩가격</label>
                         <input type="text" class="form-control" name="funding_price">
