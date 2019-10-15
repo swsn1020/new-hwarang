@@ -65,6 +65,8 @@ $(function(){
 					</tr>
 			</c:otherwise>
 		</c:choose>
+		
+		
 		</table>
 		</div>
 <%@ include file="layout/bottom.jsp"%>

@@ -199,16 +199,16 @@
 	//관심삭제로직
 	function removeFavorite() {
 		var seqValue = '<c:out value="${param.seq}"/>';
-		var id = $('#replyer');
+		var replyer = $('#replyer');
 		var fav = {
-			exh_seq	: seq
+			exh_seq	: seqValue,
+			member_id : replyer.val()
 		};
 
 		favService.remove(fav, function(result) {
 			if(result){
 				alert("관심 삭제가 완료 되었습니다.");
-				$("#favStatus"+seq).attr("class","far fa-star");
-				$("#favStatus"+seq).attr("data-target","#fav-AddModal"+seq);
+				location.reload();
 				$(".close").click();
 			}else{
 				alert("관심 삭제가 실패 되었습니다.");	

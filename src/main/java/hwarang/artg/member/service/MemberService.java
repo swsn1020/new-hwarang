@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import hwarang.artg.manager.model.NoticeVO;
 import hwarang.artg.mapper.MemberAuthMapper;
 import hwarang.artg.mapper.MemberMapper;
 import hwarang.artg.member.model.MemberAuthVO;
@@ -69,7 +70,18 @@ public class MemberService {
 		}
 		return false;
 	}
+	//수정한것들\\
 	
+	public List<NoticeVO> getUserNotice(String member_id) {
+		return membermapper.selectUserNotice(member_id);
+	}
+	public int readUserNotice(String member_id) {
+		return membermapper.readUserNotice(member_id);
+		
+	}
+	public int getNoticeCount(String member_id) throws Exception{
+		return membermapper.selectNoticeCount(member_id);
+	}
 	//Member block Count 처리
 	public boolean doMemberCountBlock(String id) {
 		if(membermapper.blockCountMember(id)>0) {
@@ -77,7 +89,6 @@ public class MemberService {
 		}
 		return false;
 	}
-	
 	//Member block Status 처리
 	public boolean doMemberStatusBlock(String id) {
 		if(membermapper.blockStatusMember(id)>0) {

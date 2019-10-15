@@ -1,16 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <title>Insert title here</title>
-<%@ include file="../layout/left.jsp"%>
+<%@ include file="../layout/menu.jsp" %>
 
 <script type="text/javascript">
+//let
+let gBno = '${fboard.num}',
+	gBoardWriter = '${fboard.userid}',
+	gRno = 0,
+	gReplytext = null;
 $(function() {	//문서가 로딩되면 실행할 함수
 		/*댓글 목록 그리기 */
 	replyList(1);
 	$("#btnRegister").on("click",function(){
 		//replyForm에 작성된 내용을 DB에 쓰기 후, 결과 받아와서 처리
 		var data = $("#Replyregister").serialize();
+		var replyer = $('#replyer');
 		$.ajax({
-			url : "${contextPath}/reply/register",
+			url : "${contextPath}/freereply/register",
 			data : data,
 			type : "post",
 			dataType : "json",
@@ -21,6 +27,22 @@ $(function() {	//문서가 로딩되면 실행할 함수
 					$("#Replyregister")[0].reset();
 					//새로운 댓글 목록 그리기
 					location.reload();
+					console.debug("reply.js::socket>>",socket)
+					if(socket){
+						//websocket에 보내기 (reply,댓글작성자,게시글작성자,글번호)
+						//let
+						
+						let socketMsg = "reply," + $('#replyer').val() + "," + gBoardWriter + "," + gBno;
+						console.debug("sssssssmsg>>", socketMsg)
+						socket.send(socketMsg);
+// 						alert(replyer.val());
+// 						alert(gBoardWriter);
+// 						alert(gBno);
+						alert("socket 등록 완료");
+						
+					}else{
+						alert("socket 등록 실패")
+					}
 				}else{
 					//댓글 등록 실패
 					alert("오류가 발생했습니다.계속 발생한다면 문의하세요.")
@@ -79,7 +101,7 @@ function replyList(num){
 		$("#replyTable tr").remove();
 		getReplyCnt();
 		$.ajax({
-			url : "${contextPath}/reply/all",
+			url : "${contextPath}/freereply/all",
 			data : {"fboardNum" : '${fboard.num}',"curPage":num},
 			type : "get",
 			dataType : "json",
@@ -197,7 +219,7 @@ function replyList(num){
 			rbtnModify.on("click",function(){
 				var d = $(this).closest("form").serialize();			
 				$.ajax({
-						url : "${contextPath}/reply/modifyReply",
+						url : "${contextPath}/freereply/modifyReply",
 						type: "post",
 						data : d,
 						dataType:"json",
@@ -216,7 +238,7 @@ function replyList(num){
 			rbtnRemove.on("click",function(){
 				var d = $(this).closest("form").serialize();
 				$.ajax({
-					url : "${contextPath}/reply/removeReply",
+					url : "${contextPath}/freereply/removeReply",
 					type : "post",
 					data : d,
 					dataType:"json",
@@ -263,6 +285,40 @@ function replyList(num){
 	}		
 	});
 }
+</script>
+
+<script>
+// function connect(){
+	
+// 	var ws = new WebSocket("ws://localhost:8081/replyEcho?bno=1234");
+	
+// 	ws.onopen = function(){
+// 		console.log('Info.connection opened');
+// 		setTimeout(function(){connect(); },1000);
+		
+// 	};
+	
+// 	ws.onmessage = function(event){
+// 		console.log(event.data+'\n');
+// 	};
+	
+// 	ws.onclose = function(event){
+// 		console.log('Info:connection closed.');
+// 		//setTimeout(function(){connect(); },1000);
+// 	};
+// 	ws.onerror = function(err) {console.log('Errror:, err');};
+	
+// }
+
+
+$('#btnSend').on('click',function(evt){
+	evt.preventDefault();
+	if(socket.readyState!==1) return;
+	//let
+		let msg = $('input#msg').val();
+		socket.send(msg);
+	
+});
 </script>
 	<fmt:formatDate value="${fboard.regDate }" var="regDate" pattern="yyyy-MM-dd"/>
 		<div class="container">
@@ -367,7 +423,7 @@ function replyList(num){
 			<table class="table">
 				<tr>
 					<td>
-						<input type="hidden" name="userid" value="${fboard.userid}">
+						<input type="hidden" id="replyer" name="userid" value='<sec:authentication property="principal.Username"/>'>
 					</td>
 					<th>내용</th>
 					<td><textarea rows="3" cols="30" name="content"></textarea></td>

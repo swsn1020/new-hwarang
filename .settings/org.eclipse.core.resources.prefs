@@ -1,5 +1,4 @@
 eclipse.preferences.version=1
 encoding//src/main/webapp/WEB-INF/views/exhibition/favoriteList.jsp=UTF-8
-encoding//src/main/webapp/WEB-INF/views/funding/payment.jsp=UTF-8
-encoding//src/main/webapp/WEB-INF/views/funding/register.jsp=UTF-8
+encoding//src/main/webapp/WEB-INF/views/funding/fundingWrite.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/views/layout/left.jsp=UTF-8

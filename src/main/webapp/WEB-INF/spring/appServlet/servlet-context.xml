@@ -38,6 +38,7 @@
 	<!-- 커뮤니티 -->
 	<context:component-scan base-package="hwarang.artg.community.controller"/>
 	
+	
 	<!-- websocket -->
 	<!-- Stomp.js 이용한 WebScoket 연결 및 메시지 처리를 위한 설정 -->
 	<websocket:message-broker application-destination-prefix="/client">
@@ -46,6 +47,18 @@
 		</websocket:stomp-endpoint>
 		<websocket:simple-broker prefix="/category"/>
 	</websocket:message-broker>
+	
+	<!-- 재근 websocket -->
+	<beans:bean id="replyEchochoHandler" class="hwarang.artg.community.handler.ReplyEchoHandler"/>
+	   
+		<websocket:handlers>
+        <websocket:mapping handler="replyEchochoHandler" path="/freeboardView" />
+        <websocket:handshake-interceptors>
+            <beans:bean
+                class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
+        </websocket:handshake-interceptors>
+    </websocket:handlers>
+
 	
 	<!-- 다중파일 -->
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">

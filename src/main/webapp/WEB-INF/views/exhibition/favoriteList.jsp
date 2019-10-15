@@ -32,7 +32,7 @@ $(function(){ //전체선택 체크박스 클릭
 function removeFavorite(seq,id) {
 	var fav = {
 		exh_seq	: seq,
-		member_id : id,
+		member_id : id
 	};
 	favService.remove(fav, function(result) {
 		if(result){

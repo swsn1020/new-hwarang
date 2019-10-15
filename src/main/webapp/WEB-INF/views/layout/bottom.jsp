@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="s" uri="http://www.springframework.org/security/tags"%>
 <script type="text/javascript">
 	$(function() {
 		Kakao.init('f2ce3ae8264eed849df9ea6f9ad313b9');
@@ -14,6 +17,7 @@
 		
 	});
 </script>
+</div>
 <div class="container"></div>
 <nav class="navbar navbar-collapse" id="myNavbar">
 	<ul class="nav navbar-nav navbar-right">
@@ -27,10 +31,10 @@
 	</ul>
 	<div id="plusfriend-chat-button"></div>
 </nav>
-<p class="text-muted text-center">
+<p class="text-muted text-center">s
 	<small>The page and links are prepared for ready. it`s not
 		along be there:</small>
 </p>
 
-</body>
-</html>
+
+

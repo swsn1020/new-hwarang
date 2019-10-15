@@ -29,7 +29,7 @@ public class ManagerAlarmController {
 		model.addAttribute("alarmList", service.pagingList(cri));
 		return "manager/alarm/alarmList";
 	}
-	
+
 	@ResponseBody
 	@RequestMapping(value="/alarmCheck", method=RequestMethod.POST)
 	public boolean checkAlarm(int num) {
@@ -42,6 +42,8 @@ public class ManagerAlarmController {
 	public boolean removeAlarm(int num) {
 		return service.alarmRemove(num);
 	}
+
+
 	
 	@ResponseBody
 	@RequestMapping(value="/unReadCnt")
@@ -54,7 +56,5 @@ public class ManagerAlarmController {
 	public List<Map<String, Object>> getUnReadAlarms(){
 		return service.getFourAlarms();
 	}
-	
-	
-	
+
 }
