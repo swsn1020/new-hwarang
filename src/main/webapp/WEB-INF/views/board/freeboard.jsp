@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <title>게시글목록</title>
-<%@ include file="../layout/left.jsp" %>
+<%@ include file="../layout/menu.jsp" %>
 	<div class="container">
 	<h3>자유게시판</h3>
 	<div id="table-responsive">

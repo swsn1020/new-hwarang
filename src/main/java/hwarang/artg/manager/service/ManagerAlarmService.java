@@ -19,6 +19,26 @@ import hwarang.artg.rrboard.service.ReviewBoardService;
 public class ManagerAlarmService {
 	@Autowired
 	private ManagerAlarmMapper dao;
+<<<<<<< HEAD
+=======
+	
+	@Autowired
+	private QnAService qnaService;
+	@Autowired
+	private ReportService reportService;
+	@Autowired
+	private BlockStatusService blockService;
+	@Autowired
+	private FAQService faqService;
+	@Autowired
+	private NoticeService noticeService;
+	@Autowired
+	private FreeBoardService freeBoardService;
+	@Autowired
+	private ReviewBoardService reviewBoardService;
+	@Autowired
+	private RecommendBoardService recommBoardService;
+>>>>>>> refs/remotes/origin/geun2
 	
 	
 	public boolean alarmRegister(ManagerAlarmVO alarm) {
@@ -59,6 +79,7 @@ public class ManagerAlarmService {
 		return checkAlarmCategory(dao.selectAllManagerAlarms());
 	}
 	
+
 	public List<Map<String, Object>> pagingList(CriteriaDTO cri){
 		return checkAlarmCategory(dao.getListWithPaging(cri));
 	}

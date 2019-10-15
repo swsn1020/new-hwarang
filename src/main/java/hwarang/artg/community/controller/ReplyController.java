@@ -26,7 +26,7 @@ import hwarang.artg.community.service.FreeBoardService;
 import hwarang.artg.community.service.FreeReplyService;
 
 @RestController
-@RequestMapping("/reply")
+@RequestMapping("/freereply")
 public class ReplyController {
 	@Autowired
 	private FreeReplyService freereplyservice;
@@ -34,8 +34,10 @@ public class ReplyController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
+
 	public boolean freeReplyRegister(FreeReplyVO freereply,Principal principal,Model model) {
 		model.addAttribute("principal",principal);
+
 		return freereplyservice.freereplyRegister(freereply);
 	}
 	@ResponseBody
@@ -51,7 +53,7 @@ public class ReplyController {
 	@ResponseBody
 	@RequestMapping(value = "/all", method = RequestMethod.GET)
 	public Map<String,Object> getfreeReplyList(@RequestParam("fboardNum")int fboardNum, @RequestParam(defaultValue = "1")int curPage, Model model,Principal principal) {
-		model.addAttribute("principal",principal);
+//		model.addAttribute("principal",principal);
 		Map<String,Object> rMap = new HashMap<String,Object>();
 		int count = freereplyservice.getTotalReplies(fboardNum);
 		ReplyPager rPager = new ReplyPager(count, curPage);
@@ -60,5 +62,6 @@ public class ReplyController {
 		rMap.put("rPager",rPager);
 		rMap.put("replyTable",freereplyservice.nRepliesGetByBNum(fboardNum, start, end));
 		return rMap;
+		
 	}
 }

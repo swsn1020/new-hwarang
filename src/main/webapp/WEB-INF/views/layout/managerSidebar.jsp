@@ -48,6 +48,7 @@ $(function(){
 		$("#show-sidebar").click(function() {
 			$(".page-wrapper").addClass("toggled");
 		});
+<<<<<<< HEAD
 		
 		//차단 개수 가져오기
 		$.ajax({
@@ -100,6 +101,11 @@ $(function(){
 				alert("알람리스트 불러오기 ajax 에러");
 			}
 		});
+=======
+		
+		//알람 붙이기
+
+>>>>>>> refs/remotes/origin/geun2
 		
 	}); //onload() End
 	
@@ -178,8 +184,17 @@ $(function(){
               <!-- Navbar Menu -->
               <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
                 <!-- Notifications-->
+<<<<<<< HEAD
                 <li class="nav-item dropdown"> <a id="notifications" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-bell-o fa-lg"></i><span class="badge badge-danger badge-corner" id="alCnt"></span></a>
+=======
+
+                <li class="nav-item dropdown"> <a id="notifications" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-bell-o fa-lg"></i><span class="badge bg-red badge-corner">${alarmCnt}</span></a>
+                  <ul aria-labelledby="notifications" class="dropdown-menu">
+
+                <li class="nav-item dropdown"> <a id="notifications" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-bell-o fa-lg"></i><span class="badge bg-red badge-corner" id="alCnt"></span></a>
+>>>>>>> refs/remotes/origin/geun2
                   <ul id="alarmlist" aria-labelledby="notifications" class="dropdown-menu">
+
                     <li id="notification-item">
                     	<a rel="nofollow" href="/alarm/alarmList" class="dropdown-item"> 
 	                        <div class="notification">
@@ -187,6 +202,17 @@ $(function(){
 	                        </div>
                         </a>
                     </li>
+
+                    <c:forEach items="${alarmList}" var="alarm">
+                    	<li>
+	                    	<a rel="nofollow" href="${alarm.url }" class="dropdown-item"> 
+		                        <div class="notification">
+		                          <div class="notification-content"><i class="fa fa-twitter bg-blue"></i>${alarm.category }&nbsp;${alarm.subCategory }이 등록되었습니다.</div>
+		                          <div class="notification-time"><small></small></div>
+		                        </div>
+	                        </a>
+                        </li>
+                    </c:forEach>
                   </ul>
                 </li>
                 <!-- Logout    -->

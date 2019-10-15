@@ -6,7 +6,6 @@
 <%@ taglib uri="http://www.springframework.org/security/tags"
 	prefix="sec"%>
 <sec:authentication property="principal" var="pinfo" />
-<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -42,11 +41,57 @@
 <script type="text/javascript" src="/resources/js/common_fn.js"></script>
 <script type="text/javascript" src="/resources/js/calendar.js"></script>
 <script type="text/javascript" src="/resources/js/layout.js"></script>
+<script src="/resources/js/sockjs.js"></script>
+<script src="/resources/js/stomp.js"></script>
 <!-- menu css -->
 <!-- <link href="http://www.blueb.co.kr/data/201010/IJ12873478039948/style.css" media="all" rel="stylesheet" type="text/css" /> -->
 <!-- font -->
 <!-- <link href="https://fonts.googleapis.com/css?family=Prompt:400,500,700" rel="stylesheet"> -->
 <!-- kakao login -->
+<script>
+//let
+let socket = null;
+$(document).ready(function(){
+	connectWS();
+});
+function connectWS(){
+    console.log("tttttttttttttt")
+	var ws = new WebSocket("ws://localhost:8081/freeboardView?num=382");
+    socket = ws;
+    
+	ws.onopen = function(){
+		console.log('Info.connection opened');
+		console.log(ws);
+	};
+	
+	ws.onmessage = function(event){
+		console.log("ReceiveMesaage:", event.data+'\n');
+		  var $socketAlert = $('#socketAlert');
+	        $socketAlert.html(event.data);
+	        $socketAlert.css('display', 'block');
+	        
+	        setTimeout( function() {
+	        	$socketAlert.css('display', 'none');
+	        }, 3000);
+	};
+	
+	ws.onclose = function(event){
+		console.log('Info:connection closed.');
+		//setTimeout(function(){connect(); },1000);
+	};
+	ws.onerror = function(err) {console.log('Errror:, err');};
+	
+}
+
+$('#btnSend').on('click',function(evt){
+	evt.preventDefault();
+	if(socket.readyState!==1) return;
+	//let
+		let msg = $('input#msg').val();
+		ws.send(msg);
+	
+});
+</script>
 <style>
 @font-face { font-family: 'Arita-dotum-Medium'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/Arita-dotum-Medium.woff') format('woff'); font-weight: normal; font-style: normal; }
 *{
@@ -96,15 +141,16 @@
 </style>
 </head>
 <body>
-
 	<header>
 		<div class='header'>
+		 <div id="socketAlert" class="alert alert-success" role="alert" style="display:none;"></div>
 			<div class='header-title'>
 				<h1>
 					<a href="/"><img class="header_img maintitle"
 						src="https://trello-attachments.s3.amazonaws.com/5d6613e9716d6e23f5e579bb/312x140/3f52467f9d01dd9ce0a0f28eacece66e/%EB%A1%9C%EA%B3%A0.png"
 						alt="Cinque Terre"></a>
 				</h1>
+				    <div id="socketAlert" class="alert alert-success" role="alert"></div>
 			</div>
 			<div class="header-login">
 				<ul class="nav justify-content-center">
@@ -123,6 +169,30 @@
 						class="nav-link" href="/exhibition/favoriteList">관심목록</a></li>	
 					<li class="nav-item" id="side_item"><a
 						class="nav-link" href="/exhibition/recentlyView">최근본상품</a><div></div></li>
+					<input id="userid" type="hidden" value='<sec:authentication property="principal.Username"/>'>
+					<ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
+                <!-- Notifications-->
+                <li class="nav-item dropdown"> <a id="notifications" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-bell-o fa-lg"></i><span class="badge bg-red badge-corner">${alarmCnt}</span></a>
+                  <ul aria-labelledby="notifications" class="dropdown-menu">
+                    <li id="notification-item">
+                    	<a rel="nofollow" href="#" class="dropdown-item"> 
+	                        <div class="notification">
+	                          <div class="notification-content"><i class="fa fa-envelope bg-green"></i>You have 6 new messages </div>
+	                          <textarea class="notification-time">알람넣을부분</textarea>
+	                        </div>
+                        </a>
+                    </li>
+                    <c:forEach items="${alarmList}" var="useralarm">
+                    	<li>
+	                    	<a rel="nofollow" href="${useralarm.url }" class="dropdown-item"> 
+		                        <div class="notification">
+		                          <div class="notification-content"><i class="fa fa-twitter bg-blue"></i>${useralarm.category }&nbsp;${useralarm.subCategory }이 등록되었습니다.</div>
+		                          <div class="notification-time"><small></small></div>
+		                        </div>
+	                        </a>
+                        </li>
+                    </c:forEach>
+                  </ul>
 					</sec:authorize>
 					<sec:authorize access="isAnonymous()">
 					<li class="nav-item" id="side_item"><a
@@ -174,6 +244,10 @@
 
 			</nav>
 		</div>
+<<<<<<< HEAD
 
 </header>
 
+=======
+</header>
+>>>>>>> refs/remotes/origin/geun2
