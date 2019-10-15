@@ -21,9 +21,44 @@ $(function(){ //전체선택 체크박스 클릭
 			e.preventDefault();
 		}	
 	});
-}) 	
+})
+function remove(rec, callback, error) {
+	$.ajax({
+		type : 'delete',
+		url : '/exhibition/removeRecentlyView',
+		data : JSON.stringify(rec),
+		contentType : "application/json; charset=utf-8",
+		success : function(deleteResult, status, xhr) {
+			if(callback){
+				callback(deleteResult);
+			}
+		},
+		error : function(xhr, status, er) {
+			if(error){
+				error(er);
+			}
+		}
+	});
+}
+function removeRecently(seq,id) {
+	var rec = {
+		exh_seq	: seq,
+		member_id : id,
+	};
+	remove(rec, function(result) {
+		if(result){
+			$("#favStatus"+seq).attr("class","far fa-star");
+			$("#favStatus"+seq).attr("data-target","#fav-AddModal"+seq);
+			$(".close").click();
+			location.reload();
+		}else{
+			alert("관심 삭제가 실패 되었습니다.");	
+		}
+		return false;
+	})
+};
 </script>
-
+<sec:authentication property="principal.Username" var="id" />
 <div class="container">
 	<h2 style="font-weight: bold;">최근 본 상품</h2>
 	<form action="/exhibition/removeRecentlyView" method="post">
@@ -58,8 +93,9 @@ $(function(){ //전체선택 체크박스 클릭
 							<li class="nav-item col-sm-12" id="side_item"><br></li>
 							<li class="nav-item col-sm-12" id="side_item">${r.exh_place}</li>
 							<li class="nav-item col-sm-12" id="side_item">${r.exh_price}</li>
-							<li class="nav-item col-sm-12" id="side_item"><fmt:formatDate pattern="yyyy-MM-dd" value="${r.exh_startDate}" timeZone="Asia/Seoul"/> ~ <fmt:formatDate pattern="yyyy-MM-dd" value="${r.exh_endDate}" timeZone="Asia/Seoul"/></li>
+							<li class="nav-item col-sm-12" id="side_item"><fmt:formatDate pattern="yyyy-MM-dd" value="${r.exh_startDate}" timeZone="Asia/Seoul"/> ~ <fmt:formatDate pattern="yyyy-MM-dd" value="${r.exh_endDate}" timeZone="Asia/Seoul"/></li>						
 						</ul>
+						<a class="btn btn-outline-dark" style="float:right;;" onclick="removeRecently(${r.exh_seq},'${id}')">삭제</a>
 					</td>
 				</tr>
 			</c:forEach>

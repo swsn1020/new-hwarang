@@ -48,7 +48,7 @@ public class ExhibitionController {
 	NaverBlogService blogservice;
 	@Autowired
 	ExhibitionLikeService lService;
-
+	//공연리스트 불러오기
 	@GetMapping("")
 	public String exhibitionShow(Model model, CriteriaDTO cri, ExhibitionVO exh) throws Exception {
 		if(cri.getAmount()==10 || cri.getAmount()==0) {
@@ -72,7 +72,22 @@ public class ExhibitionController {
 		model.addAttribute("eList", service.pagingList(cri, exh, id));
 		return "/exhibition/exhibition";
 	}
-
+	//단일공연정보 불러오기
+	@GetMapping("/view")
+	public void exhibitionDetail(Model model, int seq, Principal principal) throws Exception {
+		String id = principal.getName();
+		RecentlyViewVO rec = new RecentlyViewVO(seq, id);
+		if(rService.getIsViewd(rec)) {
+			rService.removeRecentlyView(rec);
+		}
+		rService.addRecentlyView(new RecentlyViewVO(seq, id));
+		model.addAttribute("group",fService.getGroup(id));
+		ExhibitionVO exh = service.getOneView(seq,id);
+		model.addAttribute("exh", exh);
+		List<NaverBlogDTO> blogReview = blogservice.naverurlapi(exh.getExh_title());
+		model.addAttribute("blogReview", blogReview);
+	}
+	//지도리스트불러오기
 	@GetMapping("/mapList")
 	public void exhibitionMapShow(Model model, String area) {
 		if(area==null || area=="") {
@@ -102,33 +117,21 @@ public class ExhibitionController {
 		model.addAttribute("pList", pList);
 	}
 
+	//공연장시퀀스로 공연장정보 얻어오기
 	@GetMapping(value = "/getPlaceInfo/{placeseq}", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
 	@ResponseBody
 	public ResponseEntity<ExhibitionVO> getPlace(@PathVariable("placeseq") String placeseq) {
 		return new ResponseEntity<>(service.showPlaceListByPseq(placeseq), HttpStatus.OK);
 	}
 	
+	//해당공연장의 공연리스트 얻어오기
 	@GetMapping(value = "/placeList/{placeseq}", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
 	@ResponseBody
 	public ResponseEntity<List<ExhibitionVO>> getExhibitionListByPlace(@PathVariable("placeseq") String placeseq) {
 		return new ResponseEntity<>(service.showListByPlace(placeseq), HttpStatus.OK); 
 	}
 	
-	@GetMapping("/view")
-	public void exhibitionDetail(Model model, int seq, Principal principal) throws Exception {
-		String id = principal.getName();
-		RecentlyViewVO rec = new RecentlyViewVO(seq, id);
-		if(rService.getIsViewd(rec)) {
-			rService.removeRecentlyView(rec);
-		}
-		rService.addRecentlyView(new RecentlyViewVO(seq, id));
-		model.addAttribute("group",fService.getGroup(id));
-		ExhibitionVO exh = service.getOneView(seq,id);
-		model.addAttribute("exh", exh);
-		List<NaverBlogDTO> blogReview = blogservice.naverurlapi(exh.getExh_title());
-		model.addAttribute("blogReview", blogReview);
-	}
-	
+	//간단한 단일공연정보 주기
 	@GetMapping(value = "/{seq}", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
 	@ResponseBody
 	public ResponseEntity<ExhibitionVO> getExhibition(@PathVariable("seq") int seq) {
@@ -136,7 +139,7 @@ public class ExhibitionController {
 	}
 	
 	
-	
+	//최근본공연 부분
 	@GetMapping("/recentlyView")
 	public void recentlyView(Model model, CriteriaDTO cri, Principal principal) {
 		String id = principal.getName();
@@ -155,7 +158,14 @@ public class ExhibitionController {
 		return "redirect:/exhibition/recentlyView";
 	}
 	
+	@DeleteMapping(value ="/removeRecentlyView", consumes = "application/json", produces = {MediaType.TEXT_PLAIN_VALUE})
+	@ResponseBody
+	public ResponseEntity<String> removeRec(@RequestBody RecentlyViewVO rec) {
+		rec.setMember_id(SecurityContextHolder.getContext().getAuthentication().getName());
+		return rService.removeRecentlyView(rec) == true ? new ResponseEntity<>("success", HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
 	
+	//즐겨찾기 부분
 	@RequestMapping("/favoriteList")
 	public void exhibitionFavorite(Model model, String group, CriteriaDTO cri, Principal principal) {
 		String id = principal.getName();
@@ -201,7 +211,8 @@ public class ExhibitionController {
 		vo.setMember_id(SecurityContextHolder.getContext().getAuthentication().getName());
 		return fService.removeFavorite(vo) == true ? new ResponseEntity<>("success", HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
-	
+
+	//추천 부분
 	@RequestMapping("/like/add")
 	public String likeAdd(Principal principal, int seq) {
 		ExhLikeVO like = new ExhLikeVO(principal.getName(), seq, 1);

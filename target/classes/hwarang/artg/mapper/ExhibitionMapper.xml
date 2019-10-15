@@ -31,17 +31,17 @@
 		</trim>
 	</sql>
 	<sql id="sortcri">
-			<if test='cri.sort ==null or cri.sort.equals("0")'>/*+INDEX_DESC(h index_exh_seq) */</if>
-			<if test='cri.sort !=null and cri.sort.equals("1")'>/*+INDEX_ASC(h index_exh_area) */</if>
-			<if test='cri.sort !=null and cri.sort.equals("2")'>/*+INDEX_ASC(h index_exh_value) */</if>  
-			<if test='cri.sort !=null and cri.sort.equals("3")'>/*+INDEX_DESC(h index_exh_value) */</if>  
-			<if test='cri.sort !=null and cri.sort.equals("4")'>/*+INDEX_ASC(h index_exh_startDate) */</if> 
-			<if test='cri.sort !=null and cri.sort.equals("5")'>/*+INDEX_DESC(h index_exh_startDate) */</if>  
-			<if test='cri.sort !=null and cri.sort.equals("6")'>/*+INDEX_ASC(h index_exh_startDate) */</if> 
-			<if test='cri.sort !=null and cri.sort.equals("7")'>/*+INDEX_DESC(h index_exh_enddate) */</if>  
-			<if test='cri.sort !=null and cri.sort.equals("8")'>/*+INDEX_ASC(h index_exh_enddate) */</if>  
-			<if test='cri.sort !=null and cri.sort.equals("9")'>/*+INDEX_DESC(h INDEX_EXH_LIKE) */</if>  
-			<if test='cri.sort !=null and cri.sort.equals("10")'>/*+INDEX_ASC(h INDEX_EXH_UNLIKE) */</if>   
+		<if test='cri.sort ==null or cri.sort.equals("0")'>/*+INDEX_DESC(h index_exh_seq) */</if>
+		<if test='cri.sort !=null and cri.sort.equals("1")'>/*+INDEX_ASC(h index_exh_area) */</if>
+		<if test='cri.sort !=null and cri.sort.equals("2")'>/*+INDEX_ASC(h index_exh_value) */</if>  
+		<if test='cri.sort !=null and cri.sort.equals("3")'>/*+INDEX_DESC(h index_exh_value) */</if>  
+		<if test='cri.sort !=null and cri.sort.equals("4")'>/*+INDEX_ASC(h index_exh_startDate) */</if> 
+		<if test='cri.sort !=null and cri.sort.equals("5")'>/*+INDEX_DESC(h index_exh_startDate) */</if>  
+		<if test='cri.sort !=null and cri.sort.equals("6")'>/*+INDEX_ASC(h index_exh_startDate) */</if> 
+		<if test='cri.sort !=null and cri.sort.equals("7")'>/*+INDEX_DESC(h index_exh_enddate) */</if>  
+		<if test='cri.sort !=null and cri.sort.equals("8")'>/*+INDEX_ASC(h index_exh_enddate) */</if>  
+		<if test='cri.sort !=null and cri.sort.equals("9")'>/*+INDEX_DESC(h INDEX_EXH_LIKE) */</if>  
+		<if test='cri.sort !=null and cri.sort.equals("10")'>/*+INDEX_ASC(h INDEX_EXH_UNLIKE) */</if>   
 	</sql>
 
 	<insert id="insert">
@@ -84,31 +84,31 @@
 	</select>
 	
 	<select id="getListMain" resultType="hwarang.artg.exhibition.model.ExhibitionVO">
-	  <![CDATA[
-	  select 
-	    seq exh_seq, exh_title, exh_startDate,exh_enddate,exh_place,exh_realmName,exh_area,exh_subTitle, exh_price,exh_contents,exh_contents1,exh_contents2,exh_url,exh_phone,exh_imgurl,exh_gpsx,exh_gpsy,exh_placeurl,exh_placeaddr,exh_placeseq,
-	    (select count(*) from favorite_mark where member_id = #{member_id} and exh_seq = seq) favorite_status, exh_like, exh_unlike
-	  from (select /*+INDEX_DESC(h index_exh_like) */ rownum rn,exh_seq seq, exh_title,exh_startDate,exh_enddate,exh_place,exh_realmName,exh_area,exh_subTitle,exh_price,exh_contents,exh_contents1,exh_contents2,exh_url,exh_phone,exh_imgurl,exh_gpsx,exh_gpsy,exh_placeurl,exh_placeaddr,exh_placeseq, exh_like, exh_unlike
-	      from exhibition h where  
-	  rownum <= #{cri.pageNum} * #{cri.amount}) where rn > (#{cri.pageNum} -1) * #{cri.amount}   
-	  ]]>
+		<![CDATA[
+		select 
+		  seq exh_seq, exh_title, exh_startDate,exh_enddate,exh_place,exh_realmName,exh_area,exh_subTitle, exh_price,exh_contents,exh_contents1,exh_contents2,exh_url,exh_phone,exh_imgurl,exh_gpsx,exh_gpsy,exh_placeurl,exh_placeaddr,exh_placeseq,
+		  (select count(*) from favorite_mark where member_id = #{member_id} and exh_seq = seq) favorite_status, exh_like, exh_unlike
+		from (select /*+INDEX_DESC(h index_exh_like) */ rownum rn,exh_seq seq, exh_title,exh_startDate,exh_enddate,exh_place,exh_realmName,exh_area,exh_subTitle,exh_price,exh_contents,exh_contents1,exh_contents2,exh_url,exh_phone,exh_imgurl,exh_gpsx,exh_gpsy,exh_placeurl,exh_placeaddr,exh_placeseq, exh_like, exh_unlike
+		    from exhibition h where  
+		rownum <= #{cri.pageNum} * #{cri.amount}) where rn > (#{cri.pageNum} -1) * #{cri.amount}   
+		]]>
 	</select>
 
 	<select id="getListWithPaging" resultType="hwarang.artg.exhibition.model.ExhibitionVO">
-  <![CDATA[
-  select seq exh_seq, exh_title, exh_startDate,exh_enddate,exh_place,exh_realmName,exh_area,exh_subTitle, exh_price,exh_contents,exh_contents1,exh_contents2,exh_url,exh_phone,exh_imgurl,exh_gpsx,exh_gpsy,exh_placeurl,exh_placeaddr,exh_placeseq,(select count(*) from favorite_mark where member_id = #{member_id} and exh_seq = seq) favorite_status,
-    (select count(*) from exhibition_reply where exh_seq = seq)exh_recomm_cnt,exh_like, exh_unlike
-  from (select  
-  ]]>
-  <include refid="sortcri"></include>
-  <![CDATA[   
-      rownum rn,exh_seq seq, exh_title,exh_startDate,exh_enddate,exh_place,exh_realmName,exh_area,exh_subTitle,exh_price,exh_contents,exh_contents1,exh_contents2,exh_url,exh_phone,exh_imgurl,exh_gpsx,exh_gpsy,exh_placeurl,exh_placeaddr,exh_placeseq,exh_like, exh_unlike
-      from exhibition h where
-  ]]>
-  <include refid="criteria"></include>
-  <![CDATA[   
-  rownum <= #{cri.pageNum} * #{cri.amount}) where rn > (#{cri.pageNum} -1) * #{cri.amount}
-  ]]>
+		<![CDATA[
+		select seq exh_seq, exh_title, exh_startDate,exh_enddate,exh_place,exh_realmName,exh_area,exh_subTitle, exh_price,exh_contents,exh_contents1,exh_contents2,exh_url,exh_phone,exh_imgurl,exh_gpsx,exh_gpsy,exh_placeurl,exh_placeaddr,exh_placeseq,(select count(*) from favorite_mark where member_id = #{member_id} and exh_seq = seq) favorite_status,
+		  (select count(*) from exhibition_reply where exh_seq = seq)exh_recomm_cnt,exh_like, exh_unlike
+		from (select  
+		]]>
+		<include refid="sortcri"></include>
+		<![CDATA[   
+		    rownum rn,exh_seq seq, exh_title,exh_startDate,exh_enddate,exh_place,exh_realmName,exh_area,exh_subTitle,exh_price,exh_contents,exh_contents1,exh_contents2,exh_url,exh_phone,exh_imgurl,exh_gpsx,exh_gpsy,exh_placeurl,exh_placeaddr,exh_placeseq,exh_like, exh_unlike
+		    from exhibition h where
+		]]>
+		<include refid="criteria"></include>
+		<![CDATA[   
+		rownum <= #{cri.pageNum} * #{cri.amount}) where rn > (#{cri.pageNum} -1) * #{cri.amount}
+		]]>
 	</select>
 
 	<select id="getTotalCount" resultType="int">
