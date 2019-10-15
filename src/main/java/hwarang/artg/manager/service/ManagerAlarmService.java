@@ -19,7 +19,7 @@ import hwarang.artg.rrboard.service.ReviewBoardService;
 public class ManagerAlarmService {
 	@Autowired
 	private ManagerAlarmMapper dao;
-	
+
 	@Autowired
 	private QnAService qnaService;
 	@Autowired

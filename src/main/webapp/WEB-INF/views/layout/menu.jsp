@@ -245,9 +245,13 @@ $('#btnSend').on('click',function(evt){
 			</nav>
 		</div>
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 </header>
 
+=======
+</header>
+>>>>>>> refs/remotes/origin/geun2
 =======
 </header>
 >>>>>>> refs/remotes/origin/geun2

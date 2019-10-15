@@ -58,6 +58,31 @@
 			select *from member where member_name = #{member_name}
 		</select>
 		<!-- 수정한것들 -->
+
+		
+		<select id="selectUserNotice" resultType="hwarang.artg.community.model.AlarmVO">
+   	select x.*
+   		 , CASE alarm_type  
+            WHEN 1 THEN participated_username||'님이 ['||free_title||'] 게시판에 댓글을 남기셨습니다.'
+            END as alarm_message
+		from (           
+				select notice_seq, recieve_member_seq, notice_member_seq, c.member_id as participated_username
+      			, a.free_num,free_reply_num, alarm_type, alarm_regdate, alarm_readdate  
+        		, d.free_title
+		from free_alarm a
+		join member c on a.notice_member_seq = c.member_id
+		join free_board d on a.free_num = d.free_num
+		where recieve_member_seq = #{free_num}) x 
+    </select>
+    <update id="readUserNotice">
+    	UPDATE alarm SET alarm_readdate = sysdate
+		WHERE member_id = #{member_id} AND alarm_readdate IS NULL
+    </update>
+		
+	 <select id="selectNoticeCount" resultType="Integer">
+    	SELECT COUNT(*) FROM alarm
+    	WHERE member_id = #{member_id} AND alarm_readdate IS NULL
+    </select>	
 		
 		<select id="selectUserNotice" resultType="hwarang.artg.community.model.AlarmVO">
    	select x.*

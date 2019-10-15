@@ -49,6 +49,7 @@ $(function(){
 			$(".page-wrapper").addClass("toggled");
 		});
 <<<<<<< HEAD
+<<<<<<< HEAD
 		
 		//차단 개수 가져오기
 		$.ajax({
@@ -101,6 +102,11 @@ $(function(){
 				alert("알람리스트 불러오기 ajax 에러");
 			}
 		});
+=======
+		
+		//알람 붙이기
+
+>>>>>>> refs/remotes/origin/geun2
 =======
 		
 		//알람 붙이기
@@ -185,8 +191,11 @@ $(function(){
               <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
                 <!-- Notifications-->
 <<<<<<< HEAD
+<<<<<<< HEAD
                 <li class="nav-item dropdown"> <a id="notifications" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-bell-o fa-lg"></i><span class="badge badge-danger badge-corner" id="alCnt"></span></a>
 =======
+=======
+>>>>>>> refs/remotes/origin/geun2
 
                 <li class="nav-item dropdown"> <a id="notifications" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-bell-o fa-lg"></i><span class="badge bg-red badge-corner">${alarmCnt}</span></a>
                   <ul aria-labelledby="notifications" class="dropdown-menu">
