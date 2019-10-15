@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+ <mapper namespace="hwarang.artg.mapper.FreeReplyMapper"> 
+ <insert id="insertReply" parameterType="hwarang.artg.community.model.FreeReplyVO"> 
+ insert into free_reply 
+		(free_reply_num,free_num,member_id,free_reply_content)
+ 	values(seq_b_free_reply.nextval,#{fboardNum},#{userid},#{content})
+ </insert> 
+
+ <update id="updateReply" parameterType="hwarang.artg.community.model.FreeReplyVO"> 
+update free_reply 
+	set free_reply_content = #{content} 
+ 		where free_reply_num = #{num}  
+ </update> 
+
+ <delete id="deleteReply" parameterType="int"> 
+	delete from free_reply where free_reply_num = #{num} 
+ </delete> 
+
+ <select id="selectOne" parameterType="int" resultMap="replyMap"> 
+select * from free_reply where free_reply_num = #{num}	
+ </select> 
+
+<select id="selectListByBnum" resultMap="replyMap"> 
+<!--  select * from free_reply where free_num = #{fboardNum}  -->
+	 select * from free_reply 
+        where free_num = #{fboardNum}
+            order by free_reply_num desc
+ </select> 
+
+ <select id="selectAll" resultMap="replyMap"> 
+ select * from free_reply 
+ </select> 
+<sql id="pagingHeader">
+select *
+	from (
+		select rownum as rn, a.* from(
+</sql>		
+<sql id="pagingFooter">
+	) A
+)
+	where rn between #{start} and #{end}	
+</sql> 
+<!-- 페이징 처리 -->
+<select id="getListWithPaging" resultMap="replyMap">
+	<include refid="pagingHeader"/>
+		select free_reply_num , free_num , member_id, free_reply_content, free_reply_regdate , free_reply_updatedate, block
+			from free_reply
+			where free_num = #{fboardNum}
+			order by free_reply_num
+	<include refid="pagingFooter"/>
+</select>
+<select id="getTotalCountByBNum" resultType="int">
+	select count(*) from free_reply
+	where free_num = #{fboardNum}
+</select>
+<select id="replyUserIdCheck" resultType="String">
+	select member_id
+		from free_reply
+			where free_reply_num = {num}
+</select>
+
+<select id="getReplyCnt" resultType="int">
+		SELECT count(*) AS 
+		FROM free_reply WHERE free_num = #{fboardNum}
+</select>
+
+
+
+<!-- 신고처리 -hj- -->
+<update id="updateBlock">
+	UPDATE free_reply SET BLOCK = #{block} WHERE free_reply_num = #{num}
+</update>
+
+ <resultMap id="replyMap" type="hwarang.artg.community.model.FreeReplyVO"> 
+ <result column="free_reply_num" property="num"/> 
+ <result column="free_num" property="fboardNum"/> 
+ <result column="member_id" property="userid"/> 
+ <result column="free_reply_content" property="content"/> 
+ <result column="free_reply_regdate" property="regDate"/> 
+ <result column="free_reply_updatedate" property="upDateDate"/> 
+ <result column="BLOCK" property="block"/>
+ </resultMap> 
+ 
+</mapper> 

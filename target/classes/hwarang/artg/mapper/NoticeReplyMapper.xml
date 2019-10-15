@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hwarang.artg.mapper.NoticeReplyMapper">
+	<insert id="insertReply" parameterType="hwarang.artg.manager.model.NoticeReplyVO">
+		<selectKey order="BEFORE" keyProperty="num" resultType="int">
+			SELECT seq_notice_reply.nextval FROM dual 
+		</selectKey>
+		INSERT INTO NOTICE_REPLY (NOTICE_REPLY_NUM, NOTICE_NUM, MEMBER_ID, NOTICE_REPLY_CONTENT)
+		VALUES (#{num}, #{boardNum}, #{memId}, #{content})
+	</insert>
+	<update id="updateReply" parameterType="hwarang.artg.manager.model.NoticeReplyVO">
+		UPDATE NOTICE_REPLY SET NOTICE_REPLY_CONTENT = #{content}, NOTICE_REPLY_UPDATEDATE = sysdate
+		WHERE NOTICE_REPLY_NUM = #{num}
+	</update>
+	<delete id="deleteReply" >
+		DELETE FROM NOTICE_REPLY WHERE NOTICE_REPLY_NUM = #{num}
+	</delete>
+	<delete id="deleteReplyByBNum">
+		DELETE FROM NOTICE_REPLY WHERE NOTICE_NUM = #{boardNum}
+	</delete>
+	<select id="selectReply" resultMap="replyMap">
+		SELECT * FROM NOTICE_REPLY WHERE NOTICE_REPLY_NUM = #{num}
+	</select>
+	<select id="selectRepliesByBNum" resultMap="replyMap">
+		SELECT * 
+		FROM NOTICE_REPLY WHERE NOTICE_NUM = #{boardNum}
+		ORDER BY NOTICE_REPLY_UPDATEDATE ASC
+	</select>
+	<select id="getReplyCnt" resultType="int">
+		SELECT count(*)
+		FROM NOTICE_REPLY WHERE NOTICE_NUM = #{boardNum}
+	</select>
+	<select id="selectReplies" resultMap="replyMap">
+		SELECT * FROM NOTICE_REPLY
+	</select>
+	
+	<sql id="pagingHeader">
+		SELECT * 
+		  FROM (
+				SELECT rownum AS rn, A.* FROM (
+	</sql>
+	
+	<sql id="pagingFooter">
+			) A
+		) 
+		 WHERE rn BETWEEN #{start} AND #{end}
+	</sql>
+	
+	
+	<!-- 페이징 처리 -->
+	<select id="getListWithPaging" resultMap="replyMap">
+		<include refid="pagingHeader"/>
+			   SELECT notice_reply_num, notice_num, member_id, notice_reply_content, notice_reply_regdate, notice_reply_updatedate, block
+                 FROM notice_reply
+                WHERE notice_num = #{boardNum}
+                ORDER BY NOTICE_REPLY_NUM
+        <include refid="pagingFooter"/>
+	</select>
+	
+	<select id="getTotalCountByBNum" resultType="int">
+		SELECT count(*) FROM NOTICE_REPLY
+		 WHERE NOTICE_NUM = #{boardNum}
+	</select>
+	
+	<!-- 댓글 수 증가를 위해 댓글 번호로 해당 게시글 번호 얻어오기  -->
+	<select id="getBoardNum" resultType="int">
+		SELECT NOTICE_NUM FROM NOTICE_REPLY WHERE NOTICE_REPLY_NUM = #{num}
+	</select>
+	
+	<!-- block 처리 -->
+	<update id="updateBlock">
+		UPDATE NOTICE_REPLY SET BLOCK = #{block} WHERE NOTICE_REPLY_NUM = #{num}
+	</update>
+	
+	<resultMap type="hwarang.artg.manager.model.NoticeReplyVO" id="replyMap">
+		<result column="NOTICE_REPLY_NUM" property="num"/>
+		<result column="NOTICE_NUM" property="boardNum"/>
+		<result column="MEMBER_ID" property="memId"/>
+		<result column="NOTICE_REPLY_CONTENT" property="content"/>
+		<result column="NOTICE_REPLY_REGDATE" property="regDate"/>
+		<result column="NOTICE_REPLY_UPDATEDATE" property="modiDate"/>
+		<result column="BLOCK" property="block"/>
+	</resultMap>
+</mapper>

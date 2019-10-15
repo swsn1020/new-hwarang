@@ -42,7 +42,7 @@ public class ManagerAlarmController {
 	public boolean removeAlarm(int num) {
 		return service.alarmRemove(num);
 	}
-<<<<<<< HEAD
+
 	
 	@ResponseBody
 	@RequestMapping(value="/unReadCnt")
@@ -55,10 +55,5 @@ public class ManagerAlarmController {
 	public List<Map<String, Object>> getUnReadAlarms(){
 		return service.getFourAlarms();
 	}
-	
-	
-	
-=======
-	
->>>>>>> refs/remotes/origin/geun2
+
 }

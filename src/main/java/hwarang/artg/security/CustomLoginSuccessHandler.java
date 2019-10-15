@@ -17,22 +17,16 @@ import lombok.extern.log4j.Log4j;
 public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler{
 	ReplyEchoHandler reh = new ReplyEchoHandler();
 	@Override
-<<<<<<< HEAD
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication auth) throws IOException, ServletException {
-=======
-	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-			Authentication auth ) throws IOException, ServletException {
->>>>>>> refs/remotes/origin/geun2
+
 		System.out.println("Login seuccess");
 		List<String> roleNames = new ArrayList<>();
 		auth.getAuthorities().forEach(authority -> {
 			roleNames.add(authority.getAuthority());
 		});
-<<<<<<< HEAD
-		System.out.println("로그인석세스핸들러작동");
-=======
 
->>>>>>> refs/remotes/origin/geun2
+		System.out.println("로그인석세스핸들러작동");
+
 		request.setAttribute("role", roleNames);
 		//하던 곳으로 그대로 이동(아무것도 설정 안함)
 		response.sendRedirect("/");

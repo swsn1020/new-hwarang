@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hwarang.artg.mapper.ReportMapper">
+	<insert id="insertReport" parameterType="hwarang.artg.manager.model.ReportVO">
+		<selectKey order="BEFORE" keyProperty="num" resultType="int">
+			select seq_report_board.nextval from dual
+		</selectKey>
+		INSERT INTO REPORT_BOARD (REPORT_NUM, MEMBER_ID, REPORT_TITLE, REPORT_CATEGORY, REPORT_CONTENT)
+		VALUES (#{num}, #{memId}, #{title}, #{category}, #{content})
+	</insert>
+	<update id="updateReport" parameterType="hwarang.artg.manager.model.ReportVO">
+		UPDATE REPORT_BOARD SET REPORT_TITLE = #{title}, REPORT_CONTENT = #{content}, REPORT_CATEGORY = #{category}, REPORT_MODI_DATE = sysdate
+		WHERE REPORT_NUM = #{num}
+	</update>
+	<update id="updateReply">
+		UPDATE REPORT_BOARD SET REPORT_REPLY = #{reply}, REPORT_MODI_DATE = sysdate
+		WHERE REPORT_NUM = #{num}
+	</update>
+	<delete id="deleteReport" parameterType="int">
+		DELETE FROM REPORT_BOARD WHERE REPORT_NUM = #{num}
+	</delete>
+	<select id="selectReport_id" parameterType="String" resultMap="rMap">
+		SELECT * FROM REPORT_BOARD WHERE MEMBER_ID = #{memId}
+	</select>
+	<select id="selectReport" parameterType="int" resultMap="rMap">
+		SELECT * FROM REPORT_BOARD WHERE REPORT_NUM = #{num}
+	</select>
+	<select id="selectAllReports" resultMap="rMap">
+		SELECT * FROM REPORT_BOARD order by REPORT_NUM desc
+	</select>
+	
+	<!-- 페이징 처리 (파라미터 pageNum, amount)-->
+	<select id="getListWithPaging" resultMap="rMap">
+		<![CDATA[
+ 			SELECT REPORT_NUM, MEMBER_ID, REPORT_TITLE, REPORT_CATEGORY, REPORT_CONTENT, REPORT_REG_DATE, REPORT_MODI_DATE, REPORT_REPLY
+ 			  FROM (SELECT /*+INDEX_DESC(REPORT_BOARD pk_report_num) */ rownum as rNum, REPORT_NUM, MEMBER_ID, REPORT_TITLE, REPORT_CATEGORY, REPORT_CONTENT, REPORT_REG_DATE, REPORT_MODI_DATE, REPORT_REPLY 
+ 					  FROM REPORT_BOARD 
+ 					 WHERE rownum <= #{pageNum} * #{amount})
+ 			 WHERE rNum > (#{pageNum} - 1) * #{amount}
+ 		]]> 
+	</select>
+		
+	<!-- 총 페이지 구하기 -->
+	<select id="getTotalCount" resultType="int">
+		SELECT count(*) FROM REPORT_BOARD
+	</select>
+	<resultMap type="hwarang.artg.manager.model.ReportVO" id="rMap">
+		<result column="REPORT_NUM" property="num"/>
+		<result column="MEMBER_ID" property="memId"/>
+		<result column="REPORT_TITLE" property="title"/>
+		<result column="REPORT_CATEGORY" property="category"/>
+		<result column="REPORT_CONTENT" property="content"/>
+		<result column="REPORT_REG_DATE" property="regDate"/>
+		<result column="REPORT_MODI_DATE" property="modiDate"/>
+		<result column="REPORT_REPLY" property="reply"/>
+	</resultMap>
+</mapper>

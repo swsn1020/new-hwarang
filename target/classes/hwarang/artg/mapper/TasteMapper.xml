@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper    	
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<mapper namespace="hwarang.artg.mapper.TasteMapper">
+		<insert id="insertTaste" parameterType="hwarang.artg.member.model.TasteVO">
+			insert into taste(member_id,taste_name)
+			values(#{member_id},#{taste_name})
+		</insert>
+		<update id="updateTaste" parameterType="hwarang.artg.member.model.TasteVO">
+			update taste
+			set taste_name = #{taste_name},
+				taste_point = #{taste_point}
+			where member_id = #{member_id}
+		</update>
+		<delete id="deleteTaste" parameterType="String">
+			delete from taste where taste_name = #{taste_name}
+		</delete>
+		<select id="selectTaste" parameterType="String" resultType="hwarang.artg.member.model.TasteVO">
+			select *from taste where taste_name = #{taste_name}
+		</select>
+		<select id="selectAllTaste" resultType="hwarang.artg.member.model.TasteVO">
+			select *from taste
+		</select>
+	</mapper>

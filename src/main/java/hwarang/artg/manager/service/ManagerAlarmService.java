@@ -19,8 +19,6 @@ import hwarang.artg.rrboard.service.ReviewBoardService;
 public class ManagerAlarmService {
 	@Autowired
 	private ManagerAlarmMapper dao;
-<<<<<<< HEAD
-=======
 	
 	@Autowired
 	private QnAService qnaService;
@@ -38,7 +36,7 @@ public class ManagerAlarmService {
 	private ReviewBoardService reviewBoardService;
 	@Autowired
 	private RecommendBoardService recommBoardService;
->>>>>>> refs/remotes/origin/geun2
+
 	
 	
 	public boolean alarmRegister(ManagerAlarmVO alarm) {

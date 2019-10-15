@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hwarang.artg.mapper.RecentlyViewMapper">
+
+	<insert id="insert">
+		insert into recently_view (exh_seq, member_id, recently_date)
+		values (#{exh_seq}, #{member_id}, sysdate + 9/24)
+	</insert>
+	
+	<delete id="delete">
+		delete recently_view where member_id = #{member_id} and exh_seq = #{exh_seq}
+	</delete>
+	
+	<select id="select" resultType="hwarang.artg.exhibition.model.RecentlyViewVO">
+		select * from recently_view where member_id = #{member_id} and exh_seq = #{exh_seq}
+	</select>
+
+	<select id="selectAll" resultType="hwarang.artg.exhibition.model.RecentlyViewVO">
+		select * from recently_view 
+	</select>
+	
+	<select id="selectList" resultType="hwarang.artg.exhibition.model.RecentlyViewVO" >
+	<![CDATA[
+		select rnum,exh_seq,recently_date,exh_title,exh_place,exh_price,exh_imgurl,exh_realmName,exh_startDate,exh_endDate,exh_value from exhibition,
+		(select ROW_NUMBER() OVER (order by recently_date desc) rnum, exh_seq seq,recently_date from recently_view  where member_id = #{member_id}) where exh_seq = seq and rnum BETWEEN ((#{cri.pageNum} -1) * #{cri.amount}+1)  and  (#{cri.pageNum} * #{cri.amount}) ORDER BY rnum
+	]]>
+	</select>
+
+
+	<select id="getTotalCount" resultType="int">
+		select count(*) from recently_view where member_id = #{member_id}
+	</select>
+
+	<select id="isViewd" resultType="int">
+		select count(*) from recently_view where exh_seq = #{exh_seq} and member_id = #{member_id}
+	</select>
+
+</mapper>

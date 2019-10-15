@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hwarang.artg.mapper.AlarmMapper">
+<insert id="insertAlarm" parameterType="hwarang.artg.community.model.AlarmVO">
+<selectKey order="BEFORE" keyProperty="alarm_num">
+	select seq_user_alarm.nextval from dual
+</selectKey>
+	insert into user_alarm(alarm_num,alarm_category,board_category,member_id,board_num)
+	values(#{alarm_num},#{alarm_category},#{board_category},#{member_id},#{board_num})
+</insert>
+
+<update id="updateAlarm" parameterType="hwarang.artg.community.model.AlarmVO">
+update user_alarm 
+	set alarm_checked = "y" 
+		where alarm_num = ${alarm_num}
+</update>
+<select id="selectAlarm" parameterType="int">
+select * from user_alarm where alarm_num = ${alarm_num}
+</select>
+<select id="selectAllAlarms">
+select * from user_alarm order by alarm_num desc
+</select>
+
+<select id="selectFourAlarms" parameterType="hwarang.artg.community.model.AlarmVO">
+select * from user_alarm
+	where alarm_checked ="n" and rownum between 1 and 4
+	order by alarm_num desc
+</select>
+
+<select id="unReadAlarmCount">
+select count(*) from user_alarm where alarm_checked = "n"
+</select>
+
+<select id="getTotalCount" resultType="int">
+		SELECT count(*) from user_alarm
+</select>
+</mapper>
