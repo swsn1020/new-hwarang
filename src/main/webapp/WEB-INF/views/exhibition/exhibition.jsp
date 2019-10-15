@@ -36,7 +36,7 @@ function addFavorite(seq,id) {
 function removeFavorite(seq,id) {
 	var fav = {
 		exh_seq	: seq,
-		member_id : id,
+		member_id : id
 	};
 
 	favService.remove(fav, function(result) {
@@ -70,7 +70,9 @@ function addFavGroup(seq) {
 }
 </style>
 <div class="container mt-3 " style="text-align: center;">
-	<sec:authentication property="principal.Username" var="id" /> 
+	<sec:authorize access="isAuthenticated()">
+		<sec:authentication property="principal.Username" var="id" />
+	</sec:authorize> 
 	<form action="#">
 		<input type="hidden" name="amount" value="${pageMaker.cri.amount}"> 
 		<select name="exh_realmName">

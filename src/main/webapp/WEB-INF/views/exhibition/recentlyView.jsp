@@ -43,7 +43,7 @@ function remove(rec, callback, error) {
 function removeRecently(seq,id) {
 	var rec = {
 		exh_seq	: seq,
-		member_id : id,
+		member_id : id
 	};
 	remove(rec, function(result) {
 		if(result){
