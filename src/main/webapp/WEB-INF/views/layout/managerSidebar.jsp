@@ -92,7 +92,7 @@ $(function(){
 	//		 		alert(boardNum);
 					var msg = "새로운 "+category+"_"+subCategory+"이 등록되었습니다.";
 	//		 		alert(msg);
-					var li = "<li id='notification-item'><a href='"+url+"' class='link dropdown-item' data-num='"+num+"'><div class='notification'><div class='notification-content'><i class='fa fa-envelope bg-green'></i>"+msg+"</div></div></a></li>";
+					var li = "<li id='notification-item'><a href='"+url+"' class='link dropdown-item' data-num='"+num+"'><div class='notification'><div class='notification-content'><i class='fa fa-envelope bg-violet'></i>"+msg+"</div></div></a></li>";
 					$("#alarmlist").append(li);
 				}
 			},
@@ -131,7 +131,7 @@ $(function(){
 // 		alert(boardNum);
 		var msg = "새로운 "+category+"_"+subCategory+"이 등록되었습니다.";
 // 		alert(msg);
-		var li = "<li id='notification-item'><a href='"+url+"' class='link dropdown-item' data-num='"+num+"'><div class='notification'><div class='notification-content'><i class='fa fa-envelope bg-green'></i>"+msg+"</div></div></a></li>";
+		var li = "<li id='notification-item'><a href='"+url+"' class='link dropdown-item' data-num='"+num+"'><div class='notification'><div class='notification-content'><i class='fa fa-envelope bg-violet'></i>"+msg+"</div></div></a></li>";
 		$("#alarmlist").append(li);
 		
 		$(".link").on("click", function(){

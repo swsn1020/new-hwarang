@@ -53,9 +53,9 @@ canvas {
 }
 
 @media (max-width: 575px) {
-	 .container-fluid {
-	   padding: 0 15px;
-	 }
+ .container-fluid {
+   padding: 0 15px;
+ }
 }
 
 header.page-header {
@@ -866,6 +866,9 @@ section.dashboard-counts div[class*='col-']:last-of-type .item {
 	font-family: 'Arita-dotum-Medium';
 }
 
+.notification-content {
+	font-family: 'Arita-dotum-Medium';
+}
 .content-inner h1 {
 	font-weight: 900 !important;
 	

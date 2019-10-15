@@ -99,6 +99,9 @@ $(function(){
    		height: 100%;
 	}
 	
+	.projects h1{
+		font-family: "Poppins", sans-serif;
+	}
 	
 </style>
 <!-- content-inner -->
