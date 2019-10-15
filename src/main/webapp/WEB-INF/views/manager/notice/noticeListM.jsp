@@ -10,17 +10,10 @@
 		text-align: center;
 	}
 	
-	h1{
-		color: #725974;
-	}
-	
 	.form-control:focus {
 		border-color: #9C869C;
 		-webkit-box-shadow: 0 0 0 0.2rem rgba(156, 134, 156, 0.25);
   		box-shadow: 0 0 0 0.2rem rgba(156, 134, 156, 0.25);
-	}
-	a{
-		color: #96426A;
 	}
 </style>
 <script type="text/javascript">
@@ -94,7 +87,7 @@
 				<div style="text-align: center; margin: 10px;">
 					<div class="text">
 						<form id="searchForm" action="noticeListForManager" method="get">
-							<select name="type">
+							<select name="type" class="form-control-sm">
 								<option value="" <c:out value="${pageMaker.cri.type eq null ? 'selected' : ''}"/>>검색
 								</option>
 								<option value="T" <c:out value="${pageMaker.cri.type eq 'T'? 'selected' : ''}"/>>제목
@@ -110,7 +103,7 @@
 								<option value="TAC" <c:out value="${pageMaker.cri.type eq 'TAC' ? 'selected': ''}"/>>제목+카테고리+내용
 								</option>
 							</select>
-							<input type="text" name="keyword" placeholder="검색어를 입력하세요." value="<c:out value="${pageMaker.cri.keyword }"/>">
+							<input type="text" class="form-control-sm" name="keyword" placeholder="검색어를 입력하세요." value="<c:out value="${pageMaker.cri.keyword }"/>">
 							<input type="hidden" name="pageNum" value="<c:out value="${pageMaker.cri.pageNum }"/>">
 							<input type="hidden" name="amount" value="<c:out value="${pageMaker.cri.amount }"/>">
 							<button class="btn btn-outline-primary btn-sm">검색</button>

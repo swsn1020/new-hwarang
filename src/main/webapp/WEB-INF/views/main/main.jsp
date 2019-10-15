@@ -103,6 +103,7 @@
 .div3-div{
 	max-width: 800px;
 	height: 400px;
+	
 }
 .exh-list{
     padding-right: 20%;
@@ -188,7 +189,6 @@
 	<img class='div1-img-pattern' src='/resources/img/pattern.jpg'> <span class="carousel-control-next-icon"></span>
 	</a>
 </div>
-</div>
 
 <h2 class='div2-title'style="text-align: center;" >POPULAR IN 화랑</h2>
 <div class="exh-list album py-5 bg-light">
@@ -221,8 +221,9 @@
 				</c:forEach>
 		</div>
 </div>
+
 <!-- Nav Tabs HJ -->
-<section id='div3' class="container">
+<div id="div3">
         <div class="div3-div row">
             <div class="col-md-12">
                 <ul id="tabsJustified" class="nav nav-tabs">
@@ -233,7 +234,7 @@
                 <div id="tabsJustifiedContent" class="tab-content">
                     <div id="notice" class="tab-pane fade active show" style="padding: 1.5rem; text-align: center">
                         <div class="table-responsive d-flex align-items-center">
-                        	<table class="table table-striped table-sm">
+                        	<table class="table">
                         		<thead style="text-align: center">
                         			<tr>
                         				<th>No</th>
@@ -271,7 +272,7 @@
                        	</div>
                     </div>
                     <div id="freeboard" class="tab-pane fade" style="padding: 1.5rem; text-align: center">
-                        <table class="table table-striped table-sm">
+                        <table class="table">
                         		<thead style="text-align: center">
                         			<tr>
                         				<th>No</th>
@@ -298,7 +299,7 @@
         
         
         </div>
- </section>
+ </div>
 
 
 <!--  오른쪽 사이드 바 -->
