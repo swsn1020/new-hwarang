@@ -4,6 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@include file="../layout/menu.jsp"%>
 <title>펀딩 게시판</title>
+
 <script type="text/javascript">
     $(document).ready(function () {
         var result = '<c:out value="${result}" />';
@@ -51,21 +52,46 @@
         });
     });
 </script>
-
-<div class="row">
-            <div class="col-lg-12">
-                <h1 class="page-header">펀딩 게시판</h1>
-            </div>
-            <!-- /.col-lg-12 -->
-        </div>
-        <!-- /.row -->
-        <div class="row">
+<!-- Search-Bar -->
+<div class="row" style="text-align: center">
+	<div class="col-lg-12">
+	<!-- <h1 class="reward-header">펀딩 게시판</h1> -->
+		<form action="fundingList" method="get" id="searchForm">
+			<select name="type">
+				<option value=""
+					<c:out value="${pageMaker.cri.type == null ? 'selected' : ''}"/>>--</option>
+				<option value="T"
+					<c:out value="${pageMaker.cri.type eq 'T' ? 'selected' : ''}"/>>제목</option>
+				<option value="C"
+					<c:out value="${pageMaker.cri.type eq 'C' ? 'selected' : ''}"/>>내용</option>
+				<option value="W"
+					<c:out value="${pageMaker.cri.type eq 'W' ? 'selected' : ''}"/>>작성자</option>
+				<option value="TC"
+					<c:out value="${pageMaker.cri.type eq 'TC' ? 'selected' : ''}"/>>제목
+					or 내용</option>
+				<option value="TW"
+					<c:out value="${pageMaker.cri.type eq 'TW' ? 'selected' : ''}"/>>제목
+					or 작성자</option>
+				<option value="TWC"
+					<c:out value="${pageMaker.cri.type eq 'TWC' ? 'selected' : ''}"/>>모두
+					검색</option>
+			</select> <input type="text" name="keyword"
+				value="<c:out value='${pageMaker.cri.keyword}'/>" /> <input
+				type="hidden" name="pageNum"
+				value="<c:out value='${pageMaker.cri.pageNum}'/>" /> <input
+				type="hidden" name="amount"
+				value="<c:out value='${pageMaker.cri.amount}'/>" />
+			<button class="btn btn-default">Search</button>
+		</form>
+	</div>
+</div>
+<!-- /. Search-Bar -->
+<div class="row" style="padding-right: 15%; padding-left: 15%;">
+       
             <div class="col-lg-12">
                 <div class="panel panel-default">
-                    
-                
                    <div class="exh-list album py-5 bg-light">
-	<div class="row">
+	<div class="row" >
 		<c:forEach items="${fundingList}" var="funding">
 			<div class="col-sm-3" style="height: 600px; margin: 0 0 20px 0;">
 				<div class="card mb-3 shadow-sm">
@@ -79,41 +105,7 @@
 					</p>
 				</div>
 			</div></c:forEach>
-                         <!-- Search-Bar -->
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <form action="fundingList" method="get" id="searchForm">
-                                    <select name="type">
-                                        <option value=""
-                                                <c:out value="${pageMaker.cri.type == null ? 'selected' : ''}"/>
-                                        >--</option>
-                                        <option value="T"
-                                                <c:out value="${pageMaker.cri.type eq 'T' ? 'selected' : ''}"/>
-                                        >제목</option>
-                                        <option value="C"
-                                                <c:out value="${pageMaker.cri.type eq 'C' ? 'selected' : ''}"/>
-                                        >내용</option>
-                                        <option value="W"
-                                                <c:out value="${pageMaker.cri.type eq 'W' ? 'selected' : ''}"/>
-                                        >작성자</option>
-                                        <option value="TC"
-                                                <c:out value="${pageMaker.cri.type eq 'TC' ? 'selected' : ''}"/>
-                                        >제목 or 내용</option>
-                                        <option value="TW"
-                                                <c:out value="${pageMaker.cri.type eq 'TW' ? 'selected' : ''}"/>
-                                        >제목 or 작성자 </option>
-                                        <option value="TWC"
-                                                <c:out value="${pageMaker.cri.type eq 'TWC' ? 'selected' : ''}"/>
-                                        >모두 검색</option>
-                                    </select>
-                                    <input type="text" name="keyword" value="<c:out value='${pageMaker.cri.keyword}'/>" />
-                                    <input type="hidden" name="pageNum" value="<c:out value='${pageMaker.cri.pageNum}'/>" />
-                                    <input type="hidden" name="amount" value="<c:out value='${pageMaker.cri.amount}'/>" />
-                                    <button class="btn btn-default">Search</button>
-                                </form>
-                            </div>
-                        </div>
-                        <!-- /. Search-Bar -->
+                         
                         <!-- Pagination -->
 				<div class="container">
 					<ul class="pagination justify-content-center">
@@ -139,7 +131,7 @@
 				</div>
                         <!-- /. Pagination -->
                          <div style="float: right; position:relative; bottom: 100px; " >
-                 	<a ><button id="regBtn" type="button" class="btn btn-primary text-right">펀딩등록</button></a>
+                 	<a ><button id="regBtn" type="button" class="btn btn-primary text-right" >펀딩등록</button></a>
                  </div>
 				
 			</div>
@@ -150,13 +142,14 @@
             <!-- /.col-lg-6 -->
         </div>
         <!-- /.row -->
+        
 		 <form action="/funding/fundinglist" method="get" id="actionform">
 	    <input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
 	    <input type="hidden" name="amount" value="${pageMaker.cri.amount}">
 	    <input type="hidden" name="type" value="<c:out value='${pageMaker.cri.type}'/>">
 	    <input type="hidden" name="keyword" value="<c:out value='${pageMaker.cri.keyword}'/>"> 
 		</form>
-
+</div>
 
 
 	<%@include file="../layout/bottom.jsp"%>

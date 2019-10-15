@@ -1,9 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ include file="../layout/left.jsp"%>
-<script>
+	<title>[화랑펀딩] ${funding.funding_subject}</title>
+<%@include file="../layout/menu.jsp"%>
+<script type="text/javascript">
 	//디데이 종료 일자 설정
 	var countDownDate = new Date("October 22, 2019 06:00:00").getTime(); 
 	//1초마다 갱신되도록 함수 생성,실행 
@@ -18,12 +17,11 @@
 		var m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)); 
 		var s = Math.floor((distance % (1000 * 60)) / 1000); 
 		//id가 d-day인 HTML코드에 내용 삽입 
-		document.getElementById("d-day").innerHTML = "펀딩까지 "+ d +"일 " + h + "시간 " + m + "분 " + s + "초 남았습니다."; });
+		document.getElementById("d-day").innerHTML = "펀딩마감 "+ d +"일 " + h + "시간 " + m + "분 " + s + "초 남았습니다."; });
 </script>
 
-<head>
 
-<title>[화랑펀딩] ${funding.funding_subject}</title>
+
 
 
 <script type="text/javascript" src="https://static.wadiz.kr/web/polyfill.js?d7fcfad7"></script>
@@ -42,14 +40,13 @@
 <link href="https://cdn.wadiz.kr/resources/static/css/wdetail.css?v=20180802" rel="stylesheet">
 <link href="https://cdn.wadiz.kr/resources/Content/Site.css" rel="stylesheet">
 <script type="text/javascript" src="https://cdn.wadiz.kr/resources/static/js/wMotion.js?v=20190222"></script>
-</head>
 <!-- <body> -->
 <div id="page-container">
 
 
     <!-- S : MAIN -->
     <div id="container" class="wd-layout-sub-content reward">
-      <!-- S : 캠페인 액션바 -->
+      <!-- S : 캠페인 액션바
       <div class="campaign-action-container">
         
           <div class="wz message-popup">
@@ -65,12 +62,12 @@
        	<i class="icon campaign-cheer-o"></i></button>
        	
         
-      </div>
+      </div> -->
       <!-- E : 캠페인 액션바 -->
       
       <!-- S : 리워드 헤더 -->
       <div class="reward-header">
-        <!-- <div class="bg" style="background-color: white;"></div> -->
+        <div class="bg" style="background-color: white;"></div> 
         <p class="title-info"><em>전시회</em> <strong>#${funding.funding_hashtag}</strong> </p>
         <h2 class="title"><a href=fundingList> ${funding.funding_subject}</a></h2>
       </div>
@@ -130,8 +127,7 @@
                       <dd>
                         <p class="name"><a href="#" onclick="goMakerProfile('824272206');">${funding.maker_name }</a></p>
                         <ul class="website">
-                          <li><a href="${maker.maker_homepage}" target="_blank" data-external-link>${funding.maker_homepage }</a></li>
-                          
+                          <li><a href="${maker.maker_homepage}" target="_blank" data-external-link>${funding.maker_homepage }</a></li>          
                         </ul>
                         <ul class="social">
                           <li><a href="${funding.maker_facebook}" target="_blank" class="facebook" title="Facebook"></a></li>
@@ -140,8 +136,6 @@
                       </dd>
                     </dl>
                   </div>
-                  
-
                   <div class="contact-info">
                     <p class="direct-message">
                       <button type="button" class="chatspace-button wz button block">
@@ -149,18 +143,10 @@
                      	   메이커에게 문의하기
                       </button>
                     </p>
-                    
                       <div class="activity-info">
                         <p class="sub-title-answerTime"></p>
                         <p class="sub-content">메이커 평균 응답 시간<strong id="answerTime" class="content-span">1일 이내</strong></p>
                       </div>
-                    
-                  	<p class="sub-title">
-                  		<button type="button" class="contact-button wz button block small less">
-	                  		메이커 연락처
-	                  		<i class="icon-more icon-expand-more"></i>
-                  		</button>
-                 		</p>
                   </div>
 
                 </div>
@@ -232,17 +218,17 @@
                   
                   <div class="item">
                     <div class="number">1</div>
-                    <div class="text"><a href="/web/campaign/detail/40706">	한글날을 위해 태어난 훈민정음 여권케이스</a></div>
+                    <div class="text"><a href="/funding/fundingView?funding_num=269">한글날을 위해 태어난 훈민정음 여권케이스</a></div>
                   </div>
                   
                   <div class="item">
                     <div class="number">2</div>
-                    <div class="text"><a href="/web/campaign/detail/43359">마진 0%! 백팩의 새로운 역사를 쓸 2만원대 백팩 [유닛백2]</a></div>
+                    <div class="text"><a href="http://localhost:8081/funding/fundingView?funding_num=286">텀블러? 믹서기? 들고 다니는 무선 블랜더 S10!</a></div>
                   </div>
                   
                   <div class="item">
                     <div class="number">3</div>
-                    <div class="text"><a href="/web/campaign/detail/44019">[1억 8천 앵콜] 가심비 혁신! 업그레이드 된 무선믹서기 '프레쉬메일'</a></div>
+                    <div class="text"><a href="http://localhost:8081/funding/fundingView?funding_num=307">견생템 많이 싸도 괜찮아~하루한장 욜로홀로배변패드</a></div>
                   </div>
                   
                   <div class="item">

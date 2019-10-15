@@ -45,6 +45,9 @@
 		<security:intercept-url pattern="/block/replyModify" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')" />
 		<security:intercept-url pattern="/block/blockMember" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')" />
 		
+		<!-- jm -->
+		<security:intercept-url pattern="/order/*" access="hasAnyRole('ROLE_USER')" />
+		
 		<security:form-login login-page="/member/loginForm" />
 		<security:logout logout-url="/logout" invalidate-session="true" delete-cookies="remember-me,JSESSION_ID" logout-success-url="/" />
 		<security:access-denied-handler ref="customAccessDenied" />
