@@ -52,7 +52,7 @@
 	<beans:bean id="replyEchochoHandler" class="hwarang.artg.community.handler.ReplyEchoHandler"/>
 	   
 		<websocket:handlers>
-        <websocket:mapping handler="replyEchochoHandler" path="/replyEcho" />
+        <websocket:mapping handler="replyEchochoHandler" path="/freeboardView" />
         <websocket:handshake-interceptors>
             <beans:bean
                 class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>

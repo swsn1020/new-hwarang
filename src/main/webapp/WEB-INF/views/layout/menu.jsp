@@ -49,69 +49,30 @@
 <!-- <link href="https://fonts.googleapis.com/css?family=Prompt:400,500,700" rel="stylesheet"> -->
 <!-- kakao login -->
 <script>
-$(function(){
-	//websocket connect
-	connect();
-	
-	//dropdown
-	$(".sidebar-dropdown > a").click(function() {
-			$(".sidebar-submenu").slideUp(200);
-			if ($(this).parent().hasClass("active")) {
-				$(".sidebar-dropdown").removeClass("active");
-				$(this).parent().removeClass("active");
-			} else {
-				$(".sidebar-dropdown").removeClass("active");
-				$(this).next(".sidebar-submenu").slideDown(200);
-				$(this).parent().addClass("active");
-			}
-		});
-
-		$("#close-sidebar").click(function() {
-			$(".page-wrapper").removeClass("toggled");
-		});
-		$("#show-sidebar").click(function() {
-			$(".page-wrapper").addClass("toggled");
-		});
-		
-		//알람 붙이기
-		
-	}); //onload() End
-	var sock;
-	
-	var stompClient;
-	function connect(){
-		console.log("연결됨.");
-		sock = new SockJS("/chat");
-		stompClient = Stomp.over(sock);
-		var memId = $("#userid").val();
-		stompClient.connect({}, function(){
-			stompClient.subscribe("/category/msg/"+memId, function(message){
-				console.log("message: "+JSON.stringify(message));
-				console.log("message: "+message.body);
-// 				alert(message.body);
-			});
-		})
-	}
-	function addMsg(message){
-// 		alert(message);
-		var txt = $(".notification-time").val();
-		alert(txt);
-		alert(txt+message);
-	}
-</script>
-<script>
-function connect(){
-	
-	var ws = new WebSocket("ws://localhost:8081/replyEcho?bno=1234");
-	
+//let
+let socket = null;
+$(document).ready(function(){
+	connectWS();
+});
+function connectWS(){
+    console.log("tttttttttttttt")
+	var ws = new WebSocket("ws://localhost:8081/freeboardView?num=382");
+    socket = ws;
+    
 	ws.onopen = function(){
 		console.log('Info.connection opened');
-		setTimeout(function(){connect(); },1000);
-		
+		console.log(ws);
 	};
 	
 	ws.onmessage = function(event){
-		console.log(event.data+'\n');
+		console.log("ReceiveMesaage:", event.data+'\n');
+		  var $socketAlert = $('#socketAlert');
+	        $socketAlert.html(event.data);
+	        $socketAlert.css('display', 'block');
+	        
+	        setTimeout( function() {
+	        	$socketAlert.css('display', 'none');
+	        }, 3000);
 	};
 	
 	ws.onclose = function(event){
@@ -121,9 +82,11 @@ function connect(){
 	ws.onerror = function(err) {console.log('Errror:, err');};
 	
 }
+
 $('#btnSend').on('click',function(evt){
 	evt.preventDefault();
 	if(socket.readyState!==1) return;
+	//let
 		let msg = $('input#msg').val();
 		ws.send(msg);
 	
@@ -166,12 +129,14 @@ $('#btnSend').on('click',function(evt){
 <body>
 	<header>
 		<div class='header'>
+		 <div id="socketAlert" class="alert alert-success" role="alert" style="display:none;"></div>
 			<div class='header-title'>
 				<h1>
 					<a href="/"><img class="header_img maintitle"
 						src="https://trello-attachments.s3.amazonaws.com/5d6613e9716d6e23f5e579bb/312x140/3f52467f9d01dd9ce0a0f28eacece66e/%EB%A1%9C%EA%B3%A0.png"
 						alt="Cinque Terre"></a>
 				</h1>
+				    <div id="socketAlert" class="alert alert-success" role="alert"></div>
 			</div>
 			<div class="header-login">
 				<ul class="nav justify-content-center">
@@ -266,33 +231,3 @@ $('#btnSend').on('click',function(evt){
 			</nav>
 		</div>
 </header>
-<<<<<<< HEAD
-<c:if test="${ not empty pageContext.request.userPrincipal }">
-	<link rel="stylesheet" href="/resources/css/nav_notice.css"/>
-	<script src="/resources/js/nav_notice.js"></script>
-	<script>
-// 	$(function() {
-// 		var login_member_id = $("#userid").val();
-// 	getNoticeCount(login_member_id);
-// 	setInterval(function() {
-// 		getNoticeCount(login_member_id)
-// 	}, 40000)
-// 	$(".nav-link").on("click",function()){
-// 		$.ajax({
-// 			url :"getUserNotice"
-// 			dataType:"json",
-// 			cache: false,
-// 			data : {member_id : login_member_id},
-// 			success : function(ret){
-// 			}
-// 		})					
-// 		}
-// 	}
-// 	});
-	
-
-
-	</script>
-</c:if>
-=======
->>>>>>> refs/remotes/origin/master

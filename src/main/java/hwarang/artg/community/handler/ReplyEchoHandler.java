@@ -15,9 +15,6 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 import hwarang.artg.community.interceptor.SessionNames;
 import hwarang.artg.member.model.MemberVO;
 
-
-
-
 public class ReplyEchoHandler extends TextWebSocketHandler{
 	List<WebSocketSession> sessions = new ArrayList<>();
 	Map<String, WebSocketSession> userSessions = new HashMap<>();
@@ -26,17 +23,22 @@ public class ReplyEchoHandler extends TextWebSocketHandler{
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception{
 //		System.out.println("afterConnectionEstablished:" + session);
 		String senderId = getId(session);
-		userSessions.put(senderId,session);
-		
+		userSessions.put(session.getPrincipal().getName(),session);
+
+		System.out.println("3 :  " + session.getPrincipal().getName());				
+		System.out.println("afterConnection");
+		System.out.println(senderId);
+		System.out.println(userSessions.get(senderId));
 	}
 	
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
+		System.out.println("handleTextMessage:" + session + " : " + message);
 		String senderId = getId(session);
 //		for (WebSocketSession sess: sessions) {
 //		sess.sendMessage(new TextMessage(senderId + ": " + message.getPayload()));
 //		}
-		
+
 		//protocol : cmd(다른기능쓸수도있으니),작성자,게시글 작성자,(reply,user2,user1,234번게시글)
 		String msg = message.getPayload();
 		if (StringUtils.hasText(msg)) {
@@ -46,13 +48,17 @@ public class ReplyEchoHandler extends TextWebSocketHandler{
 				String replyWriter = strs[1];
 				String boardWriter = strs[2];
 				String bno = strs[3];
-				
+				System.out.println("usersessions");
+				System.out.println(boardWriter);
 				WebSocketSession boardWriterSession = userSessions.get(boardWriter);
+				System.out.println(boardWriterSession);
 				if ("reply".equals(cmd) && boardWriterSession != null) {
 					TextMessage tmpMsg = new TextMessage(replyWriter + "님이 "
 							+ "<a href='/board/freeboardView?num=" + bno + "'>" + bno + "</a>번 게시글에 댓글을 달았습니다!");
 					boardWriterSession.sendMessage(tmpMsg);
-				}
+				}else {
+					System.out.println("동작안함");
+				}				
 			}
 		}
 	}
@@ -60,15 +66,19 @@ public class ReplyEchoHandler extends TextWebSocketHandler{
 	private String getId(WebSocketSession session) {
 		Map<String,Object> httpSession = session.getAttributes();
 		MemberVO loginUser = (MemberVO)httpSession.get(SessionNames.LOGIN);
-		if (null == loginUser)
+		if (null == loginUser) {
+			System.out.println("loginUser가 null");
+			System.out.println(session.getId());
 			return session.getId();
-		else
-			return loginUser.getMember_id();
+		}else {
+			System.out.println("loginUesr가 null값이 아님");
+			System.out.println(loginUser.getMember_id());
+			return loginUser.getMember_id();			
+		}
 	}
-
+	
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-		
-		
+		System.out.println("afterConnectionEstablished:" + session + ":" + status);
 	}
 }

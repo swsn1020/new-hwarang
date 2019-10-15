@@ -1,14 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <title>Insert title here</title>
-<%@ include file="../layout/left.jsp"%>
+<%@ include file="../layout/menu.jsp" %>
 
 <script type="text/javascript">
+//let
+let gBno = '${fboard.num}',
+	gBoardWriter = '${fboard.userid}',
+	gRno = 0,
+	gReplytext = null;
 $(function() {	//문서가 로딩되면 실행할 함수
 		/*댓글 목록 그리기 */
 	replyList(1);
 	$("#btnRegister").on("click",function(){
 		//replyForm에 작성된 내용을 DB에 쓰기 후, 결과 받아와서 처리
 		var data = $("#Replyregister").serialize();
+		var replyer = $('#replyer');
 		$.ajax({
 			url : "${contextPath}/freereply/register",
 			data : data,
@@ -21,6 +27,22 @@ $(function() {	//문서가 로딩되면 실행할 함수
 					$("#Replyregister")[0].reset();
 					//새로운 댓글 목록 그리기
 					location.reload();
+					console.debug("reply.js::socket>>",socket)
+					if(socket){
+						//websocket에 보내기 (reply,댓글작성자,게시글작성자,글번호)
+						//let
+						
+						let socketMsg = "reply," + $('#replyer').val() + "," + gBoardWriter + "," + gBno;
+						console.debug("sssssssmsg>>", socketMsg)
+						socket.send(socketMsg);
+// 						alert(replyer.val());
+// 						alert(gBoardWriter);
+// 						alert(gBno);
+						alert("socket 등록 완료");
+						
+					}else{
+						alert("socket 등록 실패")
+					}
 				}else{
 					//댓글 등록 실패
 					alert("오류가 발생했습니다.계속 발생한다면 문의하세요.")
@@ -266,32 +288,35 @@ function replyList(num){
 </script>
 
 <script>
-function connect(){
+// function connect(){
 	
-	var ws = new WebSocket("ws://localhost:8081/replyEcho?bno=1234");
+// 	var ws = new WebSocket("ws://localhost:8081/replyEcho?bno=1234");
 	
-	ws.onopen = function(){
-		console.log('Info.connection opened');
-		setTimeout(function(){connect(); },1000);
+// 	ws.onopen = function(){
+// 		console.log('Info.connection opened');
+// 		setTimeout(function(){connect(); },1000);
 		
-	};
+// 	};
 	
-	ws.onmessage = function(event){
-		console.log(event.data+'\n');
-	};
+// 	ws.onmessage = function(event){
+// 		console.log(event.data+'\n');
+// 	};
 	
-	ws.onclose = function(event){
-		console.log('Info:connection closed.');
-		//setTimeout(function(){connect(); },1000);
-	};
-	ws.onerror = function(err) {console.log('Errror:, err');};
+// 	ws.onclose = function(event){
+// 		console.log('Info:connection closed.');
+// 		//setTimeout(function(){connect(); },1000);
+// 	};
+// 	ws.onerror = function(err) {console.log('Errror:, err');};
 	
-}
+// }
+
+
 $('#btnSend').on('click',function(evt){
 	evt.preventDefault();
 	if(socket.readyState!==1) return;
+	//let
 		let msg = $('input#msg').val();
-		ws.send(msg);
+		socket.send(msg);
 	
 });
 </script>
@@ -398,7 +423,7 @@ $('#btnSend').on('click',function(evt){
 			<table class="table">
 				<tr>
 					<td>
-						<input type="hidden" name="userid" value="${fboard.userid}">
+						<input type="hidden" id="replyer" name="userid" value='<sec:authentication property="principal.Username"/>'>
 					</td>
 					<th>내용</th>
 					<td><textarea rows="3" cols="30" name="content"></textarea></td>

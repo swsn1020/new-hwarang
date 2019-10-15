@@ -17,34 +17,7 @@
 		
 	});
 </script>
-<<<<<<< HEAD
-<c:if test="${ not empty pageContext.request.userPrincipal }">
-	<link rel="stylesheet" href="/resources/css/nav_notice.css"/>
-	<script src="/resources/js/nav_notice.js"></script>
-	<script>
-	$(function() {
-		var login_member_id = $("#userid").val();
-	getNoticeCount(login_member_id);
-	setInterval(function() {
-		getNoticeCount(login_member_id)
-	}, 40000)
-	$(".nav-link").on("click",function()){
-		$.ajax({
-			url :"getUserNotice"
-			dataType:"json",
-			cache: false,
-			data : {member_id : login_member_id},
-			success : function(ret){
-			}
-		})					
-		}
-	}
-	});
-	</script>
-</c:if>
 </div>
-=======
->>>>>>> refs/remotes/origin/master
 <div class="container"></div>
 <nav class="navbar navbar-collapse" id="myNavbar">
 	<ul class="nav navbar-nav navbar-right">
