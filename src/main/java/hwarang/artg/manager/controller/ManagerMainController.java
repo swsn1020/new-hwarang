@@ -96,9 +96,9 @@ public class ManagerMainController {
 		if(memberService.memberRemove(member_id)) {
 			msg = "탈퇴 처리 되었습니다.";
 		}
-		model.addAttribute("url", "memberList");
+		model.addAttribute("url", "memberAuth");
 		model.addAttribute("msg", msg);
-		return "result";
+		return "manager/result";
 	}
 	
 	@MessageMapping("/client/send/{var}")

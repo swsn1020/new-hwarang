@@ -20,6 +20,24 @@ public class ManagerAlarmService {
 	@Autowired
 	private ManagerAlarmMapper dao;
 	
+	@Autowired
+	private QnAService qnaService;
+	@Autowired
+	private ReportService reportService;
+	@Autowired
+	private BlockStatusService blockService;
+	@Autowired
+	private FAQService faqService;
+	@Autowired
+	private NoticeService noticeService;
+	@Autowired
+	private FreeBoardService freeBoardService;
+	@Autowired
+	private ReviewBoardService reviewBoardService;
+	@Autowired
+	private RecommendBoardService recommBoardService;
+
+	
 	
 	public boolean alarmRegister(ManagerAlarmVO alarm) {
 		if(dao.insertManagerAlarm(alarm) > 0) {
@@ -59,6 +77,7 @@ public class ManagerAlarmService {
 		return checkAlarmCategory(dao.selectAllManagerAlarms());
 	}
 	
+
 	public List<Map<String, Object>> pagingList(CriteriaDTO cri){
 		return checkAlarmCategory(dao.getListWithPaging(cri));
 	}
@@ -138,9 +157,12 @@ public class ManagerAlarmService {
 		String subCategory = originCategory.substring((originCategory.indexOf("_")+1));
 		if(subCategory.equals("Reply")) {
 			subCategory = "댓글";
-		}else {
+		}else if(subCategory.equals("Board")) {
 			subCategory = "게시글";
+		}else {
+			subCategory = "회원";
 		}
+		
 		int boardNum = alarm.getBoardNum();
 		
 		switch(category) {
@@ -176,6 +198,9 @@ public class ManagerAlarmService {
 			category = "후기게시판";
 			alMap.put("url", "/review/view?num="+boardNum);
 			break;
+		default :
+			alMap.put("url", "/admin/memberList");
+			
 		}
 		alMap.put("category", category);
 		alMap.put("subCategory", subCategory);

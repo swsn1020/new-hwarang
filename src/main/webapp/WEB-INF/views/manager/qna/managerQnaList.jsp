@@ -46,7 +46,7 @@
 	<section class="projects no-padding-top">
 		<div class="contianer-fluid">
 			<div style="width: 100%; padding-top: 50px; margin-bottom: 10px; text-align: center;">
-				<h1 style="color: #74655F"><strong>1:1문의</strong></h1>
+				<h1><strong>1:1문의</strong></h1>
 			</div>
 		</div>
 		<div class="project" id="project3">

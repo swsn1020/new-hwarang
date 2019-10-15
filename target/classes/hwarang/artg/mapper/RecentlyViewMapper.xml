@@ -6,7 +6,7 @@
 
 	<insert id="insert">
 		insert into recently_view (exh_seq, member_id, recently_date)
-		values (#{exh_seq}, #{member_id}, sysdate)
+		values (#{exh_seq}, #{member_id}, sysdate + 9/24)
 	</insert>
 	
 	<delete id="delete">
@@ -33,5 +33,8 @@
 		select count(*) from recently_view where member_id = #{member_id}
 	</select>
 
+	<select id="isViewd" resultType="int">
+		select count(*) from recently_view where exh_seq = #{exh_seq} and member_id = #{member_id}
+	</select>
 
 </mapper>

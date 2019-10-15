@@ -99,6 +99,9 @@ $(function(){
    		height: 100%;
 	}
 	
+	.projects h1{
+		font-family: "Poppins", sans-serif;
+	}
 	
 </style>
 <!-- content-inner -->
@@ -188,7 +191,7 @@ $(function(){
           <!-- Statistics -->
           <div class="statistics col-lg-3 col-12">
             <div class="statistic d-flex align-items-center bg-white has-shadow">
-              <div class="icon bg-red"><i class="fa fa-tasks fa-lg" style="padding-top: 10px;"></i></div>
+              <div class="icon bg-red"><i class="fa fa-user-plus fa-lg" style="padding-top: 10px;"></i></div>
               <div class="text"><strong>${newMemCount }</strong><br><small>New Members within a week</small><br></div>
             </div>
             <div class="statistic d-flex align-items-center bg-white has-shadow">
@@ -196,7 +199,7 @@ $(function(){
               <div class="text"><strong>${ExhiCountMonth}</strong><br><small>This month Exhibition</small></div>
             </div>
             <div class="statistic d-flex align-items-center bg-white has-shadow">
-              <div class="icon bg-orange"><i class="fa fa-paper-plane-o fa-lg" style="padding-top: 10px;"></i></div>
+              <div class="icon bg-orange"><i class="fa fa-won-sign fa-lg" style="padding-top: 10px;"></i></div>
               <div class="text"><strong><span class="counter"></span></strong><br><small>TOTAL FUNDING PRICE</small></div>
             </div>
           </div>

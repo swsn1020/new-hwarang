@@ -48,6 +48,7 @@ $(function(){
 		$("#show-sidebar").click(function() {
 			$(".page-wrapper").addClass("toggled");
 		});
+<<<<<<< HEAD
 		
 		//차단 개수 가져오기
 		$.ajax({
@@ -92,7 +93,7 @@ $(function(){
 	//		 		alert(boardNum);
 					var msg = "새로운 "+category+"_"+subCategory+"이 등록되었습니다.";
 	//		 		alert(msg);
-					var li = "<li id='notification-item'><a href='"+url+"' class='link dropdown-item' data-num='"+num+"'><div class='notification'><div class='notification-content'><i class='fa fa-envelope bg-green'></i>"+msg+"</div></div></a></li>";
+					var li = "<li id='notification-item'><a href='"+url+"' class='link dropdown-item' data-num='"+num+"'><div class='notification'><div class='notification-content'><i class='fa fa-envelope bg-violet'></i>"+msg+"</div></div></a></li>";
 					$("#alarmlist").append(li);
 				}
 			},
@@ -100,6 +101,11 @@ $(function(){
 				alert("알람리스트 불러오기 ajax 에러");
 			}
 		});
+=======
+		
+		//알람 붙이기
+
+>>>>>>> refs/remotes/origin/geun2
 		
 	}); //onload() End
 	
@@ -131,7 +137,7 @@ $(function(){
 // 		alert(boardNum);
 		var msg = "새로운 "+category+"_"+subCategory+"이 등록되었습니다.";
 // 		alert(msg);
-		var li = "<li id='notification-item'><a href='"+url+"' class='link dropdown-item' data-num='"+num+"'><div class='notification'><div class='notification-content'><i class='fa fa-envelope bg-green'></i>"+msg+"</div></div></a></li>";
+		var li = "<li id='notification-item'><a href='"+url+"' class='link dropdown-item' data-num='"+num+"'><div class='notification'><div class='notification-content'><i class='fa fa-envelope bg-violet'></i>"+msg+"</div></div></a></li>";
 		$("#alarmlist").append(li);
 		
 		$(".link").on("click", function(){
@@ -158,24 +164,37 @@ $(function(){
 <div class="page-wrapper chiller-theme toggled">
       <!-- Main Navbar-->
       <header class="header">
-        <nav class="navbar fixed-top" style="background-color: #ffffff; height: 70px; box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1), -1px 0 2px rgba(0, 0, 0, 0.05); z-index: 1">
+        <nav class="navbar fixed-top" style="background-color: #ffffff; height: 80px; box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1), -1px 0 2px rgba(0, 0, 0, 0.05); z-index: 1">
           <div class="container-fluid">
             <div class="navbar-holder d-flex align-items-center justify-content-between">
               <!-- Navbar Header-->
               <div class="navbar-header">
-                <!-- Navbar Brand -->
+                <!-- Navbar Brand 
                 <a href="/admin/main" class="navbar-brand d-none d-sm-inline-block">
                   <div class="brand-text d-none d-lg-inline-block" style="font-weight: 1000;"><span>Hwarang&nbsp; </span><strong>Artground</strong></div>
                   <div class="brand-text d-none d-sm-inline-block d-lg-none"><strong>HD</strong></div>
-                </a>
+                </a>-->
+                <a href="/">
+                	<img class="header_img maintitle" src="/resources/img/logop2.png" height="58px;">
+                	<img class="header_img maintitle" src="/resources/img/logohr.png" alt="Cinque Terre" height="58px;">
+				</a>
                 <!-- Toggle Button-->
                 <a id="toggle-btn" href="#" class="menu-btn active"><span></span><span></span><span></span></a>
               </div>
               <!-- Navbar Menu -->
               <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
                 <!-- Notifications-->
+<<<<<<< HEAD
                 <li class="nav-item dropdown"> <a id="notifications" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-bell-o fa-lg"></i><span class="badge badge-danger badge-corner" id="alCnt"></span></a>
+=======
+
+                <li class="nav-item dropdown"> <a id="notifications" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-bell-o fa-lg"></i><span class="badge bg-red badge-corner">${alarmCnt}</span></a>
+                  <ul aria-labelledby="notifications" class="dropdown-menu">
+
+                <li class="nav-item dropdown"> <a id="notifications" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-bell-o fa-lg"></i><span class="badge bg-red badge-corner" id="alCnt"></span></a>
+>>>>>>> refs/remotes/origin/geun2
                   <ul id="alarmlist" aria-labelledby="notifications" class="dropdown-menu">
+
                     <li id="notification-item">
                     	<a rel="nofollow" href="/alarm/alarmList" class="dropdown-item"> 
 	                        <div class="notification">
@@ -183,10 +202,21 @@ $(function(){
 	                        </div>
                         </a>
                     </li>
+
+                    <c:forEach items="${alarmList}" var="alarm">
+                    	<li>
+	                    	<a rel="nofollow" href="${alarm.url }" class="dropdown-item"> 
+		                        <div class="notification">
+		                          <div class="notification-content"><i class="fa fa-twitter bg-blue"></i>${alarm.category }&nbsp;${alarm.subCategory }이 등록되었습니다.</div>
+		                          <div class="notification-time"><small></small></div>
+		                        </div>
+	                        </a>
+                        </li>
+                    </c:forEach>
                   </ul>
                 </li>
                 <!-- Logout    -->
-                <li class="nav-item"><a href="/logout" class="nav-link logout"> <span class="d-none d-sm-inline">Logout</span><i class="fa fa-sign-out fa-lg"></i></a></li>
+                <li class="nav-item"><a href="/logout" class="nav-link logout"><span class="d-none d-sm-inline">Logout</span><i class="fa fa-sign-out fa-lg"></i></a></li>
               </ul>
             </div>
           </div>
@@ -199,7 +229,7 @@ $(function(){
 	  <nav id="sidebar" class="sidebar-wrapper" style="box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1), -1px 0 2px rgba(0, 0, 0, 0.05);">
 	    <div class="sidebar-content">
 	      <div class="sidebar-brand">
-	        <a href="#">sidebar</a>
+	        <a href="/admin/main"><strong>ADMIN PAGE</strong></a>
 	        <div id="close-sidebar">
 	          <i class="fas fa-times"></i>
 	        </div>
@@ -224,7 +254,7 @@ $(function(){
 	          </li>
 	          <li class="sidebar-dropdown">
 	            <a href="#">
-	              <i class="fas fa-clipboard"></i>
+	              <i class="fas fa-cog"></i>
 	              <span><strong>Board Management</strong></span>
 	            </a>
 	            <div class="sidebar-submenu">
@@ -240,11 +270,11 @@ $(function(){
 	                  <a href="/qna/qnaListForManager">Q&amp;A Board </a>
 	                </li>
 	                <li>
-	                  <a href="/block/blockListForManager">Block Status <span class="badge badge-pill badge-danger blockCnt"></span>
-	                  </a>
+	                  <a href="/report/reportListForManager">Report Board</a>
 	                </li>
 	                <li>
-	                  <a href="/report/reportListForManager">Report Board</a>
+	                  <a href="/block/blockListForManager">Block Status <span class="badge badge-pill badge-danger blockCnt"></span>
+	                  </a>
 	                </li>
 	                 <li>
 	                  <a href="/alarm/alarmList">Alarm Status<span class="badge badge-pill badge-success alCnt"></span></a>
@@ -276,7 +306,7 @@ $(function(){
               </li>
               <li class="sidebar-dropdown">
 	            <a href="#">
-	              <i class="fa fa-users"></i>
+	              <i class="fa fa-clipboard"></i>
 	              <span><strong>Boards</strong></span>
 	<!--               <span class="badge badge-pill badge-danger">3</span> -->
 	            </a>
