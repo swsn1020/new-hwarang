@@ -72,21 +72,13 @@ public class QnAController {
 	}
 	
 	@RequestMapping("/qnaListForUser")
-	public String showQnAListForUser(CriteriaDTO cri, String memId, Model model, Principal principal) {
+	public String showQnAListForUser(CriteriaDTO cri, String memId, Model model) {
 		System.out.println("qnaListForUser요청");
-		String id = principal.getName();
-		if(memId.equals(id)) {
-			PageDTO page = new PageDTO(cri, service.getTotalCount(memId));
-			model.addAttribute("pageMaker", page);
-			model.addAttribute("qnaList", service.pagingList(cri, memId));
-			return "manager/qna/userQnaList";
-		}else {
-			String msg = "해당 Q&A 작성자만 열람 가능합니다.";
-			String url = "qnaListForUser?memId="+id;
-			model.addAttribute("msg", msg);
-			model.addAttribute("url", url);
-			return "manager/result";
-		}
+		PageDTO page = new PageDTO(cri, service.getTotalCount(memId));
+		model.addAttribute("pageMaker", page);
+		model.addAttribute("qnaList", service.pagingList(cri, memId));
+		return "manager/qna/userQnaList";
+		
 	}
 
 	@RequestMapping("/qnaWrite")
