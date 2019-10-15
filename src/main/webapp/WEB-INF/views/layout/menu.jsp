@@ -150,7 +150,6 @@ $('#btnSend').on('click',function(evt){
 						src="https://trello-attachments.s3.amazonaws.com/5d6613e9716d6e23f5e579bb/312x140/3f52467f9d01dd9ce0a0f28eacece66e/%EB%A1%9C%EA%B3%A0.png"
 						alt="Cinque Terre"></a>
 				</h1>
-				    <div id="socketAlert" class="alert alert-success" role="alert"></div>
 			</div>
 			<div class="header-login">
 				<ul class="nav justify-content-center">
@@ -237,21 +236,12 @@ $('#btnSend').on('click',function(evt){
 							</div>
 						</li>
         				<li class="nav-item">
-        					<a class="nav-link" href="/funding/list">&nbsp;크라우드펀딩&nbsp;</a>
+        					<a class="nav-link" href="/funding/fundingList">&nbsp;크라우드펀딩&nbsp;</a>
         				</li>
 					</ul>
 				</div>
 
 			</nav>
 		</div>
-<<<<<<< HEAD
-<<<<<<< HEAD
-
 </header>
 
-=======
-</header>
->>>>>>> refs/remotes/origin/geun2
-=======
-</header>
->>>>>>> refs/remotes/origin/geun2

@@ -126,29 +126,27 @@
 		IMP.request_pay({ // param
 			pg : "inicis",
 			pay_method : "card",
-			merchant_uid : "ORD20180131-0000011",
-			name : '${exhibition.exh_title}',
-			amount : 1000,
-			buyer_email : "leehyegi95@gmail.com",
-			buyer_name : "리혜지",
-			buyer_tel : "010-4242-4242",
-			buyer_addr : "서울특별시 강남구 5번 출구앞",
-			buyer_postcode : "01181"
+			merchant_uid : "${member.member_id}",
+			name : '${funding.funding_subject}',
+			amount : ${funding.funding_price},
+			buyer_email : "${member.member_email}",
+			buyer_name : "${member.member_name}",
+			buyer_tel : "${member.member_phonenum}",
+			buyer_addr : "${member.member_address}",
 		}, function(rsp) { // callback
 			if (rsp.success) {
 				// 결제 성공 시 로직,
-				alert("결제 성공")
+				alert("결제 완료")
 			} else {
 				// 결제 실패 시 로직,
-				alert("결제 실패")
+				alert("결제 취소")
 			}
 		});
 	}
 </script>
-</head>
-<title>결제페이지</title>
+</head><title>결제페이지</title>
 <body>
-	<H1>1.상품정보</H1>
+	<H1>1.펀딩정보</H1>
 	<form name="form_order">
 		<table class="list_view">
 			<tbody align=center>
@@ -159,8 +157,8 @@
 					<td>합계</td>
 				</tr>
 				<tr>
-						<td class="goods_image"><a href="${contextPath}/exhibition/view?seq=${exhibition.exh_seq}">
-						<img width="75" alt="" src="${exhibition.exh_imgurl }">
+						<td class="goods_image"><a href="${contextPath}/funding/fundingView?funding_num=${funding.funding_num}">
+						<img width="75" alt="" src="${funding.funding_image }">
 						<input type="hidden" id="member_id" name="member_id" value="${order.member_id }" /> 
 						</a></td>
 						<td>
@@ -173,7 +171,7 @@
 							<h2>1개<h2>
 							<input type="hidden" id="order_qty" name="order_qty" value="${order.order_qty}" />
 						</td>
-						<td><h2>${exhibition.exh_price}(원)</h2></td>
+						<td><h2>${funding.funding_price}(원)</h2></td>
 						<td>
 							<h2>${1 * exhibition.exh_value}원</h2> 
 							<input type="hidden" id="order_price" name="order_price" value="${order.order_qty * order.order_price}" />
