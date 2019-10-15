@@ -33,7 +33,7 @@ $(function(){
 	<section class="projects no-padding-top">
 		<div class="contianer-fluid">
 			<div style="width: 100%; padding-top: 50px; margin-bottom: 10px; text-align: center;">
-				<h1 style="color: #80425A"><strong>Member List</strong></h1>
+				<h1><strong>회원목록</strong></h1>
 			</div>
 		</div>
 		<div class="project" id="project3">
@@ -50,7 +50,7 @@ $(function(){
 							<option value="Y" <c:out value="${pageMaker.cri.type eq 'Y' ? 'selected' : ''}"/>>YEAR</option>
 							<option value="I" <c:out value="${pageMaker.cri.type eq 'I' ? 'selected' : ''}"/>>ID</option>
 						</select>
-						<input type="text" name="keyword" id="search" disabled="disabled" value="<c:out value="${pageMaker.cri.keyword }"/>">
+						<input type="text" class="form-control-sm" name="keyword" id="search" disabled="disabled" value="<c:out value="${pageMaker.cri.keyword }"/>">
 						<input type="hidden" name="pageNum" value="<c:out value="${pageMaker.cri.pageNum }"/>">
 						<input type="hidden" name="amount" value="<c:out value="${pageMaker.cri.amount }"/>">
 						<input type="submit" class="btn btn-outline-primary btn-sm" value="검색">
