@@ -361,13 +361,9 @@
 	
 	<!-- 댓글 목록 div -->
 	<div class="notice-div container" style="padding-left: 50px; padding-right: 50px;">
-		<sec:authorize access="isAnonymous()">
-			<input type="hidden" name="currId" value="anonymous"/>
-		</sec:authorize>	
 		<sec:authorize access="isAuthenticated()">
 			<input type="hidden" name="currId" value="<sec:authentication property="principal.Username"/>">
 		</sec:authorize>
-		
 		<table class="table" id="replies">
 			<thead></thead>
 		</table>
@@ -381,7 +377,7 @@
 			</li>
 			<c:forEach var="num" begin="${rPager.blockBegin }" end="${rPager.totalPage}">
 				<li class='${rPager.curPage == num ? "active" : "page-item"}'>
-					<a class="page-link" href="javascript:replyList(${num})">[${num}]</a>
+					<a class="page-link" href="javascript:replyList(${num})">${num}</a>
 				</li>
 			</c:forEach>
 			<li id="right" class="page-item">
