@@ -112,6 +112,7 @@ ${mem }<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncod
 					</c:forEach>
 				</table>
 				</div>
+				<hr style="border-color: #29201E; border-width: 2px; margin-top: 20px; width: 90%;">
 				<ul class="pagination justify-content-center">
 					<li class='${ pageMaker.prev == true ? "page-item" : "page-item disabled" }'>
 						<a class="page-link" href="reportListForManager?pageNum=${pageMaker.startPage-1 }">&laquo;</a>
@@ -151,9 +152,13 @@ ${mem }<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncod
 		        				<td id="content"></td>
 		        			</tr>
 		        			<tr>
-		        				<td colspan="2">
-					        		<textarea class="form-control" rows="5" name="reply" style="resize: none;"></textarea><br>
-		        				</td>
+<!-- 		        				<td colspan="2"> -->
+<!-- 					        		<textarea class="form-control" rows="5" name="reply" style="resize: none;"></textarea><br> -->
+<!-- 		        				</td> -->
+								<th>답변내용</th>
+								<td>
+									<textarea class="form-control" rows="5" name="reply" style="resize: none;"></textarea><br>
+								</td>
 		        			</tr>
 		        		</table>
 	        		</div>
@@ -161,7 +166,7 @@ ${mem }<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncod
 	        <!-- Modal footer -->
 	        	<div class="modal-footer">
 	         	 	<input type="submit" class="btn btn-outline-primary btn-sm" value="답변등록">
-	         	 	<button type="button" class="btn btn-outline-danger btn-sm" data-dismiss="modal">닫기</button>
+	         	 	<button type="button" class="btn btn-outline-dark btn-sm" data-dismiss="modal">닫기</button>
 	       	 	</div>
 	       	</form>
 	      </div>

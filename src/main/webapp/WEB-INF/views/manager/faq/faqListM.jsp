@@ -85,6 +85,7 @@
 					</tbody>
 				</table>
            	</div>
+           	<hr style="border-color: #29201E; border-width: 2px; margin-top: 20px; width: 90%;">
            	<div style="text-align: center; margin: 10px;">
            		<div class="text">
 					<form id="searchForm" action="faqListForManager" method="get">

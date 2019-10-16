@@ -13,11 +13,13 @@
 	});
 </script>
 <div class="content-inner" style="padding-bottom: 59px;">
+<section class="projects no-padding-top">
 	<div class="contianer-fluid">
 		<div style="width: 100%; padding-top: 50px; margin-bottom: 10px; text-align: center;">
-			<h1 style="color: #74655F;"><strong>Block Status-Detail</strong></h1>
+			<h1><strong>신고 상세보기</strong></h1>
 		</div>
-	</div><br>
+	</div>
+	<div class="project" id="project3">
 	<div class="row bg-white has-shadow">
 		<div class="card-body" style="padding: 20px;">
 			<div class="table-responsive">
@@ -38,6 +40,11 @@
 					<tr>
 						<th>신고 사유</th>
 						<td colspan="4">${block.content }<br><br></td>
+					</tr>
+					<tr>
+						<td colspan="5">
+							<hr style="border-color: #939A9F; border-width: 2px; margin-top: 20px;">
+						</td>
 					</tr>
 					<tr>
 						<th>신고 대상 ID</th>
@@ -114,4 +121,6 @@
 			 </div>
 		</div>   
 	</div>
+	</div>
+</section>
 </div>

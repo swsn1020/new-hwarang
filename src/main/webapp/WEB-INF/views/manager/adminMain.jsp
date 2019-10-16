@@ -20,11 +20,8 @@ $(function(){
         {
             scales:
             {
-                xAxes: [{
-                   
-                }],
                 yAxes: [{
-                	 barPercentage: 0.1,
+                	barPercentage: 0.1,
  	            	categoryPercentage: 0.1,
  	            	barThickness: 1,
  	                ticks: {
@@ -45,20 +42,20 @@ $(function(){
                     label: "Posted today each board",
                     data: ['${qnaTC}', '${freeBTC}', '${reportTC}', '${blockTC}', '${reviewBTC}', '${recommBTC}'],
                     backgroundColor: [
-                    	'rgba(255, 99, 132, 0.2)',
-    	                'rgba(54, 162, 235, 0.2)',
-    	                'rgba(255, 206, 86, 0.2)',
-    	                'rgba(75, 192, 192, 0.2)',
-    	                'rgba(153, 102, 255, 0.2)',
-    	                'rgba(255, 159, 64, 0.2)',
+                    	'#D0C3C8',
+                    	'#BDACAB',
+                    	'#8A7B8B',
+                    	'#5C5561',
+                    	'#424A47',
+                    	'#697471',
                     ],
                     borderColor: [
-                        'rgb(121, 106, 238)',
-                        'rgb(121, 106, 238)',
-                        'rgb(121, 106, 238)',
-                        'rgb(121, 106, 238)',
-                        'rgb(121, 106, 238)',
-                        'rgb(121, 106, 238)',
+                    	'#D0C3C8',
+                    	'#BDACAB',
+                    	'#8A7B8B',
+                    	'#5C5561',
+                    	'#424A47',
+                    	'#697471',
                     ],
                     borderWidth: 1,
                 }
@@ -207,7 +204,7 @@ $(function(){
 				<!-- Bar Chart   -->
 				<div class="bar-chart has-shadow bg-white">
 					<div class="title">
-						<strong class="text-violet">Posted Today</strong><br>
+						<strong style="color: #184141;">Posted Today</strong><br>
 						<%
 							SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 							String date = sdf.format(new Date());
@@ -221,7 +218,7 @@ $(function(){
 			<div class="images col-lg-3 col-12" style="text-align: center;">
 				<div class="image d-flex align-items-center bg-white has-shadow">
 					<div id="img" class="carousel slide" data-ride="carousel" style="width: 100%; height: 100%;">
-						<p><strong class="text-red">REVIEW BOARD</strong></p><br>
+						<p><strong style="color: #CF4C48;">REVIEW BOARD</strong></p><br>
 						 <!-- Indicators -->
 						  <ul class="carousel-indicators">
 						    <li data-target="#img" data-slide-to="0" class="active"></li>
@@ -268,7 +265,7 @@ $(function(){
             <div class="left-col col-lg-6 d-flex align-items-center justify-content-between">
               <div class="project-title d-flex align-items-center">
                 <div class="text">
-                  <h3 class="h4"><a href="/qna/qnaListForManager">Q&amp;A</a></h3><small>최근 등록된 문의</small>
+                  <h3 class="h4"><a href="/qna/qnaListForManager"><strong>Q&amp;A</strong></a></h3><small>최근 등록된 문의</small>
                 </div>
               </div>
               <div class="project-date"><span class="hidden-sm-down"><%=date %></span></div>
@@ -328,7 +325,7 @@ $(function(){
 						<div class="project-title d-flex align-items-center">
 							<div class="text">
 								<h3 class="h4">
-									<a href="/block/blockListForManager" style="color: none;">Block Status</a>
+									<a href="/block/blockListForManager" style="color: none;"><strong>Block Status</strong></a>
 								</h3>
 								<small>최근 신고된 게시물</small>
 							</div>

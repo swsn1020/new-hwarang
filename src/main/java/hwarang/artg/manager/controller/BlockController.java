@@ -85,12 +85,6 @@ public class BlockController {
 		return service.blockRegister(block);
 	}
 	
-	@RequestMapping(value="/blockModify", method=RequestMethod.GET)
-	public String showBlockModify(int num, Model model) {
-		model.addAttribute("block", service.blockGetOne(num));
-		return "manager/block/blockModify";
-	}
-	
 //	@ResponseBody
 	@RequestMapping(value="replyModify", method=RequestMethod.POST)
 	public String doReplyModify(@RequestParam("num")int num, @RequestParam("reply")String reply, Model model) {

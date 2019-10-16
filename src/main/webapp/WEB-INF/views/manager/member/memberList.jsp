@@ -154,6 +154,7 @@ $(function(){
 						</tbody>
 					</table>
 				</div>
+				<hr style="border-color: #29201E; border-width: 2px; margin-top: 20px;">
 				<ul class="pagination justify-content-center">
 					<li class='${ pageMaker.prev == true ? "page-item" : "page-item disabled" }'>
 						<a class="page-link" href="memberList?pageNum=${pageMaker.startPage-1 }&type=${param.type}&keyword=${param.keyword}">&laquo;</a>
