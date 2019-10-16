@@ -16,8 +16,12 @@ public class FundingOrderServiceImpl implements FundingOrderService{
 
 	@Override
 	public OrderVO select(int order_seq_num) {
-		// TODO Auto-generated method stub
 		return mapper.getOne(order_seq_num);
+	}
+
+	@Override
+	public int insertOrder(OrderVO order) {
+		return mapper.insertOrder(order);
 	}
 	
 }

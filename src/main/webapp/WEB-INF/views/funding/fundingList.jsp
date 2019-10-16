@@ -4,8 +4,17 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@include file="../layout/menu.jsp"%>
 <title>펀딩 게시판</title>
-
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="//code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
 <script type="text/javascript">
+//프로그레스바 
+	$(document).ready(function() {
+	  $('.progress-bar').each(function() {
+	    var bar_value = $(this).attr('aria-valuenow') + '%';                
+	    $(this).animate({ width: bar_value }, { duration: 2000, easing: 'easeOutCirc' });
+	  });
+	});
+	
     $(document).ready(function () {
         var result = '<c:out value="${result}" />';
         checkModal(result);
@@ -52,6 +61,7 @@
         });
     });
 </script>
+
 <!-- Search-Bar -->
 <div class="row" style="text-align: center">
 	<div class="col-lg-12">
@@ -101,8 +111,19 @@
 				</div>
 				<div class="card-body">
 					<p class="card-title" style="font-weight: bold; font-size: 18px">
-						<a href="/funding/fundingView?funding_num=${funding.funding_num}">${funding.funding_subject}</a><span class="badge badge-primary">${funding.maker_name}</span>&nbsp;
-					</p>
+						<a href="/funding/fundingView?funding_num=${funding.funding_num}">${funding.funding_subject}</a>
+						</p>
+						<p>
+						<div class="progress" style="height: 20px">
+							<div class="progress-bar bg-info" 
+							aria-valuenow="${(funding.funding_price/funding.funding_target_amount)*100}" aria-valuemin="0" aria-valuemax="100">
+								<strong><fmt:formatNumber pattern=".0">${(funding.funding_price/funding.funding_target_amount)*100}</fmt:formatNumber>%</strong>
+							</div>
+						</div>
+						<br>
+						<span style="font-weight: bold" >by ${funding.maker_name}</span>&nbsp;
+						
+					
 				</div>
 			</div></c:forEach>
                          

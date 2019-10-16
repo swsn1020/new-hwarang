@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ include file="../layout/left.jsp"%>
+<%@ include file="../layout/menu.jsp"%>
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!-- 주문자 휴대폰 번호 -->
@@ -127,12 +127,12 @@
 			pg : "inicis",
 			pay_method : "card",
 			merchant_uid : "ORD20180131-0000011",
-			name : '${exhibition.exh_title}',
+			name : "${exhibition.exh_title}",
 			amount : 1000,
-			buyer_email : "leehyegi95@gmail.com",
-			buyer_name : "리혜지",
-			buyer_tel : "010-4242-4242",
-			buyer_addr : "서울특별시 강남구 5번 출구앞",
+			buyer_email : "${member.member_id}",
+			buyer_name : "${member.member_name}",
+			buyer_tel : "${member.member_phonenum}",
+			buyer_addr : "${member.member_address}",
 			buyer_postcode : "01181"
 		}, function(rsp) { // callback
 			if (rsp.success) {

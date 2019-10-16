@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ include file="../layout/left.jsp"%>
+<%@ include file="../layout/menu.jsp"%>
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!-- 주문자 휴대폰 번호 -->
@@ -119,6 +119,7 @@
 		select_tel1.value = tel1;
 		select_hp1.value = hp1;
 	}
+	
 	var IMP = window.IMP; // 생략해도 괜찮습니다.
 	IMP.init("imp88213691"); // "imp00000000" 대신 발급받은 "가맹점 식별코드"를 사용합니다.
 	function requestPay() {
@@ -136,20 +137,20 @@
 		}, function(rsp) { // callback
 			if (rsp.success) {
 				// 결제 성공 시 로직,
-				alert("결제 완료")
+				alert("결제 완료되었습니다. 나의 페이지에서 확인 가능합니다.")
 			} else {
 				// 결제 실패 시 로직,
-				alert("결제 취소")
+				alert("결제가 취소되었습니다.")
 			}
 		});
 	}
 </script>
 </head><title>결제페이지</title>
-<body>
+
+	<form name="form_order" style="padding-right: 15%; padding-left: 15%;">
 	<H1>1.펀딩정보</H1>
-	<form name="form_order">
 		<table class="list_view">
-			<tbody align=center>
+			<tbody align=center >
 				<tr style="background: #33ff00">
 					<td colspan=2 class="fixed">주문상품명</td>
 					<td>수량</td>
@@ -157,21 +158,21 @@
 					<td>합계</td>
 				</tr>
 				<tr>
-						<td class="goods_image"><a href="${contextPath}/funding/fundingView?funding_num=${funding.funding_num}">
+						<td class="funding_image"><a href="${contextPath}/funding/fundingView?funding_num=${funding.funding_num}">
 						<img width="75" alt="" src="${funding.funding_image }">
 						<input type="hidden" id="member_id" name="member_id" value="${order.member_id }" /> 
 						</a></td>
 						<td>
 							<h2>
 								<a href="${pageContext.request.contextPath}/goods/goods.do?command=goods_detail&goods_id=${item.goods_id }">${item.goods_title }</A>
-								<input type="hidden" id="order_title" name="exh_title" value="${order.order_title }" />
+								<input type="hidden" id="order_name" name="order_name" value="${funding.funding_subject}" />
 							</h2>
 						</td>
 						<td>
 							<h2>1개<h2>
-							<input type="hidden" id="order_qty" name="order_qty" value="${order.order_qty}" />
+							<input type="hidden" id="order_rec" name="order_rec" value="${order.order_rec}" />
 						</td>
-						<td><h2>${funding.funding_price}(원)</h2></td>
+						<td><h2>${funding.funding_price}(원)</h2><input type="hidden" id="order_price" name="order_price" value="${order.order_price}" /></td>
 						<td>
 							<h2>${1 * exhibition.exh_value}원</h2> 
 							<input type="hidden" id="order_price" name="order_price" value="${order.order_qty * order.order_price}" />
@@ -317,32 +318,11 @@
 		</table>
 		<div class="clear"></div>
 		<br> <br> <br>
+		<button onclick="requestPay()" class="btn btn-primary text-right">결제하기</button>
+		 <a href="${contextPath}/exhibition/favoriteList"
+			class="btn btn-primary text-right">돌아가기 </a>
 	</form>
 	<div class="clear"></div>
-	<br>
-	<br>
-	<br>
-	<center>
-		<br> <br>
-		<!-- <a href="javascript:fn_show_order_detail();">결제하기</a>  -->
-		<br> <a href="${contextPath}/exhibition/favoriteList"
-			class="btn btn-primary text-right">돌아가기 </a>
-
-		<div class="clear"></div>
-		<div id="layer" style="visibility: hidden">
-			<!-- visibility:hidden 으로 설정하여 해당 div안의 모든것들을 가려둔다. -->
-			<div id="popup_order_detail">
-				<!-- 팝업창 닫기 버튼 -->
-				<a href="javascript:"
-					onClick="javascript:imagePopup('close', '.layer01');"> <img
-					src="${contextPath}/resources/image/close.png" id="close" />
-				</a> <br />
-
-			</div>
-		</div>
-		<div class="clear"></div>
-		<br>
-		<button onclick="requestPay()" class="btn btn-primary text-right">결제하기</button>
 
 
 <%@include file="../layout/bottom.jsp"%>

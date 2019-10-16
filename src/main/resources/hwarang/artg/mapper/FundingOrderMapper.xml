@@ -13,10 +13,19 @@
 	<select id="selectAll" resultType="hwarang.artg.funding.model.OrderVO">
 		select * from funding_order
 	</select>
-	<select id="DayCount" >
-		select trunc(startDate) - to_date('20171110', 'YYYYMMDD')from dual
-	</select>
+
 	<select id="getFunding">
 		select * from crowdfunding
 	</select>
+	<insert id="insertOrder">
+		<selectKey keyProperty="order_seq_num" order="BEFORE" resultType="int">
+			SELECT order_seq_num.nextVal
+            FROM dual
+		</selectKey>
+		INSERT INTO funding_order (order_seq_num,order_name,order_price,order_id,member_id,order_rec,member_address,order_phone,amount,order_date)
+		VALUES
+		(order_seq_num.nextval, #{order_seq_num},#{order_name},#{order_price},#{order_id},#{member_id}
+		,#{order_rec},#{member_address},#{order_phone},#{amount},#{order_date})
+	</insert>
+	
 </mapper>

@@ -9,6 +9,8 @@ import lombok.Data;
 @Data
 public class OrderVO {
 	private String order_seq_num;
+	private String order_name;
+	private int order_price;
 	private String order_id;
 	private String member_id;
 	private String order_rec;

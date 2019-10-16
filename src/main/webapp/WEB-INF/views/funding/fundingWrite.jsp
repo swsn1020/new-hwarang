@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<%@ include file="../layout/left.jsp"%>
+<%@ include file="../layout/menu.jsp"%>
 
 <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"/>
@@ -13,6 +13,7 @@
     <script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.min.js"></script>
     <script src="/js/bootstrap-datepicker.kr.js" charset="UTF-8"></script>
     <title>펀딩 등록게시판</title>
+    <div style="padding-left: 20%;padding-right: 20%;">
 <div class="row">
     <div class="col-lg-12">
         <h1 class="page-header">펀딩등록</h1>
@@ -36,16 +37,6 @@
                         <label>펀딩가격</label>
                         <input type="text" class="form-control" name="funding_price">
                     </div>
-                    
-                    <div class="form-group">
-			        <label>펀딩 시작일</label>
-			        <div class="input-group date">
-			            <input type="text" class="form-control" name="funding_created_date">
-			            <span class="input-group-addon">
-			            <i class="glyphicon glyphicon-calendar"></i></span>
-			        </div>
-			        </div>
-			        
 			        <div class="form-group">
 					 <label>펀딩 종료일 </label>
 			        <div class="input-group date">
@@ -124,13 +115,12 @@
                 </form>
             </div>
             <!-- end panel-body -->
-            
         </div>
         <!-- end panel-body -->
     </div>
     <!-- end panel -->
 </div>
 <!-- /.row -->
-
+ </div>
 
 <%@include file="../layout/bottom.jsp"%>
