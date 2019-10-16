@@ -75,6 +75,11 @@ public class NoticeService {
 		return false;
 	}
 	
+	//공지사항 상단 고정
+	public List<NoticeVO> getTopNotices(){
+		return dao.topNotices();
+	}
+	
 	
 	
 	//Notice_Reply 처리(댓글 증가 처리)
@@ -145,5 +150,7 @@ public class NoticeService {
 		}
 		return false;
 	}
+	
+	
 
 }

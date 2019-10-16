@@ -53,7 +53,7 @@ $(function(){
 							</tr>
 							<tr>
 								<td colspan="2">
-									<textarea class="form-control" rows="15" name="content" style="resize: none;" ></textarea>
+									<textarea class="form-control" rows="15" name="content" style="resize: none;"></textarea>
 								</td>
 							</tr>
 						</table>

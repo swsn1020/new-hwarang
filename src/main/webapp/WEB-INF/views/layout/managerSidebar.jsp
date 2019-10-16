@@ -95,6 +95,8 @@ $(function(){
 					var li = "<li id='notification-item'><a href='"+url+"' class='link dropdown-item' data-num='"+num+"'><div class='notification'><div class='notification-content'><i class='fa fa-envelope bg-violet'></i>"+msg+"</div></div></a></li>";
 					$("#alarmlist").append(li);
 				}
+				var li = "<li id='notification-item'><a href='/alarm/alarmList' class='dropdown-item'><div class='notification'><div class='notification-content'><i class='fa fa-inbox bg-orange'></i>Alarm Box</div></div></a></li>";
+				$("#alarmlist").append(li);
 			},
 			error: function(){
 				alert("알람리스트 불러오기 ajax 에러");
@@ -123,7 +125,11 @@ $(function(){
 		var unReadCnt = Number($("#alCnt").text());
 		unReadCnt += 1;
 // 		alert("안읽은 알람갯수: "+unReadCnt);
+		var blinky = 0;
 		$("#alCnt").text(unReadCnt);
+		blinky = setInterval(function(){
+			$(".blinky").toggle();
+		}, 300);
 		var url = message.url;
 		var category = message.category;
 		var subCategory = message.subCategory;
@@ -131,8 +137,8 @@ $(function(){
 // 		alert(boardNum);
 		var msg = "새로운 "+category+"_"+subCategory+"이 등록되었습니다.";
 // 		alert(msg);
-		var li = "<li id='notification-item'><a href='"+url+"' class='link dropdown-item' data-num='"+num+"'><div class='notification'><div class='notification-content'><i class='fa fa-envelope bg-violet'></i>"+msg+"</div></div></a></li>";
-		$("#alarmlist").append(li);
+		var li = "<li id='notification-item'><a href='"+url+"' class='link dropdown-item' data-num='"+num+"' style='background-color: #DADCE1;'><div class='notification'><div class='notification-content'><i class='fa fa-envelope bg-violet'></i>"+msg+"</div></div></a></li>";
+		$("#alarmlist").prepend(li);
 		
 		$(".link").on("click", function(){
 			$.ajax({
@@ -148,6 +154,11 @@ $(function(){
 					alert("알람 확인 에러");
 				}
 			});
+		});
+		
+		$("#notifications").on("click", function(){
+			clearInterval(blinky);
+			$(".blinky").show();
 		});
 		
 	}
@@ -178,8 +189,9 @@ $(function(){
               <!-- Navbar Menu -->
               <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
                 <!-- Notifications-->
-                <li class="nav-item dropdown"> <a id="notifications" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-bell-o fa-lg"></i><span class="badge badge-danger badge-corner" id="alCnt"></span></a>
+                <li class="nav-item dropdown"> <a id="notifications" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-bell-o fa-lg"></i><span class="badge badge-danger badge-corner blinky" id="alCnt"></span></a>
                   <ul id="alarmlist" aria-labelledby="notifications" class="dropdown-menu">
+                  	<!-- 
                     <li id="notification-item">
                     	<a rel="nofollow" href="/alarm/alarmList" class="dropdown-item"> 
 	                        <div class="notification">
@@ -187,6 +199,7 @@ $(function(){
 	                        </div>
                         </a>
                     </li>
+                     -->
                   </ul>
                 </li>
                 <!-- Logout    -->

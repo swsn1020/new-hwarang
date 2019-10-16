@@ -1,7 +1,11 @@
 package hwarang.artg.manager.controller;
 
 import java.security.Principal;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.Cookie;
@@ -229,6 +233,29 @@ public class NoticeController {
 		model.addAttribute("url", url);
 		return "manager/result";
 	}
+	
+	//공지사항 상단 고정하기
+	@ResponseBody
+	@RequestMapping("/noticeTop3")
+	public List<Map<String, Object>> showTopNotices(){
+		List<Map<String, Object>> params = new ArrayList<Map<String,Object>>();
+		List<NoticeVO> noticeList = service.getTopNotices();
+		for(NoticeVO notice : noticeList) {
+			Map<String, Object> noticeMap = new HashMap<String, Object>();
+			noticeMap.put("num", notice.getNum());
+			noticeMap.put("title", notice.getTitle());
+			noticeMap.put("content", notice.getContent());
+			Date regDate =notice.getRegDate();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			noticeMap.put("regDate", sdf.format(regDate));
+			noticeMap.put("readCnt", notice.getReadCnt());
+			params.add(noticeMap);
+		}
+		return params;
+	}
+	
+	
+	
 	
 	//Notice_reply 처리
 	@ResponseBody

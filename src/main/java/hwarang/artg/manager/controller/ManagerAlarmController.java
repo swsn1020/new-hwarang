@@ -24,7 +24,7 @@ public class ManagerAlarmController {
 	@RequestMapping("/alarmList")
 	public String showAlarmList(CriteriaDTO cri, Model model) {
 		System.out.println("alarmList 요청");
-		PageDTO page = new PageDTO(cri, service.getTotalCount());
+		PageDTO page = new PageDTO(cri, service.getTotalCount(cri));
 		model.addAttribute("pageMaker", page);
 		model.addAttribute("alarmList", service.pagingList(cri));
 		return "manager/alarm/alarmList";

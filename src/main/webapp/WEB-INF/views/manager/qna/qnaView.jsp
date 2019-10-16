@@ -39,13 +39,13 @@ $(function(){
 			<tr>
 				<th style="width: 17%;">문의분류</th>
 				<td colspan="3">
-					<select id="category" name="category" class="form-control col-md-3" disabled="disabled" style="display: inline-block;">
+					<select id="category" name="category" class="col-md-3" disabled="disabled" style="display: inline-block;">
 						<option value="info">고객정보</option>
 						<option value="order">주문</option>
 						<option value="Board">게시판</option>
 						<option value="other">기타</option>
 					</select>
-					<select id="subCategory" name="subCategory" class="form-control col-md-3" disabled="disabled" style="display: inline-block;">
+					<select id="subCategory" name="subCategory" class="col-md-3" disabled="disabled" style="display: inline-block;">
 						<option value="modiInfo">정보수정</option>
 						<option value="delInfo">회원탈퇴</option>
 						<option value="pay">결제</option>
@@ -68,9 +68,9 @@ $(function(){
 				<td colspan="3">${qna.title }</td>
 			</tr>
 			<tr>
-				<td colspan="3" style="width: 90%;">
-					<div style="display: inline-block;">작성자&nbsp; ${qna.memId } </div>&nbsp;
-					<div id="readCnt" style="display: inline-block;">작성일&nbsp; ${regDate}</div>
+				<td><strong>작성자</strong>&nbsp; ${qna.memId } </td>
+				<td colspan="2" style="width: 90%;">
+					<strong>작성일</strong>&nbsp; ${regDate}
 				</td>
 				<td>
 					<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')">

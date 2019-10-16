@@ -82,8 +82,8 @@ public class ManagerAlarmService {
 		return checkAlarmCategory(dao.getListWithPaging(cri));
 	}
 	
-	public int getTotalCount() {
-		return dao.getTotalCount();
+	public int getTotalCount(CriteriaDTO cri) {
+		return dao.getTotalCount(cri);
 	}
 	
 	

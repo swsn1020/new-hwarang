@@ -144,11 +144,11 @@
 					
 					var tr = $("<tr>");
 					
-					tr.append($("<td>"+rnum+"</td>"));
+					tr.append($("<td style='width: 5%;'>"+rnum+"</td>"));
 					rnum++;
-					tr.append($("<td><a href='#'>"+memId+"</a><br>"+finalDate+"</td>"));
+					tr.append($("<td style='width: 20%;'>"+memId+"<br>"+finalDate+"</td>"));
 					tr.append($("<td>").text(content).append(modiForm));
-					tr.append($("<td>").append(delForm));
+					tr.append($("<td style='width: 15%;'>").append(delForm));
 					var modiBtn = $("<button type='button' id='modi-btn' class='btn btn-link btn-sm' data-toggle='collapse' data-target='#modi"+i+"'> 수정 </button>");
 					var delBtn = $("<button type='button' id='del-btn' class='btn btn-link btn-sm' data-toggle='collapse' data-target='#del"+i+"'> 삭제 </button>");
 					//내가 쓴 글일 경우 신고 버튼 없음

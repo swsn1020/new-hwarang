@@ -48,50 +48,6 @@
 <!-- font -->
 <!-- <link href="https://fonts.googleapis.com/css?family=Prompt:400,500,700" rel="stylesheet"> -->
 <!-- kakao login -->
-<script>
-//let
-let socket = null;
-$(document).ready(function(){
-	connectWS();
-});
-function connectWS(){
-    console.log("tttttttttttttt")
-	var ws = new WebSocket("ws://localhost:8081/freeboardView?num=382");
-    socket = ws;
-    
-	ws.onopen = function(){
-		console.log('Info.connection opened');
-		console.log(ws);
-	};
-	
-	ws.onmessage = function(event){
-		console.log("ReceiveMesaage:", event.data+'\n');
-		  var $socketAlert = $('#socketAlert');
-	        $socketAlert.html(event.data);
-	        $socketAlert.css('display', 'block');
-	        
-	        setTimeout( function() {
-	        	$socketAlert.css('display', 'none');
-	        }, 3000);
-	};
-	
-	ws.onclose = function(event){
-		console.log('Info:connection closed.');
-		//setTimeout(function(){connect(); },1000);
-	};
-	ws.onerror = function(err) {console.log('Errror:, err');};
-	
-}
-
-$('#btnSend').on('click',function(evt){
-	evt.preventDefault();
-	if(socket.readyState!==1) return;
-	//let
-		let msg = $('input#msg').val();
-		ws.send(msg);
-	
-});
-</script>
 <style>
 @font-face { font-family: 'Arita-dotum-Medium'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/Arita-dotum-Medium.woff') format('woff'); font-weight: normal; font-style: normal; }
 *{

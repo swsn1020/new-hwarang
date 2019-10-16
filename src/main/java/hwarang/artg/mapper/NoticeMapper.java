@@ -40,4 +40,7 @@ public interface NoticeMapper {
 	
 	//게시글 block 처리
 	public int updateBlock(@Param("block")String block, @Param("num") int num);
+	
+	/***** 중요 공지 상단 고정하기 *****/
+	public List<NoticeVO> topNotices();
 }
