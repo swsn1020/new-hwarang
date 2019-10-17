@@ -289,10 +289,13 @@ public class NoticeController {
 	
 	@ResponseBody
 	@RequestMapping(value="/reply/modify", method=RequestMethod.POST)
-	public boolean replyModify(NoticeReplyVO nReply, String pw) {
+	public boolean replyModify(NoticeReplyVO nReply, String password, Principal principal) {
+		System.out.println("NoticeReply 수정 요청");
 		//비밀번호 같으면 수정
 		NoticeReplyVO reply = service.nReplyGetOne(nReply.getNum());
-		if(reply != null && pw.equals("true")) {
+		String id = principal.getName();
+		String originPw = memService.memberGetOne(id).getMember_password();
+		if(reply != null && pwEncoder.matches(password, originPw)) {
 			System.out.println("비밀번호 일치");
 //			System.out.println(nReply.toString());
 			return service.nReplyModify(nReply);
@@ -303,9 +306,11 @@ public class NoticeController {
 	
 	@ResponseBody
 	@RequestMapping(value="/reply/delete", method=RequestMethod.POST)
-	public boolean replyRemove(int num, String pw) throws Exception {
+	public boolean replyRemove(int num, String password, Principal principal) throws Exception {
 		NoticeReplyVO reply = service.nReplyGetOne(num);
-		if(reply != null && pw.equals("true")) {
+		String id = principal.getName();
+		String originPw = memService.memberGetOne(id).getMember_password();
+		if(reply != null && pwEncoder.matches(password, originPw)) {
 			return service.nReplyRemove(num);
 		}else {
 			return false;

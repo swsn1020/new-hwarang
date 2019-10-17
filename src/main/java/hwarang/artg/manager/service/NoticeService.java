@@ -93,8 +93,6 @@ public class NoticeService {
 	}
 	
 	public boolean nReplyModify(NoticeReplyVO nReply) {
-		
-		
 		if(rDao.updateReply(nReply) > 0) {
 			return true;
 		}

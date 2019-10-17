@@ -228,7 +228,6 @@ public class BlockStatusService {
 			}
 			break;
 		}
-		
 		params.put("block", block);
 		params.put("category", category);
 		params.put("subCategory", subCategory);
@@ -240,8 +239,5 @@ public class BlockStatusService {
 	public int getBlockCountNotChecked() {
 		return dao.getCountNotChecked();
 	}
-	
-	
-	
 	
 }

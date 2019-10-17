@@ -100,7 +100,7 @@ function removeAll(e){
 						</tr>
 						<tr>
 							<td colspan="2">
-								<textarea class="form-control" rows="15" name="content" style="resize: none;" placeholder="*문의 내용은 2000자까지 가능합니다. "></textarea>
+								<pre><textarea class="form-control" rows="15" name="content" style="resize: none;" placeholder="*문의 내용은 2000자까지 가능합니다. "></textarea></pre>
 							</td>
 						</tr>
 						<tr>

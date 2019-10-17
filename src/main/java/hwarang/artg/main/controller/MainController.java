@@ -31,6 +31,7 @@ public class MainController {
 		CriteriaDTO cri = new CriteriaDTO(1, 3);
 		model.addAttribute("eList", service.mainList(cri,"id"));
 		model.addAttribute("noticeList", noticeService.noticeRecentAll());
+		
 		model.addAttribute("faqList", faqService.fagRecentAll());
 		model.addAttribute("freeList", freeservice.selectRecentFree());
 		return "/main/main";

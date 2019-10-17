@@ -48,8 +48,8 @@
 								<td>${faq.category }</td>
 								<td>
 									<div id="accordion">
-										<div><a data-toggle="collapse" href="#content${vs.index }">${faq.question }</a></div>
-										<div id="content${vs.index }" class="collapse"  data-parent="#accordion">${faq.answer }</div>
+										<div><a data-toggle="collapse" href="#content${vs.index }">Q.&nbsp;${faq.question }</a></div><br>
+										<div id="content${vs.index }" class="collapse"  data-parent="#accordion">A.&nbsp;&nbsp;${faq.answer }</div>
 									</div>
 								</td>
 								<td>${regDate}</td>

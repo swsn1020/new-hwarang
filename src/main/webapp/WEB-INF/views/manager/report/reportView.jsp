@@ -71,13 +71,13 @@ function show(id){
 			<tr>
 				<th style="width: 15%;">게시판 종류</th>
 				<td colspan="5">
-					<select class="form-control col-sm-3" id="category" name="category" disabled="disabled" style="display: inline-block;">
+					<select class=" col-sm-3" id="category" name="category" disabled="disabled" style="display: inline-block;">
 						<option value="Free">자유게시판</option>
 						<option value="Review">후기게시판</option>
 						<option value="Exhibition">전시게시판</option>
 						<option value="Funding">펀딩게시판</option>
 					</select>
-					<select class="form-control col-sm-3" id="subCategory" name="subCategory" disabled="disabled" style="display: inline-block;">
+					<select class=" col-sm-3" id="subCategory" name="subCategory" disabled="disabled" style="display: inline-block;">
 						<option value="Board">게시글</option>
 						<option value="Reply">댓글</option>
 					</select>
@@ -208,6 +208,10 @@ function show(id){
 	          	<tr>
 	          		<th>신고대상ID</th>
 	          		<td><input class="form-control" type="text" name="blockMemId"></td>
+	          	</tr>
+	          	<tr>
+	          		<th>신고 대상 <br> 게시글 제목</th>
+	          		<td><input class="form-control" type="text" name="boardTitle"></td>
 	          	</tr>
 	          	<tr>
 	          		<th>신고내용</th>

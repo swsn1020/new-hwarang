@@ -199,7 +199,7 @@ public class ReportController {
 		File thumbnail = new File(UPLOAD_PATH+"\\"+"thumbnail"+"\\"+fileName+".png");
 		if (image.exists()) { 
 			thumbnail.getParentFile().mkdirs();
-		    Thumbnails.of(image).size(50, 50).outputFormat("png").toFile(thumbnail);
+		    Thumbnails.of(image).size(100, 100).outputFormat("png").toFile(thumbnail);
 		}
 
 		FileInputStream in = new FileInputStream(thumbnail);

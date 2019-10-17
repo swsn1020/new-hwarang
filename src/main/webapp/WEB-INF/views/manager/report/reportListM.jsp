@@ -76,7 +76,7 @@ ${mem }<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncod
 		<div class="project" id="project3">
           <div class="row bg-white has-shadow">
           	<div class="card-body" style="padding: 20px;">
-          		<div class="table-responsive">
+          		<div class="table-responsive"">
 				<table class="table table-hover">
 					<thead>
 						<tr>

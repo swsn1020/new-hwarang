@@ -69,7 +69,7 @@ $(function(){
 			</tr>
 			<tr>
 				<td><strong>작성자</strong>&nbsp; ${qna.memId } </td>
-				<td colspan="2" style="width: 90%;">
+				<td colspan="2" style="width: 70%;;">
 					<strong>작성일</strong>&nbsp; ${regDate}
 				</td>
 				<td>
@@ -107,11 +107,11 @@ $(function(){
 		<table class="table">
 			<tr>
 				<th style="width: 17%; border-top: none;" rowspan="3">답변 내용</th>
-				<td colspan="3" rowspan="3" style="border-top: none;">${qna.reply }</td>
+				<td colspan="3" rowspan="3" style="border-top: none; ">${qna.reply }</td>
 			</tr>
 			<tr>
 				<!-- 답변등록Form -->
-				<td colspan="4">
+				<td colspan="4" style="border-top: none;">
 					<div class="form-group collapse" id="replyForm" style="text-align: center;">
 						<form action="replyModify" method="post">
 							<input type="hidden" name="num" value="${qna.num }">

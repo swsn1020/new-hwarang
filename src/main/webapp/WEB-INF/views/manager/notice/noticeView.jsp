@@ -112,6 +112,9 @@
 					
 					//멤버 아이디
 					var memId = data.replies[i].memId;
+					if(memId == 'id1'){
+						memId = '관리자';
+					}
 					//내용(Block처리 함께)
 					var blockStatus = data.replies[i].block;
 					if(blockStatus == 'true'){
@@ -122,23 +125,23 @@
 					
 					//수정폼 (수정, 삭제는 본인이 작성한 글만)
 					var modiForm = $("<form></form>");
-					var modiTxt = $("<div id='modi"+i+"' class='collapse'>"+
-							"<input type='hidden' name='num' value='"+data.replies[i].num+"'>"+
-							"<label for='pw'>password</label><br><input type='password' name='pw' class='form-control'><br>"+
+					var modiTxt = $("<br><div id='modi"+i+"' class='collapse'>"+
+							"<input type='hidden' name='num' value='"+data.replies[i].num+"'>비밀번호 확인<br>"+
+							"<input type='password' name='password' class='form-control'><br>"+
 							"<textarea class='form-control' rows='5' name='content'>"+content+"</textarea></div>");
 					//삭제폼 (수정, 삭제는 본인이 작성한 글만)
 					var delForm = $("<form></form>");
-					var delTxt = $("<div id='del"+i+"' class='collapse'>"+
-							"<input type='hidden' name='num' value='"+data.replies[i].num+"'>"+
-							"<label for='pw'>password</label><br><input type='password' name='pw' class='form-control'></div>");
+					var delTxt = $("<br><div id='del"+i+"' class='collapse'>"+
+							"<input type='hidden' name='num' value='"+data.replies[i].num+"'>비밀번호 확인<br>"+
+							"<input type='password' name='password' class='form-control'></div>");
 					
 					//'수정'안  확인버튼
-					var modiSubmit = $("<button type='button' class='btn btn-link'>수정</button>");
+					var modiSubmit = $("<button type='button' class='btn btn-link btn-sm'>수정</button>");
 					modiTxt.append(modiSubmit);
 					modiForm.append(modiTxt);
 					
 					//'삭제'안 확인버튼
-					var delSubmit = $("<button type='button' class='btn btn-link'>삭제</button>");
+					var delSubmit = $("<button type='button' class='btn btn-link btn-sm'>삭제</button>");
 					delTxt.append(delSubmit);
 					delForm.append(delTxt);
 					
@@ -148,7 +151,7 @@
 					rnum++;
 					tr.append($("<td style='width: 20%;'>"+memId+"<br>"+finalDate+"</td>"));
 					tr.append($("<td>").text(content).append(modiForm));
-					tr.append($("<td style='width: 15%;'>").append(delForm));
+					tr.append($("<td>").append(delForm));
 					var modiBtn = $("<button type='button' id='modi-btn' class='btn btn-link btn-sm' data-toggle='collapse' data-target='#modi"+i+"'> 수정 </button>");
 					var delBtn = $("<button type='button' id='del-btn' class='btn btn-link btn-sm' data-toggle='collapse' data-target='#del"+i+"'> 삭제 </button>");
 					//내가 쓴 글일 경우 신고 버튼 없음
@@ -204,10 +207,10 @@
 							success : function(result) {
 								if (result) {
 									alert("수정되었습니다.");
-									replyList();
+									replyList(1);
 								} else {
 									alert("다시 시도해주세요.");
-									replyList();
+									replyList(1);
 								}
 							},
 							error : function() {
@@ -229,10 +232,10 @@
 							success : function(result) {
 								if (result) {
 									alert("삭제되었습니다.");
-									replyList();
+									replyList(1);
 								} else {
 									alert("다시 시도해주세요.");
-									replyList();
+									replyList(1);
 								}
 							},
 							error : function() {
@@ -298,7 +301,7 @@
 						<div style="display: inline-block;">작성일&nbsp; ${regDate } </div>&nbsp;
 						<div id="readCnt" style="display: inline-block;">조회수&nbsp; ${notice.readCnt }</div>
 					</td>
-					<td>
+					<td style="width: 15%;">
 						<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')">
 						<button onclick="location.href='noticeModify?num=${notice.num}'" class="btn btn-outline-success btn-sm">수정</button>
 						<button type="button" data-toggle="modal" data-target="#delModal" class="btn btn-outline-info btn-sm">삭제</button>
@@ -307,13 +310,13 @@
 				</tr>
 				<tr>
 					<td colspan="4">
-						<div style="text-align: center;">
+						<div style="">
 							<c:choose>
 								<c:when test="${notice.block eq true}">
 									<p>관리자에 의해 삭제처리된 게시글입니다.</p>
 								</c:when>
 								<c:otherwise>
-									<p>${notice.content }</p>
+									<div><br><pre>${notice.content }</pre></div>
 								</c:otherwise>
 							</c:choose>
 						</div>
@@ -351,11 +354,15 @@
 		    </div>
 		  </div><!-- Modal End -->
 	<br>
-	<div class="btnGroup" style="text-align: center;">
+	<div class="notice-div container btnGroup" style="text-align: center">
 		<button onclick="location.href='noticeList'" class="btn btn-outline-dark btn-sm">목록</button>
-		<c:if test="${notice.block != true}">
-			<button id="btn-block" class="btn btn-outline-danger btn-sm">신고</button>
-		</c:if>
+		<!-- 
+		<sec:authorize access="!hasRole('ROLE_ADMIN')">
+			<c:if test="${notice.block != true}">
+				<button id="btn-block" class="btn btn-outline-danger btn-sm">신고</button>
+			</c:if>
+		</sec:authorize>
+		 -->
 	</div>
 	<br>
 	
