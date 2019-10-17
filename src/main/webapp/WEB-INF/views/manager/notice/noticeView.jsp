@@ -76,6 +76,7 @@
 		$("#replies tr").remove();
 		getReplyCnt();
 // 		alert("replyCnt : "+replyCnt);
+
 		$.ajax({
 			url: "reply/all",
 			data: {"boardNum": '${notice.num}', "curPage": num},
@@ -94,6 +95,14 @@
 				}
 				if(rPager.curPage == rPager.totalPage){
 					$("#right").attr("class", "page-item disabled");
+				}
+				
+				for(var i = 0; i<= rPager.totalPage; i++){
+					if(i == num){
+						$("#curNum"+i).attr("class", "active");
+					}else {
+						$("#curNum"+i).attr("class", "page-item");
+					}
 				}
 				
 				for(var i in data.replies){
@@ -207,10 +216,10 @@
 							success : function(result) {
 								if (result) {
 									alert("수정되었습니다.");
-									replyList(1);
+									replyList(num);
 								} else {
 									alert("다시 시도해주세요.");
-									replyList(1);
+									replyList(num);
 								}
 							},
 							error : function() {
@@ -232,10 +241,10 @@
 							success : function(result) {
 								if (result) {
 									alert("삭제되었습니다.");
-									replyList(1);
+									replyList(num);
 								} else {
 									alert("다시 시도해주세요.");
-									replyList(1);
+									replyList(num);
 								}
 							},
 							error : function() {
@@ -268,7 +277,6 @@
 					})(i)	// 댓글 해당 인덱스 보내기(클로저 방지)
 					replyTable.append(tr);
 				} //for문
-				
 				
 			},
 			error: function(){
@@ -382,8 +390,8 @@
 			<li id="left" class="page-item disabled">
 				<a class="page-link" href="javascript:replyList(1)">&laquo;</a>
 			</li>
-			<c:forEach var="num" begin="${rPager.blockBegin }" end="${rPager.totalPage}">
-				<li class='${rPager.curPage == num ? "active" : "page-item"}'>
+			<c:forEach var="num" begin="${rPager.blockBegin }" end="${rPager.totalPage}" varStatus="vs">
+				<li id="curNum${vs.index }">
 					<a class="page-link" href="javascript:replyList(${num})">${num}</a>
 				</li>
 			</c:forEach>

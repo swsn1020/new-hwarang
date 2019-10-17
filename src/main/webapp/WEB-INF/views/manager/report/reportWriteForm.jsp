@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <title>화랑-신고게시판</title>
-<%@ include file="../../layout/left.jsp" %>
+<%@ include file="../../layout/menu.jsp" %>
 <script type="text/javascript" src="/resources/js/manager/validationCheck.js"></script>
 <script>
 $(function(){
