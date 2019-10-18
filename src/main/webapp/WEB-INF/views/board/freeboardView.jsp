@@ -38,7 +38,7 @@ $(function() {	//문서가 로딩되면 실행할 함수
 // 						alert(replyer.val());
 // 						alert(gBoardWriter);
 // 						alert(gBno);
-						alert("socket 등록 완료");
+// 						alert("socket 등록 완료");
 						
 					}else{
 						alert("socket 등록 실패")
@@ -322,12 +322,12 @@ $('#btnSend').on('click',function(evt){
 </script>
 	<fmt:formatDate value="${fboard.regDate }" var="regDate" pattern="yyyy-MM-dd"/>
 		<div class="container">
-				<input type="button" class="btn btn-primary" value="목록" onclick="location.href='freeboard'">
+				<input type="button" class="btn btn-outline-secondary" value="목록" onclick="location.href='freeboard'">
 				<input type="hidden" value="<sec:authentication property="principal.Username" var="id"/>">
 				<c:if test="${id eq fboard.userid}">			
-					<input type="button" class="btn btn-primary" value="수정" onclick="location.href='modify?num=${fboard.num }'"> 
-					<input type="button" class="btn btn-primary" value="삭제" onclick="location.href='remove?num=${fboard.num }'"> 
-					<input type="button" class="btn btn-primary" value="새글쓰기" onclick="location.href='register'">
+					<input type="button"class="btn btn-outline-secondary" value="수정" onclick="location.href='modify?num=${fboard.num }'"> 
+					<input type="button" class="btn btn-outline-secondary" value="삭제" onclick="location.href='remove?num=${fboard.num }'"> 
+					<input type="button" class="btn btn-outline-secondary" value="새글쓰기" onclick="location.href='register'">
 				</c:if>
 				<button id="btn-block" class="btn btn-outline-danger btn-sm">신고</button>
 	<div class="table-responsive">
@@ -399,10 +399,10 @@ $('#btnSend').on('click',function(evt){
 	<div class="container">
 		<ul class="pagination justify-content-center">
 			<li id="left" class="page-item disabled">
-				<a class="page-link" href="javascript:replyList(1)">&laquo;</a>
+				<a class="page-link" href="javascript:replyList(1))">&laquo;</a>
 			</li>
 			<c:forEach var="num" begin="${rPager.blockBegin }" end="${rPager.totalPage}">
-				<li class='${rPager.curPage == num ? "active" : "page-item"}'>
+				<li class='${rPager.curPage == num ? "page-item active" : "page-item"}'>
 					<a class="page-link" href="javascript:replyList(${num})">[${num}]</a>
 				</li>
 			</c:forEach>
@@ -428,7 +428,7 @@ $('#btnSend').on('click',function(evt){
 					<th>내용</th>
 					<td><textarea rows="3" cols="30" name="content"></textarea></td>
 					<td>
-						<button class="btn btn-primary" id="btnRegister" >등록</button>
+						<button class="btn btn-outline-secondary" id="btnRegister" >등록</button>
 					</td>
 				</tr>
 			</table>

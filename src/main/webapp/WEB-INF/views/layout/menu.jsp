@@ -82,7 +82,6 @@ function connectWS(){
 	ws.onerror = function(err) {console.log('Errror:, err');};
 	
 }
-
 $('#btnSend').on('click',function(evt){
 	evt.preventDefault();
 	if(socket.readyState!==1) return;
@@ -116,7 +115,6 @@ $('#btnSend').on('click',function(evt){
 	margin-left: 300px;
 }
 .header-menu{
-
 	display: flex;
 	border-bottom: 1px solid nono;
 	font-family: 'Arita-dotum-Medium';
@@ -129,14 +127,34 @@ $('#btnSend').on('click',function(evt){
 <body>
 	<header>
 		<div class='header'>
-		 <div id="socketAlert" class="alert alert-success" role="alert" style="display:none;"></div>
 			<div class='header-title'>
 				<h1>
 					<a href="/"><img class="header_img maintitle"
 						src="https://trello-attachments.s3.amazonaws.com/5d6613e9716d6e23f5e579bb/312x140/3f52467f9d01dd9ce0a0f28eacece66e/%EB%A1%9C%EA%B3%A0.png"
 						alt="Cinque Terre"></a>
+			<div class="container bootstrap snippet">
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="ibox float-e-margins">
+								<div class="ibox-content">
+									<h2>
+										<span class="text-navy"></span>
+									</h2>
+									<div class="search-form">
+										<form id="searchList" action="/layout/searchList" method="get">	
+											<input type="text" name="key" placeholder="검색어를 입력하세요" value="<c:out value="${param.key}"/>" />
+											<input type="hidden" name="pageNum" value="<c:out value="${pageMaker.cri.pageNum}"/>"/>
+											<input type="hidden" name="amount" value="<c:out value="${pageMaker.cri.amount}"/>"/>
+											<button class="btn btn-default">검색</button>											
+										</form>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					
 				</h1>
-				    <div id="socketAlert" class="alert alert-success" role="alert"></div>
 			</div>
 			<div class="header-login">
 				<ul class="nav justify-content-center">
@@ -156,29 +174,7 @@ $('#btnSend').on('click',function(evt){
 					<li class="nav-item" id="side_item"><a
 						class="nav-link" href="/exhibition/recentlyView">최근본상품</a><div></div></li>
 					<input id="userid" type="hidden" value='<sec:authentication property="principal.Username"/>'>
-					<ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
-                <!-- Notifications-->
-                <li class="nav-item dropdown"> <a id="notifications" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-bell-o fa-lg"></i><span class="badge bg-red badge-corner">${alarmCnt}</span></a>
-                  <ul aria-labelledby="notifications" class="dropdown-menu">
-                    <li id="notification-item">
-                    	<a rel="nofollow" href="#" class="dropdown-item"> 
-	                        <div class="notification">
-	                          <div class="notification-content"><i class="fa fa-envelope bg-green"></i>You have 6 new messages </div>
-	                          <textarea class="notification-time">알람넣을부분</textarea>
-	                        </div>
-                        </a>
-                    </li>
-                    <c:forEach items="${alarmList}" var="useralarm">
-                    	<li>
-	                    	<a rel="nofollow" href="${useralarm.url }" class="dropdown-item"> 
-		                        <div class="notification">
-		                          <div class="notification-content"><i class="fa fa-twitter bg-blue"></i>${useralarm.category }&nbsp;${useralarm.subCategory }이 등록되었습니다.</div>
-		                          <div class="notification-time"><small></small></div>
-		                        </div>
-	                        </a>
-                        </li>
-                    </c:forEach>
-                  </ul>
+   
 					</sec:authorize>
 					<sec:authorize access="isAnonymous()">
 					<li class="nav-item" id="side_item"><a

@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -55,17 +56,14 @@ public class BoardController {
 
 	@RequestMapping(value = "/freeboard", method = RequestMethod.GET)
 	public String showfreeboardList(Model model, CriteriaDTO cri,Principal principal) throws Exception {
+		
 		PageDTO page = new PageDTO(cri, fservice.getTotal(cri));
 		System.out.println(page);
-		model.addAttribute("pageMaker", page);
+		model.addAttribute("pageMaker",page);
 		model.addAttribute("freeboard", fservice.pagingList(cri));
 //		model.addAttribute("principal",principal);
 		System.out.println(page);
 		return "/board/freeboard";
-	}
-	@RequestMapping("main")
-	public String main() {
-		return "/board/servey";
 	}
 
 	@RequestMapping("/freeboardView")
