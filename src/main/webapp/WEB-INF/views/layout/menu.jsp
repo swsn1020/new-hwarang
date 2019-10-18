@@ -125,7 +125,7 @@ $(document).ready(function(){
 						alt="Cinque Terre"></a>
 				</h1>
 			</div>
-		</div>
+		</div> 
 				<div class="container bootstrap snippet" style="text-align: center; padding-left: 3%;">
 					<div class="row">
 						<div class="col-lg-12">
