@@ -34,13 +34,13 @@ public class QnAService {
 		if(dao.insertQnA(QnA) > 0) {
 			//첨부파일 없으면
 			if(fileList.get(0).getOriginalFilename().equals("")) {
-				System.out.println("파일선택하지 않음");
+//				System.out.println("파일선택하지 않음");
 				return true;
 			}else {
 				//DB에 저장
-				System.out.println("선택fileList"+fileList.size());
+//				System.out.println("선택fileList"+fileList.size());
 				List<Map<String, Object>> fList = writeFile(fileList);
-				System.out.println(fList.toString());
+//				System.out.println(fList.toString());
 				for(int i=0; i<fList.size(); i++) {
 					Map<String, Object> fileMap = fList.get(i);
 					fileMap.put("qnaNum", QnA.getNum());
@@ -50,9 +50,9 @@ public class QnAService {
 					qnaImg.setUploadPath((String)fileMap.get("uploadPath"));
 					qnaImg.setOriginName((String)fileMap.get("originName"));
 					if(imgDao.insertFile(qnaImg) > 0) {
-						System.out.println("파일 DB등록 성공");
+//						System.out.println("파일 DB등록 성공");
 					}else {
-						System.out.println("파일 DB등록 실패");
+//						System.out.println("파일 DB등록 실패");
 					}
 				}
 				return true;
@@ -68,7 +68,7 @@ public class QnAService {
 		if (dao.updateQnA(QnA) > 0) {
 			//fileList는 null값을 보내지 않음 >> fileName으로 검사!!
 			if (fileList.get(0).getOriginalFilename().equals("")) {
-				System.out.println("파일 선택하지 않음");
+//				System.out.println("파일 선택하지 않음");
 				return true;
 			} else {
 				System.out.println("선택fileList" + fileList.size());
@@ -82,9 +82,9 @@ public class QnAService {
 					qnaImg.setUploadPath((String) fileMap.get("uploadPath"));
 					qnaImg.setOriginName((String) fileMap.get("originName"));
 					if (imgDao.insertFile(qnaImg) > 0) {
-						System.out.println("파일 DB등록 성공");
+//						System.out.println("파일 DB등록 성공");
 					} else {
-						System.out.println("파일 DB등록 실패");
+//						System.out.println("파일 DB등록 실패");
 					}
 				}
 				return true;
@@ -105,15 +105,15 @@ public class QnAService {
 	public boolean qnaRemove(int num) {
 		if(dao.deleteQnA(num) > 0) {
 			//포함된 파일 모두 삭제
-			System.out.println("qna삭제요청");
+//			System.out.println("qna삭제요청");
 			if(imgDao.selectFilesByQNum(num).isEmpty()) {
-				System.out.println("요청 들어왔다고 이미지 근데 비어있어");
+//				System.out.println("요청 들어왔다고 이미지 근데 비어있어");
 			}else {
 				if(imgDao.deleteFileByQNum(num)>0) {
-					System.out.println("파일삭제 성공");
+//					System.out.println("파일삭제 성공");
 					return true;
 				}else {
-					System.out.println("파일 삭제 실패");
+//					System.out.println("파일 삭제 실패");
 					return false;
 				}
 			}
@@ -171,7 +171,7 @@ public class QnAService {
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				System.out.println("파일 복사 예외 발생");
+//				System.out.println("파일 복사 예외 발생");
 				return null;
 			}
 			Map<String, Object> copyList = new HashMap<String, Object>();

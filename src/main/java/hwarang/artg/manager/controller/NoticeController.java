@@ -46,7 +46,7 @@ public class NoticeController {
 //		List<NoticeVO> n_List = service.noticeGetAll();
 //		model.addAttribute("noticeList", n_List);
 		//페이징 처리 List
-		System.out.println("noticeList요청");
+//		System.out.println("noticeList요청");
 		PageDTO page = new PageDTO(cri, service.getTotalCount(cri));
 		model.addAttribute("pageMaker", page);
 		model.addAttribute("noticeList", service.pagingList(cri));
@@ -58,7 +58,7 @@ public class NoticeController {
 //		List<NoticeVO> n_List = service.noticeGetAll();
 //		model.addAttribute("noticeList", n_List);
 		//페이징 처리 List
-		System.out.println("noticeListForManager요청");
+//		System.out.println("noticeListForManager요청");
 		PageDTO page = new PageDTO(cri, service.getTotalCount(cri));
 		model.addAttribute("pageMaker", page);
 		model.addAttribute("noticeList", service.pagingList(cri));
@@ -107,12 +107,12 @@ public class NoticeController {
 		//상세보기 요청 들어올때마다 쿠키 검사
 		//쿠키가 있는 경우
 		if(cookies != null && cookies.length > 0) {
-			System.out.println("cookie 있음");
+//			System.out.println("cookie 있음");
 			//쿠키 배열 검사 (게시글 번호, 아이디)
 			for(int i=0; i<cookies.length; i++) {
 				// Cookie의 name이 cookie + reviewNo와 일치하는 쿠키를 viewCookie에 넣어줌 
 				if(cookies[i].getName().equals("nCookie"+num)) {
-					System.out.println("이미 조회한 게시물, 쿠키 생성 후 재진입");
+//					System.out.println("이미 조회한 게시물, 쿠키 생성 후 재진입");
 					targetCookie = cookies[i];
 				}
 			}
@@ -124,7 +124,7 @@ public class NoticeController {
 			System.out.println("쿠키생성할까요?");
 			if(targetCookie == null) {
 				//이미 생성된 쿠키 없음 >> 처음 클릭
-				System.out.println("생성된 쿠키없음");
+//				System.out.println("생성된 쿠키없음");
 				//쿠키 생성(이름, 값)
 				Cookie newCookie = new Cookie("nCookie"+num, "|"+num+"|");
 				//쿠키 추가
@@ -210,22 +210,22 @@ public class NoticeController {
 					//삭제 성공(파일 삭제) >> 이동할 화면
 					//Service에서 작성하기
 					if(service.nReplyRemoveByBNum(num)) {
-						System.out.println("공지댓글 삭제 성공");
+//						System.out.println("공지댓글 삭제 성공");
 					}else {
-						System.out.println("공지 댓글 삭제 실패");
+//						System.out.println("공지 댓글 삭제 실패");
 					}
-					System.out.println("Notice삭제 성공");
+//					System.out.println("Notice삭제 성공");
 					msg = "공지가 삭제되었습니다";
 				}else {
 					//삭제실패
 					url = "noticeView?num="+num;
 					msg = "공지 삭제에 실패하였습니다.";
-					System.out.println("Notice삭제 실패");
+//					System.out.println("Notice삭제 실패");
 				}
 			}
 		}else {
 			//비밀번호 불일치
-			System.out.println("비밀번호가 틀렸습니다.");
+//			System.out.println("비밀번호가 틀렸습니다.");
 			msg = "비밀번호를 다시 확인하세요.";
 			url = "noticeView?num="+num;
 		}
@@ -283,20 +283,20 @@ public class NoticeController {
 	@ResponseBody
 	@RequestMapping("/reply/getReplyCnt")
 	public int getReplyCount(int boardNum) {
-		System.out.println("replyCount 요청 들어옴");
+//		System.out.println("replyCount 요청 들어옴");
 		return service.getnReplyCount(boardNum);
 	}
 	
 	@ResponseBody
 	@RequestMapping(value="/reply/modify", method=RequestMethod.POST)
 	public boolean replyModify(NoticeReplyVO nReply, String password, Principal principal) {
-		System.out.println("NoticeReply 수정 요청");
+//		System.out.println("NoticeReply 수정 요청");
 		//비밀번호 같으면 수정
 		NoticeReplyVO reply = service.nReplyGetOne(nReply.getNum());
 		String id = principal.getName();
 		String originPw = memService.memberGetOne(id).getMember_password();
 		if(reply != null && pwEncoder.matches(password, originPw)) {
-			System.out.println("비밀번호 일치");
+//			System.out.println("비밀번호 일치");
 //			System.out.println(nReply.toString());
 			return service.nReplyModify(nReply);
 		}else {

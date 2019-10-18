@@ -83,7 +83,7 @@ $(function(){
 			type: "get",
 			dataType: "json",
 			success: function(data){
-				console.log("data: "+data);
+// 				console.log("data: "+data);
 				for(var i in data){
 					var url = data[i].url;
 					var category = data[i].category;
@@ -102,21 +102,22 @@ $(function(){
 				alert("알람리스트 불러오기 ajax 에러");
 			}
 		});
-		
 	}); //onload() End
 	
 	var sock;
 	var stompClient;
 	function connect(){
-		console.log("연결됨.");
+// 		console.log("연결됨.");
 		sock = new SockJS("/chat");
 		stompClient = Stomp.over(sock);
 		stompClient.connect({}, function(){
 			stompClient.subscribe("/category/msg/id1", function(message){
-				console.log("message: "+JSON.stringify(message));
-				console.log("message: "+message.body);
+// 				console.log("message: "+JSON.stringify(message));
+// 				console.log("message: "+message.body);
 				addMsg(JSON.parse(message.body));
 // 				alert(message.body);
+				$("#alarmModal").find("p[id='content']").text("새로운 알람이 도착하였습니다.");
+				$("#alarmModal").modal('show');
 			});
 		})
 	}
@@ -125,17 +126,19 @@ $(function(){
 		var unReadCnt = Number($("#alCnt").text());
 		unReadCnt += 1;
 // 		alert("안읽은 알람갯수: "+unReadCnt);
-		var blinky = 0;
-		$("#alCnt").text(unReadCnt);
-		blinky = setInterval(function(){
-			$(".blinky").toggle();
-		}, 300);
 		var url = message.url;
 		var category = message.category;
 		var subCategory = message.subCategory;
 		var num = message.alarm.num;
 // 		alert(boardNum);
 		var msg = "새로운 "+category+"_"+subCategory+"이 등록되었습니다.";
+		var blinky = 0;
+		$("#alCnt").text(unReadCnt);
+		$(".alCnt").text(unReadCnt);
+		
+		blinky = setInterval(function(){
+			$(".blinky").toggle();
+		}, 300);
 // 		alert(msg);
 		var li = "<li id='notification-item'><a href='"+url+"' class='link dropdown-item' data-num='"+num+"' style='background-color: #DADCE1;'><div class='notification'><div class='notification-content'><i class='fa fa-envelope bg-violet'></i>"+msg+"</div></div></a></li>";
 		$("#alarmlist").prepend(li);
@@ -164,6 +167,18 @@ $(function(){
 	}
 	
 </script>
+<style>
+.modal {
+   position: absolute;
+   top: 10px;
+   right: 100px;
+   bottom: 0;
+   left: 0;
+   z-index: 10040;
+   overflow: auto;
+   overflow-y: auto;
+}
+</style>
 </head>
 <body>
 <div class="page-wrapper chiller-theme toggled">
@@ -325,3 +340,24 @@ $(function(){
 	    </div>
 	    <!-- sidebar-content  -->
 	  </nav>
+	  
+	  <!-- The Modal -->
+	  <div class="modal fade bottom" id="alarmModal" tabindex="-1" role="dialog" data-backdrop="true" aria-hidden="true">
+	    <div class="modal-dialog" role="document">
+	      <div class="modal-content">
+	        <!-- Modal Header -->
+	        <div class="modal-header">
+	          <h3 class="modal-title w-100">NEW</h3>
+	          <button type="button" class="close" data-dismiss="modal">&times;</button>
+	        </div>
+	        <!-- Modal body -->
+	        <div class="modal-body" style="text-align: center;">
+	          	<p id="content"></p>
+	        </div>
+	        <!-- Modal footer -->
+	        <div class="modal-footer">
+	          <button type="button" class="btn btn-outline-dark btn-sm" data-dismiss="modal">확인</button>
+	        </div>
+	      </div>
+	    </div>
+	  </div>

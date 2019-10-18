@@ -12,12 +12,10 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import hwarang.artg.common.model.CriteriaDTO;
 import hwarang.artg.common.model.PageDTO;
 import hwarang.artg.manager.service.BlockStatusService;
-import hwarang.artg.manager.service.ManagerAlarmService;
 import hwarang.artg.manager.service.ManagerMainService;
 import hwarang.artg.manager.service.QnAService;
 import hwarang.artg.member.service.MemberService;
@@ -36,7 +34,7 @@ public class ManagerMainController {
 	
 	@RequestMapping("/main")
 	public String showMainPage(Model model, HttpSession session, Principal principal) {
-		System.out.println("Manager Main 요청들어옴");
+//		System.out.println("Manager Main 요청들어옴");
 		Map<String, Object> results = managerService.MangerMainResults();
 		
 		/* 총 멤버 수, 총 게시글 수, 총 댓글 수 */
@@ -76,7 +74,7 @@ public class ManagerMainController {
 	
 	@RequestMapping("/memberList")
 	public String showMemberList(CriteriaDTO cri, Model model) {
-		System.out.println("admin/memberList 요청");
+//		System.out.println("admin/memberList 요청");
 		PageDTO page = new PageDTO(cri, managerService.totalMemCount(cri));
 		model.addAttribute("pageMaker", page);
 		model.addAttribute("memberList", managerService.pagingList(cri));
@@ -85,7 +83,7 @@ public class ManagerMainController {
 	
 	@RequestMapping("/memberAuth")
 	public String setMemberAuths(CriteriaDTO cri, Model model) {
-		System.out.println("member Auth Settings 요청");
+//		System.out.println("member Auth Settings 요청");
 		PageDTO page = new PageDTO(cri, managerService.totalMemCount(cri));
 		model.addAttribute("pageMaker", page);
 		model.addAttribute("memberList", managerService.pagingList(cri));
@@ -94,7 +92,7 @@ public class ManagerMainController {
 	
 	@RequestMapping("/delMember")
 	public String deleteAccount(String member_id, Model model) {
-		System.out.println("delMember 요청 들어옴");
+//		System.out.println("delMember 요청 들어옴");
 		String msg = "탈퇴 처리에 실패하였습니다.";
 		if(memberService.memberRemove(member_id)) {
 			msg = "탈퇴 처리 되었습니다.";
@@ -107,8 +105,8 @@ public class ManagerMainController {
 	@MessageMapping("/client/send/{var}")
 	@SendTo("/category/msg/{var}")
 	public String chatMessage(String message, @DestinationVariable(value ="var") String variable) {
-		System.out.println("var : " + variable);
-		System.out.println("managerController message: "+message);
+//		System.out.println("var : " + variable);
+//		System.out.println("managerController message: "+message);
 		return message;
 	}
 	

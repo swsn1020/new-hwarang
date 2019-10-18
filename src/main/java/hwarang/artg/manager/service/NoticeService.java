@@ -2,11 +2,8 @@ package hwarang.artg.manager.service;
 
 import java.util.List;
 
-import javax.naming.NoInitialContextException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import hwarang.artg.common.model.CriteriaDTO;

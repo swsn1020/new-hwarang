@@ -6,7 +6,7 @@
 		replyList(1);
 		$("#replyForm").on("submit", function(){
 			var params = $(this).serialize();
-			console.log(params);
+// 			console.log(params);
 			$.ajax({
 				url: "reply/write",
 				data: params,
@@ -84,12 +84,12 @@
 			dataType: "json",
 			success: function(data){
 				//data는 list
-				console.log(data);
+// 				console.log(data);
 				var rnum = (Number(num) * 10 ) - 9;
 				var rPager = data.rPager;
-				console.log(rPager);
-				console.log(rPager.curPage);
-				console.log(rPager.totalPage);
+// 				console.log(rPager);
+// 				console.log(rPager.curPage);
+// 				console.log(rPager.totalPage);
 				if(rPager.curPage != 1){
 					$("#left").attr("class", "page-item");
 				}
@@ -176,12 +176,12 @@
 					var currId = replyTable.closest("div").find("input[name='currId']").val();
 // 					alert(currId);
 					if(currId != memId){
-						console.log("아이디 일치하지 않음");
+// 						console.log("아이디 일치하지 않음");
 						modiBtn.css("display", "none");
 						delBtn.css("display", "none");
 						blockBtn.css("display", "true");
 					}else{
-						console.log("아이디 일치");
+// 						console.log("아이디 일치");
 						modiBtn.css("display", "true");
 						delBtn.css("display", "true");
 						blockBtn.css("display", "none");

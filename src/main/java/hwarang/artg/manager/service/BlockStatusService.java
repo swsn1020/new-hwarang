@@ -16,7 +16,6 @@ import hwarang.artg.manager.model.BlockStatusVO;
 import hwarang.artg.manager.model.NoticeReplyVO;
 import hwarang.artg.manager.model.NoticeVO;
 import hwarang.artg.mapper.BlockStatusMapper;
-import hwarang.artg.member.service.MemberService;
 import hwarang.artg.rrboard.model.RecommendBoardVO;
 import hwarang.artg.rrboard.model.RecommendReplyVO;
 import hwarang.artg.rrboard.model.ReviewBoardVO;
@@ -44,8 +43,6 @@ public class BlockStatusService {
 	private RecommendBoardService recommBoardService;
 	@Autowired
 	private RecommendReplyService recommReplyService;
-	@Autowired
-	private MemberService memberService;
 	
 	//신고 등록
 	public boolean blockRegister(BlockStatusVO block) {
