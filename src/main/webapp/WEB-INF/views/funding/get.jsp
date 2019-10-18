@@ -2,8 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ include file="../layout/left.jsp"%>
-
+<%@ include file="../layout/menu.jsp"%>
+<%@include file="../layout/rightUser.jsp"%>
 <!-- <!doctype html> -->
 <!-- <html lang="ko"> -->
 <head>

@@ -2,7 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ include file="../layout/left.jsp"%>
+<%@ include file="../layout/menu.jsp"%>
+<%@include file="../layout/rightUser.jsp"%>
 <div class="row">
             <div class="col-lg-12">
                 <h1 class="page-header">크라우드펀딩 게시판</h1>

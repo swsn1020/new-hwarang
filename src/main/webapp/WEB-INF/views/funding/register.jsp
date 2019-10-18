@@ -2,8 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<%@ include file="../layout/left.jsp"%>
-
+<%@ include file="../layout/menu.jsp"%>
+<%@include file="../layout/rightUser.jsp"%>
 <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"/>
     <script type='text/javascript' src='//code.jquery.com/jquery-1.8.3.js'></script>
