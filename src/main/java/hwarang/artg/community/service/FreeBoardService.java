@@ -179,6 +179,8 @@ public class FreeBoardService {
 		}
 		return false;
 	}
-	
+	public boolean updateLike(int num) {
+		return freeboardMapper.updateLike(num)==1;
+	}
 	
 }

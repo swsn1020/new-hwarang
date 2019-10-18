@@ -29,11 +29,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import hwarang.artg.common.model.CriteriaDTO;
 import hwarang.artg.community.model.FreeBoardVO;
+import hwarang.artg.community.model.FreeLikeVO;
 import hwarang.artg.common.model.PageDTO;
 import hwarang.artg.common.model.ReplyPager;
 import hwarang.artg.community.service.FreeBoardService;
 import hwarang.artg.community.service.FreeImgService;
+import hwarang.artg.community.service.FreeLikeService;
 import hwarang.artg.community.service.FreeReplyService;
+import hwarang.artg.exhibition.model.ExhLikeVO;
 import hwarang.artg.manager.model.NoticeVO;
 import hwarang.artg.member.service.MemberService;
 import net.coobird.thumbnailator.Thumbnails;
@@ -53,6 +56,9 @@ public class BoardController {
 	
 	@Autowired
 	private MemberService memberservice;
+	
+	@Autowired
+	private FreeLikeService likeservice;
 
 	@RequestMapping(value = "/freeboard", method = RequestMethod.GET)
 	public String showfreeboardList(Model model, CriteriaDTO cri,Principal principal) throws Exception {
@@ -248,4 +254,30 @@ public class BoardController {
 		if(result!=null) memberservice.readUserNotice(member_id);
 		return result;
 	}
+	
+	//추천 하기
+	@RequestMapping("/like/add")
+	public String likeAdd(Principal principal,int num) {
+		FreeLikeVO like = new FreeLikeVO(principal.getName(),num,1);
+		likeservice.addLikeStatus(like);
+		fservice.updateLike(num);
+//		return "/board/freeboardView";
+		return "redirect:/board/freeboardView?num="+num;
+	}	
+	@RequestMapping("/like/modify")
+	public String likeModi(Principal principal, int num, int status) {
+		System.out.println(num+"번 추천 수정요청!");
+		FreeLikeVO like = new FreeLikeVO(principal.getName(),num, status);
+		likeservice.modifyLikeStatus(like);
+		fservice.updateLike(num);
+//		return "/board/freeboardView";
+		return "redirect:/board/freeboardView?num="+num;
+	}
+	@RequestMapping("/unlike/add")
+	public String unlikeAdd(Principal principal,int num) {
+		FreeLikeVO like = new FreeLikeVO(principal.getName(),num,2);
+		likeservice.addLikeStatus(like);
+		fservice.updateLike(num);
+		return "redirect:/board/freeboardView?num="+num;
+	}	
 }

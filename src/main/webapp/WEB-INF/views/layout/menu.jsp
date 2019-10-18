@@ -239,11 +239,8 @@ $('#btnSend').on('click',function(evt){
 				</div>
 
 			</nav>
-<<<<<<< HEAD
 		</div>
 </header>
-=======
 		</div>
 </header>
 
->>>>>>> refs/remotes/origin/master
