@@ -65,7 +65,7 @@ $(function(){
 	
     var totalFP = numberWithCommas('${totalFP}');
 //     alert(totalFP);
-	$(".counter").text(totalFP).append("<small style='color: black;'>원</small>");
+	$(".counter").text(totalFP).append("<small style='color: black; font-weight: bold;'>원</small>");
 	$("#review0").addClass('active');
 });	//onload End
     
@@ -86,20 +86,25 @@ $(function(){
 	.carousel-control-prev-icon {
 	outline: black;
 	}
- 	.carousel-item { 
- 	  white-space: nowrap;  
+	
+ 	.content { 
+  	  white-space: normal;   
+/* 	  display: inline-block; */
  	  overflow: hidden; 
  	  text-overflow: ellipsis;  
+ 	  width: 100%;
+ 	  line-height: 2; 
+  	  height: 15em; 
  	} 
-	.carousel-inner .content {
-		width: 100%;
-   		height: 100%;
-	}
 	
 	.projects h1{
 		font-family: "Poppins", sans-serif;
 	}
 	
+	#review:hover {
+		color: black;
+		text-decoration: underline;
+	}
 </style>
 <!-- content-inner -->
 <!-- 신규가입자(수), 신규게시물(수), 신규 댓글(수),  -->
@@ -231,14 +236,14 @@ $(function(){
 						  <!-- The slideshow -->
 						  <div class="carousel-inner" style="padding-left: 30px; padding-right: 30px;">
 						  	<c:forEach items="${reviewList }" var="review" varStatus="vs">
-							    <div class="carousel-item" id="review${vs.index }">
-							      <div class="content">
-							      	<h5><a href="/review/view?num=${review.review_num}">${review.review_title }</a></h5>
-							      	<br><br><br><div> ${review.review_content }</div>
-							      </div>
+						    	<div class="carousel-item" id="review${vs.index }">
+						      	<h5><a id="review" href="/reivew/view?num=${review.review_num }">${review.review_title }</a></h5><br>
+							    	<div class="content">
+								      	${review.review_content }
+							      	</div>
 							    </div>
 						  	</c:forEach>
-						  </div>
+						  </div><br><br>
 						  <!-- Left and right controls -->
 						  <a class="carousel-control-prev" href="#img" data-slide="prev">
 						    <span class="carousel-control-prev-icon"></span>
