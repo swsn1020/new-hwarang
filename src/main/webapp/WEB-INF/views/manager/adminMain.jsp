@@ -105,6 +105,11 @@ $(function(){
 		color: black;
 		text-decoration: underline;
 	}
+	@font-face { font-family: 'GyeonggiBatang'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/GyeonggiBatang.woff') format('woff'); font-weight: normal; font-style: normal; }
+	.images{
+		font-family: 'GyeonggiBatang';
+	}
+	
 </style>
 <!-- content-inner -->
 <!-- 신규가입자(수), 신규게시물(수), 신규 댓글(수),  -->
