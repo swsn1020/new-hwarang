@@ -1,6 +1,7 @@
 package hwarang.artg.manager.controller;
 
 import java.security.Principal;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -36,29 +37,31 @@ public class ManagerMainController {
 	@RequestMapping("/main")
 	public String showMainPage(Model model, HttpSession session, Principal principal) {
 		System.out.println("Manager Main 요청들어옴");
+		Map<String, Object> results = managerService.MangerMainResults();
+		
 		/* 총 멤버 수, 총 게시글 수, 총 댓글 수 */
-		model.addAttribute("totalMembers", managerService.memberCounts());
-		model.addAttribute("totalPosts", managerService.totalPost());
-		model.addAttribute("totalReplies", managerService.totalReply());
+		model.addAttribute("totalMembers", results.get("TOTM"));
+		model.addAttribute("totalPosts", results.get("POST"));
+		model.addAttribute("totalReplies", results.get("REPLY"));
 
 		/* 최근 일주일  가입한 신규 회원 수 */
-		model.addAttribute("newMemCount", managerService.newMemberCount());
+		model.addAttribute("newMemCount", results.get("NEWM"));
 		/* 이번달 시작되는 전시회 수*/
-		model.addAttribute("ExhiCountMonth", managerService.thisMonthExhiCount());
+		model.addAttribute("ExhiCountMonth", results.get("TOTE"));
 		/* Funding Total Price */
-		model.addAttribute("totalFP", managerService.getTotalPrice());
+		model.addAttribute("totalFP", results.get("PRICE"));
 		
 		/* QNA, BLOCKSTATUS 5개씩 출력 */
 		model.addAttribute("qnaList", qnaService.qnaGetByRegDate());
 		model.addAttribute("blockList", blockService.blockGetByRegDate());
 		
 		/* 그래프  - 오늘 등록된 게시글 수 */
-		model.addAttribute("qnaTC", managerService.qnaTodayCount());
-		model.addAttribute("reportTC", managerService.reportTodayCount());
-		model.addAttribute("blockTC", managerService.blockTodayCount());
-		model.addAttribute("reviewBTC", managerService.reviewBTodayCount());
-		model.addAttribute("freeBTC", managerService.freeBTodayCount());
-		model.addAttribute("recommBTC", managerService.RecommBTodayCount());
+		model.addAttribute("qnaTC", results.get("TOTQ"));
+		model.addAttribute("reportTC", results.get("TOTREP"));
+		model.addAttribute("blockTC", results.get("TOTB"));
+		model.addAttribute("reviewBTC", results.get("TOTREV"));
+		model.addAttribute("freeBTC", results.get("TOTF"));
+		model.addAttribute("recommBTC", results.get("TOTREC"));
 		
 		//sidebar에 저장될 내용
 		String id = principal.getName();

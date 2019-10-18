@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import hwarang.artg.mapper.ManagerMainMapper;
 import hwarang.artg.mapper.MemberAuthMapper;
 import hwarang.artg.mapper.MemberMapper;
 import hwarang.artg.mapper.PointMapper;
@@ -66,13 +67,17 @@ public class BeanTest {
 //	private ReviewReplyService s;
 	
 	@Autowired
+	private ManagerMainMapper dao;
 //	private MemberService ms;
-	private MemberAuthService memas;
+//	private MemberAuthService memas;
+	
 	
 	
 	@Test
 	public void test() {
-		System.out.println(memas.memberauthGetOne("id1"));
+		System.out.println(dao.getTotals().get("TOTREP"));
+		
+//		System.out.println(memas.memberauthGetOne("id1"));
 //		s.pointGetRegister(1, 100, "포인트사용", "bbb");
 		
 		
