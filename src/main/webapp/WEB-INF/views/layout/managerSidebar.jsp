@@ -48,8 +48,6 @@ $(function(){
 		$("#show-sidebar").click(function() {
 			$(".page-wrapper").addClass("toggled");
 		});
-<<<<<<< HEAD
-<<<<<<< HEAD
 		
 		//차단 개수 가져오기
 		$.ajax({
@@ -102,16 +100,9 @@ $(function(){
 				alert("알람리스트 불러오기 ajax 에러");
 			}
 		});
-=======
 		
 		//알람 붙이기
 
->>>>>>> refs/remotes/origin/geun2
-=======
-		
-		//알람 붙이기
-
->>>>>>> refs/remotes/origin/geun2
 		
 	}); //onload() End
 	
