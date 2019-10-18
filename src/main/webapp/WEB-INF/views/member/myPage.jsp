@@ -35,9 +35,9 @@ h1,h2,h3,h4,h5{
 						<tr align="right">
 							<!-- 신고 -->
 							<td>
-								<button type="button" class="btn btn-outline-dark btn-sm" onclick="location.href='/block/blockListForUser?memId=${id}'">신고내역</button>
+								<button type="button" class="btn btn-outline-dark btn-sm" onclick="location.href='/block/blockListForUser?memId=<sec:authentication property="principal.username"/>'">신고내역</button>
 							<!-- 1:1 -->
-								<button type="button" class="btn btn-outline-dark btn-sm" onclick="location.href='/qna/qnaListForUser?memId=${id}'">1:1 문의</button>
+								<button type="button" class="btn btn-outline-dark btn-sm" onclick="location.href='/qna/qnaListForUser?memId=<sec:authentication property="principal.username"/>'">1:1 문의</button>
 							</td>
 						</tr>
 					</tbody>

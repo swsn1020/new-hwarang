@@ -12,17 +12,6 @@ $(function(){
 	});
 });
 </script>
-<style>
-	h1{
-		color: #725974;
-	}
-	.form-control:focus {
-		border-color: #9C869C;
-		-webkit-box-shadow: 0 0 0 0.2rem rgba(156, 134, 156, 0.25);
-  		box-shadow: 0 0 0 0.2rem rgba(156, 134, 156, 0.25);
-		
-	}
-</style>
 <div class="content-inner" style="padding-bottom: 59px;">
 	<section class="projects no-padding-top">
 		<div class="contianer-fluid">
@@ -53,7 +42,7 @@ $(function(){
 							</tr>
 							<tr>
 								<td colspan="2">
-									<textarea class="form-control" rows="15" name="content" style="resize: none;" ></textarea>
+									<pre><textarea class="form-control" rows="15" name="content" style="resize: none;"></textarea></pre>
 								</td>
 							</tr>
 						</table>

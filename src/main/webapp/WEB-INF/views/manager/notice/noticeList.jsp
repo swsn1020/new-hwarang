@@ -11,6 +11,25 @@
 	}
 </style>
 <script type="text/javascript">
+$(function(){
+	var table = $(".table");
+	$.ajax({
+		url: "noticeTop3",
+		type: "get",
+		dataType: "json",
+		success: function(data){
+			for(var i in data){
+				var num = data[i].num;
+				var title = data[i].title;
+				var content = data[i].content;
+				var regDate = data[i].regDate;
+				var readCnt = data[i].readCnt;
+				var tr = "<tr><td style='text-align: center;'><span class='badge badge-pill badge-danger'>공지</span></td><td><a href='noticeView?num="+num+"'>"+title+"</a></td><td style='text-align: center;'>"+regDate+"</td><td style='text-align: center;'>"+readCnt+"</td></tr>";
+				table.prepend(tr);
+			}
+		}
+	});
+});
 </script>
 	<br><br><br>
 	<div class="notice-div container">

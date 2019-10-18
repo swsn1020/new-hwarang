@@ -117,7 +117,7 @@ function removeAll(e){
 				</tr>
 				<tr>
 					<td colspan="2">
-						<textarea class="form-control" rows="15" name="content" style="resize: none;">${qna.content }</textarea>
+						<pre><textarea class="form-control" rows="15" name="content" style="resize: none;">${qna.content }</textarea></pre>
 					</td>
 				</tr>
 				<tr>

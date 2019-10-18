@@ -36,6 +36,7 @@ public class FreeBoardService {
 	
 	@Autowired
 	private FreeImgMapper freeimgMapper;
+	
 	public List<FreeBoardVO> selectRecentFree(){
 		return freeboardMapper.selectRecentFree();
 	}
@@ -178,6 +179,8 @@ public class FreeBoardService {
 		}
 		return false;
 	}
-	
+	public boolean updateLike(int num) {
+		return freeboardMapper.updateLike(num)==1;
+	}
 	
 }

@@ -52,6 +52,7 @@
 		<div class="project" id="project3">
           <div class="row bg-white has-shadow">
           	<div class="card-body" style="padding: 20px;">
+          		<div class="table-responsive">
           		<table class="table table-hover">
 					<thead>
 						<tr>
@@ -82,7 +83,8 @@
 							</tr>
 					</c:forEach>
 				</table>
-		
+				</div>
+			<hr style="border-color: #29201E; border-width: 2px; margin-top: 20px; width: 90%;">
 			<!-- Pagination -->
 			<ul class="pagination justify-content-center">
 				<li class='${pageMaker.prev == true ? "page-item" : "page-item disabled" }'>

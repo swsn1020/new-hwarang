@@ -21,19 +21,17 @@ public class ReplyEchoHandler extends TextWebSocketHandler{
 	
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception{
-//		System.out.println("afterConnectionEstablished:" + session);
 		String senderId = getId(session);
 		userSessions.put(session.getPrincipal().getName(),session);
 
-		System.out.println("3 :  " + session.getPrincipal().getName());				
-		System.out.println("afterConnection");
-		System.out.println(senderId);
-		System.out.println(userSessions.get(senderId));
+//		System.out.println("3 :  " + session.getPrincipal().getName());				
+//		System.out.println("afterConnection");
+//		System.out.println(senderId);
+//		System.out.println(userSessions.get(senderId));
 	}
 	
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-		System.out.println("handleTextMessage:" + session + " : " + message);
 		String senderId = getId(session);
 //		for (WebSocketSession sess: sessions) {
 //		sess.sendMessage(new TextMessage(senderId + ": " + message.getPayload()));
@@ -48,10 +46,10 @@ public class ReplyEchoHandler extends TextWebSocketHandler{
 				String replyWriter = strs[1];
 				String boardWriter = strs[2];
 				String bno = strs[3];
-				System.out.println("usersessions");
-				System.out.println(boardWriter);
+//				System.out.println("usersessions");
+//				System.out.println(boardWriter);
 				WebSocketSession boardWriterSession = userSessions.get(boardWriter);
-				System.out.println(boardWriterSession);
+//				System.out.println(boardWriterSession);
 				if ("reply".equals(cmd) && boardWriterSession != null) {
 					TextMessage tmpMsg = new TextMessage(replyWriter + "님이 "
 							+ "<a href='/board/freeboardView?num=" + bno + "'>" + bno + "</a>번 게시글에 댓글을 달았습니다!");
@@ -65,20 +63,22 @@ public class ReplyEchoHandler extends TextWebSocketHandler{
 	
 	private String getId(WebSocketSession session) {
 		Map<String,Object> httpSession = session.getAttributes();
-		MemberVO loginUser = (MemberVO)httpSession.get(SessionNames.LOGIN);
+		MemberVO loginUser = (MemberVO)httpSession.get(session.getPrincipal());
+//		System.out.println("loginUser확인");
+//		System.out.println(loginUser);
 		if (null == loginUser) {
-			System.out.println("loginUser가 null");
-			System.out.println(session.getId());
+//			System.out.println("loginUser가 null");
+//			System.out.println(session.getId());
 			return session.getId();
 		}else {
-			System.out.println("loginUesr가 null값이 아님");
-			System.out.println(loginUser.getMember_id());
+//			System.out.println("loginUesr가 null값이 아님");
+//			System.out.println(loginUser.getMember_id());
 			return loginUser.getMember_id();			
 		}
 	}
 	
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-		System.out.println("afterConnectionEstablished:" + session + ":" + status);
+//		System.out.println("afterConnectionEstablished:" + session + ":" + status);
 	}
 }

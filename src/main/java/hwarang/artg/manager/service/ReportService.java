@@ -37,13 +37,13 @@ public class ReportService {
 	public boolean reportRegister(ReportVO report, List<MultipartFile> fileList) {
 		if (dao.insertReport(report) > 0) {
 			if (fileList.get(0).getOriginalFilename().equals("")) {
-				System.out.println("파일선택하지 않음");
+//				System.out.println("파일선택하지 않음");
 				return true;
 			} else {
 				// DB에 저장
 				System.out.println("선택fileList" + fileList.size());
 				List<Map<String, Object>> fList = writeFile(fileList);
-				System.out.println(fList.toString());
+//				System.out.println(fList.toString());
 				for (int i = 0; i < fList.size(); i++) {
 					Map<String, Object> fileMap = fList.get(i);
 					fileMap.put("reportNum", report.getNum());
@@ -53,9 +53,9 @@ public class ReportService {
 					reportImg.setUploadPath((String) fileMap.get("uploadPath"));
 					reportImg.setOriginName((String) fileMap.get("originName"));
 					if (imgDao.insertFile(reportImg) > 0) {
-						System.out.println("파일 DB등록 성공");
+//						System.out.println("파일 DB등록 성공");
 					} else {
-						System.out.println("파일 DB등록 실패");
+//						System.out.println("파일 DB등록 실패");
 					}
 				}
 				return true;
@@ -68,10 +68,10 @@ public class ReportService {
 	public boolean reportModify(ReportVO report, List<MultipartFile> fileList) {
 		if(dao.updateReport(report) > 0) {
 			if (fileList.get(0).getOriginalFilename().equals("")) {
-				System.out.println("파일 선택하지 않음");
+//				System.out.println("파일 선택하지 않음");
 				return true;
 			} else {
-				System.out.println("선택fileList" + fileList.size());
+//				System.out.println("선택fileList" + fileList.size());
 				List<Map<String, Object>> fList = writeFile(fileList);
 				for (int i = 0; i < fList.size(); i++) {
 					Map<String, Object> fileMap = fList.get(i);
@@ -82,9 +82,9 @@ public class ReportService {
 					reportImg.setUploadPath((String) fileMap.get("uploadPath"));
 					reportImg.setOriginName((String) fileMap.get("originName"));
 					if (imgDao.insertFile(reportImg) > 0) {
-						System.out.println("파일 DB등록 성공");
+//						System.out.println("파일 DB등록 성공");
 					} else {
-						System.out.println("파일 DB등록 실패");
+//						System.out.println("파일 DB등록 실패");
 					}
 				}
 				return true;
@@ -105,16 +105,16 @@ public class ReportService {
 	public boolean reportRemove(int num) {
 		if(dao.deleteReport(num) > 0) {
 			//포함된 파일 모두 삭제
-			System.out.println("ReportDAO 삭제요청");
+//			System.out.println("ReportDAO 삭제요청");
 			if(!imgDao.selectFilesByRNum(num).isEmpty()) {
-				System.out.println("파일 있음");
+//				System.out.println("파일 있음");
 				if(imgDao.deleteFileByRNum(num)>0) {
-					System.out.println("Report파일 삭제 성공");
+//					System.out.println("Report파일 삭제 성공");
 					return true;
 				}
 			}else {
 				//첨부된 파일 없음
-				System.out.println("파일 없음");
+//				System.out.println("파일 없음");
 				return true;
 			}
 		}
@@ -156,7 +156,7 @@ public class ReportService {
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				System.out.println("파일 복사 예외 발생");
+//				System.out.println("파일 복사 예외 발생");
 				return null;
 			}
 			Map<String, Object> copyList = new HashMap<String, Object>();

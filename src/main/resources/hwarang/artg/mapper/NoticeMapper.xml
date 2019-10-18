@@ -40,6 +40,15 @@
 	  	 WHERE rownum between 1 and 5
 	</select>
 	
+	<select id="topNotices" resultMap="nMap">
+		SELECT * 
+		  FROM ( SELECT * 
+		 		   FROM NOTICE_BOARD
+		 		  WHERE NOTICE_CATEGORY = 'import' 
+		 	   ORDER BY NOTICE_REG_DATE DESC)
+		 WHERE rownum between 1 and 3
+	</select>
+	
 	
 	<!-- 검색기능 위한 sql(다른 쿼리에서 반복될 때 사용, 나중에 include -->
 	<sql id="criteriaDTO">

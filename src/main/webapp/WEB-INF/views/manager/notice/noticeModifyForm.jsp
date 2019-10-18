@@ -53,8 +53,8 @@ $(function(){
 							</td>
 						</tr>
 						<tr>
-							<td colspan="2">
-								<textarea class="form-control" name="content" rows="15" style="resize: none;">${notice.content }</textarea>
+							<td colspan="2" style="text-align: ">
+								<pre><textarea class="form-control" name="content" rows="15" style="resize: none;">${notice.content }</textarea></pre>
 							</td>
 						</tr>
 						</table>

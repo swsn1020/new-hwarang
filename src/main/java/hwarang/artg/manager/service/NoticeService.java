@@ -2,11 +2,8 @@ package hwarang.artg.manager.service;
 
 import java.util.List;
 
-import javax.naming.NoInitialContextException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import hwarang.artg.common.model.CriteriaDTO;
@@ -75,6 +72,11 @@ public class NoticeService {
 		return false;
 	}
 	
+	//공지사항 상단 고정
+	public List<NoticeVO> getTopNotices(){
+		return dao.topNotices();
+	}
+	
 	
 	
 	//Notice_Reply 처리(댓글 증가 처리)
@@ -88,8 +90,6 @@ public class NoticeService {
 	}
 	
 	public boolean nReplyModify(NoticeReplyVO nReply) {
-		
-		
 		if(rDao.updateReply(nReply) > 0) {
 			return true;
 		}
@@ -145,5 +145,7 @@ public class NoticeService {
 		}
 		return false;
 	}
+	
+	
 
 }

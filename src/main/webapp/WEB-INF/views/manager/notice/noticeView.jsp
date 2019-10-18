@@ -7,7 +7,7 @@
 		replyList(1);
 		$("#replyForm").on("submit", function(){
 			var params = $(this).serialize();
-			console.log(params);
+// 			console.log(params);
 			$.ajax({
 				url: "reply/write",
 				data: params,
@@ -77,6 +77,7 @@
 		$("#replies tr").remove();
 		getReplyCnt();
 // 		alert("replyCnt : "+replyCnt);
+
 		$.ajax({
 			url: "reply/all",
 			data: {"boardNum": '${notice.num}', "curPage": num},
@@ -84,17 +85,25 @@
 			dataType: "json",
 			success: function(data){
 				//data는 list
-				console.log(data);
+// 				console.log(data);
 				var rnum = (Number(num) * 10 ) - 9;
 				var rPager = data.rPager;
-				console.log(rPager);
-				console.log(rPager.curPage);
-				console.log(rPager.totalPage);
+// 				console.log(rPager);
+// 				console.log(rPager.curPage);
+// 				console.log(rPager.totalPage);
 				if(rPager.curPage != 1){
 					$("#left").attr("class", "page-item");
 				}
 				if(rPager.curPage == rPager.totalPage){
 					$("#right").attr("class", "page-item disabled");
+				}
+				
+				for(var i = 0; i<= rPager.totalPage; i++){
+					if(i == num){
+						$("#curNum"+i).attr("class", "active");
+					}else {
+						$("#curNum"+i).attr("class", "page-item");
+					}
 				}
 				
 				for(var i in data.replies){
@@ -113,6 +122,9 @@
 					
 					//멤버 아이디
 					var memId = data.replies[i].memId;
+					if(memId == 'id1'){
+						memId = '관리자';
+					}
 					//내용(Block처리 함께)
 					var blockStatus = data.replies[i].block;
 					if(blockStatus == 'true'){
@@ -123,31 +135,31 @@
 					
 					//수정폼 (수정, 삭제는 본인이 작성한 글만)
 					var modiForm = $("<form></form>");
-					var modiTxt = $("<div id='modi"+i+"' class='collapse'>"+
-							"<input type='hidden' name='num' value='"+data.replies[i].num+"'>"+
-							"<label for='pw'>password</label><br><input type='password' name='pw' class='form-control'><br>"+
+					var modiTxt = $("<br><div id='modi"+i+"' class='collapse'>"+
+							"<input type='hidden' name='num' value='"+data.replies[i].num+"'>비밀번호 확인<br>"+
+							"<input type='password' name='password' class='form-control'><br>"+
 							"<textarea class='form-control' rows='5' name='content'>"+content+"</textarea></div>");
 					//삭제폼 (수정, 삭제는 본인이 작성한 글만)
 					var delForm = $("<form></form>");
-					var delTxt = $("<div id='del"+i+"' class='collapse'>"+
-							"<input type='hidden' name='num' value='"+data.replies[i].num+"'>"+
-							"<label for='pw'>password</label><br><input type='password' name='pw' class='form-control'></div>");
+					var delTxt = $("<br><div id='del"+i+"' class='collapse'>"+
+							"<input type='hidden' name='num' value='"+data.replies[i].num+"'>비밀번호 확인<br>"+
+							"<input type='password' name='password' class='form-control'></div>");
 					
 					//'수정'안  확인버튼
-					var modiSubmit = $("<button type='button' class='btn btn-link'>수정</button>");
+					var modiSubmit = $("<button type='button' class='btn btn-link btn-sm'>수정</button>");
 					modiTxt.append(modiSubmit);
 					modiForm.append(modiTxt);
 					
 					//'삭제'안 확인버튼
-					var delSubmit = $("<button type='button' class='btn btn-link'>삭제</button>");
+					var delSubmit = $("<button type='button' class='btn btn-link btn-sm'>삭제</button>");
 					delTxt.append(delSubmit);
 					delForm.append(delTxt);
 					
 					var tr = $("<tr>");
 					
-					tr.append($("<td>"+rnum+"</td>"));
+					tr.append($("<td style='width: 5%;'>"+rnum+"</td>"));
 					rnum++;
-					tr.append($("<td><a href='#'>"+memId+"</a><br>"+finalDate+"</td>"));
+					tr.append($("<td style='width: 20%;'>"+memId+"<br>"+finalDate+"</td>"));
 					tr.append($("<td>").text(content).append(modiForm));
 					tr.append($("<td>").append(delForm));
 					var modiBtn = $("<button type='button' id='modi-btn' class='btn btn-link btn-sm' data-toggle='collapse' data-target='#modi"+i+"'> 수정 </button>");
@@ -165,12 +177,12 @@
 					var currId = replyTable.closest("div").find("input[name='currId']").val();
 // 					alert(currId);
 					if(currId != memId){
-						console.log("아이디 일치하지 않음");
+// 						console.log("아이디 일치하지 않음");
 						modiBtn.css("display", "none");
 						delBtn.css("display", "none");
 						blockBtn.css("display", "true");
 					}else{
-						console.log("아이디 일치");
+// 						console.log("아이디 일치");
 						modiBtn.css("display", "true");
 						delBtn.css("display", "true");
 						blockBtn.css("display", "none");
@@ -205,10 +217,10 @@
 							success : function(result) {
 								if (result) {
 									alert("수정되었습니다.");
-									replyList();
+									replyList(num);
 								} else {
 									alert("다시 시도해주세요.");
-									replyList();
+									replyList(num);
 								}
 							},
 							error : function() {
@@ -230,10 +242,10 @@
 							success : function(result) {
 								if (result) {
 									alert("삭제되었습니다.");
-									replyList();
+									replyList(num);
 								} else {
 									alert("다시 시도해주세요.");
-									replyList();
+									replyList(num);
 								}
 							},
 							error : function() {
@@ -267,7 +279,6 @@
 					replyTable.append(tr);
 				} //for문
 				
-				
 			},
 			error: function(){
 				alert("replyList 오류");
@@ -299,7 +310,7 @@
 						<div style="display: inline-block;">작성일&nbsp; ${regDate } </div>&nbsp;
 						<div id="readCnt" style="display: inline-block;">조회수&nbsp; ${notice.readCnt }</div>
 					</td>
-					<td>
+					<td style="width: 15%;">
 						<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')">
 						<button onclick="location.href='noticeModify?num=${notice.num}'" class="btn btn-outline-success btn-sm">수정</button>
 						<button type="button" data-toggle="modal" data-target="#delModal" class="btn btn-outline-info btn-sm">삭제</button>
@@ -308,13 +319,13 @@
 				</tr>
 				<tr>
 					<td colspan="4">
-						<div style="text-align: center;">
+						<div style="">
 							<c:choose>
 								<c:when test="${notice.block eq true}">
 									<p>관리자에 의해 삭제처리된 게시글입니다.</p>
 								</c:when>
 								<c:otherwise>
-									<p>${notice.content }</p>
+									<div><br><pre>${notice.content }</pre></div>
 								</c:otherwise>
 							</c:choose>
 						</div>
@@ -352,23 +363,23 @@
 		    </div>
 		  </div><!-- Modal End -->
 	<br>
-	<div class="btnGroup" style="text-align: center;">
+	<div class="notice-div container btnGroup" style="text-align: center">
 		<button onclick="location.href='noticeList'" class="btn btn-outline-dark btn-sm">목록</button>
-		<c:if test="${notice.block != true}">
-			<button id="btn-block" class="btn btn-outline-danger btn-sm">신고</button>
-		</c:if>
+		<!-- 
+		<sec:authorize access="!hasRole('ROLE_ADMIN')">
+			<c:if test="${notice.block != true}">
+				<button id="btn-block" class="btn btn-outline-danger btn-sm">신고</button>
+			</c:if>
+		</sec:authorize>
+		 -->
 	</div>
 	<br>
 	
 	<!-- 댓글 목록 div -->
 	<div class="notice-div container" style="padding-left: 50px; padding-right: 50px;">
-		<sec:authorize access="isAnonymous()">
-			<input type="hidden" name="currId" value="anonymous"/>
-		</sec:authorize>	
 		<sec:authorize access="isAuthenticated()">
 			<input type="hidden" name="currId" value="<sec:authentication property="principal.Username"/>">
 		</sec:authorize>
-		
 		<table class="table" id="replies">
 			<thead></thead>
 		</table>
@@ -380,9 +391,9 @@
 			<li id="left" class="page-item disabled">
 				<a class="page-link" href="javascript:replyList(1)">&laquo;</a>
 			</li>
-			<c:forEach var="num" begin="${rPager.blockBegin }" end="${rPager.totalPage}">
-				<li class='${rPager.curPage == num ? "active" : "page-item"}'>
-					<a class="page-link" href="javascript:replyList(${num})">[${num}]</a>
+			<c:forEach var="num" begin="${rPager.blockBegin }" end="${rPager.totalPage}" varStatus="vs">
+				<li id="curNum${vs.index }">
+					<a class="page-link" href="javascript:replyList(${num})">${num}</a>
 				</li>
 			</c:forEach>
 			<li id="right" class="page-item">

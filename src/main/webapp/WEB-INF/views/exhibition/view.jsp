@@ -453,7 +453,14 @@
 			<ul class="list-group list-group-flush col-sm-10" id="chat"></ul>
 		</div>
 
-
+		<!-- 신고pop에 보낼 내용 -->
+		<form id="blockForm" name="blockForm" method="post">
+			<input type="hidden" name="blockMemId" value="">
+			<input type="hidden" name="category" value="">
+			<input type="hidden" name="boardNum" value="${notice.num }">
+			<input type="hidden" name="replyNum" value="">
+			<input type="hidden" name="boardTitle" value="${notice.title }">
+		</form>
 	</div>
 </div>
 <%@include file="../layout/bottom.jsp"%>

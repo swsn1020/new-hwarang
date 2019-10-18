@@ -30,7 +30,7 @@
           	<div class="card-body" style="padding: 20px;">
           		<div class="buttondiv" style="text-align: center; float: right; margin-bottom: 10px;">
 					<button type="button" class="btn btn-outline-secondary btn-sm" onclick="location.href='noticeWrite'">공지작성</button>
-				</div>
+				</div><br>
           		<div class="table-responsive">
 					<table class="table table-hover" style="margin: auto;">
 						<thead>
@@ -84,6 +84,7 @@
 						</tbody>
 					</table>
 				</div>
+				<hr style="border-color: #29201E; border-width: 2px; margin-top: 20px; width: 90%;">
 				<div style="text-align: center; margin: 10px;">
 					<div class="text">
 						<form id="searchForm" action="noticeListForManager" method="get">

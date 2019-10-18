@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,8 +22,8 @@ public class ManagerAlarmController {
 	
 	@RequestMapping("/alarmList")
 	public String showAlarmList(CriteriaDTO cri, Model model) {
-		System.out.println("alarmList 요청");
-		PageDTO page = new PageDTO(cri, service.getTotalCount());
+//		System.out.println("alarmList 요청");
+		PageDTO page = new PageDTO(cri, service.getTotalCount(cri));
 		model.addAttribute("pageMaker", page);
 		model.addAttribute("alarmList", service.pagingList(cri));
 		return "manager/alarm/alarmList";
@@ -33,7 +32,7 @@ public class ManagerAlarmController {
 	@ResponseBody
 	@RequestMapping(value="/alarmCheck", method=RequestMethod.POST)
 	public boolean checkAlarm(int num) {
-		System.out.println("alarmCheck 요청 들어옴");
+//		System.out.println("alarmCheck 요청 들어옴");
 		return service.alarmModify(num);
 	}
 	
@@ -42,6 +41,7 @@ public class ManagerAlarmController {
 	public boolean removeAlarm(int num) {
 		return service.alarmRemove(num);
 	}
+
 
 	
 	@ResponseBody

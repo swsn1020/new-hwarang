@@ -23,4 +23,5 @@ public interface FreeBoardMapper{
 	public List<FreeBoardVO> selectRecentFree();
 	/* 신고처리 */
 	public int updateBlock(@Param("block")String block, @Param("num") int num);
+	public int updateLike(int num);
 }

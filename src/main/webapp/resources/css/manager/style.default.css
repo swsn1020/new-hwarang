@@ -190,61 +190,61 @@ input {
 }
 
 .bg-red {
-  background: #A74E36 !important;
-  color: #fff;
+  background: #CF4C48 !important;
+  color: #EAE6DD;
 }
 
 .bg-red:hover {
-  color: #fff;
+  color: #EAE6DD;
 }
 
 .bg-blue {
-  background: #3F556F !important;
-  color: #fff;
+  background: #9AABBD !important;
+  color: #EAE6DD;
 }
 
 .bg-blue:hover {
-  color: #fff;
+  color: #EAE6DD;
 }
 
 .bg-yellow {
-  background: #C8A25B !important;
-  color: #fff;
+  background: #F4CA99 !important;
+  color: #EAE6DD;
 }
 
 .bg-yellow:hover {
-  color: #fff;
+  color: #EAE6DD;
 }
 
 .bg-green {
-  background: #5E968B !important;
-  color: #fff;
+  background: #8F9767 !important;
+  color: #EAE6DD;
 }
 
 .bg-green:hover {
-  color: #fff;
+  color: #EAE6DD;
 }
 
 .bg-orange {
   background: #ffc36d !important;
-  color: #fff;
+  color: #EAE6DD;
 }
 
 .bg-orange:hover {
-  color: #fff;
+  color: #EAE6DD;
 }
 
 .bg-violet {
-  background: #6D5374 !important;
-  color: #fff;
+  background: #814F76 !important;
+  color: #EAE6DD;
 }
 
 .bg-violet:hover {
-  color: #fff;
+  color: #EAE6DD;
 }
 
 .bg-gray {
-  background: #ced4da !important;
+  background: #A59B97 !important;
 }
 
 .bg-white {
@@ -252,27 +252,27 @@ input {
 }
 
 .text-red {
-  color: #A74E36;
+  color: #CF4C48;
 }
 
 .text-red:hover {
-  color: #A74E36;
+  color: #CF4C48;
 }
 
 .text-yellow {
-  color: #C8A25B;
+  color: #F4CA99;
 }
 
 .text-yellow:hover {
-  color: #C8A25B;
+  color: #F4CA99;
 }
 
 .text-green {
-  color: #5E968B;
+  color: #8F9767;
 }
 
 .text-green:hover {
-  color: #5E968B;
+  color: #8F9767;
 }
 
 .text-orange {
@@ -284,27 +284,27 @@ input {
 }
 
 .text-violet {
-  color: #6D5374;
+  color: #814F76;
 }
 
 .text-violet:hover {
-  color: #6D5374;
+  color: #D9C4D4;
 }
 
 .text-blue {
-  color: #3F556F;
+  color: #9AABBD;
 }
 
 .text-blue:hover {
-  color: #3F556F;
+  color: #9AABBD;
 }
 
 .text-gray {
-  color: #ced4da;
+  color: #A59B97;
 }
 
 .text-gray:hover {
-  color: #ced4da;
+  color: #A59B97;
 }
 
 .text-uppercase {
@@ -1240,10 +1240,10 @@ section.charts div[class*="col-"] {
 .form-control:focus {
   color: #495057;
   background-color: #fff;
-  border-color: #796AEE;
   outline: none;
-  -webkit-box-shadow: 0 0 0 0.2rem rgba(121, 106, 238, 0.25);
-  box-shadow: 0 0 0 0.2rem rgba(121, 106, 238, 0.25);
+  border-color: #424A47;
+  -webkit-box-shadow: 0 0 0 0.2rem rgba(66, 74, 71, 0.25);
+  box-shadow: 0 0 0 0.2rem rgba(66, 74, 71, 0.25);
 }
 
 .form-control-sm {
@@ -1434,8 +1434,15 @@ input.input-material.is-invalid ~ label {
   margin-bottom: 30px;
 }
 
-.modal-content {
+@font-face { font-family: 'Arita-dotum-Medium'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/Arita-dotum-Medium.woff') format('woff'); font-weight: normal;  }
+div.modal h1{
+	font-family: 'Arita-dotum-Medium';
+	font-weight: bold;
+	
+}
+div.modal-body {
   border-radius: 0;
+  font-family: 'Arita-dotum-Medium';
 }
 
 /*
