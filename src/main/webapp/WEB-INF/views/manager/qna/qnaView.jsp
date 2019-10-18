@@ -165,4 +165,3 @@ $(function(){
 		  
 	
 	
-<%@ include file="../../layout/bottom.jsp"%>

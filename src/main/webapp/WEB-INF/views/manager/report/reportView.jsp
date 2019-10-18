@@ -259,4 +259,3 @@ function show(id){
 	  </div><!-- 신고Form End -->
 	  
 	  
-<%@ include file="../../layout/bottom.jsp"%>

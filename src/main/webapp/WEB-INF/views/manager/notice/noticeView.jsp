@@ -429,4 +429,3 @@
 		<input type="hidden" name="replyNum" value="">
 		<input type="hidden" name="boardTitle" value="${notice.title }">
 	</form>
-<%@ include file="../../layout/bottom.jsp"%>
