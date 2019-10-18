@@ -48,7 +48,6 @@
 <!-- font -->
 <!-- <link href="https://fonts.googleapis.com/css?family=Prompt:400,500,700" rel="stylesheet"> -->
 <!-- kakao login -->
-<<<<<<< HEAD
 <script>
 $(document).ready(function(){
 	$(document).on('mouseover', '.topMenu span', function() {
@@ -61,8 +60,6 @@ $(document).ready(function(){
 	});
 });
 </script>
-=======
->>>>>>> refs/remotes/origin/hyeji2
 <style>
 @font-face { font-family: 'GyeonggiBatang'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/GyeonggiBatang.woff') format('woff'); font-weight: normal; font-style: normal; }
 *{
@@ -85,8 +82,6 @@ $(document).ready(function(){
 	margin: 0 auto;
 	border: 1px solid none;
 }
-<<<<<<< HEAD
-=======
 .header-title{
 	display: block;
 	padding-top: 10px;
@@ -104,7 +99,6 @@ $(document).ready(function(){
 	margin-left: 15px;
 	font-size: 20px;
 }
->>>>>>> refs/remotes/origin/hyeji2
 .pagination, .page-item a {
 	color: #5C5A5C ;
 	font-weight: normal ;
@@ -123,13 +117,16 @@ $(document).ready(function(){
 </head>
 <body>
 	<header>
-		<div class='header'>
+		<div class='header-div'>
 			<div class='header-title'>
 				<h1>
 					<a href="/"><img class="header_img maintitle"
 						src="https://trello-attachments.s3.amazonaws.com/5d6613e9716d6e23f5e579bb/312x140/3f52467f9d01dd9ce0a0f28eacece66e/%EB%A1%9C%EA%B3%A0.png"
 						alt="Cinque Terre"></a>
-			<div class="container bootstrap snippet">
+				</h1>
+			</div>
+		</div>
+				<div class="container bootstrap snippet" style="text-align: center; padding-left: 3%;">
 					<div class="row">
 						<div class="col-lg-12">
 							<div class="ibox float-e-margins">
@@ -138,24 +135,21 @@ $(document).ready(function(){
 										<span class="text-navy"></span>
 									</h2>
 									<div class="search-form">
-										<form id="searchList" action="/layout/searchList" method="get">	
-											<input type="text" name="key" placeholder="검색어를 입력하세요" value="<c:out value="${param.key}"/>" />
-											<input type="hidden" name="pageNum" value="<c:out value="${pageMaker.cri.pageNum}"/>"/>
-											<input type="hidden" name="amount" value="<c:out value="${pageMaker.cri.amount}"/>"/>
-											<button class="btn btn-default">검색</button>											
+										<form id="searchList" action="/layout/searchList" method="get">
+											<input type="text" name="key" placeholder="검색어를 입력하세요"
+												value="<c:out value="${param.key}"/>" /> <input
+												type="hidden" name="pageNum"
+												value="<c:out value="${pageMaker.cri.pageNum}"/>" /> <input
+												type="hidden" name="amount"
+												value="<c:out value="${pageMaker.cri.amount}"/>" />
+											<button class="btn btn-default">검색</button>
 										</form>
-										</div>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-					
-				</h1>
-			</div>
-			<div class="header-login">
-			</div>
-		</div>
+				</div>
 		<div class="topMenu">
             <ul class="menu01">
                 <li><span>이용안내</span>
