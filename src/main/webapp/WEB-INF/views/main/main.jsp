@@ -103,6 +103,11 @@
 .div3-div{
 	max-width: 800px;
 	height: 400px;
+	
+}
+.exh-list{
+    padding-right: 20%;
+    padding-left: 20%;
 }
 </style>
 <!--  본문시작  -->
@@ -184,33 +189,41 @@
 	<img class='div1-img-pattern' src='/resources/img/pattern.jpg'> <span class="carousel-control-next-icon"></span>
 	</a>
 </div>
-</div>
-<div id="div2">
-	<h2 class='div2-title'> NOW 화랑</h2>
-	<div class="row">
-			<c:forEach items="${eList}" var="e">
-				<div class="div2-img col-sm-3">
-					<div class="card mb-3 shadow-sm">
+
+<h2 class='div2-title'style="text-align: center;" >POPULAR IN 화랑</h2>
+<div class="exh-list album py-5 bg-light">
+		<div class="row">
+				<c:forEach items="${eList}" var="e">
+				<div class="col-sm-4" style="height: 600px; margin: 0 0 20px 0;">
+					<div class="card mb-4 shadow-sm">
 						<a href="/exhibition/view?seq=${e.exh_seq}"><img
-							class="div2-img-top" alt="item image"
-							role="img" src="${e.exh_imgurl}"></a>
+							class="card-img-top" style="width: 100%; height: 400px;"
+							alt="item image" role="img" src="${e.exh_imgurl}"></a>
 					</div>
 					<div class="card-body">
-						<p class="card-title">
-							<a href="/exhibition/view?seq=${e.exh_seq}">${e.exh_title}</a>
-						<p>
-						<p class="card-text">
-							${fn:substring(e.exh_startDate, 0, 10)} ~ ${fn:substring(e.exh_endDate, 0, 10)}
+						<p class="card-title" style="font-weight: bold; font-size: 18px">
+							<a href="/exhibition/view?seq=${e.exh_seq}">${e.exh_title}</a><span class="badge badge-primary">${e.exh_realmName}</span>&nbsp;[${e.exh_recomm_cnt}]
 						</p>
-						<i class="far fa-thumbs-up" style="color: blue;"></i>&nbsp;&nbsp;<i
-							class="far fa-thumbs-down" style="color: gray;"></i>
+						
+						<p class="card-text">
+							${fn:substring(e.exh_startDate, 0, 10)} ~ ${fn:substring(e.exh_endDate, 0, 10)}<br>${e.exh_area}&nbsp;/&nbsp;${e.exh_place}
+						</p>
+						
+						<p class="card-text">
+							<i class="far fa-thumbs-up" style="color: blue;">${e.exh_like}</i>&nbsp;/&nbsp;<i class="far fa-thumbs-down" style="color: gray;">${e.exh_unlike}</i>
+							&nbsp;&nbsp;&nbsp;&nbsp;<span>즐겨찾기&nbsp;<a><i id="favStatus${e.exh_seq}" class='${e.favorite_status == 0 ? "far ":"star fas "}fa-star' data-toggle="modal" data-target='${e.favorite_status == 0 ? "#fav-AddModal":"#fav-RemoveModal"}${e.exh_seq}'></i></a></span>
+						</p>
+						<p class="card-text">
+							
+						</p>
 					</div>
 				</div>
-			</c:forEach>
-	</div>
+				</c:forEach>
+		</div>
 </div>
+
 <!-- Nav Tabs HJ -->
-<section id='div3' class="container">
+<div id="div3">
         <div class="div3-div row">
             <div class="col-md-12">
                 <ul id="tabsJustified" class="nav nav-tabs">
@@ -221,7 +234,7 @@
                 <div id="tabsJustifiedContent" class="tab-content">
                     <div id="notice" class="tab-pane fade active show" style="padding: 1.5rem; text-align: center">
                         <div class="table-responsive d-flex align-items-center">
-                        	<table class="table table-striped table-sm">
+                        	<table class="table">
                         		<thead style="text-align: center">
                         			<tr>
                         				<th>No</th>
@@ -259,7 +272,7 @@
                        	</div>
                     </div>
                     <div id="freeboard" class="tab-pane fade" style="padding: 1.5rem; text-align: center">
-                        <table class="table table-striped table-sm">
+                        <table class="table">
                         		<thead style="text-align: center">
                         			<tr>
                         				<th>No</th>
@@ -286,7 +299,7 @@
         
         
         </div>
- </section>
+ </div>
 
 
 <!--  오른쪽 사이드 바 -->

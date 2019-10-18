@@ -20,7 +20,6 @@ public class MemberService {
 	private MemberMapper membermapper;
 	@Autowired
 	private MemberAuthMapper maMapper;
-	
 	@Autowired
 	private ReviewBoardService rbservice;
 	

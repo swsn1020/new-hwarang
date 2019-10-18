@@ -11,10 +11,14 @@ ${mem }<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncod
 		text-align: center;
 	}
 </style>
+<br><br><br>
 	<div class="container">
-		<h3 style="display: inline-block;">신고게시판</h3>
-		
-		<div style="border-top: 2px solid black;"></div>
+		<div class="button-div">
+			<h3 style="float: left;">신고게시판</h3>
+			<button type="button" class="btn btn-outline-secondary btn-sm" onclick="location.href='reportWrite'" style="float: right;">신고글 작성</button>
+		</div>
+		<br>
+		<div style="border-top: 2px solid black; margin-top: 20px;"></div>
 		<table class="table table-hover">
 			<thead>
 				<tr>
@@ -67,7 +71,5 @@ ${mem }<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncod
 				</li>
 			</ul>
 		</div>
-		<div class="container" style="text-align: right;">
-		<button type="button" class="btn btn-outline-secondary btn-sm" onclick="location.href='reportWrite'">신고글 작성</button>
-		</div>
+		
 <%@ include file="../../layout/bottom.jsp"%>

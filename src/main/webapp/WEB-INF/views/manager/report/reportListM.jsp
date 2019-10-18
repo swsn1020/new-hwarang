@@ -62,13 +62,15 @@ ${mem }<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncod
 	function show(id){
 		document.getElementById(id).style.display='';
 	}
-	
 </script>
+<style>
+	
+</style>
 <div class="content-inner" style="padding-bottom: 59px;">
 	<section class="projects no-padding-top">
 		<div class="contianer-fluid">
 			<div style="width: 100%; padding-top: 50px; margin-bottom: 10px; text-align: center;">
-				<h1 style="color: #74655F"><strong>Report Status</strong></h1>
+				<h1><strong>신고게시판</strong></h1>
 			</div>
 		</div>
 		<div class="project" id="project3">
@@ -97,14 +99,14 @@ ${mem }<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncod
 							<td style="text-align: center;">${regDate }</td>
 							<c:choose>
 								<c:when test="${report.reply eq '미해결' || report.reply eq null }">
-									<td style="color: red; text-align: center;"><a data-toggle="modal" href="#replyModal" data-whatever="${report.num }" data-content="${report.content }">처리 중</a></td>
+									<td style="text-align: center;"><a data-toggle="modal" href="#replyModal" data-whatever="${report.num }" data-content="${report.content }" style="color: #57859D">처리 중</a></td>
 								</c:when>
 								<c:otherwise>
 									<td style="text-align: center;">처리 완료</td>
 								</c:otherwise>
 							</c:choose>
 							<td style="text-align: center;">
-								<span style="color: red;"><a href="#blockModal" data-toggle="modal" data-category="${report.category }"><i class="fas fa-ban fa-lg"></i></a></span>
+								<span><a href="#blockModal" data-toggle="modal" data-category="${report.category }" style="color: red;"><i class="fas fa-ban fa-lg"></i></a></span>
 							</td>
 						</tr>
 					</c:forEach>

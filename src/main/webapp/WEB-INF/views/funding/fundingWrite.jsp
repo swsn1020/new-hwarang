@@ -12,44 +12,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker3.min.css">
     <script type='text/javascript' src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.min.js"></script>
     <script src="/js/bootstrap-datepicker.kr.js" charset="UTF-8"></script>
-    
- <script type='text/javascript'>
-    $(function(){
-        $('.input-group.date').datepicker({
-            calendarWeeks: false,
-            todayHighlight: true,
-            autoclose: true,
-            format: "yyyy/mm/dd",
-            language: "kr"
-        });
-    });
-    
-    ajaxForm : function (id, func){
-        $('#'+id).ajaxForm({
-            contentType : false,
-            processData: false,
-            enctype: "multipart/form-data",
-            dataType : "POST",
-            dataType : 'json',
-            beforeSubmit: function(data, form, option) {
-                console.log('beforeSubmit');
-                console.log(data);
-                console.log(form);
-                console.log(option);
-            },
-            success: function(returnData) {
-                func(returnData);
-            },
-            error: function(x,e){
-                console.log("[aljjabaegi]ajax status : "+x.status);
-                console.log(e);
-            },
-        });
-    },
-
-
- </script>
-
+    <title>펀딩 등록게시판</title>
 <div class="row">
     <div class="col-lg-12">
         <h1 class="page-header">펀딩등록</h1>
@@ -65,15 +28,10 @@
             <!-- /.panel-heading -->
             <div class="panel-body">
             
-                <form action="/funding/register" method="post" role="form">
+                <form action="fundingWrite" method="post" role="form">
                     <div class="form-group">
                         <label>제목</label> <input type="text" class="form-control" name="funding_subject">
                     </div>
-                    <div class="form-group">
-                        <label>작성자</label>
-                        <input type="text" class="form-control" name="funding_writer">
-                    </div>
-                    
 					<div class="form-group">
                         <label>펀딩가격</label>
                         <input type="text" class="form-control" name="funding_price">
@@ -173,12 +131,6 @@
     <!-- end panel -->
 </div>
 <!-- /.row -->
-
-<!-- 이미지  -->
-  
-<form id="frm" name="frm" action="${ctx}/content/uploadContent.do" enctype="multipart/form-data" method="post">
-    <label for="file">이미지 파일 </label><input multiple="multiple" name="files[]" id="files" type="file" style="width:500px"/>
-</form>
 
 
 <%@include file="../layout/bottom.jsp"%>

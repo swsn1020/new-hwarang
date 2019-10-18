@@ -29,8 +29,26 @@ $(function(){ //전체선택 체크박스 클릭
 	});
 }) 	
 
+function removeFavorite(seq,id) {
+	var fav = {
+		exh_seq	: seq,
+		member_id : id
+	};
+	favService.remove(fav, function(result) {
+		if(result){
+			$("#favStatus"+seq).attr("class","far fa-star");
+			$("#favStatus"+seq).attr("data-target","#fav-AddModal"+seq);
+			$(".close").click();
+			location.reload();
+		}else{
+			alert("관심 삭제가 실패 되었습니다.");	
+		}
+		return false;
+	})
+};
 
 </script>
+<sec:authentication property="principal.Username" var="id" />
 <div class="container mt-3 ">
 	<form action="" method="post">
 		<select name="group">
@@ -77,9 +95,10 @@ $(function(){ //전체선택 체크박스 클릭
 								<h5 style="font-weight: bold;"><a class="nav-link" style="padding: 0px;" href="/exhibition/view?seq=${f.exh_seq}">${f.exh_title}<span class="badge badge-primary">${f.exh_realmName}</span></a></h5></li>
 							<li class="nav-item col-sm-12" id="side_item">${f.exh_place}</li>
 							<li class="nav-item col-sm-12" id="side_item">${f.exh_price}</li>
-							<li class="nav-item col-sm-12" id="side_item"><fmt:formatDate pattern="yyyy-MM-dd" value="${f.exh_startDate}" timeZone="Asia/Seoul"/> ~ <fmt:formatDate pattern="yyyy-MM-dd" value="${f.exh_endDate}" timeZone="Asia/Seoul"/></li>
+							<li class="nav-item col-sm-12" id="side_item"><fmt:formatDate pattern="yyyy-MM-dd" value="${f.exh_startDate}" timeZone="Asia/Seoul"/> ~ <fmt:formatDate pattern="yyyy-MM-dd" value="${f.exh_endDate}" timeZone="Asia/Seoul"/></li>	
 						</ul>
 							<a class="btn btn-outline-dark" style="float: right;" href="/order/orderGoodsForm?seq=${f.exh_seq}">결제</a>
+							<a class="btn btn-outline-dark" style="float: right;" onclick="removeFavorite(${f.exh_seq},'${id}')">삭제</a>
 					</td>
 				</tr>
 			</c:forEach>

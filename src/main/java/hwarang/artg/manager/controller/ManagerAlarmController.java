@@ -1,5 +1,8 @@
 package hwarang.artg.manager.controller;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
@@ -39,5 +42,19 @@ public class ManagerAlarmController {
 	public boolean removeAlarm(int num) {
 		return service.alarmRemove(num);
 	}
+
+
 	
+	@ResponseBody
+	@RequestMapping(value="/unReadCnt")
+	public int unReadCount() {
+		return service.unReadAlarmCount();
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/unReadAlarms")
+	public List<Map<String, Object>> getUnReadAlarms(){
+		return service.getFourAlarms();
+	}
+
 }

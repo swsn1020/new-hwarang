@@ -2,11 +2,13 @@ package hwarang.artg.manager.controller;
 
 import java.security.Principal;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,6 +19,8 @@ import hwarang.artg.common.model.CriteriaDTO;
 import hwarang.artg.common.model.PageDTO;
 import hwarang.artg.manager.model.BlockStatusVO;
 import hwarang.artg.manager.service.BlockStatusService;
+import hwarang.artg.member.model.MemberAuthVO;
+import hwarang.artg.member.service.MemberAuthService;
 import hwarang.artg.member.service.MemberService;
 
 @Controller
@@ -28,6 +32,8 @@ public class BlockController {
 	private PasswordEncoder pwEncoder;
 	@Autowired
 	private MemberService memService;
+	@Autowired
+	private MemberAuthService memAuthService;
 	
 	
 	@RequestMapping("/blockListForManager")
@@ -164,18 +170,44 @@ public class BlockController {
 		return "manager/result";
 	}
 	
-	@RequestMapping(value="blockMember", method=RequestMethod.POST)
+	//user 권한 없애기
+	@Transactional
+	@RequestMapping(value="/blockMember", method=RequestMethod.POST)
 	public String doBlockMember(@RequestParam("member_id")String id, Model model) {
 		String msg = id+"님의 계정차단에 실패하였습니다.";
-		String url = "/admin/memberList";
-		if(memService.doMemberStatusBlock(id)) {
-			msg = id+"님의 활동정지가 설정되었습니다.";
+		String url = "/admin/memberAuth";
+		//'ROLE_USER' 권한 제거하기
+		if(memService.memberGetOne(id) != null) {
+			//회원 아이디 있음
+			MemberAuthVO ma = new MemberAuthVO();
+			ma.setMember_id(id);
+			ma.setMember_auth("ROLE_USER");
+			System.out.println(ma);
+			if(memAuthService.memberauthRemove(ma)) {
+				if(memService.doMemberStatusBlock(id)) {
+					msg = id+"님의 활동정지가 설정되었습니다.";
+				}else {
+					// disabled 설정에 실패
+					System.out.println("활동 정지 실패(disabled실패)");
+				}
+			}else {
+				// 'ROLE_USER' 권한 빼기 실패(이미 없는 경우)
+				System.out.println("권한빼기 실패(role_user)");
+				msg = "이미 활동 정지 처리된 아이디 입니다.";
+			}
 		}else {
-			url = "history.go(-1)";
+			//해당하는 아이디 찾을수 없음
+			System.out.println("해당하는 아이디의 멤버 없음");
+			msg = "해당하는 아이디의 Member가 없습니다";
 		}
 		model.addAttribute("url", url);
 		model.addAttribute("msg", msg);
 		return "manager/result";
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="/unCheckBlocks")
+	public int getUnCheckBlocks() {
+		return service.getBlockCountNotChecked();
+	}
 }

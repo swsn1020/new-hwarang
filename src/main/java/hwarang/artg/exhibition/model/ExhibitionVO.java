@@ -1,7 +1,5 @@
 package hwarang.artg.exhibition.model;
 
-import java.util.Date;
-
 import lombok.Data;
 
 @Data

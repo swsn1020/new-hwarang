@@ -28,7 +28,7 @@
 						alert("알림 확인");
 					}
 				},
-				error: function(result){
+				error: function(){
 					alert("알람 확인 에러");
 				}
 			});
@@ -52,9 +52,10 @@
 				success: function(result){
 					if(result){
 						alert("알림 확인");
+						location.reload();
 					}
 				},
-				error: function(result){
+				error: function(){
 					alert("알람 확인 에러");
 				}
 			});
@@ -87,7 +88,7 @@
 	<section class="projects no-padding-top">
 		<div class="contianer-fluid">
 			<div style="width: 100%; padding-top: 50px; margin-bottom: 10px; text-align: center;">
-				<h1 style="color: #80425A"><strong>Alarms</strong></h1>
+				<h1><strong>알림함</strong></h1>
 			</div>
 		</div>
 		<div class="project" id="project3">

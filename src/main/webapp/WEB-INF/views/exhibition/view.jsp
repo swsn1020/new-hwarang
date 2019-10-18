@@ -20,10 +20,45 @@
 <script type="text/javascript">
 	$(function() {
 		//추천,비추천
-		$('.disabled').click(function(e) {
-			alert("구매자만 투표할 수 있습니다.");
+		$('.like').click(function(e) {
 			e.preventDefault();
-			return false;
+			if("${exh.exh_like_status}"==0){
+				alert("등록요청");
+				location.replace('/exhibition/like/add?seq=${exh.exh_seq}'); 
+			}
+			if("${exh.exh_like_status}"==1){
+				alert("추천 삭제");
+				location.replace('/exhibition/like/modify?seq=${exh.exh_seq}&status=3'); 
+			}
+			if("${exh.exh_like_status}"==2){
+				alert("이미 비추천을 누르셨습니다.");
+				return false;
+			}
+			if("${exh.exh_like_status}"==3){
+				alert("등록요청");
+				location.replace('/exhibition/like/modify?seq=${exh.exh_seq}&status=1'); 
+			}
+		});
+		
+		$('.unlike').click(function(e) {
+			e.preventDefault();
+			if("${exh.exh_like_status}"==0){
+				alert("등록요청");
+				location.replace('/exhibition/unlike/add?seq=${exh.exh_seq}'); 
+			}
+			if("${exh.exh_like_status}"==1){
+				alert("이미 추천을 누르셨습니다.");
+				return false;
+			}
+			if("${exh.exh_like_status}"==2){
+				alert("비추천 삭제");
+				location.replace('/exhibition/unlike/modify?seq=${exh.exh_seq}&status=3'); 
+			}
+			if("${exh.exh_like_status}"==3){
+				alert("등록요청");
+				location.replace('/exhibition/unlike/modify?seq=${exh.exh_seq}&status=2'); 
+			}
+			
 		});
 
 		//지도
@@ -140,6 +175,7 @@
 			}
 			
 	});
+	//관심추가로직
 	function addFavorite() {
 		var seqValue = '<c:out value="${param.seq}"/>';
 		var replyer = $('#replyer');
@@ -153,13 +189,35 @@
 		favService.add(fav, function(result) {
 			if(result){
 				alert("관심 등록 완료 되었습니다.");
+				location.reload();
 				$("#modal-close").click();
 			}else{
 				alert("관심 등록이 실패 되었습니다.");	
 			}
 		})
 	};
+	//관심삭제로직
+	function removeFavorite() {
+		var seqValue = '<c:out value="${param.seq}"/>';
+		var replyer = $('#replyer');
+		var fav = {
+			exh_seq	: seqValue,
+			member_id : replyer.val()
+		};
 
+		favService.remove(fav, function(result) {
+			if(result){
+				alert("관심 삭제가 완료 되었습니다.");
+				location.reload();
+				$(".close").click();
+			}else{
+				alert("관심 삭제가 실패 되었습니다.");	
+			}
+			return false;
+		})
+	};
+	
+	//관심그룹추가로직
 	function addFavGroup(seq) {
 		var basicGroup = $("#basic-group");
 		var addGroupVal = $("#addFavGroup").val();
@@ -211,8 +269,8 @@
 			</div>
 			<br>
 			<div style="text-align: center;">
-				<a class="btn btn-outline-dark" id="like" href="/exhibition/like/add?seq=${exh.exh_seq}" style="color: blue;">&nbsp;추천(${exh.exh_like})&nbsp;</a>
-				<a class="btn btn-outline-dark" id="unlike" href="/exhibition/unlike/add?seq=${exh.exh_seq}" style="color: gray;">비추천(${exh.exh_unlike})</a>
+				<a class="btn btn-outline-dark like" href="" style="color: blue;">&nbsp;추천(${exh.exh_like})&nbsp;</a>
+				<a class="btn btn-outline-dark unlike" href="" style="color: gray;">비추천(${exh.exh_unlike})</a>
 			</div>
 			<table class="exh-table table table-hover">
 				<tbody>
@@ -243,7 +301,8 @@
 	
 				</tbody>
 			</table>
-			<a class="btn btn-outline-dark" data-toggle="modal" data-target="#favModal">관심목록 추가</a> 
+			<c:if test="${exh.favorite_status==0}"><a class="btn btn-outline-dark" data-toggle="modal" data-target="#favModal">관심목록 추가</a></c:if>
+			<c:if test="${exh.favorite_status==1}"><a class="btn btn-outline-dark" data-toggle="modal" data-target="#fav-RemoveModal">관심목록 삭제</a></c:if>
 			<a class="btn btn-outline-dark" data-toggle="modal" data-target="#buyModal" onclick="">공연 예매</a>
 		</div>
 		<!-- 관심추가  Modal -->
@@ -279,6 +338,30 @@
 	            		<a data-dismiss="modal" id="modal-close" class="btn btn-outline-dark">취소하기</a>
 					</div>
 
+				</div>
+			</div>
+		</div>
+		<!-- 관심삭제  Modal -->
+		<div class="modal" id="fav-RemoveModal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<p class="modal-title">관심목록 삭제</p>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+					<!-- Modal body -->
+					<div class="content" >
+						<p class="info" style="margin: 10px;">
+							<strong>${exh.exh_title}</strong> (가)이 삭제됩니다. 
+							<br />정말로 삭제 하시겠습니까?
+						</p>
+					</div>
+					<!-- Modal footer -->
+					<div class="modal-footer">
+						<a class="btn btn-outline-dark" onclick="removeFavorite()">삭제하기</a>
+						<a data-dismiss="modal" class="btn btn-outline-dark">취소하기</a>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -351,8 +434,7 @@
 		<!-- 댓글 구현 부분 -->
 		<div class="exh-reply container">
 			<form action="#" id="replyForm" method="get">
-				<input type="hidden" class="alert alert-secondary" id="replyer"
-					name="member_id" value="<sec:authentication property="principal.Username"/>">
+				<input type="hidden" id="replyer" name="member_id" value="<sec:authentication property="principal.Username"/>">
 					 <input type="hidden"
 					class="alert alert-secondary" id="seq" name="exh_seq"
 					value="${exh.exh_seq}">

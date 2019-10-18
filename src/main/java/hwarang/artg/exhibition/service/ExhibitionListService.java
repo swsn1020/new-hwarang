@@ -51,6 +51,10 @@ public class ExhibitionListService implements Runnable{
 		return mapper.select(exh_seq);
 	}
 	
+	public ExhibitionVO getOneView(int exh_seq, String member_id) {
+		return mapper.selectOne(exh_seq,member_id);
+	}
+	
 	public int getTotal(CriteriaDTO cri,  ExhibitionVO exh) {
 		return mapper.getTotalCount(cri, exh);
 	}
@@ -65,6 +69,10 @@ public class ExhibitionListService implements Runnable{
 	
 	public List<String> getExhPlace() {
 		return mapper.getExhPlace();
+	}
+	
+	public boolean updateLike(int seq) {
+		return mapper.updateLike(seq)==1;
 	}
 	
 	
@@ -100,6 +108,7 @@ public class ExhibitionListService implements Runnable{
 		ExhibitionService service = new ExhibitionService();
 		
 		for (int i = 0; i < list.size(); i++) {
+			System.out.println(list.get(i));
 			mapper.insert(service.apiParserSearch(list.get(i)));
 		}
 	}

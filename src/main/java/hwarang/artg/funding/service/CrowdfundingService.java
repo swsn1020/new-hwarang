@@ -9,23 +9,53 @@ import hwarang.artg.common.model.CriteriaDTO;
 import hwarang.artg.funding.model.CrowdfundingVO;
 import hwarang.artg.mapper.CrowdfundingMapper;
 
-/*
- * »ğÀÔ : memberRegister
-¼öÁ¤ : memberModify
-»èÁ¦ :memberRemove
-°³Ã¼ÇÏ³ª¼±ÅÃ : memberGetOne
-¸ğµç°³Ã¼¼±ÅÃ : memberGetAll
-ÆäÀÌÂ¡Ã³¸®ÈÄ°³Ã¼¼±ÅÃ : memberGetListByPaging
-ºñ¹Ğ¹øÈ£ È®ÀÎ : memberCheckPw
- * */
-
-public interface CrowdfundingService {
+@Service
+public class CrowdfundingService {
 	
-	public void register(CrowdfundingVO funding);
-    public CrowdfundingVO get(int funding_num);
-    public boolean modify(CrowdfundingVO funding);
-    public boolean remove(int funding_num);
-    public List<CrowdfundingVO> getList(CriteriaDTO cri);
-    public int getTotal(CriteriaDTO cri);
-    public CrowdfundingVO payment(int funding_num);
+	@Autowired
+	private CrowdfundingMapper dao;
+	
+	public boolean noticeRegister(CrowdfundingVO funding) {
+		if(dao.insertFunding(funding)> 0) {
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean fundingModify(CrowdfundingVO funding) {
+		if(dao.updateFunding(funding) > 0) {
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean fundingRemove(int funding_num) {
+		if(dao.deleteFunding(funding_num) > 0) {
+			return true;
+		}
+		return false;
+	}
+	
+	public CrowdfundingVO fundingGetOne(int funding_num) {
+		return dao.selectFunding(funding_num);
+	}
+	
+	public List<CrowdfundingVO> fundingGetAll() {
+		return dao.selectAllFunding();
+	}
+	
+	//í˜ì´ì§• ì²˜ë¦¬í•œ list
+	public List<CrowdfundingVO> pagingList(CriteriaDTO cri){
+		return dao.getListWithPaging(cri);
+	}
+	
+	//ê²€ìƒ‰ ê¸°ëŠ¥ ì¶”ê°€
+	public int getTotalCount(CriteriaDTO cri) {
+		return dao.getTotalCount(cri);
+	}
+	
+	
+	
+
+	
 }

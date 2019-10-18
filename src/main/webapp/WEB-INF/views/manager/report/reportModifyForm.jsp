@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <title>화랑-신고게시판-수정</title>
-<%@ include file="../../layout/left.jsp" %>
+<%@ include file="../../layout/menu.jsp" %>
 <script type="text/javascript" src="/resources/js/manager/validationCheck.js"></script>
 <script type="text/javascript">
 $(function(){
@@ -64,8 +64,16 @@ function removeAll(e){
     }
 }
 </script>
+<style>
+	.container{
+		margin: 0 20% 0 20%;
+		padding-left: 50px;
+		padding-right: 50px;
+	}
+</style>
 	<div class="container">
 		<h3>신고 글 수정</h3>
+		<div style="border-top: 2px solid black;"></div>
 		<div class="form-group">
 			<form id="replyForm" action="reportModify" method="post" enctype="multipart/form-data">
 				<input type="hidden" name="num" value="${report.num }">
@@ -112,11 +120,14 @@ function removeAll(e){
 						</td>
 					</tr>
 				</table>
+				<div style="border-top: 2px solid black;"></div>
+				<br>
 				<div class="btnGroup" style="text-align: center;">
 					<input type="submit" class="btn btn-outline-primary btn-sm" value="수정">
 					<input type="button" class="btn btn-outline-info btn-sm" value="목록" onclick="location.href='reportList'">
 				</div>
 			</form>
 		</div>
+		
 	</div>
 <%@ include file="../../layout/bottom.jsp"%>

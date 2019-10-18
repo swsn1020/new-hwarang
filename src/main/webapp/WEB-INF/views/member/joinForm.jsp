@@ -1,21 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-   	<%@ include file="../layout/left.jsp" %>
+   	<%@ include file="../layout/menu.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
 <style type="text/css">
-.div{
+.join-div{
     padding: 0;
 	margin: 0 auto;
     box-sizing: border-box;
 }
-form {
-    margin-top: 0em;
-}
 </style>
 <meta charset="UTF-8">
-<title>joinForm</title>
+<title>화랑 - 회원가입</title>
 <script type="text/javascript">
 
 </script>
@@ -130,12 +127,12 @@ function joinSubmit(){
 </script>
 </head>
 <body>
-
+<div class="join-div container">
 		<div align="center">
 			<h1>회원가입</h1>
 		</div>
 
-		<div class="div" id="containers" style="width: 720px; margin: 0 auto;">
+		<div class="div" id="containers" style="width: 800px; margin: 0 auto;">
 			<form id="form" name="form" method="post" action="/member/join">
 				<table class="table">
 				<tbody>
@@ -217,14 +214,17 @@ function joinSubmit(){
 						</div>
 						</td>
 					</tr>
+					<tr align="center">
+						<td colspan="2">
+							<button type="button" onclick="javascript:joinSubmit();" class="btn btn-outline-dark">확인</button>
+							<button type="button" onclick="location.href='/member/loginForm'" class="btn btn-outline-dark">취소</button>
+						</td>
+					</tr>
 					</tbody>
 				</table>
-				<div class="form-inline" align="center"> 
-					<button type="button" onclick="javascript:joinSubmit();" class="form-control">확인</button>
-					<button type="button" onclick="location.href='/member/loginForm'" class="form-control">취소</button>
-				</div>
 			</form>
 		</div>
+</div>
 <%@ include file="../layout/bottom.jsp"%>
 </body>
 </html>

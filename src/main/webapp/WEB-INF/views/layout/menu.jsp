@@ -122,6 +122,20 @@ $('#btnSend').on('click',function(evt){
 	margin-left: 15px;
 	font-size: 20px;
 }
+.pagination, .page-item a {
+	color: #5C5A5C ;
+	font-weight: normal ;
+}
+
+.pagination li.active a{
+	color: #5C5A5C ;
+	background-color: #E1DAD2;
+	font-weight: bold;
+}
+.dropdown-item:hover {
+	background-color: #E1DAD2;
+}
+
 </style>
 </head>
 <body>
@@ -219,11 +233,17 @@ $('#btnSend').on('click',function(evt){
 							</div>
 						</li>
         				<li class="nav-item">
-        					<a class="nav-link" href="/funding/list">&nbsp;크라우드펀딩&nbsp;</a>
+        					<a class="nav-link" href="/funding/fundingList">&nbsp;크라우드펀딩&nbsp;</a>
         				</li>
 					</ul>
 				</div>
 
 			</nav>
+<<<<<<< HEAD
 		</div>
 </header>
+=======
+		</div>
+</header>
+
+>>>>>>> refs/remotes/origin/master

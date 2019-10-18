@@ -9,18 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import hwarang.artg.common.model.CriteriaDTO;
-import hwarang.artg.community.model.FreeBoardVO;
 import hwarang.artg.community.service.FreeBoardService;
-import hwarang.artg.manager.model.BlockStatusVO;
-import hwarang.artg.manager.model.FAQVO;
 import hwarang.artg.manager.model.ManagerAlarmVO;
-import hwarang.artg.manager.model.NoticeVO;
-import hwarang.artg.manager.model.QnAVO;
-import hwarang.artg.manager.model.ReportVO;
 import hwarang.artg.mapper.ManagerAlarmMapper;
-import hwarang.artg.mapper.ReportMapper;
-import hwarang.artg.rrboard.model.RecommendBoardVO;
-import hwarang.artg.rrboard.model.ReviewBoardVO;
 import hwarang.artg.rrboard.service.RecommendBoardService;
 import hwarang.artg.rrboard.service.ReviewBoardService;
 
@@ -28,7 +19,7 @@ import hwarang.artg.rrboard.service.ReviewBoardService;
 public class ManagerAlarmService {
 	@Autowired
 	private ManagerAlarmMapper dao;
-	
+
 	@Autowired
 	private QnAService qnaService;
 	@Autowired
@@ -45,6 +36,7 @@ public class ManagerAlarmService {
 	private ReviewBoardService reviewBoardService;
 	@Autowired
 	private RecommendBoardService recommBoardService;
+
 	
 	
 	public boolean alarmRegister(ManagerAlarmVO alarm) {
@@ -165,9 +157,12 @@ public class ManagerAlarmService {
 		String subCategory = originCategory.substring((originCategory.indexOf("_")+1));
 		if(subCategory.equals("Reply")) {
 			subCategory = "댓글";
-		}else {
+		}else if(subCategory.equals("Board")) {
 			subCategory = "게시글";
+		}else {
+			subCategory = "회원";
 		}
+		
 		int boardNum = alarm.getBoardNum();
 		
 		switch(category) {
@@ -203,6 +198,9 @@ public class ManagerAlarmService {
 			category = "후기게시판";
 			alMap.put("url", "/review/view?num="+boardNum);
 			break;
+		default :
+			alMap.put("url", "/admin/memberList");
+			
 		}
 		alMap.put("category", category);
 		alMap.put("subCategory", subCategory);

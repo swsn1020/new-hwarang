@@ -2,40 +2,43 @@
     pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ include file="../layout/left.jsp" %>
+<%@ include file="../layout/menu.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>recommendboardFrom</title>
-<script type="text/javascript">
-
-</script>
+<title>화랑 - 홍보</title>
+<style type="text/css">
+.recommend-div{
+	margin: 0 20% 0 20%;
+}
+</style>
 </head>
 <body>
-		<div align="center">
-			<h1>추천 게시판</h1>
-		</div>
-		<div class="table-responsive">
+<div class="recommend-div container">
+		<div>
+			<h3 style="font-weight: bold;">홍보 게시판</h3>
 		 	<%-- <sec:authentication property="principal.username" var="id"/> --%>
 			<sec:authorize access="hasRole('ROLE_USER')">			
-				<button onclick="location.href='/recommend/write'" class="btn btn-link">Write</button>		 	
+				<button onclick="location.href='/recommend/write'" class="btn btn-outline-dark btn-sm">글쓰기</button>		 	
 			</sec:authorize>
+		</div>
+		<div class="table-responsive" style="margin-top: 10px;">
 			<table class="table table-hover">
 				<thead>
-					<tr>
-						<th>No</th>
-						<th>Title</th>
-						<th>Writer</th>
-						<th>Date</th>
-						<th>Count</th>
+					<tr style="border-top: 2px solid black;">
+						<th>번호</th>
+						<th>제목</th>
+						<th>작성자</th>
+						<th>입력일</th>
+						<th>조회수</th>
 					</tr>
 				</thead>
 				<tbody>
 					<c:forEach items="${recommendList}" var="recomm">
-						<tr align="center">
+						<tr>
 							<td>${recomm.recomm_num}</td>
-							<td><a href="view?num=${recomm.recomm_num}">${recomm.recomm_title}</a>
+							<td style="width: 50%;"><a href="view?num=${recomm.recomm_num}">${recomm.recomm_title}</a>
 								<c:if test="${recomm.reply_count != 0}">
 									<span class="badge">${recomm.reply_count }</span>
 								</c:if>
@@ -48,8 +51,8 @@
 				</tbody>
 			</table>
 		</div>
-		<div style="text-align: center;">
-				<form id="searchForm" action="/recommend/recommendboard" method="get">
+		<div style="text-align: center; border-top: 2px solid black;">
+				<form id="searchForm" action="/recommend/recommendboard" method="get" style="margin-top: 10px;">
 					<select name="type">
 						<option value="" 
 							<c:out value="${pageMaker.cri.type eq null ? 'selected' : ''}"/>>검색
@@ -77,17 +80,17 @@
 					<%-- <c:out value="${pageMaker.cri.pageNum }"/> --%>
 					
 					<input type="hidden" name="amount" value="<c:out value="${pageMaker.cri.amount }"/>">
-					<button class="btn btn-primary">검색</button>
+					<button class="btn btn-outline-dark btn-sm">검색</button>
 				</form>
 		</div> 
 		<%-- 네비게이션 표시 --%>
-		<div class="container" align="center">
+		<div class="container" align="center" style="margin-top: 10px;">
 			<ul class="pagination justify-content-center">
 				<li class='${pageMaker.prev == true ? "page-item ":"page-item disabled"}'>
 					<a class="page-link" href="recommendboard?pageNum=${pageMaker.startPage-1}&type=${param.type}&keyword=${param.keyword}">이전</a>
 				</li>
 				<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
-					<li class='${pageMaker.cri.pageNum == num ? "page-item":"page-item active"}'>
+					<li class='${pageMaker.cri.pageNum == num ? "active":"page-item"}'>
 						<a class="page-link" href="recommendboard?pageNum=${num}&type=${param.type}&keyword=${param.keyword}">${num}</a>
 					</li>
 				</c:forEach>
@@ -96,6 +99,7 @@
 				</li>
 			</ul>
 		</div>
+</div>
 <%@ include file="../layout/bottom.jsp"%>
 
 </body>

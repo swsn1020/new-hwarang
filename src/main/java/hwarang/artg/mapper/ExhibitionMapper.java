@@ -10,6 +10,7 @@ import hwarang.artg.exhibition.model.ExhibitionVO;
 public interface ExhibitionMapper {
 	public int insert(ExhibitionVO exh);
 	public int update(ExhibitionVO exh);
+	public int updateLike(int exh_seq);
 	public int delete(int exh_seq);
 	public ExhibitionVO select(int exh_seq);
 	public ExhibitionVO selectOne(@Param("exh_seq") int exh_seq,  @Param("member_id") String member_id);
