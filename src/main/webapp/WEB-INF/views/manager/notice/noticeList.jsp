@@ -106,4 +106,3 @@ $(function(){
 		</ul>
 	</div>
 </div>
-<%@ include file="../../layout/bottom.jsp"%>

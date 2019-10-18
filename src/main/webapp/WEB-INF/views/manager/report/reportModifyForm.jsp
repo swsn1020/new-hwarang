@@ -130,4 +130,3 @@ function removeAll(e){
 		</div>
 		
 	</div>
-<%@ include file="../../layout/bottom.jsp"%>

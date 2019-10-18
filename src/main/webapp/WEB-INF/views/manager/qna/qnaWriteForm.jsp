@@ -122,4 +122,3 @@ function removeAll(e){
 			</form>
 		</div>
 	</div>
-<%@ include file="../../layout/bottom.jsp"%>
