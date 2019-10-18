@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hwarang.artg.mapper.FreeBoardLikeMapper">
+<insert id="insert" parameterType="hwarang.artg.mapper.FreeBoardLikeMapper">
+		 insert into free_like (member_id,free_num ,free_like_status ,free_likedate )
+		 values(#{member_id},#{free_num},#{free_like_status}, sysdate + 9/24)
+
+</insert>
+<delete id="delete">
+		delete free_like where exh_seq = #{exh_seq} and member_id = #{member_id}
+</delete>
+
+<update id="update">
+		update free_like set free_like_status = #{free_like_status} where free_num = #{free_num} and member_id = #{member_id}
+</update>
+</mapper>  

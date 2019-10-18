@@ -31,5 +31,5 @@ public class ExhibitionVO {
 	private int exh_recomm_cnt;
 	private int exh_like;
 	private int exh_unlike;
-	private int exh_like_status;
+	private int exh_like_status;	
 }

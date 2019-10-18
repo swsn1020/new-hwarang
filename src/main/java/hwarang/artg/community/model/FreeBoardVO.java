@@ -21,6 +21,7 @@ public class FreeBoardVO {
 	private int readCount;
 	private int recommCount;
 	private int disrecommCount;
+	private int free_like_status;
 	private int replyCount;
 //	private int boardNum;
 	
@@ -42,6 +43,12 @@ public class FreeBoardVO {
 		this.userid = userid;
 		this.title = title;
 		this.content = content;
+	}	
+	public int getFree_like_status() {
+		return free_like_status;
+	}
+	public void setFree_like_status(int free_like_status) {
+		this.free_like_status = free_like_status;
 	}
 	public int getNum() {
 		return num;
