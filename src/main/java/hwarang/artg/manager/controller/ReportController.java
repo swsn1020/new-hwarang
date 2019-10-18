@@ -2,16 +2,15 @@ package hwarang.artg.manager.controller;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.security.Principal;
-import java.util.Collection;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -220,6 +219,7 @@ public class ReportController {
 		System.out.println("파일uuid : "+uuid);
 		return service.getAttachment(uuid);
 	}
+	
 	
 	@ResponseBody
 	@RequestMapping(value="/fileDelete", method=RequestMethod.POST)

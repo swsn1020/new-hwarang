@@ -42,10 +42,13 @@
 						<td colspan="4">${block.content }<br><br></td>
 					</tr>
 					<tr>
-						<td colspan="5">
-							<hr style="border-color: #939A9F; border-width: 2px; margin-top: 20px;">
+						<td colspan="5" style="text-align: center;">
+							<a href="#" data-toggle="collapse" data-target="#blocked"><i class="fas fa-chevron-down fa-2x"></i></a>
 						</td>
 					</tr>
+					</table>
+					<div class="collapse" id="blocked">
+					<table class="table">
 					<tr>
 						<th>신고 대상 ID</th>
 						<td colspan="2">${block.blockMemId }</td>
@@ -77,6 +80,7 @@
 						</c:choose>
 					</tr>
 				</table>
+				</div>
 				<!-- 답변 등록 Form -->
 				<div id="replyForm" class="form-group collapse">
 					<form action="replyModify" method="post" style="text-align: center;">

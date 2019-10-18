@@ -264,7 +264,7 @@ $(function(){
 	                  </a>
 	                </li>
 	                 <li>
-	                  <a href="/alarm/alarmList">Alarm Status<span class="badge badge-pill badge-success alCnt"></span></a>
+	                  <a href="/alarm/alarmList">Alarm Box<span class="badge badge-pill badge-success alCnt"></span></a>
 	                </li>
 	              </ul>
 	            </div>

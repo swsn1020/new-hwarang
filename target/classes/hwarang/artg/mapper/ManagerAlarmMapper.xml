@@ -27,9 +27,10 @@
 	</select>
 	<!-- 5개 불러오기 -->
 	<select id="selectFourAlarms" resultMap="aMap">
-		SELECT * FROM MANAGER_ALARM
-		WHERE AL_CHECKED = 'N' AND rownum between 1 and 4
-		ORDER BY AL_NUM desc
+		SELECT * 
+		FROM (SELECT * FROM MANAGER_ALARM WHERE AL_CHECKED = 'N'
+			  ORDER BY AL_NUM DESC)
+		WHERE rownum between 1 and 4
 	</select>
 	
 	<sql id="criteriaDTO">

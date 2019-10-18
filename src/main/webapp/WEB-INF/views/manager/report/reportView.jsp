@@ -37,6 +37,14 @@ $(function(){
 		});
 	});
 	
+// 	$(".img").on("click", function(){
+// 		var imgSrc = $(this).data("src");
+// 		alert(imgSrc);
+// 		imgSrc = 'file://C:\IMAGE\Report\'
+// 		var img = $("#imgModal").find("img[name='img']");
+// 		img.attr("src", "file:C:/IMAGE/Report/"+imgSrc);
+// 	})
+	
 });
 
 function getOriginFileName(fullName){
@@ -249,5 +257,6 @@ function show(id){
 	      </div>
 	    </div>
 	  </div><!-- 신고Form End -->
+	  
 	  
 <%@ include file="../../layout/bottom.jsp"%>
