@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <title>게시글목록</title>
 <%@ include file="../layout/menu.jsp" %>
+<%@include file="../layout/rightUser.jsp"%>
 	<div class="container">
 	<h3>자유게시판</h3>
 	<div id="table-responsive">
@@ -10,6 +11,7 @@
 		<button type ="button" class="btn btn-outline-secondary" onclick="location.href='register'">게시글 등록</button>
 		</sec:authorize>
 		</div>
+		<div style="border-top: 2px solid black;"></div>		
 		<table class="table table-hover">
 			<tr>
 				<th>번호</th>
@@ -51,9 +53,7 @@
 								<option value="TCW"
 									<c:out value="${pageMaker.cri.type eq 'TCW'?'selected': ''}"/>>제목+내용+작성자</option>										
 								</select>
-							<input type="text" name="keyword" placeholder="검색어를 입력하세요"
-								value="<c:out value="${pageMaker.cri.keyword}"/>"/>
-							
+							<input type="text" name="keyword" placeholder="검색어를 입력하세요" value="<c:out value="${pageMaker.cri.keyword}"/>"/>							
 							<input type="hidden" name="pageNum" value='<c:out value="${pageMaker.cri.pageNum}"/>'/>
 							<input type="hidden" name="amount" value='<c:out value="${pageMaker.cri.amount}"/>'/>
 							<button class="btn btn-default">검색</button>
@@ -61,6 +61,8 @@
 					</td>
 				</tr>
 		</table>	
+		<div style="border-top: 2px solid black;"></div>	
+		<br>			
 		</div>
 			<ul class="pagination justify-content-center">
 			<li class='${pageMaker.prev == true ? "page-item ":"page-item disabled"}'><a class="page-link" href="freeboard?pageNum=${pageMaker.startPage -1}&type=${param.type}&keyword=${param.keyword}">이전</a></li>

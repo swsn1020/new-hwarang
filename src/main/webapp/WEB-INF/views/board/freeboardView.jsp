@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <title>Insert title here</title>
 <%@ include file="../layout/menu.jsp" %>
-
+<%@include file="../layout/rightUser.jsp"%>
 <script type="text/javascript">
 //let
 let gBno = '${fboard.num}',
@@ -9,6 +9,51 @@ let gBno = '${fboard.num}',
 	gRno = 0,
 	gReplytext = null;
 $(function() {	//문서가 로딩되면 실행할 함수
+	
+	//추천,비추천
+	$('.like').click(function(e) {
+		e.preventDefault();
+		if("${fboard.free_like_status}"==0){
+			alert("등록요청");
+			location.replace('/board/like/add?num=${fboard.num}'); 
+		}
+		if("${fboard.free_like_status}"==1){
+			alert("추천 삭제");
+			location.replace('/board/like/modify?num=${fboard.num}&status=3'); 
+		}
+		if("${fboard.free_like_status}"==2){
+			alert("이미 비추천을 누르셨습니다.");
+			return false;
+		}
+		if("${fboard.free_like_status}"==3){
+			alert("등록요청");
+			location.replace('/board/like/modify?num=${fboard.num}&status=1'); 
+		}
+	});
+	
+	$('.unlike').click(function(e) {
+		e.preventDefault();
+		if("${fboard.free_like_status}"==0){
+			alert("등록요청");
+			location.replace('/board/unlike/add?num=${fboard.num}'); 
+		}
+		if("${fboard.free_like_status}"==1){
+			alert("이미 추천을 누르셨습니다.");
+			return false;
+		}
+		if("${fboard.free_like_status}"==2){
+			alert("비추천 삭제");
+			location.replace('/fboard/unlike/modify?seq=${fboard.num}&status=3'); 
+		}
+		if("${fboard.free_like_status}"==3){
+			alert("등록요청");
+			location.replace('/fboard/unlike/modify?seq=${fboard.num}&status=2'); 
+		}
+		
+	});
+	
+	
+	
 		/*댓글 목록 그리기 */
 	replyList(1);
 	$("#btnRegister").on("click",function(){
@@ -38,7 +83,7 @@ $(function() {	//문서가 로딩되면 실행할 함수
 // 						alert(replyer.val());
 // 						alert(gBoardWriter);
 // 						alert(gBno);
-						alert("socket 등록 완료");
+// 						alert("socket 등록 완료");
 						
 					}else{
 						alert("socket 등록 실패")
@@ -176,8 +221,7 @@ function replyList(num){
 				var modiBtn = $("<button type='button' class='btn btn-link btn-sm' data-toggle='collapse' data-target='#modi"+i+"'> 수정 </a>");
 				var delBtn = $("<button type='button' class='btn btn-link btn-sm' data-toggle='collapse' data-target='#del"+i+"'> 삭제 </a>");
 				//신고버튼
-				var blockBtn = $("<button type='button' class='btn btn-link btn-sm' style='color: red;'> 신고 </button>");
-				
+				var blockBtn = $("<button type='button' class='btn btn-link btn-sm' style='color: red;'> 신고 </button>");			
 				tr.append($("<td style='width: 200px;''>").append(modiBtn).append(delBtn).append(blockBtn));
 				//disabled 설정하기
 				
@@ -186,17 +230,18 @@ function replyList(num){
 				}
 				
 				var currId = table.closest("div").find("input[name='currId']").val();
-//					alert(currId);
+// 					alert(currId);
 				if(currId != data.replyTable[i].userid){
 					console.log("아이디 일치하지 않음");
 					modiBtn.css("display", "none");
 					delBtn.css("display", "none");
+					blockBtn.css("display", "true");
 				}else{
 					console.log("아이디 일치");
 					modiBtn.css("display", "true");
 					delBtn.css("display", "true");
+					blockBtn.css("display", "none");
 				}
-
 				
 				modiBtn.on("click", function(){
 					var delBtn = $(this).next();
@@ -226,7 +271,7 @@ function replyList(num){
 						success:function(result){
 							if(result){
 								alert("수정완료");
-								replyList();
+								replyList(num);
 							}else{
 								alert("수정실패");
 							}	
@@ -245,7 +290,7 @@ function replyList(num){
 					success: function(result){
 						if(result){
 							alert("삭제완료");
-							replyList();
+							replyList(num);
 						}else{
 							alert("삭제실패");
 						}
@@ -322,14 +367,18 @@ $('#btnSend').on('click',function(evt){
 </script>
 	<fmt:formatDate value="${fboard.regDate }" var="regDate" pattern="yyyy-MM-dd"/>
 		<div class="container">
-				<input type="button" class="btn btn-primary" value="목록" onclick="location.href='freeboard'">
+				<input type="button" class="btn btn-outline-secondary" value="목록" onclick="location.href='freeboard'">
 				<input type="hidden" value="<sec:authentication property="principal.Username" var="id"/>">
 				<c:if test="${id eq fboard.userid}">			
-					<input type="button" class="btn btn-primary" value="수정" onclick="location.href='modify?num=${fboard.num }'"> 
-					<input type="button" class="btn btn-primary" value="삭제" onclick="location.href='remove?num=${fboard.num }'"> 
-					<input type="button" class="btn btn-primary" value="새글쓰기" onclick="location.href='register'">
+					<input type="button"class="btn btn-outline-secondary" value="수정" onclick="location.href='modify?num=${fboard.num }'"> 
+					<input type="button" class="btn btn-outline-secondary" value="삭제" onclick="location.href='remove?num=${fboard.num }'"> 
+					<input type="button" class="btn btn-outline-secondary" value="새글쓰기" onclick="location.href='register'">
 				</c:if>
 				<button id="btn-block" class="btn btn-outline-danger btn-sm">신고</button>
+			<div style="text-align: center;">
+				<a class="btn btn-outline-dark like" href="" style="color: blue;">&nbsp;추천(${fboard.recommCount})&nbsp;</a>
+				<a class="btn btn-outline-dark unlike" href="" style="color: gray;">비추천(${fboard.disrecommCount})</a>
+			</div>
 	<div class="table-responsive">
 		<table class="table">
 			<tr>
@@ -399,10 +448,10 @@ $('#btnSend').on('click',function(evt){
 	<div class="container">
 		<ul class="pagination justify-content-center">
 			<li id="left" class="page-item disabled">
-				<a class="page-link" href="javascript:replyList(1)">&laquo;</a>
+				<a class="page-link" href="javascript:replyList(1))">&laquo;</a>
 			</li>
 			<c:forEach var="num" begin="${rPager.blockBegin }" end="${rPager.totalPage}">
-				<li class='${rPager.curPage == num ? "active" : "page-item"}'>
+				<li class='${rPager.curPage == num ? "page-item active" : "page-item"}'>
 					<a class="page-link" href="javascript:replyList(${num})">[${num}]</a>
 				</li>
 			</c:forEach>
@@ -428,7 +477,7 @@ $('#btnSend').on('click',function(evt){
 					<th>내용</th>
 					<td><textarea rows="3" cols="30" name="content"></textarea></td>
 					<td>
-						<button class="btn btn-primary" id="btnRegister" >등록</button>
+						<button class="btn btn-outline-secondary" id="btnRegister" >등록</button>
 					</td>
 				</tr>
 			</table>

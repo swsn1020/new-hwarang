@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import hwarang.artg.common.model.CriteriaDTO;
 import hwarang.artg.manager.model.FAQVO;
-import hwarang.artg.manager.model.NoticeVO;
 import hwarang.artg.mapper.FAQMapper;
 
 @Service

@@ -4,21 +4,16 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.OutputStream;
 import java.security.Principal;
-import java.util.Collection;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -50,7 +45,7 @@ public class QnAController {
 	
 	@RequestMapping("/qnaListForManager")
 	public String showQnAList(CriteriaDTO cri, Model model, Principal principal) {
-		System.out.println("qnaListForManager요청");
+//		System.out.println("qnaListForManager요청");
 		
 		String id = principal.getName();
 		List<String> auths = memAuthService.memberAuthsById(id);
@@ -73,7 +68,7 @@ public class QnAController {
 	
 	@RequestMapping("/qnaListForUser")
 	public String showQnAListForUser(CriteriaDTO cri, String memId, Model model) {
-		System.out.println("qnaListForUser요청");
+//		System.out.println("qnaListForUser요청");
 		PageDTO page = new PageDTO(cri, service.getTotalCount(memId));
 		model.addAttribute("pageMaker", page);
 		model.addAttribute("qnaList", service.pagingList(cri, memId));
@@ -88,7 +83,7 @@ public class QnAController {
 	
 	@RequestMapping(value="/qnaWrite", method=RequestMethod.POST)
 	public String doQnARegister(QnAVO QnA, String subCategory, Model model, MultipartHttpServletRequest request) {
-		System.out.println("qnaWrite 요청");
+//		System.out.println("qnaWrite 요청");
 		String category = QnA.getCategory();
 		QnA.setCategory(category+"_"+subCategory);
 		String msg = "QnA 등록에 실패하였습니다. 다시 시도하세요";
@@ -96,11 +91,11 @@ public class QnAController {
 		List<MultipartFile> fileList = request.getFiles("file");
 		if(service.qnaRegister(QnA, fileList)) {
 			//질문 등록 성공(파일도)
-			System.out.println("QnA 등록성공");
+//			System.out.println("QnA 등록성공");
 			msg = "QnA가 등록되었습니다.";
 		}else {
 			//질문 등록 실패
-			System.out.println("QnA 등록실패");
+//			System.out.println("QnA 등록실패");
 			url = "qnaWrite";
 		}
 		model.addAttribute("msg", msg);
@@ -110,11 +105,11 @@ public class QnAController {
 	
 	@RequestMapping("/qnaView")
 	public String showQnAView(int num, Model model, Principal principal) {
-		System.out.println("View 요청 들어옴");
+//		System.out.println("View 요청 들어옴");
 		String writer = service.qnaGetOne(num).getMemId();
 		String id = principal.getName();
 		List<String> auths = memAuthService.memberAuthsById(id);
-		System.out.println("현재로그인한 아이디:"+id);
+//		System.out.println("현재로그인한 아이디:"+id);
 		if(writer.equals(id)||auths.contains("ROLE_ADMIN") || auths.contains("ROLE_MANAGER")) {
 			model.addAttribute("qna", service.qnaGetOne(num));
 			model.addAttribute("qnaImgList", imgService.qnaImgGetByQNum(num));
@@ -147,10 +142,10 @@ public class QnAController {
 //		System.out.println(fileList.get(0).getOriginalFilename());
 //		System.out.println("Controller"+fileList.get(0));
 		if(service.qnaModify(QnA, fileList)) {
-			System.out.println("QnA 수정성공");
+//			System.out.println("QnA 수정성공");
 			msg = "QnA가 수정되었습니다.";
 		}else {
-			System.out.println("QnA 수정 실패");
+//			System.out.println("QnA 수정 실패");
 			url = "qnaModify?num="+qnaNum;
 		}
 		model.addAttribute("msg", msg);
@@ -176,7 +171,7 @@ public class QnAController {
 	
 	@RequestMapping(value="/checkPw", method=RequestMethod.POST)
 	public String doCheckPw(int num, String type, String password, Principal principal, Model model) {
-		System.out.println("checkPw요청들어옴 "+type);
+//		System.out.println("checkPw요청들어옴 "+type);
 		String id = principal.getName();
 		String msg = "";
 		String url = "qnaListForUser?memId="+id;
@@ -189,22 +184,22 @@ public class QnAController {
 				// 삭제요청
 				if(service.qnaRemove(num)) {
 					//삭제 성공(파일 삭제) >> 이동할 화면
-					System.out.println("QnA삭제 성공");
+//					System.out.println("QnA삭제 성공");
 					msg = "QnA가 삭제되었습니다";
 				}else {
 					//삭제실패
 					url = "qnaView?num="+num;
 					msg = "QnA삭제에 실패하였습니다.";
-					System.out.println("QnA삭제 실패");
+//					System.out.println("QnA삭제 실패");
 				}
 			}else if(type.equals("modify")) {
 				//수정요청 (수정폼 불러오기)
-				System.out.println("수정요청");
+//				System.out.println("수정요청");
 				return "redirect:qnaModify?num="+num;
 			}
 		}else {
 			//비밀번호 불일치
-			System.out.println("비밀번호가 틀렸습니다.");
+//			System.out.println("비밀번호가 틀렸습니다.");
 			msg = "비밀번호를 다시 확인하세요.";
 			url = "qnaView?num="+num;
 		}
@@ -243,7 +238,7 @@ public class QnAController {
 	//파일 다운로드
 	@RequestMapping("/download")
 	public View download(String uuid) {
-		System.out.println("파일uuid : "+uuid);
+//		System.out.println("파일uuid : "+uuid);
 		return service.getAttachment(uuid);
 	}
 	

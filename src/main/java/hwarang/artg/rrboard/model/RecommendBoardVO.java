@@ -1,7 +1,11 @@
 package hwarang.artg.rrboard.model;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 import hwarang.artg.rrboard.model.RecommendImgVO;
 

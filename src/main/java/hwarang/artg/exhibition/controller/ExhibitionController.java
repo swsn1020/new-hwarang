@@ -34,6 +34,8 @@ import hwarang.artg.exhibition.service.ExhibitionListService;
 import hwarang.artg.exhibition.service.FavoriteMarkService;
 import hwarang.artg.exhibition.service.NaverBlogService;
 import hwarang.artg.exhibition.service.RecentlyViewService;
+import hwarang.artg.rrboard.model.ReviewBoardVO;
+import hwarang.artg.rrboard.service.ReviewBoardService;
 
 @Controller
 @RequestMapping("/exhibition")
@@ -48,6 +50,8 @@ public class ExhibitionController {
 	NaverBlogService blogservice;
 	@Autowired
 	ExhibitionLikeService lService;
+	@Autowired
+	ReviewBoardService reviewService;
 	//공연리스트 불러오기
 	@GetMapping("")
 	public String exhibitionShow(Model model, CriteriaDTO cri, ExhibitionVO exh) throws Exception {

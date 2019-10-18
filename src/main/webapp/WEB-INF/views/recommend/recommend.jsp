@@ -3,6 +3,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ include file="../layout/menu.jsp" %>
+<%@include file="../layout/rightUser.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -227,6 +228,7 @@
 				});
 
 	};
+	
 </script>
 </head>
 <body>
@@ -252,17 +254,17 @@
 							pattern="yyyy-MM-dd" /></td>
 				</tr>
 				<tr>
-					<td colspan="5">
+					<td colspan="5" align="center">
 					<c:choose>
 						<c:when test="${empty imgs }">
 							<p>첨부된 파일이 없습니다.</p>
 						</c:when>
 						<c:otherwise> 
 							<c:forEach items="${imgs }" var="img" varStatus="vs">
-							<div>
+							<div class='col-sm-4'>
 								<img onerror="this.style.display='none'" alt='' style='max-width: 100%; height: auto;' src="downloadThumb?uuid=${img.recomm_uuid}">
-								<a href="download?uuid=${img.recomm_uuid}">${img.recomm_filename }</a>
-					            <br><br>
+								<label><a href="download?uuid=${img.recomm_uuid}">${img.recomm_filename }</a></label>
+					            <br>
 							</div>
 						    </c:forEach>
 						</c:otherwise>

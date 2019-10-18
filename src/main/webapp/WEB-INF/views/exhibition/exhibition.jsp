@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <title>화랑 - 전시회/공연 리스트</title>
 <%@include file="../layout/menu.jsp"%>
+<%@include file="../layout/rightUser.jsp"%>
 <script type="text/javascript">
 $(function() {
 	//없는페이지막는로직

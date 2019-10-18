@@ -47,7 +47,11 @@ $(function(){
 		});
 		$("#show-sidebar").click(function() {
 			$(".page-wrapper").addClass("toggled");
+<<<<<<< HEAD
 		});
+=======
+		});
+>>>>>>> refs/remotes/origin/hyeji2
 		
 		//차단 개수 가져오기
 		$.ajax({
@@ -83,7 +87,7 @@ $(function(){
 			type: "get",
 			dataType: "json",
 			success: function(data){
-				console.log("data: "+data);
+// 				console.log("data: "+data);
 				for(var i in data){
 					var url = data[i].url;
 					var category = data[i].category;
@@ -95,29 +99,37 @@ $(function(){
 					var li = "<li id='notification-item'><a href='"+url+"' class='link dropdown-item' data-num='"+num+"'><div class='notification'><div class='notification-content'><i class='fa fa-envelope bg-violet'></i>"+msg+"</div></div></a></li>";
 					$("#alarmlist").append(li);
 				}
+				var li = "<li id='notification-item'><a href='/alarm/alarmList' class='dropdown-item'><div class='notification'><div class='notification-content'><i class='fa fa-inbox bg-orange'></i>Alarm Box</div></div></a></li>";
+				$("#alarmlist").append(li);
 			},
 			error: function(){
 				alert("알람리스트 불러오기 ajax 에러");
 			}
+<<<<<<< HEAD
 		});
 		
 		//알람 붙이기
 
 		
+=======
+		});
+>>>>>>> refs/remotes/origin/hyeji2
 	}); //onload() End
 	
 	var sock;
 	var stompClient;
 	function connect(){
-		console.log("연결됨.");
+// 		console.log("연결됨.");
 		sock = new SockJS("/chat");
 		stompClient = Stomp.over(sock);
 		stompClient.connect({}, function(){
 			stompClient.subscribe("/category/msg/id1", function(message){
-				console.log("message: "+JSON.stringify(message));
-				console.log("message: "+message.body);
+// 				console.log("message: "+JSON.stringify(message));
+// 				console.log("message: "+message.body);
 				addMsg(JSON.parse(message.body));
 // 				alert(message.body);
+				$("#alarmModal").find("p[id='content']").text("새로운 알람이 도착하였습니다.");
+				$("#alarmModal").modal('show');
 			});
 		})
 	}
@@ -126,16 +138,22 @@ $(function(){
 		var unReadCnt = Number($("#alCnt").text());
 		unReadCnt += 1;
 // 		alert("안읽은 알람갯수: "+unReadCnt);
-		$("#alCnt").text(unReadCnt);
 		var url = message.url;
 		var category = message.category;
 		var subCategory = message.subCategory;
 		var num = message.alarm.num;
 // 		alert(boardNum);
 		var msg = "새로운 "+category+"_"+subCategory+"이 등록되었습니다.";
+		var blinky = 0;
+		$("#alCnt").text(unReadCnt);
+		$(".alCnt").text(unReadCnt);
+		
+		blinky = setInterval(function(){
+			$(".blinky").toggle();
+		}, 300);
 // 		alert(msg);
-		var li = "<li id='notification-item'><a href='"+url+"' class='link dropdown-item' data-num='"+num+"'><div class='notification'><div class='notification-content'><i class='fa fa-envelope bg-violet'></i>"+msg+"</div></div></a></li>";
-		$("#alarmlist").append(li);
+		var li = "<li id='notification-item'><a href='"+url+"' class='link dropdown-item' data-num='"+num+"' style='background-color: #DADCE1;'><div class='notification'><div class='notification-content'><i class='fa fa-envelope bg-violet'></i>"+msg+"</div></div></a></li>";
+		$("#alarmlist").prepend(li);
 		
 		$(".link").on("click", function(){
 			$.ajax({
@@ -153,9 +171,26 @@ $(function(){
 			});
 		});
 		
+		$("#notifications").on("click", function(){
+			clearInterval(blinky);
+			$(".blinky").show();
+		});
+		
 	}
 	
 </script>
+<style>
+.modal {
+   position: absolute;
+   top: 10px;
+   right: 100px;
+   bottom: 0;
+   left: 0;
+   z-index: 10040;
+   overflow: auto;
+   overflow-y: auto;
+}
+</style>
 </head>
 <body>
 <div class="page-wrapper chiller-theme toggled">
@@ -181,20 +216,9 @@ $(function(){
               <!-- Navbar Menu -->
               <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
                 <!-- Notifications-->
-<<<<<<< HEAD
-<<<<<<< HEAD
-                <li class="nav-item dropdown"> <a id="notifications" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-bell-o fa-lg"></i><span class="badge badge-danger badge-corner" id="alCnt"></span></a>
-=======
-=======
->>>>>>> refs/remotes/origin/geun2
-
-                <li class="nav-item dropdown"> <a id="notifications" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-bell-o fa-lg"></i><span class="badge bg-red badge-corner">${alarmCnt}</span></a>
-                  <ul aria-labelledby="notifications" class="dropdown-menu">
-
-                <li class="nav-item dropdown"> <a id="notifications" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-bell-o fa-lg"></i><span class="badge bg-red badge-corner" id="alCnt"></span></a>
->>>>>>> refs/remotes/origin/geun2
+                <li class="nav-item dropdown"> <a id="notifications" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-bell-o fa-lg"></i><span class="badge badge-danger badge-corner blinky" id="alCnt"></span></a>
                   <ul id="alarmlist" aria-labelledby="notifications" class="dropdown-menu">
-
+                  	<!-- 
                     <li id="notification-item">
                     	<a rel="nofollow" href="/alarm/alarmList" class="dropdown-item"> 
 	                        <div class="notification">
@@ -202,17 +226,7 @@ $(function(){
 	                        </div>
                         </a>
                     </li>
-
-                    <c:forEach items="${alarmList}" var="alarm">
-                    	<li>
-	                    	<a rel="nofollow" href="${alarm.url }" class="dropdown-item"> 
-		                        <div class="notification">
-		                          <div class="notification-content"><i class="fa fa-twitter bg-blue"></i>${alarm.category }&nbsp;${alarm.subCategory }이 등록되었습니다.</div>
-		                          <div class="notification-time"><small></small></div>
-		                        </div>
-	                        </a>
-                        </li>
-                    </c:forEach>
+                     -->
                   </ul>
                 </li>
                 <!-- Logout    -->
@@ -277,7 +291,7 @@ $(function(){
 	                  </a>
 	                </li>
 	                 <li>
-	                  <a href="/alarm/alarmList">Alarm Status<span class="badge badge-pill badge-success alCnt"></span></a>
+	                  <a href="/alarm/alarmList">Alarm Box<span class="badge badge-pill badge-success alCnt"></span></a>
 	                </li>
 	              </ul>
 	            </div>
@@ -338,3 +352,24 @@ $(function(){
 	    </div>
 	    <!-- sidebar-content  -->
 	  </nav>
+	  
+	  <!-- The Modal -->
+	  <div class="modal fade bottom" id="alarmModal" tabindex="-1" role="dialog" data-backdrop="true" aria-hidden="true">
+	    <div class="modal-dialog" role="document">
+	      <div class="modal-content">
+	        <!-- Modal Header -->
+	        <div class="modal-header">
+	          <h3 class="modal-title w-100">NEW</h3>
+	          <button type="button" class="close" data-dismiss="modal">&times;</button>
+	        </div>
+	        <!-- Modal body -->
+	        <div class="modal-body" style="text-align: center;">
+	          	<p id="content"></p>
+	        </div>
+	        <!-- Modal footer -->
+	        <div class="modal-footer">
+	          <button type="button" class="btn btn-outline-dark btn-sm" data-dismiss="modal">확인</button>
+	        </div>
+	      </div>
+	    </div>
+	  </div>

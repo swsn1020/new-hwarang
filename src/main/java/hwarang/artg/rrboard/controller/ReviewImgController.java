@@ -19,7 +19,7 @@ import hwarang.artg.rrboard.service.ReviewImgService;
 public class ReviewImgController {
 //이미지 게시글안에 출력하기
 
-	private static final String FILE_PATH = "d://temp/";
+	private static final String FILE_PATH = "c://image//review";
 	
 	@ResponseBody
 	@RequestMapping("/image")

@@ -18,5 +18,5 @@ public interface ManagerAlarmMapper {
 	public List<ManagerAlarmVO> selectFourAlarms();
 	//pagingList
 	public List<ManagerAlarmVO> getListWithPaging(CriteriaDTO cri);
-	public int getTotalCount();
+	public int getTotalCount(CriteriaDTO cri);
 }

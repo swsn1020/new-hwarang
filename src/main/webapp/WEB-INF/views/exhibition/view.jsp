@@ -5,6 +5,7 @@
 <script type="text/javascript" src="/resources/js/mention.js"></script>
 <link rel="stylesheet" type="text/css" href="/resources/css/movie.all.css">
 <%@ include file="../layout/menu.jsp"%>
+<%@include file="../layout/rightUser.jsp"%>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -572,6 +573,7 @@ function addFavGroup(seq) {
 				</table>
 		      </div>
 		    </div>
+<<<<<<< HEAD
 		    <div id="menu2" class="container tab-pane fade"><br>
 		      <!-- 한줄평 구현 부분 -->
 		      <h3>구매평</h3>
@@ -597,6 +599,11 @@ function addFavGroup(seq) {
 				 </div>				 
 			  <ul class="list-group list-group-flush col-sm-10" id="mention"></ul>	 
 			  <div class="mention-footer"></div>     
+=======
+		     <div id="menu2" class="container tab-pane fade"><br>
+		      <h3>Menu 2</h3>
+		      <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+>>>>>>> refs/remotes/origin/hyeji2
 		    </div>
 		  </div>
 		</div>
@@ -619,7 +626,14 @@ function addFavGroup(seq) {
 			<ul class="list-group list-group-flush col-sm-10" id="chat"></ul>
 		</div>
 
-
+		<!-- 신고pop에 보낼 내용 -->
+		<form id="blockForm" name="blockForm" method="post">
+			<input type="hidden" name="blockMemId" value="">
+			<input type="hidden" name="category" value="">
+			<input type="hidden" name="boardNum" value="${notice.num }">
+			<input type="hidden" name="replyNum" value="">
+			<input type="hidden" name="boardTitle" value="${notice.title }">
+		</form>
 	</div>
 </div>
 <%@include file="../layout/bottom.jsp"%>

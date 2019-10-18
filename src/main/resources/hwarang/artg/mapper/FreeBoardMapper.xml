@@ -24,11 +24,16 @@ select * from free_board where member_id = #{userid}
 <select id="selectRecentFree" resultMap="freeboardMap">
 		SELECT * 
 		  FROM ( SELECT * FROM free_board order by free_regdate desc)
-	  	 WHERE rownum between 1 and 7
+	  	 WHERE rownum between 1 and 5
 </select>
 <select id="selectOne" parameterType="int" resultMap="freeboardMap">
-select * from free_board where free_num = #{num}
+select free_num ,member_id,free_title,free_content,free_regdate, free_updatedate,free_readcnt,
+	(select count(*)from free_like where free_num = #{num} and free_like_status = 1)free_recomm_cnt,
+	(select count(*)from free_like where free_num = #{num} and free_like_status = 2)free_disrecomm_cnt
+from free_board where free_num = #{num}
+
 </select>
+
 <select id="selectAll" resultMap="freeboardMap">
 select * from free_board order by free_num desc
 </select>
@@ -87,6 +92,14 @@ update free_board
 <update id="updateBlock">
 	UPDATE FREE_BOARD SET BLOCK = #{block} WHERE free_num = #{num}
 </update>
+
+	<update id="updateLike">
+	
+	update free_board 
+		set free_recomm_cnt = (select count(*)from free_like where free_num =#{num} and free_like_status =1), 
+			free_disrecomm_cnt = (select count(*) from free_like where free_num=#{num} and free_like_status =2) 
+				where free_num =#{num}
+	</update>
 
 
 <resultMap id="freeboardMap" type="hwarang.artg.community.model.FreeBoardVO">

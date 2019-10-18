@@ -24,6 +24,11 @@ $(function(){
 		}
 	}
 </script>
+<style>
+	th, td {
+		text-align : center;
+	}
+</style>
 <div class="content-inner" style="padding-bottom: 59px;">
 	<section class="projects no-padding-top">
 		<div class="contianer-fluid">
@@ -55,11 +60,11 @@ $(function(){
 						<thead>
 							<tr>
 								<th style="width: 10%;">No</th>
-								<th>ID</th>
-								<th>NAME</th>
-								<th>REGISTER DATE</th>
+								<th style="width: 15%;">ID</th>
+								<th style="width: 10%;">NAME</th>
+								<th style="width: 20%;">REGISTER DATE</th>
 								<th style="width: 10%;">BLOCK COUNT</th>
-								<th>STATUS</th>
+								<th style="width: 10%;">STATUS</th>
 								<th>EDIT</th>
 							</tr>
 						</thead>
@@ -136,6 +141,7 @@ $(function(){
 						</tbody>
 					</table>
 				</div>
+				<hr style="border-color: #29201E; border-width: 2px; margin-top: 20px;">
 				<ul class="pagination justify-content-center">
 					<li class='${ pageMaker.prev == true ? "page-item" : "page-item disabled" }'>
 						<a class="page-link" href="memberAuth?pageNum=${pageMaker.startPage-1 }&type=${param.type}&keyword=${param.keyword}">&laquo;</a>

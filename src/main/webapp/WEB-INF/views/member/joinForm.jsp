@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
    	<%@ include file="../layout/menu.jsp" %>
+   	<%@include file="../layout/rightUser.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,7 +36,7 @@
 						$("#inputId").focus();
 						$("#inputId").val("");
 					}else if(data==no){
-						$("#msgId").text("");							
+						$("#msgId").text("");					
 					}
 				},
 				error:function(request, error){
@@ -123,7 +124,36 @@ function joinSubmit(){
 	document.form.action = "/member/join";
 	document.form.submit();
 }
-
+function noSpaceForm(obj) { // 공백사용못하게
+    var str_space = /\s/;  // 공백체크
+    if(str_space.exec(obj.value)) { //공백 체크
+    	$("#msgId").text("공백을 사용할 수 없습니다.\n공백은 자동적으로 제거 됩니다.");
+        obj.focus();
+        obj.value = obj.value.replace(' ',''); // 공백제거
+        return false;
+    }
+    var re = /[~!@\#$%^&*\()\-=+_']/gi; 
+    if(re.test(obj.value))
+    {
+    	$("#msgId").text("특수문자을 사용할 수 없습니다.\n특수문자는 자동적으로 제거 됩니다.");
+    	obj.value = obj.value.replace(re,"");
+    	return false;
+    }
+ // onkeyup="noSpaceForm(this);" onchange="noSpaceForm(this);"
+}
+function noSpacePw(obj){
+	var str_space = /\s/;  // 공백체크
+    if(str_space.exec(obj.value)) { //공백 체크
+    	$("#msgPw").text("공백을 사용할 수 없습니다.\n공백은 자동적으로 제거 됩니다.");
+        obj.focus();
+        obj.value = obj.value.replace(' ',''); // 공백제거
+        return false;
+    }
+    $("#msgPw").text("");
+}
+//이름 한글과 영문만 체크
+//휴대폰 한글넣는지 체크
+//이메일 형식 체크
 </script>
 </head>
 <body>
@@ -140,7 +170,7 @@ function joinSubmit(){
 						<th>아이디</th>
 						<td>
 							<div class="form-inline" id="dataId">
-								<input type="text" id="inputId" class="form-control" name="id" style="width: 40%;">
+								<input type="text" id="inputId" noNameCheck(obj) class="form-control" name="id" style="width: 40%;">
 								<!-- 아이디 중복 확인 -->
 							</div>
 							<small><span id="msgId"></span></small>
@@ -149,14 +179,16 @@ function joinSubmit(){
 					<tr>
 						<th>비밀번호</th>
 						<td>
-							<input type="password" id="inputPw" class="form-control" name="password" style="width: 40%;">
+							<input type="password" id="inputPw" onkeyup="noSpacePw(this);" onchange="noSpacePw(this);" class="form-control" name="password" style="width: 40%;">
 							<!-- 비밀번호 확인 -->
+							<small><span id="msgPw"></span></small>
 						</td>
 					</tr>
 					<tr>
 						<th>이름</th>
 						<td>
-							<input type="text"  class="form-control"  name="name" style="width: 40%;">
+							<input type="text" class="form-control"  name="name" style="width: 40%;">
+							<small><span id="msgName"></span></small>
 						</td>
 					</tr>
 					<tr>
@@ -168,7 +200,7 @@ function joinSubmit(){
 						</td>
 					</tr>
 					<tr>
-						<th>휴대전화번호</th>
+						<th>휴대폰</th>
 						<td>
 						<div class="form-inline">
 							<select class="form-control" name="tel1" title="010" style="width: 20%;">
