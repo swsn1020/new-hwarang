@@ -39,6 +39,7 @@ var mentionService = (function() {
 			}
 		});
 	}
+
 	//한줄평 삭제 로직
 	function remove(mention_no, callback, error) {
 		$.ajax({
@@ -89,17 +90,6 @@ var mentionService = (function() {
 		});
 	}
 
-	function getMentionStatus(seq, callback, error) {
-		$.getJSON("/exhMention/isEntered/"+seq+".json", function(data) {
-			if(callback){
-				callback(data);
-			}
-		}).fail(function(xhr, status, err) {
-			if(error){
-				error();
-			}
-		});
-	}
 	function displayTime(timeValue) {
 		var today = new Date();
 		var gap = today.getTime() - timeValue;

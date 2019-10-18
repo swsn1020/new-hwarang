@@ -28,9 +28,8 @@
 	<select id="selectListBySeq" resultType="hwarang.artg.exhibition.model.ExhibitionMentionVO" >
 	<![CDATA[
 		select mention_no,exh_seq,member_id,mention_content,mention_score,mention_regdate
-		from(select /*+INDEX_DESC(m index_mention_no) */ rownum rn,  mention_no,exh_seq,member_id,mention_content,mention_score,mention_regdate
-		from(select mention_no, exh_seq,member_id,mention_content,mention_score,mention_regdate from exhibition_mention m where exh_seq = #{exh_seq} )
-		where rownum <= #{cri.pageNum} * #{cri.amount}) where rn > (#{cri.pageNum} -1) * #{cri.amount}	
+		from(select /*+INDEX_DESC(m index_mention_no) */ rownum rn,  mention_no,exh_seq,member_id,mention_content,mention_score,mention_regdate  from exhibition_mention m where exh_seq = #{exh_seq} 
+		and rownum <= #{cri.pageNum} * #{cri.amount}) where rn > (#{cri.pageNum} -1) * #{cri.amount}	
 	]]>
 	</select>
 
@@ -38,7 +37,7 @@
 		select count(*) from exhibition_mention where exh_seq = #{exh_seq}
 	</select>
 	
-	<select id="getMentionStatus">
+	<select id="getMentionStatus" resultType="int">
 		select count(*) from exhibition_mention where exh_seq=#{exh_seq} and member_id= #{member_id}
 	</select>
 </mapper>

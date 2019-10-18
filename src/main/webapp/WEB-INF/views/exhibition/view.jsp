@@ -175,41 +175,44 @@
 				replyUL.html(str);
 			});
 		}
-		
+	
 		//구매평 부분
 		var mentionUL = $("#mention");
 		var mentionForm = $("#mentionForm");
 		showMentionList(1);
 		//구매평 추가로직
+		
 		$("#addMention").on("click", function(e) {
-
-// 			mentionService.getMentionStatus(seqValue,function(status) {
-// 				alert(status);
-// 			})		
-			if (!$('#mention_content').val()) {
-				alert("구매평 내용을 입력해 주세요");
-				return false;
-			};
-
-			var mention = {
-				mention_content : $('#mention_content').val(),
-				mention_score : $('#mention_score').val(),
-				member_id : replyer.val(),
-				exh_seq : seqValue
-			};
 			e.preventDefault();
-
-			mentionService.add(mention, function(result) {	
-				if(result){	
-					alert("구매평 입력이 완료되었습니다.");					
-				}else{
-					alert("구매평 입력에 실패하였습니다.");	
-				}
-				mentionForm.find("textarea").val("");
-				showMentionList(1);
+			getMentionStatus({exh_seq : seqValue},function(status) {
+				if(status>0){
+					alert("이미 구매평을 등록하셨습니다");
+					return false;
+				};
+				if (!$('#mention_content').val()) {
+					alert("구매평 내용을 입력해 주세요");
+					return false;
+				};
+				var mention = {
+					mention_content : $('#mention_content').val(),
+					mention_score : $('#mention_score').val(),
+					member_id : replyer.val(),
+					exh_seq : seqValue
+				};
+				e.preventDefault();
+	
+				mentionService.add(mention, function(result) {	
+					if(result){	
+						alert("구매평 입력이 완료되었습니다.");					
+					}else{
+						alert("구매평 입력에 실패하였습니다.");	
+					}
+					mentionForm.find("textarea").val("");
+					showMentionList(1);
+				})		
 			})
 		});	
-		
+
 		//구매평 삭제로직
 		$("#mention").on("click", ".mentionDelete", function(e) {
 			var mention_no = $(this).closest("li").data("mno");
@@ -254,7 +257,8 @@
 				mentionUL.html(str);
 				showMentionPage(mentionCnt);
 			});
-		}		
+		}	
+
 		//구매평 페이징 처리
 	    var pageNum = 1;
 	    var mentionPageFooter = $(".mention-footer");
@@ -279,17 +283,12 @@
 	      
 	      if(prev){
 	        str+= "<li class='page-item'><a class='page-link' href='"+(startNum -1)+"'>Previous</a></li>";
-	      }
+	      }  
 	      
-	       
-	      
-	      for(var i = startNum ; i <= endNum; i++){
-	        
-	        var active = pageNum == i? "active":"";
-	        
+	      for(var i = startNum ; i <= endNum; i++){        
+	        var active = pageNum == i? "active":"";	        
 	        str+= "<li class='page-item "+active+" '><a class='page-link' href='"+i+"'>"+i+"</a></li>";
-	      }
-	      
+	      }      
 	      if(next){
 	        str+= "<li class='page-item'><a class='page-link' href='"+(endNum + 1)+"'>Next</a></li>";
 	      }
@@ -308,6 +307,19 @@
 	      });   
 		
 	});
+function getMentionStatus(param, callback, error) {
+	console.log("번호 가져오는중");
+	var exh_seq = param.exh_seq;
+	$.getJSON("/exhMention/isEntered/"+exh_seq+".json", function(data) {
+		if(callback){
+			callback(data);
+		}
+	}).fail(function(xhr, status, err) {
+		if(error){
+			error();
+		}
+	});
+}
 //관심추가로직
 function addFavorite() {
 	var seqValue = '<c:out value="${param.seq}"/>';
@@ -584,7 +596,7 @@ function addFavGroup(seq) {
 					</form>
 				 </div>				 
 			  <ul class="list-group list-group-flush col-sm-10" id="mention"></ul>	 
-			  <div class="mention-footer">d</div>     
+			  <div class="mention-footer"></div>     
 		    </div>
 		  </div>
 		</div>

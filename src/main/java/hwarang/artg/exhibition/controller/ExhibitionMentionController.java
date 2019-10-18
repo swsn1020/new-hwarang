@@ -56,7 +56,7 @@ public class ExhibitionMentionController {
 		vo.setMention_no(mention_no);
 		return service.update(vo) == true ? new ResponseEntity<>("success", HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);	
 	}
-	@RequestMapping(value = "/isEntered/{exh_seq}")
+	@GetMapping(value = "/isEntered/{exh_seq}", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
 	public int isEntered(@PathVariable("exh_seq") int exh_seq, Principal principal){
 		System.out.println("isEntered"+exh_seq);
 		String member_id = principal.getName();
