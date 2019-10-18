@@ -431,40 +431,42 @@ public class MemberController {
 		}
 	}
 	@RequestMapping("/deleteForm")
-	public String showDeleteForm() {	
+	public String showDeleteForm(Principal principal,Model model) {
+		String id = principal.getName();
+		model.addAttribute("id", id);
 		return "/member/deleteForm";
 	}
 	@RequestMapping("/delete")
-	public String showDelete(Model model,String member_id,String snsId,HttpSession session) {
+	public String showDelete(Model model,String member_id,String password,String snsId,HttpSession session) {
 		//네이버 회원
 		if(member_id.equals("네이버 간편 로그인")) {
 			service.memberRemove(snsId);
-			model.addAttribute("url", "https://nid.naver.com/user2/help/externalAuth.nhn?lang=ko_KR");
+			session.invalidate();
+			model.addAttribute("url", "/logout");
 			model.addAttribute("msg", "탈퇴되셨습니다. 네이버 정책상 계정 정보에서 간편 로그인 삭제를 진행해주셔야 완전한 탈퇴가 됩니다.");
 			return "/member/result";
 		//카카오톡 회원
 		}else if(member_id.equals("카카오톡 간편 로그인")) {
 			service.memberRemove(snsId);
+			session.invalidate();
 			String access_token = (String) session.getAttribute("access_token");
 			kservice.delete(access_token);
-			//카카오톡 api로 탈퇴
-			model.addAttribute("url", "/index");
+			model.addAttribute("url", "/logout");
 			model.addAttribute("msg", "탈퇴되셨습니다.");
-			//session 제거
 			return "/member/result";
 		//일반 회원
 		}else { 
-			service.memberRemove(member_id);			
-			model.addAttribute("url", "/index");
+			session.invalidate();
+			service.memberRemove(member_id);	
+			model.addAttribute("url", "/logout");
 			model.addAttribute("msg", "탈퇴되셨습니다.");
 			return "/member/result";
 		}
 
 	}
-	
+	//화랑안내 페이지
+	@RequestMapping("/about")
+	public String showAboutArtGround() {
+		return "/member/aboutArtGround";
+	}
 }
-
-
-
-
-

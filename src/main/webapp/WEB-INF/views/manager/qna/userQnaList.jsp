@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <title>화랑-마이페이지-문의내역</title>
 <%@ include file="../../layout/menu.jsp" %>
+<%@include file="../../layout/rightUser.jsp"%>
 <style>
 	.container{
 		margin: 0 20% 0 20%;

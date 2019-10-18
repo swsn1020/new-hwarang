@@ -24,7 +24,7 @@ import hwarang.artg.rrboard.model.ReviewImgVO;
 @Service
 public class ReviewBoardService {
 	//파일 저장할 경로
-	private static final String UPLOAD_PATH = "c:\\image";
+	private static final String UPLOAD_PATH = "C:\\IMAGE\\review";
 	@Autowired
 	private ReviewBoardMapper rbmapper;
 	@Autowired
@@ -32,6 +32,10 @@ public class ReviewBoardService {
 	@Autowired
 	private ReviewReplyMapper rrmapper;
 	
+	//관람자 후기
+	public List<ReviewBoardVO> selectExhReview(String exh_name){
+		return rbmapper.selectExhReview(exh_name);
+	}
 	
 	//paging
 	
@@ -100,7 +104,7 @@ public class ReviewBoardService {
 		//파일 등록 요청
 		public boolean reviewimgRegister(ReviewBoardVO rb,List<MultipartFile> fileList) {
 			if(rbmapper.insertReview_Board(rb) > 0) {
-				if(fileList.size() <= 1) {
+				if(fileList.get(0).getOriginalFilename().equals("")) {
 					System.out.println("파일 선택하지 않음");
 					return true;
 				}else {
@@ -157,8 +161,7 @@ public class ReviewBoardService {
 	//게시글안에 첨부파일 리스트와 같이 작성하기
 	public boolean reviewboardRegister_files(ReviewBoardVO rb, List<MultipartFile> fileList) {
 		if(rbmapper.insertReview_Board(rb) > 0) {
-			if(fileList.size() <= 1) {
-				System.out.println(fileList.size());
+			if(fileList.get(0).getOriginalFilename().equals("")) {
 				System.out.println("파일선택하지 않음");
 				return true;
 			}else {

@@ -24,7 +24,7 @@ select * from free_board where member_id = #{userid}
 <select id="selectRecentFree" resultMap="freeboardMap">
 		SELECT * 
 		  FROM ( SELECT * FROM free_board order by free_regdate desc)
-	  	 WHERE rownum between 1 and 7
+	  	 WHERE rownum between 1 and 5
 </select>
 <select id="selectOne" parameterType="int" resultMap="freeboardMap">
 select * from free_board where free_num = #{num}

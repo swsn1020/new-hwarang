@@ -3,6 +3,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ include file="../layout/menu.jsp" %>
+<%@include file="../layout/rightUser.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -47,8 +48,9 @@ th {
 										<span class="badge badge-secondary">${review.reply_count }</span>
 									</c:if>
 								</dt>
-								<dd style="width:100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin: 0;">
-									<p>${review.review_content}</p><br><br>
+								<dd>
+									<p style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;width:100%; overflow: hidden; text-overflow: ellipsis; margin: 0;">
+									${review.review_content}<p>
 									<!-- 댓글수 -->
 									<div style="text-align: right;">
 										${review.member_id}&nbsp;&nbsp;

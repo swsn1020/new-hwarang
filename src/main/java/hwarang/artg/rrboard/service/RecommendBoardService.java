@@ -27,7 +27,7 @@ import hwarang.artg.rrboard.model.ReviewImgVO;
 @Service
 public class RecommendBoardService {
 	//파일 저장할 경로
-	private static final String UPLOAD_PATH="c:\\image";
+	private static final String UPLOAD_PATH="C:\\IMAGE\\recommend";
 	@Autowired
 	private RecommendBoardMapper rbmapper;
 	@Autowired
@@ -100,7 +100,7 @@ public class RecommendBoardService {
 	//파일 등록 요청
 	public boolean recommimgRegister(RecommendBoardVO rb,List<MultipartFile> fileList) {
 		if(rbmapper.insertRecommend_Board(rb) > 0) {
-			if(fileList.size() <= 1) {
+			if(fileList.get(0).getOriginalFilename().equals("")) {
 				System.out.println("파일 선택하지 않음");
 				return true;
 			}else {
@@ -157,7 +157,7 @@ public class RecommendBoardService {
 	//게시글안에 첨부파일 리스트와 같이 작성하기
 	public boolean recommboardRegister_files(RecommendBoardVO rb, List<MultipartFile> fileList) {
 		if(rbmapper.insertRecommend_Board(rb) > 0) {
-			if(fileList.size() <= 1) {
+			if(fileList.get(0).getOriginalFilename().equals("")) {
 				System.out.println(fileList.size());
 				System.out.println("파일선택하지 않음");
 				return true;

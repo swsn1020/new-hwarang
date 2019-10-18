@@ -37,7 +37,7 @@
 	<select id="selectRecentNotices" resultMap="nMap">
 		SELECT * 
 		  FROM ( SELECT * FROM NOTICE_BOARD order by NOTICE_REG_DATE desc)
-	  	 WHERE rownum between 1 and 7
+	  	 WHERE rownum between 1 and 5
 	</select>
 	
 	

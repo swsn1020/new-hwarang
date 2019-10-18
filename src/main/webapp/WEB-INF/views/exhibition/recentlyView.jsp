@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <title>화랑 - 최근본공연</title>
 <%@include file="../layout/menu.jsp"%>
+<%@include file="../layout/rightUser.jsp"%>
 <script type="text/javascript">
 $(function(){ //전체선택 체크박스 클릭
 	$("#allCheck").click(function(){ 

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <title>자유게시판 게시물 등록</title>
 <%@ include file="../layout/left.jsp" %>
+<%@include file="../layout/rightUser.jsp"%>
 	<div class="container">
 		<h4>게시글 등록</h4>
 		<div class="form-group">

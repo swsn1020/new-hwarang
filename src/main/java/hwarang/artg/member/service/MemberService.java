@@ -20,8 +20,6 @@ public class MemberService {
 	private MemberMapper membermapper;
 	@Autowired
 	private MemberAuthMapper maMapper;
-	@Autowired
-	private ReviewBoardService rbservice;
 	
 	public MemberVO memberFindId(String member_name) {
 		return membermapper.selectMember_name(member_name);
@@ -51,6 +49,8 @@ public class MemberService {
 	}
 	public boolean memberRemove(String id) {
 		if(membermapper.deleteMember(id) > 0) {
+			MemberAuthVO auth = maMapper.selectMember_Auth(id);
+			maMapper.deleteMember_Auth(auth);
 			return true;
 		}
 		return false;

@@ -25,7 +25,7 @@
 	<select id="selectRecentFAQs" resultMap="FAQMap">
 		SELECT * 
 		  FROM ( SELECT * FROM FAQ order by FAQ_REG_DATE desc)
-	  	 WHERE rownum between 1 and 7
+	  	 WHERE rownum between 1 and 5
 	</select>
 	
 	<sql id="criteriaDTO">

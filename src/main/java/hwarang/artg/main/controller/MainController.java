@@ -14,6 +14,8 @@ import hwarang.artg.community.service.FreeBoardService;
 import hwarang.artg.exhibition.service.ExhibitionListService;
 import hwarang.artg.manager.service.FAQService;
 import hwarang.artg.manager.service.NoticeService;
+import hwarang.artg.rrboard.model.ReviewBoardVO;
+import hwarang.artg.rrboard.service.ReviewBoardService;
 
 @Controller
 public class MainController {
@@ -25,6 +27,8 @@ public class MainController {
 	FreeBoardService freeservice;
 	@Autowired
 	FAQService faqService;
+	@Autowired
+	ReviewBoardService reviewService;
 
 	@GetMapping("/")
 	public String exhibitionShow(Model model) throws Exception {
@@ -33,6 +37,7 @@ public class MainController {
 		model.addAttribute("noticeList", noticeService.noticeRecentAll());
 		model.addAttribute("faqList", faqService.fagRecentAll());
 		model.addAttribute("freeList", freeservice.selectRecentFree());
+		model.addAttribute("review", reviewService.reviewboardGetAll());
 		return "/main/main";
 	}
 	

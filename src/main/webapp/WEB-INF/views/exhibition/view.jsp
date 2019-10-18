@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ include file="../layout/menu.jsp"%>
+<%@include file="../layout/rightUser.jsp"%>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -425,7 +426,7 @@
 				</table>
 		      </div>
 		    </div>
-		    <div id="menu2" class="container tab-pane fade"><br>
+		     <div id="menu2" class="container tab-pane fade"><br>
 		      <h3>Menu 2</h3>
 		      <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
 		    </div>
