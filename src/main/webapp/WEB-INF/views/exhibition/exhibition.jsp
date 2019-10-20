@@ -120,7 +120,7 @@ function addFavGroup(seq) {
 <div class="exh-list album py-5 bg-light">
 	<div class="row">
 		<c:forEach items="${eList}" var="e">
-			<div class="col-sm-3" style="height: 600px; margin: 0 0 20px 0;">
+			<div class="col-sm-3" style="height: 650px; margin: 0 0 20px 0;">
 				<div class="card mb-3 shadow-sm">
 					<a href="/exhibition/view?seq=${e.exh_seq}"><img
 						class="card-img-top" style="width: 100%; height: 400px;"
@@ -132,7 +132,10 @@ function addFavGroup(seq) {
 					</p>
 					
 					<p class="card-text">
-						${fn:substring(e.exh_startDate, 0, 10)} ~ ${fn:substring(e.exh_endDate, 0, 10)}<br>${e.exh_area}&nbsp;/&nbsp;${e.exh_place}
+						${fn:substring(e.exh_startDate, 0, 10)} ~ ${fn:substring(e.exh_endDate, 0, 10)}<br>${e.exh_area}&nbsp;/&nbsp;${e.exh_place}<br>가격&nbsp;:&nbsp;${e.exh_value}
+					</p>
+					<p class="card-text">
+						
 					</p>
 					
 					<p class="card-text">

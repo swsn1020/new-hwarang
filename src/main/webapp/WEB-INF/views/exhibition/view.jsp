@@ -26,7 +26,6 @@
 		$('.like').click(function(e) {
 			e.preventDefault();
 			if("${exh.exh_like_status}"==0){
-				alert("등록요청");
 				location.replace('/exhibition/like/add?seq=${exh.exh_seq}'); 
 			}
 			if("${exh.exh_like_status}"==1){
@@ -38,7 +37,6 @@
 				return false;
 			}
 			if("${exh.exh_like_status}"==3){
-				alert("등록요청");
 				location.replace('/exhibition/like/modify?seq=${exh.exh_seq}&status=1'); 
 			}
 		});
@@ -46,7 +44,6 @@
 		$('.unlike').click(function(e) {
 			e.preventDefault();
 			if("${exh.exh_like_status}"==0){
-				alert("등록요청");
 				location.replace('/exhibition/unlike/add?seq=${exh.exh_seq}'); 
 			}
 			if("${exh.exh_like_status}"==1){
@@ -58,7 +55,6 @@
 				location.replace('/exhibition/unlike/modify?seq=${exh.exh_seq}&status=3'); 
 			}
 			if("${exh.exh_like_status}"==3){
-				alert("등록요청");
 				location.replace('/exhibition/unlike/modify?seq=${exh.exh_seq}&status=2'); 
 			}
 			
@@ -138,7 +134,6 @@
 		$("#chat").on("click", ".replyDelete", function(e) {
 			var reply_num = $(this).closest("li").data("rno");
  			replyService.remove(reply_num, function(result) {
-				alert(result);
 				showList(1);
 			}); 
 			e.preventDefault();
@@ -152,7 +147,6 @@
 			var reply_num = $(this).closest("li").data("rno");
 			var reply ={reply_num : reply_num, reply_content : $(this).prev().val()};
 			replyService.update(reply, function(result) {
-				alert(result);
 				showList(1);
 			})
 			e.preventDefault();
@@ -218,7 +212,6 @@
 		$("#mention").on("click", ".mentionDelete", function(e) {
 			var mention_no = $(this).closest("li").data("mno");
 			mentionService.remove(mention_no, function(result) {
-				alert(result);
 				showMentionList(1);
 			}); 
 			e.preventDefault();
@@ -232,7 +225,6 @@
 			var mention_no = $(this).closest("li").data("mno");
 			var mention ={mention_no : mention_no, mention_content : $(this).prev().val()};
 			mentionService.update(mention, function(result) {
-				alert(result);
 				showMentionList(1);
 			})
 			e.preventDefault();

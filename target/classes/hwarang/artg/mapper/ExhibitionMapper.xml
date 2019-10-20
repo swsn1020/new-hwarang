@@ -33,9 +33,9 @@
 	<sql id="sortcri">
 		<if test='cri.sort ==null or cri.sort.equals("0")'>/*+INDEX_DESC(h index_exh_seq) */</if>
 		<if test='cri.sort !=null and cri.sort.equals("1")'>/*+INDEX_ASC(h index_exh_area) */</if>
-		<if test='cri.sort !=null and cri.sort.equals("2")'>/*+INDEX_ASC(h index_exh_value) */</if>  
+		<if test='cri.sort !=null and cri.sort.equals("2")'>/*+INDEX_ASC(h index_exh_realmName) */</if>  
 		<if test='cri.sort !=null and cri.sort.equals("3")'>/*+INDEX_DESC(h index_exh_value) */</if>  
-		<if test='cri.sort !=null and cri.sort.equals("4")'>/*+INDEX_ASC(h index_exh_startDate) */</if> 
+		<if test='cri.sort !=null and cri.sort.equals("4")'>/*+INDEX_ASC(h index_exh_value) */</if> 
 		<if test='cri.sort !=null and cri.sort.equals("5")'>/*+INDEX_DESC(h index_exh_startDate) */</if>  
 		<if test='cri.sort !=null and cri.sort.equals("6")'>/*+INDEX_ASC(h index_exh_startDate) */</if> 
 		<if test='cri.sort !=null and cri.sort.equals("7")'>/*+INDEX_DESC(h index_exh_enddate) */</if>  
