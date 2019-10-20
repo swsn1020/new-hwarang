@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,7 +27,8 @@ public class ExhibitionReplyController {
 
 	@Setter(onMethod_= {@Autowired})
 	private ExhibitionReplyService service;
-	
+
+	@PreAuthorize("isAuthenticated()")
 	@PostMapping(value ="/new", consumes = "application/json", produces = {MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<String> create(@RequestBody ExhibitionReplyVO vo){
 		System.out.println("통신받음");
@@ -45,11 +47,13 @@ public class ExhibitionReplyController {
 		return new ResponseEntity<>(service.get(reply_num), HttpStatus.OK);		
 	}
 	
+	@PreAuthorize("isAuthenticated()")
 	@DeleteMapping(value = "/{reply_num}", produces = {MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<String> remove(@PathVariable("reply_num") int reply_num){
 		return service.remove(reply_num)== true ? new ResponseEntity<>("success", HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);		
 	}
 	
+	@PreAuthorize("principal.username == #vo.member_id")
 	@RequestMapping(value = "/{reply_num}", method = {RequestMethod.PUT, RequestMethod.PATCH},consumes = "application/json", produces = {MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<String> modify(@PathVariable("reply_num") int reply_num, @RequestBody ExhibitionReplyVO vo){
 		vo.setReply_num(reply_num);

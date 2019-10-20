@@ -276,8 +276,12 @@
                         			<fmt:formatDate value="${notice.regDate }" var="regDate" pattern="yyyy-MM-dd"/>
                         			<tr>
                         				<td style="text-align: center">${vs.index+1}</td>
+<<<<<<< HEAD
                         				<td><a href="/notice/noticeView?num=${notice.num}">${notice.title }</a></td>
 
+=======
+                        				<td><a href="/notice/noticeView?num=${notice.num}">${notice.title }</a></td>
+>>>>>>> refs/remotes/origin/master
                         			<tr>
                         				<td style="text-align: center">${vs.index+1 }</td>
                         				<td><a href="/noctice/noticeView?num=${notice.num}">${notice.title }</a></td>
