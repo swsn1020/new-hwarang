@@ -274,15 +274,12 @@
                         		</thead>
                         		<c:forEach items="${noticeList }" var="notice" varStatus="vs">
                         			<fmt:formatDate value="${notice.regDate }" var="regDate" pattern="yyyy-MM-dd"/>
-<<<<<<< HEAD
                         			<tr>
                         				<td style="text-align: center">${vs.index+1}</td>
                         				<td><a href="/notice/noticeView?num=${notice.num}">${notice.title }</a></td>
-=======
                         			<tr>
                         				<td style="text-align: center">${vs.index+1 }</td>
                         				<td><a href="/noctice/noticeView?num=${notice.num}">${notice.title }</a></td>
->>>>>>> refs/remotes/origin/hyeji2
                         				<td style="text-align: center">${regDate }</td>
                         				<td style="text-align: center">${notice.readCnt }</td>
                         			</tr>
