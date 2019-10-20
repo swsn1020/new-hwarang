@@ -1,21 +1,25 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <title>화랑-마이페이지-문의내역</title>
-<%@ include file="../../layout/left.jsp" %>
+<%@ include file="../../layout/menu.jsp" %>
+<%@include file="../../layout/rightUser.jsp"%>
 <style>
 	.container{
-		margin: 10px 0px;
-		padding: 3px 0px;
+		margin: 0 20% 0 20%;
+		padding-left: 50px;
+		padding-right: 50px;
 	}
 	th {
 		text-align: center;
 	}
 </style>
 <div class="container">
-	<h3>${param.memId }-작성한 문의</h3>
-	<div class="buttondiv" style="text-align: center; float: right; margin-bottom: 10px;">
-		<button type="button" class="btn btn-outline-secondary btn-sm" onclick="location.href='qnaWrite'">문의작성</button>
+	<div class="button-div">
+		<h3 style="float: left;">내가 작성한 문의글</h3>
+		<button type="button" class="btn btn-outline-secondary btn-sm" onclick="location.href='qnaWrite'" style="float: right;">문의하기</button>
 	</div>
+	<br>
+	<div style="border-top: 2px solid black; margin-top: 20px;"></div>
 	<table class="table table-hover">
 		<thead>
 			<tr>
@@ -48,6 +52,7 @@
 			</c:forEach>
 		</tbody>
 	</table>
+	<div style="border-top: 2px solid black;"></div>
 </div>
 <br>
 
@@ -66,4 +71,3 @@
 		</li>
 	</ul>
 </div>
-<%@ include file="../../layout/bottom.jsp"%>

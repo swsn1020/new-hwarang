@@ -7,11 +7,11 @@ function boardCheck(formId){
 	//만약에 유효성 검사가 제대로 끝나면 true, 아니면 false 반환
 	var form = $("#"+formId);
 //	form.find("선택자") : 특정요소의 하위요소중에  선택자에 해당하는 요소 선택
-	if(form.find("input[name='review_title']").val().trim()==''){
+	if(form.find("input[id='title']").val().trim()==''){
 		alert("제목을 입력하세요.");
 		return false;
 	}
-	if(form.find("textarea[name='review_content']").val().trim()==''){
+	if(form.find("textarea[id='content']").val().trim()==''){
 		alert("내용을 입력하세요.");
 		return false;
 	}

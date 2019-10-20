@@ -1,15 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ include file="../layout/left.jsp" %>
+<%@ include file="../layout/menu.jsp" %>
+<%@include file="../layout/rightUser.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-<script type="text/javascript">
-
-</script>
+<title>화랑 - 홍보</title>
+<style type="text/css">
+.recommend-div{
+	margin: 0 20% 0 20%;
+}
+</style>
 <script type="text/javascript">
 $(function(){
 	$("a[name='fileDeleteBtn']").on("click", function() {
@@ -36,27 +39,29 @@ $(function(){
 </script>
 </head>
 <body>
+<div class="recommend-div container">
 	<div align="center">
-		<h1>추천 게시판</h1>
+		<h1 style="font-weight: bold;">추천 게시판</h1>
 	</div>
 	<div>
+		<div style="border-top: 2px solid black;"></div>
 		<form action="modify" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="num" value="${recomm.recomm_num}">
 			<table class="table">
 				<tr>
-					<th>Title</th>
+					<th>제목</th>
 					<td>
 						<input type="text" name="title" value="${recomm.recomm_title}">
 					</td>
 				</tr>
 				<tr>
-					<th>Write</th>
+					<th>작성자</th>
 					<td>
 						${recomm.member_id}
 					</td>
 				</tr>
 				<tr>
-					<th>img Upload</th>
+					<th>파일 첨부</th>
 					<td>
 						<c:choose>
 							<c:when test="${empty imgs }">
@@ -79,17 +84,18 @@ $(function(){
 				</tr>
 				<tr>
 					<td colspan="4">
-						<textarea rows="10" cols="50" name="content">${recomm.recomm_content}</textarea>
+						<textarea rows="10" cols="50" name="content" style="width: 100%">${recomm.recomm_content}</textarea>
 					</td>
 				</tr>
-				<tr>
-					<td>
-						<input type="submit" value="Ok">
+				<tr align="center" style="border-top: 2px solid black;">
+					<td colspan="4">
+						<input type="submit"  class="btn btn-outline-dark" value="확인">
 					</td>
 				</tr>			
 			</table>
 		</form>
 	</div>
+</div>
 <%@ include file="../layout/bottom.jsp"%>
 </body>
 </html>

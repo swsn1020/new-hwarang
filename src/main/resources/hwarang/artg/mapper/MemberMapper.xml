@@ -57,12 +57,14 @@
 		<select id="selectMember_name" parameterType="string" resultType="hwarang.artg.member.model.MemberVO">
 			select *from member where member_name = #{member_name}
 		</select>
+
 		
+		<!-- count 올리기 -->
 		<update id="blockCountMember">
 			UPDATE member SET member_report_count = member_report_count+1
 			WHERE member_id = #{member_id}
 		</update>
-		
+		<!-- user 권한 빼기 -->
 		<update id="blockStatusMember">
 			UPDATE member SET member_status = 'disabled'
 			WHERE member_id = #{member_id}

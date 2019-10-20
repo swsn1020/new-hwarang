@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <title>화랑-FAQ</title>
 <%@include file="../../layout/managerSidebar.jsp"%>
+
 <style>
 	.container{
 		margin: 10px 0px;
@@ -12,17 +13,12 @@
 	h1{
 		color: #3E404B;
 	}
-	a {
-		border-color: #6C908A;
-		-webkit-box-shadow: 0 0 0 0.2rem rgba(108, 144, 138, 0.25);
-  		box-shadow: 0 0 0 0.2rem rgba(108, 144, 138, 0.25);
-	}
 </style>
 <div class="content-inner" style="padding-bottom: 59px;">
 	<section class="projects no-padding-top">
 		<div class="contianer-fluid">
 			<div style="width: 100%; padding-top: 50px; margin-bottom: 10px; text-align: center;">
-				<h1><strong>FAQ</strong></h1>
+				<h1><strong>자주하는 질문</strong></h1>
 			</div>
 		</div>
 		<div class="project" id="project3">
@@ -53,8 +49,8 @@
 								<td>${faq.category }</td>
 								<td>
 									<div id="accordion">
-										<div><a data-toggle="collapse" href="#content${vs.index }">${faq.question }</a></div>
-										<div id="content${vs.index }" class="collapse"  data-parent="#accordion">${faq.answer }</div>
+										<div><a data-toggle="collapse" href="#content${vs.index }">Q.&nbsp;${faq.question }</a></div><br>
+										<div id="content${vs.index }" class="collapse"  data-parent="#accordion">A.&nbsp;&nbsp;${faq.answer }</div>
 									</div>
 								</td>
 								<td>${regDate}</td>
@@ -90,10 +86,11 @@
 					</tbody>
 				</table>
            	</div>
+           	<hr style="border-color: #29201E; border-width: 2px; margin-top: 20px; width: 90%;">
            	<div style="text-align: center; margin: 10px;">
            		<div class="text">
 					<form id="searchForm" action="faqListForManager" method="get">
-						<select name="type">
+						<select name="type" class="form-control-sm">
 						<option value="" <c:out value="${pageMaker.cri.type eq null ? 'selected' : ''}"/>>검색
 						</option>
 						<option value="Q" <c:out value="${pageMaker.cri.type eq 'Q'? 'selected' : ''}"/>>질문
@@ -109,7 +106,7 @@
 						<option value="QAC" <c:out value="${pageMaker.cri.type eq 'QAC' ? 'selected': ''}"/>>질문+카테고리+답변
 						</option>
 						</select>
-						<input type="text" name="keyword" placeholder="검색어를 입력하세요." value="<c:out value="${pageMaker.cri.keyword }"/>">
+						<input type="text" class="form-control-sm" name="keyword" placeholder="검색어를 입력하세요." value="<c:out value="${pageMaker.cri.keyword }"/>">
 						<input type="hidden" name="pageNum" value="<c:out value="${pageMaker.cri.pageNum }"/>">
 						<input type="hidden" name="amount" value="<c:out value="${pageMaker.cri.amount }"/>">
 						<button class="btn btn-outline-primary btn-sm">검색</button>

@@ -3,6 +3,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ include file="../layout/menu.jsp" %>
+<%@include file="../layout/rightUser.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,7 +29,7 @@ th {
 		<div>
 			<h3 style="font-weight: bold;">관람 후기</h3>
 			<sec:authorize access="hasRole('ROLE_USER')">	
-				<button onclick="location.href='/review/write'" style="margin: 10px;" class="btn btn-outline-dark">글쓰기</button>
+				<button onclick="location.href='/review/write'" style="margin: 10px;" class="btn btn-outline-dark btn-sm">글쓰기</button>
 			</sec:authorize>
 		</div>
 		<div class="table-responsive">
@@ -47,8 +48,9 @@ th {
 										<span class="badge badge-secondary">${review.reply_count }</span>
 									</c:if>
 								</dt>
-								<dd style="width:100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin: 0;">
-									<p>${review.review_content}</p><br><br>
+								<dd>
+									<p style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;width:100%; overflow: hidden; text-overflow: ellipsis; margin: 0;">
+									${review.review_content}<p>
 									<!-- 댓글수 -->
 									<div style="text-align: right;">
 										${review.member_id}&nbsp;&nbsp;
@@ -94,7 +96,7 @@ th {
 					<%-- <c:out value="${pageMaker.cri.pageNum }"/> --%>
 					
 					<input type="hidden" name="amount" value="<c:out value="${pageMaker.cri.amount }"/>">
-					<button class="btn btn-outline-dark">검색</button>
+					<button class="btn btn-outline-dark btn-sm">검색</button>
 				</form>
 		</div> 
 		<%-- 네비게이션 표시 --%>
@@ -104,7 +106,7 @@ th {
 					<a class="page-link" href="reviewboard?pageNum=${pageMaker.startPage-1}&type=${param.type}&keyword=${param.keyword}">&laquo;</a>
 				</li>
 				<c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
-					<li class='${pageMaker.cri.pageNum == num ? "page-item":"page-item active"}'>
+					<li class='${pageMaker.cri.pageNum == num ? "active":"page-item"}'>
 						<a class="page-link" href="reviewboard?pageNum=${num}&type=${param.type}&keyword=${param.keyword}">${num}</a>
 					</li>
 				</c:forEach>

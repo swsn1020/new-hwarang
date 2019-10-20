@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ include file="../layout/left.jsp" %>
+    <%@ include file="../layout/menu.jsp" %>
+    <%@include file="../layout/rightUser.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,7 +17,7 @@ ul, ol, li {
 }
 </style>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>화랑 - 비밀번호 찾기</title>
 <script type="text/javascript">
 
 </script>
@@ -44,8 +45,8 @@ function findPw(){
 </script>
 </head>
 <body>
-		<div align="center">
-			<h1>비밀번호 찾기</h1>
+		<div align="center" style="margin-top: 20px;">
+			<h3 style="font-weight: bold;">비밀번호 찾기</h3>
 		</div>
 		<div id="containers" class="div" align="center" style="width: 350px;">
 				<div>
@@ -55,7 +56,7 @@ function findPw(){
 						<input type="text" id="member_name" name="member_name" class="form-control" placeholder="이름">
 						<br>
 						<input type="email" id="member_email" name="member_email" class="form-control" placeholder="이메일">
-						<br><button type="button" id="checkId"  onclick="javascript:findPw();" class="btn btn-primary" style="height: 50px; width: 350px; ">확인</button>
+						<br><button type="button" id="checkId"  onclick="javascript:findPw();" class="btn btn-outline-dark" style="height: 50px; width: 350px; ">확인</button>
 					</form>
 				</div>
 		</div>

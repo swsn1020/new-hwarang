@@ -5,8 +5,8 @@
 <mapper namespace="hwarang.artg.mapper.FavoriteMarkMapper">
 
 	<insert id="insert" parameterType="hwarang.artg.exhibition.model.FavoriteMarkVO">
-		insert into favorite_mark (exh_seq, member_id,favorite_group)
-		values (#{exh_seq}, #{member_id}, #{favorite_group})
+		insert into favorite_mark (exh_seq, member_id,favorite_group, favorite_date)
+		values (#{exh_seq}, #{member_id}, #{favorite_group}, sysdate + 9/24)
 	</insert>
 
 	<update id="update">

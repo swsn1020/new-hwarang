@@ -48,7 +48,10 @@
 				(select count(*) from review_reply where review_reply_num = r.review_num) as reply_count
 		from review_board r order by review_num desc
 	</select>
-	
+	<!-- 전시정보 탭에 넣을 관람자 후기 -->
+	<select id="selectExhReview" parameterType="String" resultType="hwarang.artg.rrboard.model.ReviewBoardVO">
+		select *from review_board where review_exh_name = #{review_exh_name}
+	</select>
 	<!-- search -->
 	<!-- 검색기능 위한 sql(다른 쿼리에서 반복될 때 사용, 나중에 include -->
 	<sql id="criteriaDTO">

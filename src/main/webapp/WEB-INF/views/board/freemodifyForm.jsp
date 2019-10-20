@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <title>자유게시판 수정 화면 </title>
-<%@ include file="../layout/left.jsp" %>
+<%@ include file="../layout/menu.jsp" %>
 <script type="text/javascript">
 $(function(){
 	$("a[name='fileDeleteBtn']").on("click", function() {
@@ -27,6 +27,7 @@ $(function(){
 
 </script>
 <div class="container">
+	<div style="border-top: 2px solid black;"></div>		
 	<h4>게시글 수정</h4>
 	<div class="form-group">
 	<form action="modify" method="post" enctype="multipart/form-data">
@@ -64,7 +65,7 @@ $(function(){
 								</c:otherwise>
 						</c:choose>
 			</td>
-		</tr>
+		</tr>	
 				
 				<tr>
 					<td colspan="2" align="center">

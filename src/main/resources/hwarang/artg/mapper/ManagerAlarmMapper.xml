@@ -27,19 +27,43 @@
 	</select>
 	<!-- 5개 불러오기 -->
 	<select id="selectFourAlarms" resultMap="aMap">
-		SELECT * FROM MANAGER_ALARM
-		WHERE AL_CHECKED = 'N' AND rownum between 1 and 4
-		ORDER BY AL_NUM desc
+		SELECT * 
+		FROM (SELECT * FROM MANAGER_ALARM WHERE AL_CHECKED = 'N'
+			  ORDER BY AL_NUM DESC)
+		WHERE rownum between 1 and 4
 	</select>
+	
+	<sql id="criteriaDTO">
+		<trim prefix="(" suffix=") AND " prefixOverrides="OR">
+			<foreach collection="typeArr" item="type">
+				<trim prefix="OR">
+					<choose>
+						<when test="type == 'Y'.toString()">
+							<![CDATA[
+								AL_CHECKED = 'Y'
+							]]>
+						</when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+	</sql>
+	
+	
 	<select id="getTotalCount" resultType="int">
 		SELECT count(*) FROM MANAGER_ALARM
+		WHERE
+		<include refid="criteriaDTO"></include>
+		1 > 0	
 	</select>
 	<select id="getListWithPaging" resultMap="aMap">
 			 SELECT AL_NUM, AL_CATEGORY, AL_REG_DATE, AL_CHECKED, BOARD_CATEGORY, BOARD_NUM
  			  FROM (SELECT /*+INDEX_DESC(MANAGER_ALARM pk_alarm_num) */ rownum AS rNum, AL_NUM, AL_CATEGORY, AL_REG_DATE, AL_CHECKED, BOARD_CATEGORY, BOARD_NUM 
  					  FROM MANAGER_ALARM
+ 					  WHERE
+ 					  <include refid="criteriaDTO"></include>
  		<![CDATA[			  
- 					 WHERE rownum <= #{pageNum} * #{amount})
+ 					 rownum <= #{pageNum} * #{amount})
  			 WHERE rNum > (#{pageNum} - 1) * #{amount}
 		]]>
 	</select>

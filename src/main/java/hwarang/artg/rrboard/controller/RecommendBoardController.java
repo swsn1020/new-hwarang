@@ -156,7 +156,7 @@ public class RecommendBoardController {
 
 	//이미지 미리보기(썸네일)
     //경로 게시판마다 지정
-	public static final String UPLOAD_PATH = "c:\\image\\";
+	public static final String UPLOAD_PATH = "c:\\image\\recommend";
 	
 	@RequestMapping("/downloadThumb")
 	protected void download(String uuid, HttpServletResponse response) throws Exception {
@@ -168,7 +168,7 @@ public class RecommendBoardController {
 		File thumbnail = new File(UPLOAD_PATH+"\\"+"thumbnail"+"\\"+fileName+".png");
 		if (image.exists()) { 
 			thumbnail.getParentFile().mkdirs();
-			Thumbnails.of(image).size(100, 100).outputFormat("png").toFile(thumbnail);
+			Thumbnails.of(image).size(640, 480).outputFormat("png").toFile(thumbnail);
 		}
 		
 		FileInputStream in = new FileInputStream(thumbnail);

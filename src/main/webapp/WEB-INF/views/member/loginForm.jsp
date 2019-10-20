@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ include file="../layout/menu.jsp" %>
+<%@include file="../layout/rightUser.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -78,10 +79,10 @@ function goLogin(){
 </script>
 </head>
 <body>
-	<div class="container">
+	<div class="container" style="background: #f8fafc; padding: 10px; ">
 
-		<h1 align="center" style="font-weight: bold; margin-top: 10px;">로그인</h1>
-		<div style="border: 2px solid black;"></div>
+		<h1 align="center" style="margin-top: 20px;">로그인</h1>
+<!-- 		<div style="border: 1px solid black;"></div> -->
 		<br>
 		<br>
 		<%-- ${sessionScope } --%>
@@ -92,7 +93,7 @@ function goLogin(){
 					<form name="loginForm" id="loginForm">
 						<input type="text" name="username" id="member_id" class="form-control" placeholder="아이디"><br>
 						<input type="password" name="password" id="member_password" class="form-control" placeholder="비밀번호"><br>
-						<button type="button" id="checkLogin" onclick="javascript:goLogin();" class="btn btn-primary" style="height: 50px; width: 350px; ">Login</button><br><br>
+						<button type="button" id="checkLogin" onclick="javascript:goLogin();" class="btn btn-outline-dark" style="height: 50px; width: 350px; ">로그인</button><br><br>
 						<p style="color: red;"><c:if test="${not empty SPRING_SECURITY_LAST_EXCEPTION}">아이디 또는 비밀번호를 잘못 입력하셨습니다.<br>
 						아이디 찾기 / 비밀번호 찾기를 이용하여 개인정보를 확인해 주세요.</c:if></p>
 						<div class="checkbox">

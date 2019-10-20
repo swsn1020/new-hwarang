@@ -1,12 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
    <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-   <%@ include file="../layout/left.jsp" %>
+   <%@ include file="../layout/menu.jsp" %>
+   <%@include file="../layout/rightUser.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>reviewmodifyForm</title>
+<title>화랑 - 관람후기</title>
 <script type="text/javascript">
 
 </script>
@@ -34,36 +35,42 @@ $(function(){
 	});
 });
 </script>
+<style type="text/css">
+.reivew-div{
+	margin: 0 20% 0 20%;
+}
+</style>
 </head>
 <body>
-
+<div class="reivew-div container">
 	<div align="center">
-			<h1>관람 후기</h1>
+		<h1 style="font-weight: bold;">관람 후기</h1>
 	</div>
 	<div>
+		<div style="border-top: 2px solid black;"></div>
 		<form action="modify" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="num" value="${review.review_num}">
 			<table class="table">
 				<tr>
-					<th>Program name</th>
+					<th>관람명</th>
 					<td>
 						${review.review_exh_name}
 					</td>
 				</tr>
 				<tr>
-					<th>Title</th>
+					<th>제목</th>
 					<td>
 						<input type="text" name="title" value="${review.review_title}">
 					</td>
 				</tr>
 				<tr>
-					<th>Write</th>
+					<th>작성자</th>
 					<td>
 						${review.member_id}
 					</td>
 				</tr>
 				<tr>
-					<th>img Upload</th>
+					<th>첨부파일</th>
 					<td>
 						<c:choose>
 							<c:when test="${empty imgs }">
@@ -86,17 +93,18 @@ $(function(){
 				</tr>
 				<tr>
 					<td colspan="4">
-						<textarea rows="10" cols="50" name="content">${review.review_content}</textarea>
+						<textarea rows="10" cols="50" name="content" style="width: 100%">${review.review_content}</textarea>
 					</td>
 				</tr>
-				<tr>
-					<td>
-						<input type="submit" value="Ok">
+				<tr align="center" style="border-top: 2px solid black;">
+					<td colspan="4">
+						<input type="submit" class="btn btn-outline-dark" value="확인">		
 					</td>
-				</tr>			
+				</tr>
 			</table>
 		</form>
 	</div>
+</div>
 <%@ include file="../layout/bottom.jsp"%>
 </body>
 </html>

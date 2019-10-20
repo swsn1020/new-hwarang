@@ -1,15 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="../layout/left.jsp" %>
+<%@ include file="../layout/menu.jsp" %>
+<%@include file="../layout/rightUser.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<script type="text/javascript" src="/resources/js/board.js?var=1"></script>
-<title>recommwriteForm</title>
-<script type="text/javascript">
-
-</script>
+<script type="text/javascript" src="/resources/js/board.js"></script>
+<title>화랑 - 홍보</title>
 <script type="text/javascript">
 $(function(){
 	$("#writeForm").on("submit",function(){
@@ -21,40 +19,47 @@ $(function(){
 	});
 });
 </script>
+<style type="text/css">
+.recommend-div{
+	margin: 0 20% 0 20%;
+}
+</style>
 </head>
 <body>
-
+<div class="recommend-div container">
 	<div align="center">
-		<h1>추천 게시판</h1>
+		<h1 style="font-weight: bold;">홍보 게시판</h1>
 	</div>
 		<div class="form-group">
 		<form action="write" method="post" id="writeForm" enctype="multipart/form-data">
 			<sec:authentication property="principal.username" var="id"/>
 			<input type="hidden" name="member_id" value="${id}">
 			<table class="table">
-				<tr>
-					<th>Title</th>
-					<td><input class="form-control" type="text" name="recomm_title"></td>
+				<tr style="border-top: 2px solid black;">
+					<th>제목</th>
+					<td><input class="form-control" type="text" id="title" name="recomm_title"></td>
 				</tr>
 				<tr>
-					<th>Content</th>
-					<td><textarea class="form-control" name="recomm_content" rows="10" cols="50"></textarea>
+					<td colspan="2"><textarea class="form-control" id="content" name="recomm_content" rows="10" cols="50"></textarea>
 					</td>
 				</tr>
 				<tr>
-					<th>Img Upload (Max File:5MB)</th>
+					<th>파일 첨부 (Max File:5MB)</th>
 					<td>
 						<input multiple="multiple" type="file" name="file" accept=".jpg, .jpeg, .png">
 					</td>
 				</tr>
 			</table>
-			<div align="center">
-			<input style="align-content: center;" class='btn btn-link' type="submit" value="Ok"> 
-			<input style="align-content: center;" class='btn btn-link' type="reset" value="Reset">
-			<input style="align-content: center;" class='btn btn-link' type="button" onclick="location.href='/recommend/recommendboard'" value="List">
+			<div align="center" style="border-top: 2px solid black;">
+				<div style="margin-top: 10px;">  
+					<input class='btn btn-outline-dark' type="submit" value="확인"> 
+					<input class='btn btn-outline-dark' type="reset" value="취소">
+					<input class='btn btn-outline-dark' type="button" onclick="location.href='/recommend/recommendboard'" value="목록">
+				</div>
 			</div>
 		</form>
 		</div>
+</div>
 <%@ include file="../layout/bottom.jsp"%>
 </body>
 </html>

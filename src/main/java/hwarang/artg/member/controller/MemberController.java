@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -36,8 +37,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import hwarang.artg.common.model.EmailDTO;
 import hwarang.artg.common.model.EmailSender;
 import hwarang.artg.community.service.FreeBoardService;
-import hwarang.artg.funding.model.OrderVO;
-import hwarang.artg.funding.service.FundingOrderService;
 import hwarang.artg.manager.service.ReportService;
 import hwarang.artg.member.model.MemberAuthVO;
 import hwarang.artg.member.model.MemberVO;
@@ -74,8 +73,7 @@ public class MemberController {
 	private FreeBoardService freeservice;
 	@Autowired
 	private ReportService reportservice;
-	@Autowired
-	private FundingOrderService orderService;
+	
 	
 	@Autowired
 	@Qualifier("authenticationManager")
@@ -382,18 +380,19 @@ public class MemberController {
 		model.addAttribute("url", url);
 		return "/member/result";
 	}
+	@PreAuthorize("isAuthenticated()")
 	@RequestMapping("/myPage")
-	public String showMyPage(Principal principal,Model model,OrderVO order) {
+	public String showMyPage(Principal principal,Model model) {
 		String id = principal.getName();
 		model.addAttribute("member", service.memberGetOne(id));
 		model.addAttribute("points", pservice.pointGetOne(id));
 		model.addAttribute("review", reviewservice.reviewboardGetIdAll(id));
 		model.addAttribute("recommend", recommendservice.recommendboardGetAll_Id(id));
 		model.addAttribute("free", freeservice.freeboardGetAllId(id));
-		model.addAttribute("order", orderService.selectAll());
 		return "/member/myPage";
 	}
 	
+	@PreAuthorize("isAuthenticated()")
 	@RequestMapping("/modifyForm")
 	public String showModifyForm(Model model, Principal principal) {
 		String id = principal.getName();
@@ -401,6 +400,8 @@ public class MemberController {
 		model.addAttribute("member", member);
 		return "/member/modifyForm";
 	}
+	
+	@PreAuthorize("isAuthenticated()")
 	@RequestMapping("/modify")
 	public String showModify(String id,String SNSid,String password,String name,String tel1,String tel2,String tel3,
 			String email1,String email2,String zipNo,String roadAddrPart1,String addrDetail,Model model){
@@ -434,40 +435,46 @@ public class MemberController {
 			return "/member/result";
 		}
 	}
+	@PreAuthorize("isAuthenticated()")
 	@RequestMapping("/deleteForm")
-	public String showDeleteForm() {	
+	public String showDeleteForm(Principal principal,Model model) {
+		String id = principal.getName();
+		model.addAttribute("id", id);
 		return "/member/deleteForm";
 	}
+	
+	@PreAuthorize("isAuthenticated()")
 	@RequestMapping("/delete")
-	public String showDelete(Model model,String member_id,String snsId,HttpSession session) {
+	public String showDelete(Model model,String member_id,String password,String snsId,HttpSession session) {
 		//네이버 회원
 		if(member_id.equals("네이버 간편 로그인")) {
 			service.memberRemove(snsId);
-			model.addAttribute("url", "https://nid.naver.com/user2/help/externalAuth.nhn?lang=ko_KR");
+			session.invalidate();
+			model.addAttribute("url", "/logout");
 			model.addAttribute("msg", "탈퇴되셨습니다. 네이버 정책상 계정 정보에서 간편 로그인 삭제를 진행해주셔야 완전한 탈퇴가 됩니다.");
 			return "/member/result";
 		//카카오톡 회원
 		}else if(member_id.equals("카카오톡 간편 로그인")) {
 			service.memberRemove(snsId);
+			session.invalidate();
 			String access_token = (String) session.getAttribute("access_token");
 			kservice.delete(access_token);
-			//카카오톡 api로 탈퇴
-			model.addAttribute("url", "/index");
+			model.addAttribute("url", "/logout");
 			model.addAttribute("msg", "탈퇴되셨습니다.");
-			//session 제거
 			return "/member/result";
 		//일반 회원
 		}else { 
-			service.memberRemove(member_id);			
-			model.addAttribute("url", "/index");
+			session.invalidate();
+			service.memberRemove(member_id);	
+			model.addAttribute("url", "/logout");
 			model.addAttribute("msg", "탈퇴되셨습니다.");
 			return "/member/result";
 		}
 
 	}
+	//화랑안내 페이지
+	@RequestMapping("/about")
+	public String showAboutArtGround() {
+		return "/member/aboutArtGround";
+	}
 }
-
-
-
-
-

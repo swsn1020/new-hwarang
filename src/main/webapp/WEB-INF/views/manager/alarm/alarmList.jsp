@@ -28,7 +28,7 @@
 						alert("알림 확인");
 					}
 				},
-				error: function(result){
+				error: function(){
 					alert("알람 확인 에러");
 				}
 			});
@@ -52,9 +52,10 @@
 				success: function(result){
 					if(result){
 						alert("알림 확인");
+						location.reload();
 					}
 				},
-				error: function(result){
+				error: function(){
 					alert("알람 확인 에러");
 				}
 			});
@@ -62,7 +63,7 @@
 		
 		$(".del").on("click", function(){
 			var num = $(this).data("num");
-			alert(num);
+// 			alert(num);
 			$.ajax({
 				url: "removeAlarm",
 				type: "post",
@@ -80,6 +81,19 @@
 				}
 			});
 		});
+		
+		//checkBox 체크되면 action 수행
+		$("#check").change(function(){
+			if($("#check").is(":checked")){
+// 				alert("체크박스 선택");
+				$("#check").val('Y');
+			}else{
+// 				alert("체크박스 해제");
+				$("#check").val('');
+			}
+// 			alert($("#check").val());
+			$("#sortForm").submit();
+		})
 	});
 </script>
 
@@ -87,12 +101,21 @@
 	<section class="projects no-padding-top">
 		<div class="contianer-fluid">
 			<div style="width: 100%; padding-top: 50px; margin-bottom: 10px; text-align: center;">
-				<h1 style="color: #80425A"><strong>Alarms</strong></h1>
+				<h1><strong>알림함</strong></h1>
 			</div>
 		</div>
 		<div class="project" id="project3">
           <div class="row bg-white has-shadow">
            <div class="card-body" style="padding: 20px;">
+             <div class="form-check" style="text-align: right; padding-right: 50px;">
+             	<form id="sortForm" action="alarmList" method="get">
+	           		<label class="form-check-label">
+	           			<input type="checkbox" id="check" name="type" class="form-check-input" value="" <c:out value="${pageMaker.cri.type eq 'Y' ? 'checked' : ''}"/>>확인된 알람
+	           		</label>
+	           		<input type="hidden" name="pageNum" value="<c:out value="${pageMaker.cri.pageNum }"/>">
+					<input type="hidden" name="amount" value="<c:out value="${pageMaker.cri.amount }"/>">
+             	</form>
+             </div>
            	<div class="table-responsive">
 				<table class="table table-hover">
 					<thead>
@@ -137,18 +160,19 @@
 					</tbody>
 				</table>
            	</div>
+           	
            	<!-- Pagination -->
 			<ul class="pagination justify-content-center">
 				<li class='${ pageMaker.prev == true ? "page-item" : "page-item disabled" }'>
-					<a class="page-link" href="alarmList?pageNum=${pageMaker.startPage-1 }&type=${param.type}&keyword=${param.keyword}">&laquo;</a>
+					<a class="page-link" href="alarmList?pageNum=${pageMaker.startPage-1 }&type=${param.type}">&laquo;</a>
 				</li>
 				<c:forEach var="num" begin="${pageMaker.startPage }" end="${pageMaker.endPage}">
 					<li class='${pageMaker.cri.pageNum == num ? "active" : "page-item"}'>
-						<a class="page-link" href="alarmList?pageNum=${num}&type=${param.type}&keyword=${param.keyword}">${num}</a>
+						<a class="page-link" href="alarmList?pageNum=${num}&type=${param.type}">${num}</a>
 					</li>
 				</c:forEach>
 				<li class='${pageMaker.next == true ? "page-item" : "page-item disabled" }'>
-					<a class="page-link" href="alarmList?pageNum=${pageMaker.endPage+1 }&type=${param.type}&keyword=${param.keyword}">&raquo;</a>
+					<a class="page-link" href="alarmList?pageNum=${pageMaker.endPage+1 }&type=${param.type}">&raquo;</a>
 				</li>
 			</ul>
            </div>

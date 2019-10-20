@@ -5,7 +5,9 @@ import java.io.FileInputStream;
 import java.io.OutputStream;
 import java.security.Principal;
 import java.text.DateFormat;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,11 +29,16 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import hwarang.artg.common.model.CriteriaDTO;
 import hwarang.artg.community.model.FreeBoardVO;
+import hwarang.artg.community.model.FreeLikeVO;
 import hwarang.artg.common.model.PageDTO;
 import hwarang.artg.common.model.ReplyPager;
 import hwarang.artg.community.service.FreeBoardService;
 import hwarang.artg.community.service.FreeImgService;
+import hwarang.artg.community.service.FreeLikeService;
 import hwarang.artg.community.service.FreeReplyService;
+import hwarang.artg.exhibition.model.ExhLikeVO;
+import hwarang.artg.manager.model.NoticeVO;
+import hwarang.artg.member.service.MemberService;
 import net.coobird.thumbnailator.Thumbnails;
 
 @Controller
@@ -45,23 +53,30 @@ public class BoardController {
 
 	@Autowired
 	private FreeImgService imgService;
+	
+	@Autowired
+	private MemberService memberservice;
+	
+	@Autowired
+	private FreeLikeService likeservice;
 
 	@RequestMapping(value = "/freeboard", method = RequestMethod.GET)
 	public String showfreeboardList(Model model, CriteriaDTO cri,Principal principal) throws Exception {
+		
 		PageDTO page = new PageDTO(cri, fservice.getTotal(cri));
 		System.out.println(page);
-		model.addAttribute("pageMaker", page);
+		model.addAttribute("pageMaker",page);
 		model.addAttribute("freeboard", fservice.pagingList(cri));
-		model.addAttribute("principal",principal);
+//		model.addAttribute("principal",principal);
 		System.out.println(page);
 		return "/board/freeboard";
 	}
 
 	@RequestMapping("/freeboardView")
 	public String showfreeboardView(Model model, int num,HttpServletRequest request, HttpServletResponse response, @RequestParam(defaultValue = "1")int curPage,Principal principal) {
-		String id = principal.getName();
-		model.addAttribute("id",id);
-		model.addAttribute("principal",principal);
+//		String id = principal.getName();
+//		model.addAttribute("id",id);
+//		model.addAttribute("principal",principal);
 		FreeBoardVO free = fservice.freeboardGetone(num);
 		Cookie [] cookies = request.getCookies();
 		Cookie targetCookie = null;
@@ -111,9 +126,9 @@ public class BoardController {
 			int count = rservice.getTotalReplies(fboardNum);
 			ReplyPager rPager = new ReplyPager(count,curPage);
 			model.addAttribute("rPager",rPager);
+			model.addAttribute("freeImgList",imgService.freeImgGetByFNum(fboardNum));
 			System.out.println(curPage);
-			return "/board/freeboardView";
-			
+			return "/board/freeboardView";			
 		}
 		//선택된 게시물 없음
 		model.addAttribute(msg, "삭제된 게시물 입니다.");
@@ -122,8 +137,7 @@ public class BoardController {
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
-	public String showRegisterfreeForm(Principal principal,Model model) {
-		model.addAttribute("principal",principal);
+	public String showRegisterfreeForm(Model model) {
 		return "/board/freeboardRegister";
 	}
 
@@ -222,5 +236,48 @@ public class BoardController {
 	public int getReplyCount(int fboardNum) {
 		System.out.println("replyCount 요청 들어옴");
 		return fservice.getnReplyCount(fboardNum);
+	}	
+	
+	//수정한것
+	@RequestMapping("checkUserNotice")
+	public @ResponseBody Map<String, Object> checkUserNotify(
+			@RequestParam("member_id") String member_id) throws Exception {
+		Map<String, Object> ret = new HashMap<>();
+		int result = memberservice.getNoticeCount(member_id);
+		ret.put("result", result );
+		return ret;
+	}
+	
+	@RequestMapping("getUserNotice")
+	public @ResponseBody List<NoticeVO> getUserNotice(@RequestParam("member_id") String member_id){
+		List<NoticeVO> result = memberservice.getUserNotice(member_id);
+		if(result!=null) memberservice.readUserNotice(member_id);
+		return result;
+	}
+	
+	//추천 하기
+	@RequestMapping("/like/add")
+	public String likeAdd(Principal principal,int num) {
+		FreeLikeVO like = new FreeLikeVO(principal.getName(),num,1);
+		likeservice.addLikeStatus(like);
+		fservice.updateLike(num);
+//		return "/board/freeboardView";
+		return "redirect:/board/freeboardView?num="+num;
+	}	
+	@RequestMapping("/like/modify")
+	public String likeModi(Principal principal, int num, int status) {
+		System.out.println(num+"번 추천 수정요청!");
+		FreeLikeVO like = new FreeLikeVO(principal.getName(),num, status);
+		likeservice.modifyLikeStatus(like);
+		fservice.updateLike(num);
+//		return "/board/freeboardView";
+		return "redirect:/board/freeboardView?num="+num;
+	}
+	@RequestMapping("/unlike/add")
+	public String unlikeAdd(Principal principal,int num) {
+		FreeLikeVO like = new FreeLikeVO(principal.getName(),num,2);
+		likeservice.addLikeStatus(like);
+		fservice.updateLike(num);
+		return "redirect:/board/freeboardView?num="+num;
 	}	
 }

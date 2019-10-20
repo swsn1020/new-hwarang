@@ -46,12 +46,13 @@
 	<section class="projects no-padding-top">
 		<div class="contianer-fluid">
 			<div style="width: 100%; padding-top: 50px; margin-bottom: 10px; text-align: center;">
-				<h1 style="color: #74655F"><strong>1:1문의</strong></h1>
+				<h1><strong>1:1문의</strong></h1>
 			</div>
 		</div>
 		<div class="project" id="project3">
           <div class="row bg-white has-shadow">
           	<div class="card-body" style="padding: 20px;">
+          		<div class="table-responsive">
           		<table class="table table-hover">
 					<thead>
 						<tr>
@@ -82,7 +83,8 @@
 							</tr>
 					</c:forEach>
 				</table>
-		
+				</div>
+			<hr style="border-color: #29201E; border-width: 2px; margin-top: 20px; width: 90%;">
 			<!-- Pagination -->
 			<ul class="pagination justify-content-center">
 				<li class='${pageMaker.prev == true ? "page-item" : "page-item disabled" }'>

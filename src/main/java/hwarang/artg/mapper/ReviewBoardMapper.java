@@ -23,6 +23,9 @@ public interface ReviewBoardMapper {
 	public List<ReviewBoardVO> getListWithPaging(CriteriaDTO cri);
 	public int getTotalCount(CriteriaDTO cri);
 	
+	//관람자 후기
+	public List<ReviewBoardVO> selectExhReview(String review_exh_name);
+	
 	//search
 	
 	//게시글 block 처리

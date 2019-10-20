@@ -57,7 +57,7 @@
 	<section class="projects no-padding-top">
 		<div class="contianer-fluid">
 			<div style="width: 100%; padding-top: 50px; margin-bottom: 10px; text-align: center;">
-				<h1 style="color: #74655F"><strong>Block Status</strong></h1>
+				<h1><strong>신고 현황</strong></h1>
 			</div>
 		</div>
 		<div class="project" id="project3">
@@ -113,7 +113,7 @@
 													<tr>
 														<th>처리 메세지</th>
 														<td>
-															<textarea class="form-control" name="reply" id="reply" rows="5" style="resize: none;">${block.reply }</textarea>
+															<textarea class="form-control" name="reply" id="reply" rows="5" style="resize: none;" disabled="disabled">${block.reply }</textarea>
 														</td>
 													</tr>
 												</table>
@@ -123,6 +123,7 @@
 <%-- 												<input type="hidden" name="bsNum" value="${block.num }"> --%>
 <%-- 												<input type="hidden" name="blockMemId" value="${block.blockMemId }"> --%>
 <%-- 												<button type="button" class="btn btn-outline-primary btn-sm" onclick="replyRegister('replyModal${vs.index }');">답변등록</button> --%>
+												<button type="button" class="btn btn-outline-success btn-sm"  onclick="location.href='/block/blockView?num=${block.num}'">상세보기</button>
 												<button type="button" class="btn btn-outline-dark btn-sm" data-dismiss="modal">닫기</button>
 											</div>
 										</div>

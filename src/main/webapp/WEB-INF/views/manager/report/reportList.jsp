@@ -11,10 +11,35 @@ ${mem }<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncod
 		text-align: center;
 	}
 </style>
+<script>
+$(function(){
+	var table = $(".table");
+	$.ajax({
+		url: "/notice/noticeTop3",
+		type: "get",
+		dataType: "json",
+		success: function(data){
+			for(var i in data){
+				var num = data[i].num;
+				var title = data[i].title;
+				var content = data[i].content;
+				var regDate = data[i].regDate;
+				var readCnt = data[i].readCnt;
+				var tr = "<tr><td style='text-align: center;'><span class='badge badge-pill badge-danger'>공지</span></td><td><a href='/notice/noticeView?num="+num+"'>"+title+"</a></td><td style='text-align: center;'>관리자</td><td style='text-align: center;'>"+regDate+"</td><td style='text-align: center; color: #5D485B; font-weight: bold;'>공지사항</td></tr>";
+				table.prepend(tr);
+			}
+		}
+	});
+});
+</script>
+<br><br><br>
 	<div class="container">
-		<h3 style="display: inline-block;">신고게시판</h3>
-		
-		<div style="border-top: 2px solid black;"></div>
+		<div class="button-div">
+			<h3 style="float: left;">신고게시판</h3>
+			<button type="button" class="btn btn-outline-secondary btn-sm" onclick="location.href='reportWrite'" style="float: right;">신고글 작성</button>
+		</div>
+		<br>
+		<div style="border-top: 2px solid black; margin-top: 20px;"></div>
 		<table class="table table-hover">
 			<thead>
 				<tr>
@@ -67,7 +92,4 @@ ${mem }<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncod
 				</li>
 			</ul>
 		</div>
-		<div class="container" style="text-align: right;">
-		<button type="button" class="btn btn-outline-secondary btn-sm" onclick="location.href='reportWrite'">신고글 작성</button>
-		</div>
-<%@ include file="../../layout/bottom.jsp"%>
+		

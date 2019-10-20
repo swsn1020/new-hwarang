@@ -1,16 +1,67 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <title>Insert title here</title>
-<%@ include file="../layout/left.jsp"%>
-
+<%@ include file="../layout/menu.jsp" %>
+<%@include file="../layout/rightUser.jsp"%>
 <script type="text/javascript">
+//let
+let gBno = '${fboard.num}',
+	gBoardWriter = '${fboard.userid}',
+	gRno = 0,
+	gReplytext = null;
 $(function() {	//문서가 로딩되면 실행할 함수
+	
+	//추천,비추천
+	$('.like').click(function(e) {
+		e.preventDefault();
+		if("${fboard.free_like_status}"==0){
+			alert("등록요청");
+			location.replace('/board/like/add?num=${fboard.num}'); 
+		}
+		if("${fboard.free_like_status}"==1){
+			alert("추천 삭제");
+			location.replace('/board/like/modify?num=${fboard.num}&status=3'); 
+		}
+		if("${fboard.free_like_status}"==2){
+			alert("이미 비추천을 누르셨습니다.");
+			return false;
+		}
+		if("${fboard.free_like_status}"==3){
+			alert("등록요청");
+			location.replace('/board/like/modify?num=${fboard.num}&status=1'); 
+		}
+	});
+	
+	$('.unlike').click(function(e) {
+		e.preventDefault();
+		if("${fboard.free_like_status}"==0){
+			alert("등록요청");
+			location.replace('/board/unlike/add?num=${fboard.num}'); 
+		}
+		if("${fboard.free_like_status}"==1){
+			alert("이미 추천을 누르셨습니다.");
+			return false;
+		}
+		if("${fboard.free_like_status}"==2){
+			alert("비추천 삭제");
+			location.replace('/fboard/unlike/modify?seq=${fboard.num}&status=3'); 
+		}
+		if("${fboard.free_like_status}"==3){
+			alert("등록요청");
+			location.replace('/fboard/unlike/modify?seq=${fboard.num}&status=2'); 
+		}
+		
+	});
+	
+	
+	
 		/*댓글 목록 그리기 */
 	replyList(1);
 	$("#btnRegister").on("click",function(){
 		//replyForm에 작성된 내용을 DB에 쓰기 후, 결과 받아와서 처리
 		var data = $("#Replyregister").serialize();
+		var replyer = $('#replyer');
 		$.ajax({
-			url : "${contextPath}/reply/register",
+			url : "${contextPath}/freereply/register",
 			data : data,
 			type : "post",
 			dataType : "json",
@@ -21,6 +72,22 @@ $(function() {	//문서가 로딩되면 실행할 함수
 					$("#Replyregister")[0].reset();
 					//새로운 댓글 목록 그리기
 					location.reload();
+					console.debug("reply.js::socket>>",socket)
+					if(socket){
+						//websocket에 보내기 (reply,댓글작성자,게시글작성자,글번호)
+						//let
+						
+						let socketMsg = "reply," + $('#replyer').val() + "," + gBoardWriter + "," + gBno;
+						console.debug("sssssssmsg>>", socketMsg)
+						socket.send(socketMsg);
+// 						alert(replyer.val());
+// 						alert(gBoardWriter);
+// 						alert(gBno);
+// 						alert("socket 등록 완료");
+						
+					}else{
+						alert("socket 등록 실패")
+					}
 				}else{
 					//댓글 등록 실패
 					alert("오류가 발생했습니다.계속 발생한다면 문의하세요.")
@@ -79,7 +146,7 @@ function replyList(num){
 		$("#replyTable tr").remove();
 		getReplyCnt();
 		$.ajax({
-			url : "${contextPath}/reply/all",
+			url : "${contextPath}/freereply/all",
 			data : {"fboardNum" : '${fboard.num}',"curPage":num},
 			type : "get",
 			dataType : "json",
@@ -154,8 +221,7 @@ function replyList(num){
 				var modiBtn = $("<button type='button' class='btn btn-link btn-sm' data-toggle='collapse' data-target='#modi"+i+"'> 수정 </a>");
 				var delBtn = $("<button type='button' class='btn btn-link btn-sm' data-toggle='collapse' data-target='#del"+i+"'> 삭제 </a>");
 				//신고버튼
-				var blockBtn = $("<button type='button' class='btn btn-link btn-sm' style='color: red;'> 신고 </button>");
-				
+				var blockBtn = $("<button type='button' class='btn btn-link btn-sm' style='color: red;'> 신고 </button>");			
 				tr.append($("<td style='width: 200px;''>").append(modiBtn).append(delBtn).append(blockBtn));
 				//disabled 설정하기
 				
@@ -164,17 +230,18 @@ function replyList(num){
 				}
 				
 				var currId = table.closest("div").find("input[name='currId']").val();
-//					alert(currId);
+// 					alert(currId);
 				if(currId != data.replyTable[i].userid){
 					console.log("아이디 일치하지 않음");
 					modiBtn.css("display", "none");
 					delBtn.css("display", "none");
+					blockBtn.css("display", "true");
 				}else{
 					console.log("아이디 일치");
 					modiBtn.css("display", "true");
 					delBtn.css("display", "true");
+					blockBtn.css("display", "none");
 				}
-
 				
 				modiBtn.on("click", function(){
 					var delBtn = $(this).next();
@@ -197,14 +264,14 @@ function replyList(num){
 			rbtnModify.on("click",function(){
 				var d = $(this).closest("form").serialize();			
 				$.ajax({
-						url : "${contextPath}/reply/modifyReply",
+						url : "${contextPath}/freereply/modifyReply",
 						type: "post",
 						data : d,
 						dataType:"json",
 						success:function(result){
 							if(result){
 								alert("수정완료");
-								replyList();
+								replyList(num);
 							}else{
 								alert("수정실패");
 							}	
@@ -216,14 +283,14 @@ function replyList(num){
 			rbtnRemove.on("click",function(){
 				var d = $(this).closest("form").serialize();
 				$.ajax({
-					url : "${contextPath}/reply/removeReply",
+					url : "${contextPath}/freereply/removeReply",
 					type : "post",
 					data : d,
 					dataType:"json",
 					success: function(result){
 						if(result){
 							alert("삭제완료");
-							replyList();
+							replyList(num);
 						}else{
 							alert("삭제실패");
 						}
@@ -264,16 +331,54 @@ function replyList(num){
 	});
 }
 </script>
+
+<script>
+// function connect(){
+	
+// 	var ws = new WebSocket("ws://localhost:8081/replyEcho?bno=1234");
+	
+// 	ws.onopen = function(){
+// 		console.log('Info.connection opened');
+// 		setTimeout(function(){connect(); },1000);
+		
+// 	};
+	
+// 	ws.onmessage = function(event){
+// 		console.log(event.data+'\n');
+// 	};
+	
+// 	ws.onclose = function(event){
+// 		console.log('Info:connection closed.');
+// 		//setTimeout(function(){connect(); },1000);
+// 	};
+// 	ws.onerror = function(err) {console.log('Errror:, err');};
+	
+// }
+
+
+$('#btnSend').on('click',function(evt){
+	evt.preventDefault();
+	if(socket.readyState!==1) return;
+	//let
+		let msg = $('input#msg').val();
+		socket.send(msg);
+	
+});
+</script>
 	<fmt:formatDate value="${fboard.regDate }" var="regDate" pattern="yyyy-MM-dd"/>
 		<div class="container">
-				<input type="button" class="btn btn-primary" value="목록" onclick="location.href='freeboard'">
+				<input type="button" class="btn btn-outline-secondary" value="목록" onclick="location.href='freeboard'">
 				<input type="hidden" value="<sec:authentication property="principal.Username" var="id"/>">
 				<c:if test="${id eq fboard.userid}">			
-					<input type="button" class="btn btn-primary" value="수정" onclick="location.href='modify?num=${fboard.num }'"> 
-					<input type="button" class="btn btn-primary" value="삭제" onclick="location.href='remove?num=${fboard.num }'"> 
-					<input type="button" class="btn btn-primary" value="새글쓰기" onclick="location.href='register'">
+					<input type="button"class="btn btn-outline-secondary" value="수정" onclick="location.href='modify?num=${fboard.num }'"> 
+					<input type="button" class="btn btn-outline-secondary" value="삭제" onclick="location.href='remove?num=${fboard.num }'"> 
+					<input type="button" class="btn btn-outline-secondary" value="새글쓰기" onclick="location.href='register'">
 				</c:if>
 				<button id="btn-block" class="btn btn-outline-danger btn-sm">신고</button>
+			<div style="text-align: center;">
+				<a class="btn btn-outline-dark like" href="" style="color: blue;">&nbsp;추천(${fboard.recommCount})&nbsp;</a>
+				<a class="btn btn-outline-dark unlike" href="" style="color: gray;">비추천(${fboard.disrecommCount})</a>
+			</div>
 	<div class="table-responsive">
 		<table class="table">
 			<tr>
@@ -343,10 +448,10 @@ function replyList(num){
 	<div class="container">
 		<ul class="pagination justify-content-center">
 			<li id="left" class="page-item disabled">
-				<a class="page-link" href="javascript:replyList(1)">&laquo;</a>
+				<a class="page-link" href="javascript:replyList(1))">&laquo;</a>
 			</li>
 			<c:forEach var="num" begin="${rPager.blockBegin }" end="${rPager.totalPage}">
-				<li class='${rPager.curPage == num ? "active" : "page-item"}'>
+				<li class='${rPager.curPage == num ? "page-item active" : "page-item"}'>
 					<a class="page-link" href="javascript:replyList(${num})">[${num}]</a>
 				</li>
 			</c:forEach>
@@ -367,12 +472,12 @@ function replyList(num){
 			<table class="table">
 				<tr>
 					<td>
-						<input type="hidden" name="userid" value="${fboard.userid}">
+						<input type="hidden" id="replyer" name="userid" value='<sec:authentication property="principal.Username"/>'>
 					</td>
 					<th>내용</th>
 					<td><textarea rows="3" cols="30" name="content"></textarea></td>
 					<td>
-						<button class="btn btn-primary" id="btnRegister" >등록</button>
+						<button class="btn btn-outline-secondary" id="btnRegister" >등록</button>
 					</td>
 				</tr>
 			</table>

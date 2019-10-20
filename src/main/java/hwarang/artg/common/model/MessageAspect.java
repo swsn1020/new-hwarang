@@ -1,5 +1,6 @@
 package hwarang.artg.common.model;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.aspectj.lang.JoinPoint;
@@ -9,8 +10,10 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 
+import hwarang.artg.community.model.AlarmVO;
 import hwarang.artg.community.model.FreeBoardVO;
 import hwarang.artg.community.model.FreeReplyVO;
+import hwarang.artg.community.service.AlarmService;
 import hwarang.artg.manager.model.BlockStatusVO;
 import hwarang.artg.manager.model.FAQVO;
 import hwarang.artg.manager.model.ManagerAlarmVO;
@@ -30,7 +33,7 @@ public class MessageAspect{
 	private SimpMessagingTemplate template;
 	@Autowired
 	private ManagerAlarmService alarmService;
-
+	
 	
 	@Pointcut("execution(* hwarang.artg..controller.*.*Register(..))")
 	public void registerAlarmpt() {}
@@ -53,8 +56,9 @@ public class MessageAspect{
 			alarm.setBoardCategory("Notice_Board");
 			alarm.setBoardNum(notice.getNum());
 		}
-		if(params[0] instanceof NoticeReplyVO) {
+		if(params[0] instanceof NoticeReplyVO) { 
 			NoticeReplyVO noticeReply = (NoticeReplyVO)params[0];
+			String memId = noticeReply.getMemId();
 			alarm.setBoardCategory("Notice_Reply");
 			//해당 게시판으로 이동(댓글의 경우)
 			alarm.setBoardNum(noticeReply.getBoardNum());
@@ -76,7 +80,7 @@ public class MessageAspect{
 		}
 		if(params[0] instanceof BlockStatusVO) {
 			BlockStatusVO block = (BlockStatusVO)params[0];
-			alarm.setBoardCategory("Block_Board");
+			alarm.setBoardCategory("Block_Status");
 			alarm.setBoardNum(block.getNum());
 		}
 		if(params[0] instanceof FreeBoardVO) {
@@ -86,6 +90,7 @@ public class MessageAspect{
 		}
 		if(params[0] instanceof FreeReplyVO) {
 			FreeReplyVO freeReply = (FreeReplyVO)params[0];
+			String memId = freeReply.getUserid();
 			alarm.setBoardCategory("Free_Reply");
 			alarm.setBoardNum(freeReply.getBoardNum());
 		}
@@ -96,6 +101,7 @@ public class MessageAspect{
 		}
 		if(params[0] instanceof RecommendReplyVO) {
 			RecommendReplyVO recommendReply = (RecommendReplyVO)params[0];
+			String memId = recommendReply.getMember_id();
 			alarm.setBoardCategory("Recommend_Reply");
 			alarm.setBoardNum(recommendReply.getRecomm_num());
 		}
@@ -106,13 +112,21 @@ public class MessageAspect{
 		}
 		if(params[0] instanceof ReviewReplyVO) {
 			ReviewReplyVO reviewReply = (ReviewReplyVO)params[0];
+			String memId = reviewReply.getMember_id();
 			alarm.setBoardCategory("Review_Reply");
 			alarm.setBoardNum(reviewReply.getReview_num());
 		}
 		if(alarmService.alarmRegister(alarm)) {
 			System.out.println("alarm 등록 성공");
 			Map<String, Object> alMap = alarmService.checkAlarmCategory(alarm);
+
 			//메시지 보내기
+
+			String text = alarm+" 새로운 글이 등록되었습니다.";
+		
+			this.template.convertAndSend("/category/msg/id1", text);
+			
+
 //			String text = alMap+" 새로운 글이 등록되었습니다.";
 			
 			this.template.convertAndSend("/category/msg/id1", alMap);
@@ -122,4 +136,26 @@ public class MessageAspect{
 		
 	}
 
+	@Pointcut("execution(* hwarang.artg.member.controller.MemberController.showJoin(..))")
+	public void joinAlarmpt() {}
+	
+	@AfterReturning("joinAlarmpt()")
+	public void afterJoin(JoinPoint jp) {
+		System.out.println("회원가입 알람 AOP 작동!!! ");
+		Object[] params = jp.getArgs();
+		//params[0] == id
+		ManagerAlarmVO alarm = new ManagerAlarmVO();
+		alarm.setCategory("New_Member");
+		alarm.setBoardCategory(params[0]+"_Member");
+		System.out.println(alarm.getBoardCategory());
+		alarm.setBoardNum(0);
+		if(alarmService.alarmRegister(alarm)) {
+			System.out.println("alarm 등록 성공");
+			Map<String, Object> alMap = alarmService.checkAlarmCategory(alarm);
+			this.template.convertAndSend("/category/msg/id1", alMap);
+		}else {
+			System.out.println("Alarm 등록 실패");
+		}
+	}
+	
 }

@@ -34,6 +34,8 @@ import hwarang.artg.exhibition.service.ExhibitionListService;
 import hwarang.artg.exhibition.service.FavoriteMarkService;
 import hwarang.artg.exhibition.service.NaverBlogService;
 import hwarang.artg.exhibition.service.RecentlyViewService;
+import hwarang.artg.rrboard.model.ReviewBoardVO;
+import hwarang.artg.rrboard.service.ReviewBoardService;
 
 @Controller
 @RequestMapping("/exhibition")
@@ -48,7 +50,9 @@ public class ExhibitionController {
 	NaverBlogService blogservice;
 	@Autowired
 	ExhibitionLikeService lService;
-
+	@Autowired
+	ReviewBoardService reviewService;
+	//공연리스트 불러오기
 	@GetMapping("")
 	public String exhibitionShow(Model model, CriteriaDTO cri, ExhibitionVO exh) throws Exception {
 		if(cri.getAmount()==10 || cri.getAmount()==0) {
@@ -72,46 +76,7 @@ public class ExhibitionController {
 		model.addAttribute("eList", service.pagingList(cri, exh, id));
 		return "/exhibition/exhibition";
 	}
-
-	@GetMapping("/mapList")
-	public void exhibitionMapShow(Model model, String area) {
-		if(area==null || area=="") {
-			area = "서울";
-		}
-		List<ExhibitionVO> list = service.showPlaceList(area);
-		List<String> yList = new ArrayList<String>();
-		List<String> xList = new ArrayList<String>();
-		List<String> pList = new ArrayList<String>();
-		for(int i =0;i<list.size();i++) {
-			String x = list.get(i).getExh_gpsx();				
-			String y = list.get(i).getExh_gpsy();
-			String p = list.get(i).getExh_placeseq();
-			if(!x.equals("정보없음")) {
-				if(!y.equals("정보없음")) {
-					xList.add(x);
-					yList.add(y);
-					pList.add(p);
-				}
-			}
-		}
-		model.addAttribute("area",service.getExhArea());
-		model.addAttribute("xList", xList);
-		model.addAttribute("yList", yList);
-		model.addAttribute("pList", pList);
-	}
-
-	@GetMapping(value = "/getPlaceInfo/{placeseq}", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
-	@ResponseBody
-	public ResponseEntity<ExhibitionVO> getPlace(@PathVariable("placeseq") String placeseq) {
-		return new ResponseEntity<>(service.showPlaceListByPseq(placeseq), HttpStatus.OK);
-	}
-	
-	@GetMapping(value = "/placeList/{placeseq}", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
-	@ResponseBody
-	public ResponseEntity<List<ExhibitionVO>> getExhibitionListByPlace(@PathVariable("placeseq") String placeseq) {
-		return new ResponseEntity<>(service.showListByPlace(placeseq), HttpStatus.OK); 
-	}
-	
+	//단일공연정보 불러오기
 	@GetMapping("/view")
 	public void exhibitionDetail(Model model, int seq, Principal principal) throws Exception {
 		String id = principal.getName();
@@ -126,7 +91,51 @@ public class ExhibitionController {
 		List<NaverBlogDTO> blogReview = blogservice.naverurlapi(exh.getExh_title());
 		model.addAttribute("blogReview", blogReview);
 	}
+	//지도리스트불러오기
+	@GetMapping("/mapList")
+	public void exhibitionMapShow(Model model, String area) {
+		if(area==null || area=="") {
+			area = "서울";
+		}
+		List<ExhibitionVO> list = service.showPlaceList(area);
+		List<String> yList = new ArrayList<String>();
+		List<String> xList = new ArrayList<String>();
+		List<String> pList = new ArrayList<String>();
+		List<String> pcList = new ArrayList<String>();
+		for(int i =0;i<list.size();i++) {
+			String x = list.get(i).getExh_gpsx();				
+			String y = list.get(i).getExh_gpsy();
+			String p = list.get(i).getExh_placeseq();
+			String pc = list.get(i).getExh_place();
+			if(!x.equals("정보없음")) {
+				if(!y.equals("정보없음")) {
+					xList.add(x);
+					yList.add(y);
+					pList.add(p);
+				}
+			}
+		}
+		model.addAttribute("area",service.getExhArea());
+		model.addAttribute("xList", xList);
+		model.addAttribute("yList", yList);
+		model.addAttribute("pList", pList);
+	}
+
+	//공연장시퀀스로 공연장정보 얻어오기
+	@GetMapping(value = "/getPlaceInfo/{placeseq}", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
+	@ResponseBody
+	public ResponseEntity<ExhibitionVO> getPlace(@PathVariable("placeseq") String placeseq) {
+		return new ResponseEntity<>(service.showPlaceListByPseq(placeseq), HttpStatus.OK);
+	}
 	
+	//해당공연장의 공연리스트 얻어오기
+	@GetMapping(value = "/placeList/{placeseq}", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
+	@ResponseBody
+	public ResponseEntity<List<ExhibitionVO>> getExhibitionListByPlace(@PathVariable("placeseq") String placeseq) {
+		return new ResponseEntity<>(service.showListByPlace(placeseq), HttpStatus.OK); 
+	}
+	
+	//간단한 단일공연정보 주기
 	@GetMapping(value = "/{seq}", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
 	@ResponseBody
 	public ResponseEntity<ExhibitionVO> getExhibition(@PathVariable("seq") int seq) {
@@ -134,7 +143,7 @@ public class ExhibitionController {
 	}
 	
 	
-	
+	//최근본공연 부분
 	@GetMapping("/recentlyView")
 	public void recentlyView(Model model, CriteriaDTO cri, Principal principal) {
 		String id = principal.getName();
@@ -153,7 +162,14 @@ public class ExhibitionController {
 		return "redirect:/exhibition/recentlyView";
 	}
 	
+	@DeleteMapping(value ="/removeRecentlyView", consumes = "application/json", produces = {MediaType.TEXT_PLAIN_VALUE})
+	@ResponseBody
+	public ResponseEntity<String> removeRec(@RequestBody RecentlyViewVO rec) {
+		rec.setMember_id(SecurityContextHolder.getContext().getAuthentication().getName());
+		return rService.removeRecentlyView(rec) == true ? new ResponseEntity<>("success", HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
 	
+	//즐겨찾기 부분
 	@RequestMapping("/favoriteList")
 	public void exhibitionFavorite(Model model, String group, CriteriaDTO cri, Principal principal) {
 		String id = principal.getName();
@@ -199,7 +215,8 @@ public class ExhibitionController {
 		vo.setMember_id(SecurityContextHolder.getContext().getAuthentication().getName());
 		return fService.removeFavorite(vo) == true ? new ResponseEntity<>("success", HttpStatus.OK) : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
-	
+
+	//추천 부분
 	@RequestMapping("/like/add")
 	public String likeAdd(Principal principal, int seq) {
 		ExhLikeVO like = new ExhLikeVO(principal.getName(), seq, 1);

@@ -13,11 +13,13 @@
 	});
 </script>
 <div class="content-inner" style="padding-bottom: 59px;">
+<section class="projects no-padding-top">
 	<div class="contianer-fluid">
 		<div style="width: 100%; padding-top: 50px; margin-bottom: 10px; text-align: center;">
-			<h1 style="color: #74655F;"><strong>Block Status-Detail</strong></h1>
+			<h1><strong>신고 상세보기</strong></h1>
 		</div>
-	</div><br>
+	</div>
+	<div class="project" id="project3">
 	<div class="row bg-white has-shadow">
 		<div class="card-body" style="padding: 20px;">
 			<div class="table-responsive">
@@ -40,17 +42,16 @@
 						<td colspan="4">${block.content }<br><br></td>
 					</tr>
 					<tr>
+						<td colspan="5" style="text-align: center;">
+							<a href="#" data-toggle="collapse" data-target="#blocked"><i class="fas fa-chevron-down fa-2x"></i></a>
+						</td>
+					</tr>
+					</table>
+					<div class="collapse" id="blocked">
+					<table class="table">
+					<tr>
 						<th>신고 대상 ID</th>
-						<td>${block.blockMemId }</td>
-						<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_ADMIN')">
-							<td>
-								<form id="blockForm" action="blockMember" method="post">
-									<input type="hidden" name="member_id" value="${block.blockMemId }">
-									<input type="submit" value="차단설정" class="btn btn-outline-danger btn-sm">
-								</form>
-							</td>
-						</sec:authorize>
-							
+						<td colspan="2">${block.blockMemId }</td>
 						<th>신고 대상 게시글 번호</th>
 						<td>${block.boardNum }</td>
 					</tr>
@@ -79,13 +80,14 @@
 						</c:choose>
 					</tr>
 				</table>
+				</div>
 				<!-- 답변 등록 Form -->
 				<div id="replyForm" class="form-group collapse">
-					<form action="replyModify" method="post">
+					<form action="replyModify" method="post" style="text-align: center;">
 						<input type="hidden" name="num" value="${block.num }">
-						<textarea class="form-control" rows="5" name="reply" placeholder="${block.reply }" style="resize: none;" disabled="disabled"></textarea>
+						<textarea class="form-control" rows="5" name="reply" placeholder="${block.reply }" style="resize: none;"></textarea>
 						<br>
-						<input class="btn btn-outline-primary btn-sm" type="submit" value="답변등록" style="float: right;">
+						<input class="btn btn-outline-primary btn-sm" type="submit" value="답변등록">
 					</form>
 				</div>
 				<br><br>
@@ -123,4 +125,6 @@
 			 </div>
 		</div>   
 	</div>
+	</div>
+</section>
 </div>

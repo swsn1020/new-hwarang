@@ -1,26 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ include file="../layout/left.jsp" %>
+    <%@ include file="../layout/menu.jsp" %>
+    <%@include file="../layout/rightUser.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
 <style type="text/css">
-.div{
-    padding: 0;
-	margin: 0 auto;
-    box-sizing: border-box;
-}
-form {
-    margin-top: 0em;
+.delete-div{
+	margin: 0 20% 0 20%;
 }
 </style>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-<script type="text/javascript">
-</script>
+<title>화랑 - 탈퇴</title>
 <script type="text/javascript">
 	$(function(){
-		var id = '${param.id}';
+		var id = '${id}';
 		if(id.match(".*(naver).*")){
 			$("input[name='member_id']").val("네이버 간편 로그인");
 			$("input[name='snsId']").val(id);
@@ -50,9 +44,9 @@ form {
 </script>
 </head>
 <body>
-
+<div class="delete-div container">
 		<div align="center">
-			<h1>탈 퇴</h1>
+			<h3 style="font-weight: bold;">탈 퇴</h3>
 		</div>
 			<div class="div" id="containers" style="width: 720px; margin: 0 auto;" align="center">
 				<form action="/member/delete" onsubmit="doSubmit(this);return false;">
@@ -79,8 +73,8 @@ form {
 							<tr>
 								<td colspan="2" align="center">
 								<div>
-									<input type="submit" value="회원탈퇴" class="form-control">
-									<input type="button" onclick="history.back()" class="form-control" value="취소">
+									<input type="submit" value="회원탈퇴" class="btn btn-outline-dark btn-sm">
+									<input type="button" onclick="history.back()" class="btn btn-outline-dark btn-sm" value="취소">
 								</div>
 								</td>
 								
@@ -90,6 +84,7 @@ form {
 				</form>
 				
 			</div>
+</div>
 <%@ include file="../layout/bottom.jsp"%>
 </body>
 </html>

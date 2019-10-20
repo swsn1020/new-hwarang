@@ -9,7 +9,9 @@
 <script	src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
 <script>
 $(function(){
-	
+	if($("#selBox").val() == 'I'){
+		$("#search").removeAttr("disabled");
+	}
 });
 	function selectFunc() {
 		var state = $("#selBox option:selected").val();
@@ -22,11 +24,16 @@ $(function(){
 		}
 	}
 </script>
+<style>
+	th {
+		text-align: center;
+	}
+</style>
 <div class="content-inner" style="padding-bottom: 59px;">
 	<section class="projects no-padding-top">
 		<div class="contianer-fluid">
 			<div style="width: 100%; padding-top: 50px; margin-bottom: 10px; text-align: center;">
-				<h1 style="color: #80425A"><strong>Member List</strong></h1>
+				<h1><strong>회원목록</strong></h1>
 			</div>
 		</div>
 		<div class="project" id="project3">
@@ -43,7 +50,7 @@ $(function(){
 							<option value="Y" <c:out value="${pageMaker.cri.type eq 'Y' ? 'selected' : ''}"/>>YEAR</option>
 							<option value="I" <c:out value="${pageMaker.cri.type eq 'I' ? 'selected' : ''}"/>>ID</option>
 						</select>
-						<input type="text" name="keyword" id="search" disabled="disabled" value="<c:out value="${pageMaker.cri.keyword }"/>">
+						<input type="text" class="form-control-sm" name="keyword" id="search" disabled="disabled" value="<c:out value="${pageMaker.cri.keyword }"/>">
 						<input type="hidden" name="pageNum" value="<c:out value="${pageMaker.cri.pageNum }"/>">
 						<input type="hidden" name="amount" value="<c:out value="${pageMaker.cri.amount }"/>">
 						<input type="submit" class="btn btn-outline-primary btn-sm" value="검색">
@@ -55,90 +62,99 @@ $(function(){
 					<table class="table table-hover">
 						<thead>
 							<tr>
-								<th style="width: 10%;">No</th>
+								<th style="width: 5%;">No</th>
 								<th>ID</th>
 								<th>NAME</th>
 								<th>EMAIL</th>
 								<th>REGISTER DATE</th>
-								<th style="width: 10%;">BLOCK COUNT</th>
-								<th>STATUS</th>
-								<th>EDIT</th>
+								<th>ADDRESS</th>
+								<th>Info</th>
 							</tr>
 						</thead>
 						<tbody>
-							<c:set var="rnum" value="${pageMaker.total - ((pageMaker.cri.pageNum-1)*10)}"/>
+<%-- 							<c:set var="rnum" value="${pageMaker.total - ((pageMaker.cri.pageNum-1)*10)}"/> --%>
+							<c:set var="rnum" value="${((pageMaker.cri.pageNum-1)*10) +1}"/>
 							<c:forEach items="${memberList }" var="member" varStatus="vs">
 								<fmt:formatDate value="${member.member_reg_date }" var="regDate" pattern="yyyy-MM-dd"/>
 								<tr>
-									<td>${rnum }</td>
+									<td style="text-align: center;">${rnum }</td>
 									<td id="memId">${member.member_id }</td>
-									<td>${member.member_name }</td>
+									<td style="text-align: center;">${member.member_name }</td>
 									<td>${member.member_email }</td>
-									<td>${regDate }</td>
-									<td>${member.member_report_count }</td>
-									<c:choose>
-										<c:when test="${member.member_status eq 'disabled' }">
-											<td style="color: #9B434D; font-weight: bold;">${member.member_status }</td>
-										</c:when>
-										<c:otherwise>
-											<td>${member.member_status }</td>
-										</c:otherwise>
-									</c:choose>
-									<td>
-										<c:if test="${member.member_status != 'disabled'}">
-											<button id="block-btn" class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#blockModal${vs.index }">차단</button>
-										</c:if>
-										<!-- blockMember Modal -->
-									  	<div class="modal fade" id="blockModal${vs.index }" style="text-align: center;">
-									    	<div class="modal-dialog modal-dialog-centered">
-									      		<div class="modal-content">
+									<td style="text-align: center;">${regDate }</td>
+									<td>${member.member_address }
+									<td style="text-align: center;">
+										<button id="memInfo" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#memModal${vs.index }">회원정보</button>
+										<!-- The Modal -->
+										  <div class="modal" id="memModal${vs.index }">
+										    <div class="modal-dialog">
+										      <div class="modal-content">
 										        <!-- Modal Header -->
 										        <div class="modal-header">
-										          <h4 class="modal-title">회원차단</h4>
-										          <button type="button" class="close" data-dismiss="modal">&times;</button>
+										          <h1 class="modal-title">'${member.member_name }'님의 회원정보</h1>
+										          <button type="button" class="close" data-dismiss="modal">×</button>
 										        </div>
 										        <!-- Modal body -->
 										        <div class="modal-body">
-										          <form id="bMemForm" action="/block/blockMember" method="post">
-										          	<input type="hidden" name="member_id" value="${member.member_id }">
-										          	${member.member_id }님을 활동정지 시키겠습니까?<br><br>
-										          	<input type="submit" class="btn btn-outline-primary btn-sm" value="확인">
-										          	<button type="button" class="btn btn-outline-dark btn-sm" data-dismiss="modal">닫기</button>
-										          </form>
+										        	<table class="table">
+										        		<tr>
+										        			<th>아이디</th>
+										        			<td colspan="3">${member.member_id }</td>
+										        		</tr>
+										        		<tr>
+										        			<th style="width: 20%;">이름</th>
+										        			<td style="width: 40%;">${member.member_name }</td>
+										        			<th>성별</th>
+										        			<c:choose>
+										        			<c:when test="${member.member_gender eq 0}">
+										        				<td>남자</td>
+										        			</c:when>
+										        			<c:otherwise>
+										        				<td>여자</td>
+										        			</c:otherwise>
+										        			</c:choose>
+										        			
+										        		</tr>
+										        		<tr>
+										        			<th>이메일</th>
+										        			<td colspan="3">${member.member_email }</td>
+										    			</tr>
+										        		<tr>
+										        			<th>주소</th>
+										        			<td colspan="3">${member.member_address }</td>
+										    			</tr>
+										    			<tr>
+										        			<th>가입일</th>
+										        			<td colspan="3">${member.member_reg_date}</td>
+										    			</tr>
+										    			<tr>
+										    				<th>신고수</th>
+										    				<td colspan="3">${member.member_report_count }</td>
+										    			</tr>
+										    			<tr>
+										    				<th>계정 상태</th>
+										    				<td>${member.member_status }</td>
+										    			</tr>
+										        	</table>
+										        	<br><br>
 										        </div>
-									      </div>
-									    </div>
-									  </div>
-										
-										<button id="btn-del" class="btn btn-outline-dark btn-sm" data-toggle="modal" data-target="#delModal${vs.index }">탈퇴</button>
-										<!-- delMember Modal -->
-									  	<div class="modal fade" id="delModal${vs.index }" style="text-align: center;">
-									    	<div class="modal-dialog modal-dialog-centered">
-									      		<div class="modal-content">
-										        <!-- Modal Header -->
-										        <div class="modal-header">
-										          <h4 class="modal-title">회원탈퇴</h4>
-										          <button type="button" class="close" data-dismiss="modal">&times;</button>
+										        <!-- Modal footer -->
+										        <div class="modal-footer">
+										          <button type="button" class="btn btn-outline-dark btn-sm" data-dismiss="modal">Close</button>
 										        </div>
-										        <!-- Modal body -->
-										        <div class="modal-body">
-										          <form id="delMemForm" action="delMember" method="post">
-										          	<input type="hidden" name="member_id" value="${member.member_id }">
-										          	${member.member_id }님을 탈퇴시키시겠습니까?<br><br>
-										          	<input type="submit" class="btn btn-outline-primary btn-sm" value="확인">
-										          	<button type="button" class="btn btn-outline-dark btn-sm" data-dismiss="modal">닫기</button>
-										          </form>
-										        </div>
-									      </div>
-									    </div>
-									  </div>
+										      </div>
+										    </div>
+										  </div>
+  
 									</td>
 								</tr>
-								<c:set var="rnum" value="${rnum-1 }"></c:set>
+<%-- 								<c:set var="rnum" value="${rnum-1 }"></c:set> --%>
+								<c:set var="rnum" value="${rnum+1 }"></c:set>
 							</c:forEach>
 						</tbody>
 					</table>
 				</div>
+				<hr style="border-color: #29201E; border-width: 2px; margin-top: 20px;">
 				<ul class="pagination justify-content-center">
 					<li class='${ pageMaker.prev == true ? "page-item" : "page-item disabled" }'>
 						<a class="page-link" href="memberList?pageNum=${pageMaker.startPage-1 }&type=${param.type}&keyword=${param.keyword}">&laquo;</a>

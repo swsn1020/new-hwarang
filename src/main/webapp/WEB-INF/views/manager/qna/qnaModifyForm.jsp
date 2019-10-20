@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <title>화랑-문의내역 수정</title>
-<%@ include file="../../layout/left.jsp" %>
+<%@ include file="../../layout/menu.jsp" %>
+<%@include file="../../layout/rightUser.jsp"%>
 <script type="text/javascript" src="/resources/js/manager/validationCheck.js"></script>
 <script>
 $(function(){
@@ -65,8 +66,16 @@ function removeAll(e){
     }
 }
 </script>
+<style>
+	.container{
+		margin: 0 20% 0 20%;
+		padding-left: 50px;
+		padding-right: 50px;
+	}
+</style>
 	<div class="container">
 		<h3>질문 수정</h3>
+		<div style="border-top: 2px solid black;"></div>
 		<div class="form-group">
 		<form id="qnaForm" action="qnaModify" method="post" enctype="multipart/form-data">
 			<input type="hidden" name="num" value="${qna.num }">
@@ -108,7 +117,7 @@ function removeAll(e){
 				</tr>
 				<tr>
 					<td colspan="2">
-						<textarea class="form-control" rows="15" name="content" style="resize: none;">${qna.content }</textarea>
+						<pre><textarea class="form-control" rows="15" name="content" style="resize: none;">${qna.content }</textarea></pre>
 					</td>
 				</tr>
 				<tr>
@@ -125,6 +134,8 @@ function removeAll(e){
 					</td>
 				</tr>
 			</table>
+			<div style="border-top: 2px solid black;"></div>
+			<br><br>
 			<div class="btnGroup" style="text-align: center;"> 
 				<input type="submit" class="btn btn-outline-primary btn-sm" value="수정">
 				<input type="button" class="btn btn-outline-dark btn-sm" value="목록" onclick="location.href='qnaListForUser?memId=${qna.memId}'">
@@ -132,4 +143,3 @@ function removeAll(e){
 		</form>
 		</div>
 	</div>
-<%@ include file="../../layout/bottom.jsp"%>

@@ -1,24 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-   	<%@ include file="../layout/left.jsp" %>
+   	<%@ include file="../layout/menu.jsp" %>
+   	<%@include file="../layout/rightUser.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
 <style type="text/css">
-.div{
-    padding: 0;
-	margin: 0 auto;
-    box-sizing: border-box;
-}
-form {
-    margin-top: 0em;
+.modify-div{
+	margin: 0 20% 0 20%;
 }
 </style>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-<script type="text/javascript">
-
-</script>
+<title>화랑 - 개인정보 수정</title>
 <script type="text/javascript">
 	$(function(){
 		$("#submit").on("click",function(){
@@ -95,9 +88,9 @@ form {
 </script>
 </head>
 <body>
-
+<div class="modify-div container">
 		<div align="center">
-			<h1>정보 수정</h1>
+			<h3 style="font-weight: bold;">개인정보 수정</h3>
 		</div>
 		<div class="div" id="containers" style="width: 720px; margin: 0 auto;">
 			<form id="form" name="form" method="post" action="/member/modify">
@@ -175,14 +168,19 @@ form {
 						</div>
 						</td>
 					</tr>
+					<tr>
+						<td colspan="2" align="center">
+						<div>
+							<input type="submit" id="submit" value="확인" class="btn btn-outline-dark">
+							<input type="button" value="취소" onclick="history.back()" class="btn btn-outline-dark">
+						</div>
+						</td>
+					</tr>
 					</tbody>
 				</table>
-				<div class="form-inline" align="center"> 
-					<input type="submit" id="submit" value="확인" class="form-control">
-					<input type="button" value="취소" onclick="history.back()" class="form-control">
-				</div>
 			</form>
 		</div>
+</div>
 <%@ include file="../layout/bottom.jsp"%>
 </body>
 </html>

@@ -3,36 +3,14 @@
     <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
     <%@taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
     <%@ include file="../layout/menu.jsp" %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>마이 페이지</title>
-<script>
-	src="https://code.jquery.com/jquery-3.3.1.min.js"
-    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-    crossorigin="anonymous"></script><!-- jQuery CDN --->
-    
-  <script>
-    function cancelPay() {
-      jQuery.ajax({
-        "url": "http://www.myservice.com/payments/cancel",
-        "type": "POST",
-        "contentType": "application/json",
-        "data": JSON.stringify({
-          "merchant_uid": "mid_" + new Date().getTime(), // 주문번호
-          "cancel_request_amount": 2000, // 환불금액
-          "reason": "테스트 결제 환불" // 환불사유
-          "refund_holder": "홍길동", // [가상계좌 환불시 필수입력] 환불 가상계좌 예금주
-          "refund_bank": "88" // [가상계좌 환불시 필수입력] 환불 가상계좌 은행코드(ex. KG이니시스의 경우 신한은행은 88번)
-          "refund_account": "56211105948400" // [가상계좌 환불시 필수입력] 환불 가상계좌 번호
-        }),
-        "dataType": "json"
-      });
-    }
-</script>
-</head>
-<body>
+	<%@include file="../layout/rightUser.jsp"%>
+<title>화랑 - 나의 페이지</title>
+<style type="text/css">
+h1,h2,h3,h4,h5{
+	font-weight: bold;
+}
+</style>
+
 		<div align="center" style="margin-top: 10px;">
 			<h3 style="font-weight: bold;">나의 페이지</h3>
 		</div>
@@ -44,23 +22,22 @@
 					<tbody>
 						<tr>
 							<td>${member.member_name} 님 <br>
-							나의 포인트 : ${member.member_point}</td>
+							 나의 포인트 : ${member.member_point}</td>
 						</tr>
 						<tr align="right">
 							<!-- 개인정보 수정 -->
 							<td>
-								<button type="button" onclick="location.href='/member/modifyForm?id=${id}'">개인정보 수정</button>
+								<button type="button" class="btn btn-outline-dark btn-sm" onclick="location.href='/member/modifyForm'">개인정보 수정</button>
 							<!-- 회원 탈퇴 -->
-								<button type="button" onclick="location.href='/member/deleteForm?id=${id}'">회원탈퇴</button>						
+								<button type="button" class="btn btn-outline-dark btn-sm" onclick="location.href='/member/deleteForm'">회원탈퇴</button>						
 							</td>
 						</tr>
 						<tr align="right">
 							<!-- 신고 -->
 							<td>
-								<button type="button" onclick="location.href='/block/blockListForUser?memId=${id}'">신고내역</button>
+								<button type="button" class="btn btn-outline-dark btn-sm" onclick="location.href='/block/blockListForUser?memId=<sec:authentication property="principal.username"/>'">신고내역</button>
 							<!-- 1:1 -->
-								<button type="button" onclick="location.href='/qna/qnaListForUser?memId=${id}'">1:1 문의</button>
-								  <button onclick="cancelPay()">환불하기</button>
+								<button type="button" class="btn btn-outline-dark btn-sm" onclick="location.href='/qna/qnaListForUser?memId=<sec:authentication property="principal.username"/>'">1:1 문의</button>
 							</td>
 						</tr>
 					</tbody>
@@ -69,21 +46,12 @@
 			<!-- 예매내역 -->
 			<div>
 				<h3>예매 내역</h3>
-				<table class="table" style="table-layout: fixed" align="center">
-					<tbody>
-					<tr> 
-						<th>주문번호</th>
-						<th>상품 </th> 
-						<th>상품명 </th>
-						<th>수량</th>
-						<th>총 금액</th>
-					</tr>
-					<tr>
-						<th>주문번호:${order.order_seq_num}</th>
-						<th><img width="200" alt="" src="${order.order_image}"></th>
-						<th>${order.order_title}</th>
-						<th>${order.order_qty}</th>
-						<th>${order.order_price}</th>
+				<table class="table">
+					<tbody style="border-top: 2px solid black;">
+					<tr align="center"> 
+						<th>전시명</th>
+						<th>날짜</th>
+						<th>상태</th>
 					</tr>
 					</tbody>
 				</table>
@@ -92,7 +60,7 @@
 			<div>
 				<h3>포인트 내역</h3>
 				<table class="table" >
-					<tbody>
+					<tbody style="border-top: 2px solid black;">
 					<tr align="center"> 
 						<th>번호</th>
 						<th>날짜</th>
@@ -126,7 +94,7 @@
 			<div>
 				<h3>나의 게시글</h3>
 				<table class="table">
-					<tbody align="center">
+					<tbody align="center" style="border-top: 2px solid black;">
 						<tr> 
 							<th>구분</th>
 							<th>제목</th>
@@ -158,6 +126,5 @@
 			</div>
 			<div style="border-top: 2px solid black;"></div>
 		</div>
-</body>
-</html>
+
 <%@ include file="../layout/bottom.jsp"%>

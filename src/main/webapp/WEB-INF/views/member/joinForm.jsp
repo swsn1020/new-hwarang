@@ -1,21 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-   	<%@ include file="../layout/left.jsp" %>
+   	<%@ include file="../layout/menu.jsp" %>
+   	<%@include file="../layout/rightUser.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
 <style type="text/css">
-.div{
+.join-div{
     padding: 0;
 	margin: 0 auto;
     box-sizing: border-box;
 }
-form {
-    margin-top: 0em;
-}
 </style>
 <meta charset="UTF-8">
-<title>joinForm</title>
+<title>화랑 - 회원가입</title>
 <script type="text/javascript">
 
 </script>
@@ -38,7 +36,7 @@ form {
 						$("#inputId").focus();
 						$("#inputId").val("");
 					}else if(data==no){
-						$("#msgId").text("");							
+						$("#msgId").text("");					
 					}
 				},
 				error:function(request, error){
@@ -126,16 +124,45 @@ function joinSubmit(){
 	document.form.action = "/member/join";
 	document.form.submit();
 }
-
+function noSpaceForm(obj) { // 공백사용못하게
+    var str_space = /\s/;  // 공백체크
+    if(str_space.exec(obj.value)) { //공백 체크
+    	$("#msgId").text("공백을 사용할 수 없습니다.\n공백은 자동적으로 제거 됩니다.");
+        obj.focus();
+        obj.value = obj.value.replace(' ',''); // 공백제거
+        return false;
+    }
+    var re = /[~!@\#$%^&*\()\-=+_']/gi; 
+    if(re.test(obj.value))
+    {
+    	$("#msgId").text("특수문자을 사용할 수 없습니다.\n특수문자는 자동적으로 제거 됩니다.");
+    	obj.value = obj.value.replace(re,"");
+    	return false;
+    }
+ // onkeyup="noSpaceForm(this);" onchange="noSpaceForm(this);"
+}
+function noSpacePw(obj){
+	var str_space = /\s/;  // 공백체크
+    if(str_space.exec(obj.value)) { //공백 체크
+    	$("#msgPw").text("공백을 사용할 수 없습니다.\n공백은 자동적으로 제거 됩니다.");
+        obj.focus();
+        obj.value = obj.value.replace(' ',''); // 공백제거
+        return false;
+    }
+    $("#msgPw").text("");
+}
+//이름 한글과 영문만 체크
+//휴대폰 한글넣는지 체크
+//이메일 형식 체크
 </script>
 </head>
 <body>
-
+<div class="join-div container">
 		<div align="center">
 			<h1>회원가입</h1>
 		</div>
 
-		<div class="div" id="containers" style="width: 720px; margin: 0 auto;">
+		<div class="div" id="containers" style="width: 800px; margin: 0 auto;">
 			<form id="form" name="form" method="post" action="/member/join">
 				<table class="table">
 				<tbody>
@@ -143,7 +170,7 @@ function joinSubmit(){
 						<th>아이디</th>
 						<td>
 							<div class="form-inline" id="dataId">
-								<input type="text" id="inputId" class="form-control" name="id" style="width: 40%;">
+								<input type="text" id="inputId" noNameCheck(obj) class="form-control" name="id" style="width: 40%;">
 								<!-- 아이디 중복 확인 -->
 							</div>
 							<small><span id="msgId"></span></small>
@@ -152,14 +179,16 @@ function joinSubmit(){
 					<tr>
 						<th>비밀번호</th>
 						<td>
-							<input type="password" id="inputPw" class="form-control" name="password" style="width: 40%;">
+							<input type="password" id="inputPw" onkeyup="noSpacePw(this);" onchange="noSpacePw(this);" class="form-control" name="password" style="width: 40%;">
 							<!-- 비밀번호 확인 -->
+							<small><span id="msgPw"></span></small>
 						</td>
 					</tr>
 					<tr>
 						<th>이름</th>
 						<td>
-							<input type="text"  class="form-control"  name="name" style="width: 40%;">
+							<input type="text" class="form-control"  name="name" style="width: 40%;">
+							<small><span id="msgName"></span></small>
 						</td>
 					</tr>
 					<tr>
@@ -171,7 +200,7 @@ function joinSubmit(){
 						</td>
 					</tr>
 					<tr>
-						<th>휴대전화번호</th>
+						<th>휴대폰</th>
 						<td>
 						<div class="form-inline">
 							<select class="form-control" name="tel1" title="010" style="width: 20%;">
@@ -217,14 +246,17 @@ function joinSubmit(){
 						</div>
 						</td>
 					</tr>
+					<tr align="center">
+						<td colspan="2">
+							<button type="button" onclick="javascript:joinSubmit();" class="btn btn-outline-dark">확인</button>
+							<button type="button" onclick="location.href='/member/loginForm'" class="btn btn-outline-dark">취소</button>
+						</td>
+					</tr>
 					</tbody>
 				</table>
-				<div class="form-inline" align="center"> 
-					<button type="button" onclick="javascript:joinSubmit();" class="form-control">확인</button>
-					<button type="button" onclick="location.href='/member/loginForm'" class="form-control">취소</button>
-				</div>
 			</form>
 		</div>
+</div>
 <%@ include file="../layout/bottom.jsp"%>
 </body>
 </html>

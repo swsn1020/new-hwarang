@@ -2,17 +2,18 @@
 	pageEncoding="UTF-8"%>
 <title>화랑 - 전시회/공연 리스트</title>
 <%@include file="../layout/menu.jsp"%>
+<%@include file="../layout/rightUser.jsp"%>
 <script type="text/javascript">
 $(function() {
+	//없는페이지막는로직
 	$('.disabled').click(function(e) {
 		alert("더 이상 페이지가 없습니다.");
 		e.preventDefault();
 		return false;
 	});
 });
-
-function addFavorite(seq) {
-	var id = 'id';
+//관심추가로직
+function addFavorite(seq,id) {
 	var groupValue = $("#favGroup"+seq).val();
 	var fav = {
 		exh_seq	: seq,
@@ -24,7 +25,7 @@ function addFavorite(seq) {
 		if(result){
 			alert("관심 등록 완료 되었습니다.");
 			$("#favStatus"+seq).attr("class","star fas fa-star");
-			+$("#favStatus"+seq).attr("data-target","#fav-RemoveModal"+seq);
+			$("#favStatus"+seq).attr("data-target","#fav-RemoveModal"+seq);
 			$(".close").click();
 		}else{
 			alert("관심 등록이 실패 되었습니다.");	
@@ -32,12 +33,11 @@ function addFavorite(seq) {
 		return false;
 	})
 };
-
-function removeFavorite(seq) {
-	var id = 'id';
+//관심삭제로직
+function removeFavorite(seq,id) {
 	var fav = {
 		exh_seq	: seq,
-		member_id : id,
+		member_id : id
 	};
 
 	favService.remove(fav, function(result) {
@@ -52,13 +52,14 @@ function removeFavorite(seq) {
 		return false;
 	})
 };
-
+//새로운그룹명추가로직
 function addFavGroup(seq) {
 	var basicGroup = $("#basic-group"+seq);
 	var addGroupVal = $("#addFavGroup"+seq).val();
 	basicGroup.attr("value",addGroupVal);
 	basicGroup.text("새로운 그룹 - "+addGroupVal);
 	alert(addGroupVal+" 이 입력 되었습니다.");
+	$(".favGroup").append("<option value='"+addGroupVal+"'>"+addGroupVal+"</option>");
 };
 </script>
 <style>
@@ -71,8 +72,11 @@ function addFavGroup(seq) {
 }
 </style>
 <div class="container mt-3 " style="text-align: center;">
+	<sec:authorize access="isAuthenticated()">
+		<sec:authentication property="principal.Username" var="id" />
+	</sec:authorize> 
 	<form action="#">
-		<input type="hidden" name="amount" placeholder="검색어를 입력하세요." value="${pageMaker.cri.amount}"> 
+		<input type="hidden" name="amount" value="${pageMaker.cri.amount}"> 
 		<select name="exh_realmName">
 			<option selected value="">전체</option>
 			<c:forEach items="${realmname}" var="r">
@@ -89,7 +93,6 @@ function addFavGroup(seq) {
         <button type="button" class="far fa-calendar-alt" onclick="openCalendar(document.getElementById('srchFr'));">달력</button>
         <input type="text" class="form_date" id="srchTo" name="exh_endDate" title="종료일" value="${param.exh_endDate}" placeholder="종료일" readonly style="width: 120px;">
         <button type="button" class="far fa-calendar-alt" onclick="openCalendar(document.getElementById('srchTo'));">달력</button>
-			
 		<select name="sort">
 			<option selected value="0">최신순</option>
 			<option value="1" <c:out value="${param.sort  eq 1 ?'selected':''}"/>>지역순</option>
@@ -157,7 +160,7 @@ function addFavGroup(seq) {
 									placeholder="새로운 그룹 이름  추가"> <a
 									class="btn btn-outline-dark" onclick="addFavGroup(${e.exh_seq})">그룹추가</a>
 							</div>
-							<select name="group" id="favGroup${e.exh_seq}">
+							<select name="group" id="favGroup${e.exh_seq}" class="favGroup">
 								<option selected value="찜 목록" id="basic-group${e.exh_seq}">기본
 									- 찜 목록</option>
 								<c:forEach items="${group}" var="g">
@@ -166,11 +169,11 @@ function addFavGroup(seq) {
 							</select>
 							<p class="info">
 								<strong>${e.exh_title}</strong> (가)이 추가됩니다. <br />추가하시겠습니까?
-							</p>
+							</p>	
 						</div>
 						<!-- Modal footer -->
 						<div class="modal-footer">
-							<a onclick="addFavorite(${e.exh_seq})" class="btn btn-outline-dark">추가하기</a> 
+							<a onclick="addFavorite(${e.exh_seq},'${id}')" class="btn btn-outline-dark">추가하기</a> 
 							<a data-dismiss="modal" class="btn btn-outline-dark">취소하기</a>
 						</div>
 					</div>
@@ -188,13 +191,13 @@ function addFavGroup(seq) {
 						<!-- Modal body -->
 						<div class="content" >
 							<p class="info" style="margin: 10px;">
-								<strong>${e.exh_title}</strong> (가)이 삭제됩니다. <br />정말로 삭제
-								하시겠습니까?
+								<strong>${e.exh_title}</strong> (가)이 삭제됩니다. 
+								<br />정말로 삭제 하시겠습니까?
 							</p>
 						</div>
 						<!-- Modal footer -->
 						<div class="modal-footer">
-							<a class="btn btn-outline-dark" onclick="removeFavorite(${e.exh_seq})">삭제하기</a>
+							<a class="btn btn-outline-dark" onclick="removeFavorite(${e.exh_seq},'${id}')">삭제하기</a>
 							<a data-dismiss="modal" class="btn btn-outline-dark">취소하기</a>
 						</div>
 					</div>

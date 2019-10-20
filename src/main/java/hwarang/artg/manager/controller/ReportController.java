@@ -4,14 +4,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.OutputStream;
 import java.security.Principal;
-import java.util.Collection;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -48,7 +45,7 @@ public class ReportController {
 	
 	@RequestMapping("/reportList")
 	public String showReportList(CriteriaDTO cri, Model model) {
-		System.out.println("reportList요청");
+//		System.out.println("reportList요청");
 		PageDTO page = new PageDTO(cri, service.getTotalCount());
 		model.addAttribute("pageMaker", page);
 		model.addAttribute("reportList", service.pagingList(cri));
@@ -57,7 +54,7 @@ public class ReportController {
 	
 	@RequestMapping("/reportListForManager")
 	public String showReportListM(CriteriaDTO cri, Model model) {
-		System.out.println("reportListForManager 요청");
+//		System.out.println("reportListForManager 요청");
 		PageDTO page = new PageDTO(cri, service.getTotalCount());
 		model.addAttribute("pageMaker", page);
 		model.addAttribute("reportList", service.pagingList(cri));
@@ -71,17 +68,17 @@ public class ReportController {
 	
 	@RequestMapping(value="/reportWrite", method=RequestMethod.POST)
 	public String doReportRegister(ReportVO report, String subCategory, Model model, MultipartHttpServletRequest request) {
-		System.out.println("reportWrite 요청");
+//		System.out.println("reportWrite 요청");
 		String category = report.getCategory();
 		report.setCategory(category+"_"+subCategory);
 		String msg = "Report등록에 실패하였습니다. 다시 시도하세요";
 		String url = "reportList";
 		List<MultipartFile> fileList = request.getFiles("file");
 		if(service.reportRegister(report, fileList)) {
-			System.out.println("report 등록성공");
+//			System.out.println("report 등록성공");
 			msg = "Report가 등록되었습니다.";
 		}else {
-			System.out.println("report 등록실패");
+//			System.out.println("report 등록실패");
 			url = "reportWrite";
 		}
 		model.addAttribute("msg", msg);
@@ -94,7 +91,7 @@ public class ReportController {
 		String id = principal.getName();
 		String writer = service.reportGetOne(num).getMemId();
 		List<String> auths = memAuthService.memberAuthsById(id);
-		System.out.println(auths);
+//		System.out.println(auths);
 		if(id.equals(writer) || auths.contains("ROLE_ADMIN") || auths.contains("ROLE_MANAGER")) {
 			System.out.println("권한 확인 완료");
 			model.addAttribute("report", service.reportGetOne(num));
@@ -125,10 +122,10 @@ public class ReportController {
 		String url = "reportView?num="+reportNum;
 		List<MultipartFile> fileList = request.getFiles("file");
 		if(service.reportModify(report, fileList)) {
-			System.out.println("Report 수정성공");
+//			System.out.println("Report 수정성공");
 			msg = "Report가 수정되었습니다.";
 		}else {
-			System.out.println("Report 수정 실패");
+//			System.out.println("Report 수정 실패");
 			url = "reportModify?num="+reportNum;
 		}
 		model.addAttribute("msg", msg);
@@ -164,21 +161,21 @@ public class ReportController {
 				// 삭제요청
 				if(service.reportRemove(num)) {
 					//삭제 성공(파일 삭제) >> 이동할 화면
-					System.out.println("report삭제 성공");
+//					System.out.println("report삭제 성공");
 					msg = "report가 삭제되었습니다";
 				}else {
 					//삭제실패
 					msg = "report 삭제에 실패하였습니다.";
-					System.out.println("report삭제 실패");
+//					System.out.println("report삭제 실패");
 				}
 			}else if(type.equals("modify")) {
 				//수정요청
-				System.out.println("수정요청");
+//				System.out.println("수정요청");
 				return "redirect:reportModify?num="+num;
 			}
 		}else {
 			//비밀번호 불일치
-			System.out.println("비밀번호가 틀렸습니다.");
+//			System.out.println("비밀번호가 틀렸습니다.");
 			msg = "비밀번호를 다시 확인하세요.";
 			url = "reportView?num="+num;
 		}
@@ -199,7 +196,7 @@ public class ReportController {
 		File thumbnail = new File(UPLOAD_PATH+"\\"+"thumbnail"+"\\"+fileName+".png");
 		if (image.exists()) { 
 			thumbnail.getParentFile().mkdirs();
-		    Thumbnails.of(image).size(50, 50).outputFormat("png").toFile(thumbnail);
+		    Thumbnails.of(image).size(100, 100).outputFormat("png").toFile(thumbnail);
 		}
 
 		FileInputStream in = new FileInputStream(thumbnail);
@@ -217,9 +214,10 @@ public class ReportController {
 	//파일 다운로드
 	@RequestMapping("/download")
 	public View download(String uuid) {
-		System.out.println("파일uuid : "+uuid);
+//		System.out.println("파일uuid : "+uuid);
 		return service.getAttachment(uuid);
 	}
+	
 	
 	@ResponseBody
 	@RequestMapping(value="/fileDelete", method=RequestMethod.POST)

@@ -6,21 +6,25 @@
 	prefix="sec"%>
 <title>화 랑</title>
 <%@include file="../layout/menu.jsp"%>
+<%@include file="../layout/rightUser.jsp"%>
 <script type="text/javascript">
 	$(function() {
 		document.domain = "localhost";
 		var url = "/";
 		window.opener.location.replace(url);
 		window.close();
-		
+		tick2();
 	});
+	function tick2(){
+		$('#ticker_02 li:first').slideUp( function () { $(this).appendTo($('#ticker_02')).slideDown(); });
+	}
+	setInterval(function(){ tick2 () }, 3000);
 </script>
 <style>
 #div1 {
-	display: flex;
-	position: relative;
+	display: inline-block;
 	background-color: #fbf8f8;
-	max-width: 100%;
+	width: 100%;
 	height: 700px;
 	padding: 40px;
 }
@@ -39,7 +43,7 @@
 .carousel-caption {
 	position: relative;
 	display: inline-block;
-	z-index: 10;
+	z-index: 5;
 	text-align: center;
 	text-shadow: none !important;
 	right: 0 !important;
@@ -70,13 +74,13 @@
 	padding: 40px;
 	text-align: center;
 }
-#div .row {
+/* #div .row {
 	display: inline-block;
 	position: relative;
 	padding-left: 90px;
 	max-width: 100%;
 	height: 100%
-}
+} */
 .div2-img{
 	display: inline-block;
 	position: relative;
@@ -95,18 +99,43 @@
 }
 #div3{
 	max-width: 100%;
-	height: 400px;
+	height: 500px;
 	background-color: #f8fafc;
-	padding-top: 40px;
-	padding-left: 100px;
+	padding: 0 15% 5% 15%;
 }
 .div3-div{
-	max-width: 800px;
-	height: 400px;
+	max-width: 700px;
+	height: 380px;
+	background-color: white;
 }
 .exh-list{
     padding-right: 20%;
     padding-left: 20%;
+}
+#div3-div2{
+	
+}
+.ticker {
+	width: 500px;
+	height: 40px;
+	overflow: hidden;
+	border: 1px solid #DDD;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	border-radius: 5px;
+	box-shadow: 0px 0px 5px #DDD;
+}
+
+#ticker_02 {
+	height: 250px;
+}
+
+.ticker li {
+	height: 30px;
+	border-bottom: 1px dotted #DDD;
+	padding: 5px;
+	margin: 0px 5px;
 }
 </style>
 <!--  본문시작  -->
@@ -122,7 +151,8 @@
 	<!-- The slideshow -->
 	<div class="carousel-inner">
 		<div class="carousel-item active">
-				<a href="/exhibition/view?seq=154311"> <img class="div1-img"
+				<a href="/exhibition/view?seq=154311"> 
+					<img class="div1-img"
 					alt="item image" role="img"
 					src="http://www.culture.go.kr/upload/rdf/19/09/rdf_201909271124527236.gif">
 				</a>
@@ -188,10 +218,9 @@
 	<img class='div1-img-pattern' src='/resources/img/pattern.jpg'> <span class="carousel-control-next-icon"></span>
 	</a>
 </div>
-</div>
 
-<h2 class='div2-title'style="text-align: center;" >POPULAR IN 화랑</h2>
 <div class="exh-list album py-5 bg-light">
+		<h2 class='div2-title'style="text-align: center; margin: 20px;" >POPULAR IN 화랑</h2>
 		<div class="row">
 				<c:forEach items="${eList}" var="e">
 				<div class="col-sm-4" style="height: 600px; margin: 0 0 20px 0;">
@@ -202,7 +231,7 @@
 					</div>
 					<div class="card-body">
 						<p class="card-title" style="font-weight: bold; font-size: 18px">
-							<a href="/exhibition/view?seq=${e.exh_seq}">${e.exh_title}</a><span class="badge badge-primary">${e.exh_realmName}</span>&nbsp;[${e.exh_recomm_cnt}]
+							<a href="/exhibition/view?seq=${e.exh_seq}">${e.exh_title}</a><span class="badge badge-primary">${e.exh_realmName}</span>
 						</p>
 						
 						<p class="card-text">
@@ -221,10 +250,11 @@
 				</c:forEach>
 		</div>
 </div>
+
 <!-- Nav Tabs HJ -->
-<section id='div3' class="container">
-        <div class="div3-div row">
-            <div class="col-md-12">
+<div id="div3" style="font-weight: bold;">
+        <div class="div3-div row" style="display: inline-block; position: relative;">
+            <div class="col-md-12" style="margin-top: 20px;">
                 <ul id="tabsJustified" class="nav nav-tabs">
                     <li class="nav-item"><a href="" data-target="#notice" data-toggle="tab" class="nav-link active">공지사항</a></li>
                     <li class="nav-item"><a href="" data-target="#faq" data-toggle="tab" class="nav-link">FAQ</a></li>
@@ -233,7 +263,7 @@
                 <div id="tabsJustifiedContent" class="tab-content">
                     <div id="notice" class="tab-pane fade active show" style="padding: 1.5rem; text-align: center">
                         <div class="table-responsive d-flex align-items-center">
-                        	<table class="table table-striped table-sm">
+                        	<table class="table">
                         		<thead style="text-align: center">
                         			<tr>
                         				<th>No</th>
@@ -246,6 +276,9 @@
                         			<fmt:formatDate value="${notice.regDate }" var="regDate" pattern="yyyy-MM-dd"/>
                         			<tr>
                         				<td style="text-align: center">${vs.index+1}</td>
+                        				<td><a href="/notice/noticeView?num=${notice.num}">${notice.title }</a></td>
+                        			<tr>
+                        				<td style="text-align: center">${vs.index+1 }</td>
                         				<td><a href="/noctice/noticeView?num=${notice.num}">${notice.title }</a></td>
                         				<td style="text-align: center">${regDate }</td>
                         				<td style="text-align: center">${notice.readCnt }</td>
@@ -254,24 +287,24 @@
                         	</table>
                         </div>
                     </div>
-                    <div id="faq" class="tab-pane fade" style="padding: 1.5rem; text-align: center">
-                        <div class="list-group">
-                       		<ul>
-	                        	<c:forEach items="${faqList }" var="faq">
+                    <div id="faq" class="tab-pane fade" style="height:300px; padding: 1.5rem; text-align: center; white-space: inherit; overflow: auto; text-overflow: ellipsis;">
+                        <table class="table">
+	                        	<c:forEach items="${faqList }" var="faq" varStatus="vs">
 	                        		<fmt:formatDate value="${faq.regDate }" var="regDate" pattern="yyyy-MM-dd"/>
-	                        			<li class="list-group-item d-inline-block">
-	                        				<a href="/faq/faqVies?num=${faq.num }">
-	                        					<span class="title">${faq.question }</span><br>
-	                        					<span class="content">${faq.answer }</span><br>
-	                        					<span class="date">${regDate }</span>
-	                        				</a>
-	                        			</li>
+		                       		<tr>
+	                        			<td>
+											<div id="accordion">
+												<div><a data-toggle="collapse" href="#content${vs.index }">${faq.question }</a></div>
+												
+												<div id="content${vs.index }" class="collapse"  data-parent="#accordion"><hr>${faq.answer }</div>
+											</div>
+										</td>
+		                       		</tr>
 	                        	</c:forEach>
-                       		</ul>
-                       	</div>
+                       	</table>
                     </div>
                     <div id="freeboard" class="tab-pane fade" style="padding: 1.5rem; text-align: center">
-                        <table class="table table-striped table-sm">
+                        <table class="table">
                         		<thead style="text-align: center">
                         			<tr>
                         				<th>No</th>
@@ -280,10 +313,10 @@
                         				<th>Views</th>
                         			</tr>
                         		</thead>
-                        		<c:forEach items="${freeList }" var="free" varStatus="vs2">
+                        		<c:forEach items="${freeList }" var="free" varStatus="vs">
                         			<fmt:formatDate value="${free.regDate }" var="regDate" pattern="yyyy-MM-dd"/>
                         			<tr>
-                        				<td style="text-align: center">${vs2.index+1}</td>
+                        				<td style="text-align: center">${vs.index+1}</td>
                         				<td><a href="/board/freeboardView?num=${free.num}">${free.title }</a></td>
                         				<td style="text-align: center">${regDate }</td>
                         				<td style="text-align: center">${free.readCount }</td>
@@ -294,11 +327,32 @@
                 </div>
             </div>
         </div>
-        <div class='div3-div2'>
-        
-        
-        </div>
- </section>
+		<%-- <div class='div3-div2' style="display: inline-block; overflow: hidden; width:600px; height: 380px; float: right; background-color: white; padding: 40px;">
+			<h4 style="font-weight: bold; padding-bottom: 10px;">관람후기</h4>
+			<div style="width:450px; height: 300px; overflow: hidden; position: relative;" onmouseover="stopRepeat();" onmouseout="startRepeat();">
+			<table class="table" id="myTable" border="1" style="width: 100%; position: absolute;">
+				<tbody>
+					<c:forEach items="${review}" var="r">
+					<tr style="font-weight: bold; padding: 20px;">
+						<td style="padding: 5px; wi"><a href="/review/view?num=${r.review_num}">${r.review_title}</a><br>
+						${r.member_id}&nbsp;&nbsp;&nbsp;&nbsp;조회수 ${r.review_read_count}&nbsp;&nbsp;&nbsp;&nbsp;<fmt:formatDate value="${r.review_reg_date }" pattern="yyyy-MM-dd"/>
+						</td>
+					</tr>
+					</c:forEach>
+				</tbody>
+			</table>
+			</div>
+		</div> --%>
+		<div style="display: inline-block; overflow: hidden; width:600px; height: 380px; float: right; background-color: white; padding: 40px;">
+			<h4 style="font-weight: bold; padding-bottom: 20px;">관람후기</h4>
+			<ul id="ticker_02" class="ticker">
+				<c:forEach items="${review}" var="r">
+					<li><a href="/review/view?num=${r.review_num}">${r.review_title}</a>
+					&nbsp;&nbsp;${r.member_id}&nbsp;&nbsp;&nbsp;&nbsp;<fmt:formatDate value="${r.review_reg_date }" pattern="yyyy-MM-dd"/></li>
+				</c:forEach>
+			</ul>
+		</div>
+</div> 
 
 
 <!--  오른쪽 사이드 바 -->

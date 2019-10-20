@@ -1,33 +1,32 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <title>고객센터</title>
-<%@ include file="../../layout/left.jsp" %>
+<%@ include file="../../layout/menu.jsp" %>
 <style>
 	.container{
-		margin: 10px 0px;
-		padding: 3px 0px;
+		margin: 0 20% 0 20%;
+		padding-left: 50px;
+		padding-right: 50px;
 	}
 	table th, td {
 		text-align: center;
 	}
 </style>
 	<div class="container">
-		<h3>화랑-내가 신고한 게시물</h3>
+		<h3>내가 신고한 게시물</h3>
+		<div style="border-top: 2px solid black;"></div>
 		<table class="table table-hover">
 		<thead>
 			<tr>
-				<th style="width: 10%">번호</th>
 				<th style="width: 10%">신고번호</th>
 				<th>제목</th>
-				<th style="width: 25%">신고내용</th>
+				<th>신고내용</th>
 				<th style="width: 15%">신고일</th>
 				<th style="width: 15%">처리상태</th>
 			</tr>
 			</thead>
-			<c:set var="rnum" value="${pageMaker.total - ((pageMaker.cri.pageNum-1)*10)}"/>
 			<c:forEach items="${blockList }" var="block">
 				<fmt:formatDate value="${block.regDate }" var="regDate" pattern="yyyy-MM-dd"/>
 				<tr>
-					<td>${rnum }</td>
 					<td>${block.num }</td>
 					<c:set var="category" value="${block.category }"/>
 					<c:choose>
@@ -49,11 +48,11 @@
 						</c:otherwise>
 					</c:choose>
 				</tr>
-				<c:set var="rnum" value="${rnum-1 }"></c:set>
 				</c:forEach>
 		</table>
+	<div style="border-top: 2px solid black;"></div>
 	</div>
-	
+	<br><br>
 	<!-- Pagination -->
 	<div class="container">
 		<ul class="pagination justify-content-center">
@@ -70,4 +69,3 @@
 			</li>
 		</ul>
 	</div>
-<%@ include file="../../layout/bottom.jsp"%>

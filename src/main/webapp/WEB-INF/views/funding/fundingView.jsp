@@ -312,7 +312,7 @@
             	2019-09-30
             </span>
           </div>
-          <p class="post-title">* 새소식 타이틀 *</p>
+          <p class="post-title">${funding.funding_news}</p>
           <div class="post-content-wrapper">
             <div class="update-inner-contents">
               <p>내용: ${funding.funding_content }<img src="${funding.funding_image}" class="fr-fic fr-dib"></p>

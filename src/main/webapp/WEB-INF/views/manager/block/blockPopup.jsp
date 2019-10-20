@@ -53,19 +53,21 @@ $(function(){
 </script>
 </head>
 <body>
-	<div class="container" style="width: 400px; height: 500px;">
-		<h3>신고하기</h3>
+	<div class="container" style="width: 350px; height: 500px;">
+		<h3 style="text-align: center; margin-top: 20px;">신고하기</h3>
 		<div class="form-group" style="padding: 5px;">
 			<form id="blockForm" name="blockForm" method="post">
 				<input type="hidden" name="category" value="${category }">
 				<input type="hidden" name="boardNum" value="${boardNum }"> 
 				<input type="hidden" name="blockMemId" value="${blockMemId }">
-				<input type="text" name="boardTitle" value="${boardTitle }">
-				<p style="font-weight: bold;">신고자ID 
+				<p style="font-weight: bold;">신고 게시글 제목<br>
+					<input type="text" class="form-control" name="boardTitle" value="${boardTitle }">
+				</p>
+				<p style="font-weight: bold;">신고자ID<br>
 					<input type="text" name="memId" class="form-control" value="<sec:authentication property="principal.Username"/>" readonly="readonly">
 				</p>
+				<p style="font-weight: bold;">신고사유</p>
 				<fieldset>
-					<legend style="font-weight: bold; font-size: medium;">신고 내용</legend>
 					<div class="form-check">
 				      <label class="form-check-label" for="radio1">
 				        <input type="radio" class="form-check-input" id="radio1" name="content" value="부적절한 홍보 게시물" onclick="hide('div-content')">부적절한 홍보 게시물
@@ -91,7 +93,7 @@ $(function(){
 				    </div>
 				</fieldset><br>
 			    <div style="text-align: center;">
-		    		<p style="color: red;">*한번 신고한 글은 수정할 수 없습니다.</p>
+		    		<p style="color: red;">*한번 신고한 글은 수정 또는 삭제할 수 없습니다.</p>
 					<input type="submit" class="btn btn-outline-danger btn-sm" value="신고등록">
 					<input type="button" class="btn btn-outline-dark btn-sm" value="닫기" onclick="self.close();">
 				</div>

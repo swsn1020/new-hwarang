@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <title>화랑-신고게시판-상세보기</title>
-<%@ include file="../../layout/left.jsp" %>
+<%@ include file="../../layout/menu.jsp" %>
 <script type="text/javascript">
 $(function(){
 	$(".btn").click(function(){
@@ -37,6 +37,14 @@ $(function(){
 		});
 	});
 	
+// 	$(".img").on("click", function(){
+// 		var imgSrc = $(this).data("src");
+// 		alert(imgSrc);
+// 		imgSrc = 'file://C:\IMAGE\Report\'
+// 		var img = $("#imgModal").find("img[name='img']");
+// 		img.attr("src", "file:C:/IMAGE/Report/"+imgSrc);
+// 	})
+	
 });
 
 function getOriginFileName(fullName){
@@ -55,21 +63,29 @@ function show(id){
 }
 
 </script>
+<style>
+	.container{
+		margin: 0 20% 0 20%;
+		padding-left: 50px;
+		padding-right: 50px;
+	}
+</style>
 	<fmt:formatDate value="${report.regDate }" var="regDate" pattern="yyyy-MM-dd"/>
 	<fmt:formatDate value="${report.modiDate }" var="modiDate" pattern="yyyy-MM-dd"/>
 	<div class="container">
 		<h3>신고 글</h3>
+		<div style="border-top: 2px solid black;"></div>
 		<table class="table">
 			<tr>
 				<th style="width: 15%;">게시판 종류</th>
 				<td colspan="5">
-					<select class="form-control col-sm-3" id="category" name="category" disabled="disabled" style="display: inline-block;">
+					<select class=" col-sm-3" id="category" name="category" disabled="disabled" style="display: inline-block;">
 						<option value="Free">자유게시판</option>
 						<option value="Review">후기게시판</option>
 						<option value="Exhibition">전시게시판</option>
 						<option value="Funding">펀딩게시판</option>
 					</select>
-					<select class="form-control col-sm-3" id="subCategory" name="subCategory" disabled="disabled" style="display: inline-block;">
+					<select class=" col-sm-3" id="subCategory" name="subCategory" disabled="disabled" style="display: inline-block;">
 						<option value="Board">게시글</option>
 						<option value="Reply">댓글</option>
 					</select>
@@ -80,11 +96,9 @@ function show(id){
 				<td colspan="2">${report.title }</td>
 			</tr>
 			<tr>
-				<td colspan="3" style="width: 75%;">
-					<div style="display: inline-block;">작성자&nbsp; ${report.memId } </div>&nbsp;
-					<div style="display: inline-block;">작성일&nbsp; ${regDate } </div>
-				</td>
-				<td>
+				<td>작성자&nbsp; ${report.memId }</td>
+				<td colspan="2">작성일&nbsp; ${regDate }</td>
+				<td style="text-align: right;">
 					<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')">
 						<button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#blockModal">신고등록</button>
 						<button class="btn btn-info btn-sm" data-toggle="collapse" data-target="#replyForm">답변등록</button>
@@ -115,6 +129,27 @@ function show(id){
 				</td>
 			</tr>
 		</table>
+		<div style="border-top: 2px solid black;"></div>
+		<br>
+		<table class="table">
+			<tr>
+				<th style="width: 17%; border-top: none;" rowspan="3">답변 내용</th>
+				<td colspan="3" rowspan="3" style="border-top: none;">${report.reply }</td>
+			</tr>
+			<tr>
+				<td colspan="4" style="border-top: none;">
+					<div class="form-group collapse" id="replyForm" style="text-align: center;">
+						<form action="replyModify" method="post">
+							<input type="hidden" name="num" value="${report.num }">
+							<textarea class="form-control" rows="3" name="reply" placeholder="${report.reply }" style="resize: none;"></textarea><br>
+							<input class="btn btn-outline-primary btn-sm" type="submit" value="답변등록하기">
+						</form>
+					</div>
+				</td>
+			</tr>
+		</table>
+		<br>
+		<div style="border-top: 2px solid black;"></div>
 		
 		<div class="btnGroup" style="text-align: center; margin: 5px; padding: 10px;">
 			<sec:authorize access="!hasRole('ROLE_ADMIN') && !hasRole('ROLE_MANAGER')">
@@ -125,27 +160,10 @@ function show(id){
 			</sec:authorize>
 			<button type="button" class="btn btn-outline-dark btn-sm" onclick="location.href='reportList'">목록</button>
 		</div>	
+	</div>
+	
 		
-		<div class="container" style="text-align: center;">
-			<table class="table">
-				<tr>
-					<th style="width: 17%">답변 내용</th>
-					<td colspan="3">${report.reply }</td>
-				</tr>
-				<tr>
-					<td colspan="4">
-						<div class="form-group collapse" id="replyForm" style="text-align: center;">
-							<form action="replyModify" method="post">
-								<input type="hidden" name="num" value="${report.num }">
-								<textarea class="form-control" rows="3" name="reply" placeholder="${report.reply }" style="resize: none;"></textarea><br>
-								<input class="btn btn-outline-primary btn-sm" type="submit" value="답변등록하기">
-							</form>
-						</div>
-					</td>
-				</tr>
-			</table>
-		</div>
-	</div>	
+		
 	
 	<!-- CheckPwModal -->
 	  <div class="modal fade" id="checkPwModal"  style="text-align: center;">
@@ -200,6 +218,10 @@ function show(id){
 	          		<td><input class="form-control" type="text" name="blockMemId"></td>
 	          	</tr>
 	          	<tr>
+	          		<th>신고 대상 <br> 게시글 제목</th>
+	          		<td><input class="form-control" type="text" name="boardTitle"></td>
+	          	</tr>
+	          	<tr>
 	          		<th>신고내용</th>
 	          		<td>
 	          			<div class="form-check">
@@ -236,4 +258,4 @@ function show(id){
 	    </div>
 	  </div><!-- 신고Form End -->
 	  
-<%@ include file="../../layout/bottom.jsp"%>
+	  

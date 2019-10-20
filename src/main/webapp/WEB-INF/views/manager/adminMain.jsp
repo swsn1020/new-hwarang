@@ -20,17 +20,14 @@ $(function(){
         {
             scales:
             {
-                xAxes: [{
-                   
-                }],
                 yAxes: [{
-                	 barPercentage: 0.1,
+                	barPercentage: 0.1,
  	            	categoryPercentage: 0.1,
  	            	barThickness: 1,
  	                ticks: {
  	                    min: 0,
- 	                    max: 90,
- 	                    stepSize: 15
+ 	                    max: 20,
+ 	                    stepSize: 5
  	                }
                 }],
             },
@@ -39,26 +36,26 @@ $(function(){
             }
         },
         data: {
-            labels: ["NOTICE", "FREE", "REPORT", "BLOCK", "REVIEW", "RECOMMEND"],
+            labels: ["Q&A", "FREE", "REPORT", "BLOCK", "REVIEW", "RECOMMEND"],
             datasets: [
                 {
                     label: "Posted today each board",
                     data: ['${qnaTC}', '${freeBTC}', '${reportTC}', '${blockTC}', '${reviewBTC}', '${recommBTC}'],
                     backgroundColor: [
-                    	'rgba(255, 99, 132, 0.2)',
-    	                'rgba(54, 162, 235, 0.2)',
-    	                'rgba(255, 206, 86, 0.2)',
-    	                'rgba(75, 192, 192, 0.2)',
-    	                'rgba(153, 102, 255, 0.2)',
-    	                'rgba(255, 159, 64, 0.2)',
+                    	'#D0C3C8',
+                    	'#BDACAB',
+                    	'#8A7B8B',
+                    	'#5C5561',
+                    	'#424A47',
+                    	'#697471',
                     ],
                     borderColor: [
-                        'rgb(121, 106, 238)',
-                        'rgb(121, 106, 238)',
-                        'rgb(121, 106, 238)',
-                        'rgb(121, 106, 238)',
-                        'rgb(121, 106, 238)',
-                        'rgb(121, 106, 238)',
+                    	'#D0C3C8',
+                    	'#BDACAB',
+                    	'#8A7B8B',
+                    	'#5C5561',
+                    	'#424A47',
+                    	'#697471',
                     ],
                     borderWidth: 1,
                 }
@@ -68,7 +65,7 @@ $(function(){
 	
     var totalFP = numberWithCommas('${totalFP}');
 //     alert(totalFP);
-	$(".counter").text(totalFP).append("<small style='color: black;'>원</small>");
+	$(".counter").text(totalFP).append("<small style='color: black; font-weight: bold;'>원</small>");
 	$("#review0").addClass('active');
 });	//onload End
     
@@ -89,16 +86,29 @@ $(function(){
 	.carousel-control-prev-icon {
 	outline: black;
 	}
- 	.carousel-item { 
- 	  white-space: nowrap;  
+	
+ 	.content { 
+  	  white-space: normal;   
+/* 	  display: inline-block; */
  	  overflow: hidden; 
  	  text-overflow: ellipsis;  
+ 	  width: 100%;
+ 	  line-height: 2; 
+  	  height: 15em; 
  	} 
-	.carousel-inner .content {
-		width: 100%;
-   		height: 100%;
+	
+	.projects h1{
+		font-family: "Poppins", sans-serif;
 	}
 	
+	#review:hover {
+		color: black;
+		text-decoration: underline;
+	}
+	@font-face { font-family: 'GyeonggiBatang'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/GyeonggiBatang.woff') format('woff'); font-weight: normal; font-style: normal; }
+	.images{
+		font-family: 'GyeonggiBatang';
+	}
 	
 </style>
 <!-- content-inner -->
@@ -188,7 +198,7 @@ $(function(){
           <!-- Statistics -->
           <div class="statistics col-lg-3 col-12">
             <div class="statistic d-flex align-items-center bg-white has-shadow">
-              <div class="icon bg-red"><i class="fa fa-tasks fa-lg" style="padding-top: 10px;"></i></div>
+              <div class="icon bg-red"><i class="fa fa-user-plus fa-lg" style="padding-top: 10px;"></i></div>
               <div class="text"><strong>${newMemCount }</strong><br><small>New Members within a week</small><br></div>
             </div>
             <div class="statistic d-flex align-items-center bg-white has-shadow">
@@ -196,7 +206,7 @@ $(function(){
               <div class="text"><strong>${ExhiCountMonth}</strong><br><small>This month Exhibition</small></div>
             </div>
             <div class="statistic d-flex align-items-center bg-white has-shadow">
-              <div class="icon bg-orange"><i class="fa fa-paper-plane-o fa-lg" style="padding-top: 10px;"></i></div>
+              <div class="icon bg-orange"><i class="fa fa-won-sign fa-lg" style="padding-top: 10px;"></i></div>
               <div class="text"><strong><span class="counter"></span></strong><br><small>TOTAL FUNDING PRICE</small></div>
             </div>
           </div>
@@ -204,7 +214,7 @@ $(function(){
 				<!-- Bar Chart   -->
 				<div class="bar-chart has-shadow bg-white">
 					<div class="title">
-						<strong class="text-violet">Posted Today</strong><br>
+						<strong style="color: #184141;">Posted Today</strong><br>
 						<%
 							SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 							String date = sdf.format(new Date());
@@ -218,7 +228,7 @@ $(function(){
 			<div class="images col-lg-3 col-12" style="text-align: center;">
 				<div class="image d-flex align-items-center bg-white has-shadow">
 					<div id="img" class="carousel slide" data-ride="carousel" style="width: 100%; height: 100%;">
-						<p><strong class="text-red">REVIEW BOARD</strong></p>
+						<p><strong style="color: #CF4C48;">REVIEW BOARD</strong></p><br>
 						 <!-- Indicators -->
 						  <ul class="carousel-indicators">
 						    <li data-target="#img" data-slide-to="0" class="active"></li>
@@ -231,14 +241,14 @@ $(function(){
 						  <!-- The slideshow -->
 						  <div class="carousel-inner" style="padding-left: 30px; padding-right: 30px;">
 						  	<c:forEach items="${reviewList }" var="review" varStatus="vs">
-							    <div class="carousel-item" id="review${vs.index }">
-							      <div class="content">
-							      	<h5><a href="/review/view?num=${review.review_num}">${review.review_title }</a></h5>
-							      	<br><br><br><span> ${review.review_content }</span>
-							      </div>
+						    	<div class="carousel-item" id="review${vs.index }">
+						      	<h5><a id="review" href="/reivew/view?num=${review.review_num }">${review.review_title }</a></h5><br>
+							    	<div class="content">
+								      	${review.review_content }
+							      	</div>
 							    </div>
 						  	</c:forEach>
-						  </div>
+						  </div><br><br>
 						  <!-- Left and right controls -->
 						  <a class="carousel-control-prev" href="#img" data-slide="prev">
 						    <span class="carousel-control-prev-icon"></span>
@@ -265,7 +275,7 @@ $(function(){
             <div class="left-col col-lg-6 d-flex align-items-center justify-content-between">
               <div class="project-title d-flex align-items-center">
                 <div class="text">
-                  <h3 class="h4"><a href="/qna/qnaListForManager">Q&amp;A</a></h3><small>최근 등록된 문의</small>
+                  <h3 class="h4"><a href="/qna/qnaListForManager"><strong>Q&amp;A</strong></a></h3><small>최근 등록된 문의</small>
                 </div>
               </div>
               <div class="project-date"><span class="hidden-sm-down"><%=date %></span></div>
@@ -325,7 +335,7 @@ $(function(){
 						<div class="project-title d-flex align-items-center">
 							<div class="text">
 								<h3 class="h4">
-									<a href="/block/blockListForManager" style="color: none;">Block Status</a>
+									<a href="/block/blockListForManager" style="color: none;"><strong>Block Status</strong></a>
 								</h3>
 								<small>최근 신고된 게시물</small>
 							</div>
