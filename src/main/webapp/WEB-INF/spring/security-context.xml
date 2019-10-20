@@ -14,7 +14,7 @@
 	<bean id="customUserDetailsService"
 		class="hwarang.artg.security.CustomUserDetailsService" />
 	<security:http>
-<!-- 		<security:intercept-url pattern="/member/**/*" access="hasAnyRole('ROLE_USER')" /> -->
+        <security:intercept-url pattern="/member/**/*" access="hasAnyRole('ROLE_USER')" />
 		<security:intercept-url pattern="/admin/*" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')" />
 		<security:intercept-url pattern="/alarm/*" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')" />
 		<security:intercept-url pattern="/exhibition/**/*" access="hasAnyRole('ROLE_USER')" />

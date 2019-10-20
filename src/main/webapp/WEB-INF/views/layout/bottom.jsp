@@ -28,7 +28,7 @@
 			<td><p><a href="#">introduce</a>&nbsp;&nbsp;|&nbsp;&nbsp;</p></td>
 			<td><p><a href="#">infomation</a>&nbsp;&nbsp;|&nbsp;&nbsp;</p></td>
 			<td><p><a href="#">help</a>&nbsp;&nbsp;|&nbsp;&nbsp;</p></td>
-			<td><p><a href="#">sitemap</a></p></td>
+			<td><p><a href="#">notice</a></p></td>
 		</tr>
 	</table>
 
