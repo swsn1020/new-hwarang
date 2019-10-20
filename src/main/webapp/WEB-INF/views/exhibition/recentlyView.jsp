@@ -91,10 +91,10 @@ function removeRecently(seq,id) {
 							<li class="nav-item col-sm-12" id="side_item" style="text-align: center">
 								<h5 style="font-weight : bold; "><a class="nav-link" href="/exhibition/view?seq=${r.exh_seq}">${r.exh_title}<span class="badge badge-primary">${r.exh_realmName}</span></a></h5></li>
 							<li class="nav-item col-sm-12" id="side_item" style="font-weight : bold;">&nbsp;본 일시 : <fmt:formatDate pattern="MM월 dd일 kk시mm분ss초" value="${r.recently_date}" timeZone="Asia/Seoul" /></li>
-							<li class="nav-item col-sm-12" id="side_item"><br></li>
-							<li class="nav-item col-sm-12" id="side_item">${r.exh_place}</li>
-							<li class="nav-item col-sm-12" id="side_item">${r.exh_price}</li>
-							<li class="nav-item col-sm-12" id="side_item"><fmt:formatDate pattern="yyyy-MM-dd" value="${r.exh_startDate}" timeZone="Asia/Seoul"/> ~ <fmt:formatDate pattern="yyyy-MM-dd" value="${r.exh_endDate}" timeZone="Asia/Seoul"/></li>						
+							<li class="nav-item col-sm-12" id="side_item"><br><br></li>
+							<li class="nav-item col-sm-12" id="side_item">장소&nbsp;:&nbsp;${r.exh_place}<br><br></li>
+							<li class="nav-item col-sm-12" id="side_item">가격&nbsp;:&nbsp;${r.exh_price}<br><br></li>
+							<li class="nav-item col-sm-12" id="side_item">기간&nbsp;:&nbsp;<fmt:formatDate pattern="yyyy-MM-dd" value="${r.exh_startDate}" timeZone="Asia/Seoul"/> ~ <fmt:formatDate pattern="yyyy-MM-dd" value="${r.exh_endDate}" timeZone="Asia/Seoul"/><br><br><br><br></li>						
 						</ul>
 						<a class="btn btn-outline-dark" style="float:right;;" onclick="removeRecently(${r.exh_seq},'${id}')">삭제</a>
 					</td>

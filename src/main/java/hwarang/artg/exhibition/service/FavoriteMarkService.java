@@ -63,8 +63,8 @@ public class FavoriteMarkService {
 	public int getTotalCount(String favorite_group) {
 		return mapper.getTotalCount(favorite_group);
 	}
-	public int getTotalCountById(String member_id) {
-		return mapper.getTotalCountById(member_id);
+	public int getTotalCountById(String favorite_group,String member_id) {
+		return mapper.getTotalCountById(favorite_group, member_id);
 	}
 	
 	

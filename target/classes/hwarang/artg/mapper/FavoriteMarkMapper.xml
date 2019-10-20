@@ -55,7 +55,7 @@
 	</select>
 
 	<select id="getTotalCountById" resultType="int">
-		select count(*) from favorite_mark where member_id = #{member_id}
+		select count(*) from favorite_mark where member_id = #{member_id} and  favorite_group = #{favorite_group}
 	</select>
 
 </mapper>

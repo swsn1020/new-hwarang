@@ -573,7 +573,6 @@ function addFavGroup(seq) {
 				</table>
 		      </div>
 		    </div>
-<<<<<<< HEAD
 		    <div id="menu2" class="container tab-pane fade"><br>
 		      <!-- 한줄평 구현 부분 -->
 		      <h3>구매평</h3>
@@ -599,11 +598,7 @@ function addFavGroup(seq) {
 				 </div>				 
 			  <ul class="list-group list-group-flush col-sm-10" id="mention"></ul>	 
 			  <div class="mention-footer"></div>     
-=======
-		     <div id="menu2" class="container tab-pane fade"><br>
-		      <h3>Menu 2</h3>
-		      <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
->>>>>>> refs/remotes/origin/hyeji2
+
 		    </div>
 		  </div>
 		</div>

@@ -223,7 +223,6 @@ function addFavGroup(seq) {
 		</ul>
 		<form action="#">
 			<select name="amount">
-				<option value="" <c:out value="${param.amount  == null ?'selected':''}"/>>--기본 12개--</option>
 				<option value="4" <c:out value="${pageMaker.cri.amount  eq 4 ?'selected':''}"/>>4개</option>
 				<option value="8" <c:out value="${pageMaker.cri.amount  eq 8 ?'selected':''}"/>>8개</option>
 				<option value="12" <c:out value="${pageMaker.cri.amount  eq 12 ?'selected':''}"/>>12개</option>
