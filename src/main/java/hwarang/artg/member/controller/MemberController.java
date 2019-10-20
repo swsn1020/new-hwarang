@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -379,6 +380,7 @@ public class MemberController {
 		model.addAttribute("url", url);
 		return "/member/result";
 	}
+	@PreAuthorize("isAuthenticated()")
 	@RequestMapping("/myPage")
 	public String showMyPage(Principal principal,Model model) {
 		String id = principal.getName();
@@ -390,6 +392,7 @@ public class MemberController {
 		return "/member/myPage";
 	}
 	
+	@PreAuthorize("isAuthenticated()")
 	@RequestMapping("/modifyForm")
 	public String showModifyForm(Model model, Principal principal) {
 		String id = principal.getName();
@@ -397,6 +400,8 @@ public class MemberController {
 		model.addAttribute("member", member);
 		return "/member/modifyForm";
 	}
+	
+	@PreAuthorize("isAuthenticated()")
 	@RequestMapping("/modify")
 	public String showModify(String id,String SNSid,String password,String name,String tel1,String tel2,String tel3,
 			String email1,String email2,String zipNo,String roadAddrPart1,String addrDetail,Model model){
@@ -430,12 +435,15 @@ public class MemberController {
 			return "/member/result";
 		}
 	}
+	@PreAuthorize("isAuthenticated()")
 	@RequestMapping("/deleteForm")
 	public String showDeleteForm(Principal principal,Model model) {
 		String id = principal.getName();
 		model.addAttribute("id", id);
 		return "/member/deleteForm";
 	}
+	
+	@PreAuthorize("isAuthenticated()")
 	@RequestMapping("/delete")
 	public String showDelete(Model model,String member_id,String password,String snsId,HttpSession session) {
 		//네이버 회원
