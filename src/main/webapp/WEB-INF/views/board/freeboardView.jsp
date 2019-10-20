@@ -14,7 +14,7 @@ $(function() {	//문서가 로딩되면 실행할 함수
 	$('.like').click(function(e) {
 		e.preventDefault();
 		if("${fboard.free_like_status}"==0){
-			alert("등록요청");
+			alert("해당 글을 추천하였습니다.");
 			location.replace('/board/like/add?num=${fboard.num}'); 
 		}
 		if("${fboard.free_like_status}"==1){
