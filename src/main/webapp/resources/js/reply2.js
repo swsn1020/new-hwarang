@@ -78,7 +78,7 @@ var replyService = (function() {
 	}
 	//단일 댓글 조회 로직
 	function get(rno, callback, error) {
-		$.get("/exhReplies/"+reply_num+".json", function(result) {
+		$.get("/exhReplies/"+rno+".json", function(result) {
 			if(callback){
 				callback(result);
 			}

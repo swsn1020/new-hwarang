@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <title>1:1 질문</title>
 <%@ include file="../../layout/menu.jsp" %>
+<%@include file="../../layout/rightUser.jsp"%>
 <script type="text/javascript" src="/resources/js/manager/validationCheck.js"></script>
 <script>
 $(function(){
@@ -100,7 +101,7 @@ function removeAll(e){
 						</tr>
 						<tr>
 							<td colspan="2">
-								<textarea class="form-control" rows="15" name="content" style="resize: none;" placeholder="*문의 내용은 2000자까지 가능합니다. "></textarea>
+								<pre><textarea class="form-control" rows="15" name="content" style="resize: none;" placeholder="*문의 내용은 2000자까지 가능합니다. "></textarea></pre>
 							</td>
 						</tr>
 						<tr>
@@ -121,4 +122,3 @@ function removeAll(e){
 			</form>
 		</div>
 	</div>
-<%@ include file="../../layout/bottom.jsp"%>

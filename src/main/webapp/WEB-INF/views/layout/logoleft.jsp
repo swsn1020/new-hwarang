@@ -60,7 +60,6 @@ $(function(){
 				$(this).parent().addClass("active");
 			}
 		});
-
 		$("#close-sidebar").click(function() {
 			$(".page-wrapper").removeClass("toggled");
 		});
@@ -68,26 +67,44 @@ $(function(){
 			$(".page-wrapper").addClass("toggled");
 		});
 		
-		
 	});
 </script>
+<style>
+.content {
+	padding: 16px;
+	position: relative;
+}
+#navbar {
+	overflow: hidden;
+}
+/* The sticky class is added to the navbar with JS when it reaches its scroll position */
+.sticky {
+	position: fixed;
+	top: 0;
+	width: 100%;
+}
+/* Add some top padding to the page content to prevent sudden quick movement (as the navigation bar gets a new position at the top of the page (position:fixed and top:0) */
+.sticky+.content {
+	padding-top: 100px;
+}
+.sidebar-menu{
+	display: inline;
+}
+</style>
 </head>
 <body>
-	
-		<!-- Main Navbar-->
-<div class="row page-wrapper chiller-theme toggled">	
-      <header class="header">
 	<!-- Hwarang Logo -->
-	<div style="width: 100%; text-align: center;">
+	<div class="page-wrapper chiller-theme toggled">
 		<h1>
 			<a href="/"><img class="mx-auto d-block"
 				src="https://trello-attachments.s3.amazonaws.com/5d6613e9716d6e23f5e579bb/312x140/3f52467f9d01dd9ce0a0f28eacece66e/%EB%A1%9C%EA%B3%A0.png"
 				alt="Hwarang Logo"></a>
 		</h1>
-	</div>
-        <nav class="navbar">
-          <div class="container-fluid">
-            <div class="navbar-holder d-flex align-items-center justify-content-between" style="height: 70px;">
+		
+		<!-- Main Navbar-->
+		<div id="navbar" style="z-index: 2">
+        <nav class="navbar" >
+            <div class="navbar-holder d-flex align-items-center justify-content-between" style="height: 60px;">
             	<!-- Navbar Header-->
               <div class="navbar-header">
               </div>
@@ -116,83 +133,95 @@ $(function(){
                 <!-- Logout    -->
                 <li class="nav-item"><a href="login.html" class="nav-link logout"> <span class="d-none d-sm-inline">Logout</span><i class="fa fa-sign-out fa-lg"></i></a></li>
               </ul>
-            </div>
           </div>
         </nav>
-      </header>
+       </div>
+       <script>
+			window.onscroll = function() {myFunction()};
+			
+			var navbar = document.getElementById("navbar");
+			var sticky = navbar.offsetTop;
+			
+			function myFunction() {
+			  if (window.pageYOffset >= sticky) {
+			    navbar.classList.add("sticky")
+			  } else {
+			    navbar.classList.remove("sticky");
+			  }
+			}	
+		</script>
 	
-	
-	<div class="page-content d-flex align-items-stretch">
+	<div class="row content">
+	<div class="col-sm-2 d-flex align-items-stretch">
 		<a id="show-sidebar" class="btn" href="#">
 	    	<i class="fas fa-bars"></i>
 	  	</a>
 		<nav id="sidebar" class="sidebar-wrapper">
 			<div class="sidebar-content">
 				<div class="sidebar-brand">
-		        	<a href="#">MENU</a>
+		        	<a href="#"></a>
 		        	<div id="close-sidebar">
 		        	  <i class="fas fa-times"></i>
 		        	</div>
 		      	</div>
 		      <div class="sidebar-menu">
 				<ul>
-					<li class="sidebar-dropdown"><a href="#"><i class="fa fa-tachometer-alt"></i><span>전시회/공연</span></a>
-						<div class="sidebar-submenu">
-							<ul>
-		                        <li>
-		                            <a href="/exhibition">전시&amp;공연</a>
-		                        </li>
-		                        <li>
-		                            <a href="/exhibition/mapList">전시회_지도</a>
-		                        </li>
-		                        <li>
-		                            <a href="#">박람회</a>
-		                        </li>
-		                    </ul>
-	                    </div>
-					</li>
-					<li class="sidebar-dropdown"><a href="#"><i class="fa fa-tachometer-alt"></i><span>커뮤니티</span></a>
-						<div class="sidebar-submenu">
-							<ul>
-		                        <li>
-		                            <a href="/notice/noticeList">공지사항</a>
-		                        </li>
-		                        <li>
-		                            <a href="/faq/faqList">FAQ</a>
-		                        </li>
-		                        <li>
-		                            <a href="/qna/qnaListForUser?memId=haddie">Q&amp;A</a>
-		                        </li>
-		                        <li>
-		                            <a href="/report/reportList">신고게시판</a>
-		                        </li>
-		                        <li>
-		                            <a href="/free/freeboard">자유게시판</a>
-		                        </li>
-		                        <li>
-		                            <a href="/review/reviewboard">후기게시판</a>
-		                        </li>
-		                    </ul>
-		                 </div>
-					</li>
-					<li class="sidebar-dropdown"><a href="#"><i class="fa fa-tachometer-alt"></i><span>펀딩</span></a>
-						<div class="sidebar-submenu">
-							<ul>
-		                        <li>
-		                            <a href="#">크라우드펀딩</a>
-		                        </li>
-							</ul>
-						</div>
-					</li>
+					<sec:authorize access="isAuthenticated()">
+						<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')">
+							<li class="nav-item" id="side_item"><a
+							class="nav-link" href="/admin/main">관리자 페이지</a></li>
+						</sec:authorize>
+						<sec:authorize access="!hasRole('ROLE_ADMIN')">
+							<li class="nav-item" id="side_item"><a
+								class="nav-link" href="/member/myPage">나의 페이지</a></li>
+						</sec:authorize>
+					<li class="nav-item" id="side_item"><a
+						class="nav-link" href="/logout">로그아웃</a></li>
+					<li class="nav-item" id="side_item"><a
+						class="nav-link" href="/exhibition/favoriteList">관심목록</a></li>	
+					<li class="nav-item" id="side_item"><a
+						class="nav-link" href="/exhibition/recentlyView">최근본상품</a><div></div></li>
+					<input id="userid" type="hidden" value='<sec:authentication property="principal.Username"/>'>
+					<%-- <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
+                <!-- Notifications-->
+                <li class="nav-item dropdown"> <a id="notifications" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-bell-o fa-lg"></i><span class="badge bg-red badge-corner">${alarmCnt}</span></a>
+                  <ul aria-labelledby="notifications" class="dropdown-menu">
+                    <li id="notification-item">
+                    	<a rel="nofollow" href="#" class="dropdown-item"> 
+	                        <div class="notification">
+	                          <div class="notification-content"><i class="fa fa-envelope bg-green"></i>You have 6 new messages </div>
+	                          <textarea class="notification-time">알람넣을부분</textarea>
+	                        </div>
+                        </a>
+                    </li>
+                    <c:forEach items="${alarmList}" var="useralarm">
+                    	<li>
+	                    	<a rel="nofollow" href="${useralarm.url }" class="dropdown-item"> 
+		                        <div class="notification">
+		                          <div class="notification-content"><i class="fa fa-twitter bg-blue"></i>${useralarm.category }&nbsp;${useralarm.subCategory }이 등록되었습니다.</div>
+		                          <div class="notification-time"><small></small></div>
+		                        </div>
+	                        </a>
+                        </li>
+                    </c:forEach>
+                  </ul> --%>
+					</sec:authorize>
+					<sec:authorize access="isAnonymous()">
+					<li class="nav-item" id="side_item"><a
+						class="nav-link" href="/member/joinForm">회원가입</a></li>
+					<li class="nav-item" id="side_item"><a
+						class="nav-link" href="/member/loginForm">로그인</a></li>
+					</sec:authorize>
 				</ul>
 		      	</div>
-					<div class="sidebar-brand">
+					<!-- <div class="sidebar-brand">
 			        	<div id="plusfriend-addfriend-button"></div>
-			        </div>
+			        </div> -->
 			</div>
 			</nav>
-<!-- 		</div> -->
+		</div>
 <!-- 	</div> -->
 		
 		<!-- 각자 내용 시작 -->
-<div class="col-sm-8">
+<div class="col-sm-8" style="margin-left: 30px; z-index: 1">
+	<div class="align-items-center">

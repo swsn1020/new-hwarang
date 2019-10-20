@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <title>화랑-FAQ</title>
 <%@include file="../../layout/managerSidebar.jsp"%>
+
 <style>
 	.container{
 		margin: 10px 0px;
@@ -48,8 +49,8 @@
 								<td>${faq.category }</td>
 								<td>
 									<div id="accordion">
-										<div><a data-toggle="collapse" href="#content${vs.index }">${faq.question }</a></div>
-										<div id="content${vs.index }" class="collapse"  data-parent="#accordion">${faq.answer }</div>
+										<div><a data-toggle="collapse" href="#content${vs.index }">Q.&nbsp;${faq.question }</a></div><br>
+										<div id="content${vs.index }" class="collapse"  data-parent="#accordion">A.&nbsp;&nbsp;${faq.answer }</div>
 									</div>
 								</td>
 								<td>${regDate}</td>
@@ -85,6 +86,7 @@
 					</tbody>
 				</table>
            	</div>
+           	<hr style="border-color: #29201E; border-width: 2px; margin-top: 20px; width: 90%;">
            	<div style="text-align: center; margin: 10px;">
            		<div class="text">
 					<form id="searchForm" action="faqListForManager" method="get">

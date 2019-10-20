@@ -3,8 +3,7 @@
     <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
     <%@taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
     <%@ include file="../layout/menu.jsp" %>
-
-
+	<%@include file="../layout/rightUser.jsp"%>
 <title>화랑 - 나의 페이지</title>
 <style type="text/css">
 h1,h2,h3,h4,h5{
@@ -23,14 +22,14 @@ h1,h2,h3,h4,h5{
 					<tbody>
 						<tr>
 							<td>${member.member_name} 님 <br>
-							나의 포인트 : ${member.member_point}</td>
+							 나의 포인트 : ${member.member_point}</td>
 						</tr>
 						<tr align="right">
 							<!-- 개인정보 수정 -->
 							<td>
-								<button type="button" class="btn btn-outline-dark btn-sm" onclick="location.href='/member/modifyForm?id=${id}'">개인정보 수정</button>
+								<button type="button" class="btn btn-outline-dark btn-sm" onclick="location.href='/member/modifyForm'">개인정보 수정</button>
 							<!-- 회원 탈퇴 -->
-								<button type="button" class="btn btn-outline-dark btn-sm" onclick="location.href='/member/deleteForm?id=${id}'">회원탈퇴</button>						
+								<button type="button" class="btn btn-outline-dark btn-sm" onclick="location.href='/member/deleteForm'">회원탈퇴</button>						
 							</td>
 						</tr>
 						<tr align="right">

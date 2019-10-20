@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <title>화랑 - 전시회/공연 리스트</title>
 <%@include file="../layout/menu.jsp"%>
+<%@include file="../layout/rightUser.jsp"%>
 <script type="text/javascript">
 $(function() {
 	//없는페이지막는로직
@@ -24,7 +25,7 @@ function addFavorite(seq,id) {
 		if(result){
 			alert("관심 등록 완료 되었습니다.");
 			$("#favStatus"+seq).attr("class","star fas fa-star");
-			+$("#favStatus"+seq).attr("data-target","#fav-RemoveModal"+seq);
+			$("#favStatus"+seq).attr("data-target","#fav-RemoveModal"+seq);
 			$(".close").click();
 		}else{
 			alert("관심 등록이 실패 되었습니다.");	
@@ -58,6 +59,7 @@ function addFavGroup(seq) {
 	basicGroup.attr("value",addGroupVal);
 	basicGroup.text("새로운 그룹 - "+addGroupVal);
 	alert(addGroupVal+" 이 입력 되었습니다.");
+	$(".favGroup").append("<option value='"+addGroupVal+"'>"+addGroupVal+"</option>");
 };
 </script>
 <style>
@@ -158,7 +160,7 @@ function addFavGroup(seq) {
 									placeholder="새로운 그룹 이름  추가"> <a
 									class="btn btn-outline-dark" onclick="addFavGroup(${e.exh_seq})">그룹추가</a>
 							</div>
-							<select name="group" id="favGroup${e.exh_seq}">
+							<select name="group" id="favGroup${e.exh_seq}" class="favGroup">
 								<option selected value="찜 목록" id="basic-group${e.exh_seq}">기본
 									- 찜 목록</option>
 								<c:forEach items="${group}" var="g">

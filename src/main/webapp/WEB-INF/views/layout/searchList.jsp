@@ -18,9 +18,9 @@
 	href="https://fonts.googleapis.com/css?family=Raleway:400,500,500i,700,800i"
 	rel="stylesheet">
 <title>검색리스트</title>
-
 <%@ include file="../layout/menu.jsp"%>
-<div class="container bootstrap snippet">
+<%@include file="../layout/rightUser.jsp"%>
+<div class="container bootstrap snippet" style="padding: 0 10% 0 10%;">
 	<div class="row">
 		<div class="col-lg-12">
 			<div class="ibox float-e-margins">

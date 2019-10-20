@@ -49,59 +49,36 @@
 <!-- <link href="https://fonts.googleapis.com/css?family=Prompt:400,500,700" rel="stylesheet"> -->
 <!-- kakao login -->
 <script>
-//let
-let socket = null;
 $(document).ready(function(){
-	connectWS();
-});
-function connectWS(){
-    console.log("tttttttttttttt")
-	var ws = new WebSocket("ws://localhost:8081/freeboardView?num=382");
-    socket = ws;
-    
-	ws.onopen = function(){
-		console.log('Info.connection opened');
-		console.log(ws);
-	};
-	
-	ws.onmessage = function(event){
-		console.log("ReceiveMesaage:", event.data+'\n');
-		  var $socketAlert = $('#socketAlert');
-	        $socketAlert.html(event.data);
-	        $socketAlert.css('display', 'block');
-	        
-	        setTimeout( function() {
-	        	$socketAlert.css('display', 'none');
-	        }, 3000);
-	};
-	
-	ws.onclose = function(event){
-		console.log('Info:connection closed.');
-		//setTimeout(function(){connect(); },1000);
-	};
-	ws.onerror = function(err) {console.log('Errror:, err');};
-	
-}
-$('#btnSend').on('click',function(evt){
-	evt.preventDefault();
-	if(socket.readyState!==1) return;
-	//let
-		let msg = $('input#msg').val();
-		ws.send(msg);
-	
+	$(document).on('mouseover', '.topMenu span', function() {
+	    $('.dept01').slideDown(400);
+	});
+	$(document).on('mouseover', 'div', function () {
+	    if (!$(this).hasClass('topMenu')) {
+	        $('.dept01').slideUp(400);
+	    }
+	});
 });
 </script>
 <style>
-@font-face { font-family: 'Arita-dotum-Medium'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/Arita-dotum-Medium.woff') format('woff'); font-weight: normal; font-style: normal; }
+@font-face { font-family: 'GyeonggiBatang'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/GyeonggiBatang.woff') format('woff'); font-weight: normal; font-style: normal; }
 *{
-	font-family: 'Arita-dotum-Medium';
+	/* font-family: 'Arita-dotum-Medium'; */
+	font-family: 'GyeonggiBatang';
 }
-.header{
-	float: left;
-	/* font-family: 'Prompt', 'Noto Sans KR',dotum,'돋움',vernade,arial,sans-serif; */
-	font-family: 'Arita-dotum-Medium';
-	display: flex;
+.topMenu {width: 100%; margin-bottom: 20px; text-align: center; height: 40px; z-index: 8; margin-left: 30%;}
+.topMenu:after {content: ""; display: block; clear: both; }
+.menu01>li {float: left; width: 160px; line-height: 40px;}
+.topMenu li {list-style: none;}
+.menu01 span {font-size: 25px; font-weight: bold; }            
+.dept01 {display: none; padding: 20px 0;  position: relative; font-size: 20px; font-weight: bold;}            
+#nop {float: none;}     
+.none:after {content: ""; display: block; clear: both; width: 100%; height: 1px;}
+.nono{ display: block; width: 100%;height: 1px;}
+.header-div{
+	font-family: 'GyeonggiBatang';
 	padding-left: 42%;
+	padding-top: 10px;
 	margin: 0 auto;
 	border: 1px solid none;
 }
@@ -140,13 +117,16 @@ $('#btnSend').on('click',function(evt){
 </head>
 <body>
 	<header>
-		<div class='header'>
+		<div class='header-div'>
 			<div class='header-title'>
 				<h1>
 					<a href="/"><img class="header_img maintitle"
 						src="https://trello-attachments.s3.amazonaws.com/5d6613e9716d6e23f5e579bb/312x140/3f52467f9d01dd9ce0a0f28eacece66e/%EB%A1%9C%EA%B3%A0.png"
 						alt="Cinque Terre"></a>
-			<div class="container bootstrap snippet">
+				</h1>
+			</div>
+		</div> 
+				<div class="container bootstrap snippet" style="text-align: center; padding-left: 3%;">
 					<div class="row">
 						<div class="col-lg-12">
 							<div class="ibox float-e-margins">
@@ -155,92 +135,61 @@ $('#btnSend').on('click',function(evt){
 										<span class="text-navy"></span>
 									</h2>
 									<div class="search-form">
-										<form id="searchList" action="/layout/searchList" method="get">	
-											<input type="text" name="key" placeholder="검색어를 입력하세요" value="<c:out value="${param.key}"/>" />
-											<input type="hidden" name="pageNum" value="<c:out value="${pageMaker.cri.pageNum}"/>"/>
-											<input type="hidden" name="amount" value="<c:out value="${pageMaker.cri.amount}"/>"/>
-											<button class="btn btn-default">검색</button>											
+										<form id="searchList" action="/layout/searchList" method="get">
+											<input type="text" name="key" placeholder="검색어를 입력하세요"
+												value="<c:out value="${param.key}"/>" /> <input
+												type="hidden" name="pageNum"
+												value="<c:out value="${pageMaker.cri.pageNum}"/>" /> <input
+												type="hidden" name="amount"
+												value="<c:out value="${pageMaker.cri.amount}"/>" />
+											<button class="btn btn-default">검색</button>
 										</form>
-										</div>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-					
-				</h1>
-			</div>
-			<div class="header-login">
-				<ul class="nav justify-content-center">
-					<sec:authorize access="isAuthenticated()">
-						<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')">
-							<li class="nav-item" id="side_item"><a
-							class="nav-link" href="/admin/main">관리자 페이지</a></li>
-						</sec:authorize>
-						<sec:authorize access="!hasRole('ROLE_ADMIN')">
-							<li class="nav-item" id="side_item"><a
-								class="nav-link" href="/member/myPage">나의 페이지</a></li>
-						</sec:authorize>
-					<li class="nav-item" id="side_item"><a
-						class="nav-link" href="/logout">로그아웃</a></li>
-					<li class="nav-item" id="side_item"><a
-						class="nav-link" href="/exhibition/favoriteList">관심목록</a></li>	
-					<li class="nav-item" id="side_item"><a
-						class="nav-link" href="/exhibition/recentlyView">최근본상품</a><div></div></li>
-					<input id="userid" type="hidden" value='<sec:authentication property="principal.Username"/>'>
-   
-					</sec:authorize>
-					<sec:authorize access="isAnonymous()">
-					<li class="nav-item" id="side_item"><a
-						class="nav-link" href="/member/joinForm">회원가입</a></li>
-					<li class="nav-item" id="side_item"><a
-						class="nav-link" href="/member/loginForm">로그인</a></li>
-					</sec:authorize>
-				</ul>
-			</div>
-		</div>
-		<div class="header-menu">
-			<nav class="navbar navbar-expand-sm">
-				<div class="collapse navbar-collapse" id="navbarsExample03">
-					<ul class="navbar-nav justify-content-center">
-						<li class="nav-item dropdown"><a
-							class="nav-link dropdown-toggle" href="#" id="dropdown03"
-							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&nbsp;이용안내&nbsp;</a>
-							<div class="dropdown-menu" aria-labelledby="dropdown03">
-								<a class="dropdown-item" href="#">화랑안내</a> 
-								<a class="dropdown-item" href="/notice/noticeList">공지사항</a> 
-								<a class="dropdown-item" href="/faq/faqList">FAQ</a>
-							</div>
-						</li>
-						<li class="nav-item dropdown"><a
-							class="nav-link dropdown-toggle" href="#" id="dropdown03"
-							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&nbsp;&nbsp;화랑&nbsp;</a>
-							<div class="dropdown-menu" aria-labelledby="dropdown03">
-								<a class="dropdown-item" href="/exhibition">공연·전시</a>
-								<a class="dropdown-item" href="/exhibition/mapList">네비게이션</a>
-							</div>
-						</li>
-						<li class="nav-item">
-        					<a class="nav-link" href="/review/reviewboard">&nbsp;관람후기&nbsp;</a>
-        				</li>
-        				<li class="nav-item dropdown"><a
-							class="nav-link dropdown-toggle" href="#" id="dropdown03"
-							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&nbsp;커뮤니티&nbsp;</a>
-							<div class="dropdown-menu" aria-labelledby="dropdown03">
-								<a class="dropdown-item" href="/board/freeboard">자유게시판</a>
-								<a class="dropdown-item" href="/recommend/recommendboard">홍보</a>
-								<a class="dropdown-item" href="/report/reportList">신고</a>
-							</div>
-						</li>
-        				<li class="nav-item">
-        					<a class="nav-link" href="/funding/fundingList">&nbsp;크라우드펀딩&nbsp;</a>
-        				</li>
-					</ul>
 				</div>
-
-			</nav>
-		</div>
-</header>
-		</div>
+		<div class="topMenu">
+            <ul class="menu01">
+                <li><span>이용안내</span>
+                    <ul class="dept01">
+                        <li id="nop"><a href="/member/about">화랑안내</a></li>
+                        <li id="nop"><a href="/notice/noticeList">공지사항</a></li>
+                        <li id="nop"><a href="/faq/faqList">FAQ</a></li>
+                    </ul>
+                </li>
+                <li><span>화랑</span>
+                    <ul class="dept01">
+                        <li id="nop"><a href="/exhibition">공연·전시</a></li>
+                        <li id="nop"><a href="/exhibition/mapList">네비게이션</a></li>
+                        <li id="nop">&nbsp;</li>
+                    </ul>
+                </li>
+                <li><a href="/review/reviewboard"><span>관람후기</span></a>
+                	<ul class="dept01">
+                        <li id="nop">&nbsp;</li>
+                        <li id="nop">&nbsp;</li>
+                        <li id="nop">&nbsp;</li>
+                    </ul>
+                </li>
+                <li><span>커뮤니티</span>
+                    <ul class="dept01">
+                        <li id="nop"><a href="/board/freeboard">자유게시판</a></li>
+                        <li id="nop"><a href="/recommend/recommendboard">홍보게시판</a></li>
+                        <li id="nop"><a href="/report/reportList">신고</a></li>
+                    </ul>
+                </li>
+                <li><a href="/funding/list"><span>&nbsp;&nbsp;크라우드펀딩</span></a>
+                	<ul class="dept01">
+                        <li id="nop">&nbsp;</li>
+                        <li id="nop">&nbsp;</li>
+                        <li id="nop">&nbsp;</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div class="none">
+        </div>
 </header>
 

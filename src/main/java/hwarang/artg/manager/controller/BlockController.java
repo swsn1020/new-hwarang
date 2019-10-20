@@ -1,8 +1,6 @@
 package hwarang.artg.manager.controller;
 
 import java.security.Principal;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +36,7 @@ public class BlockController {
 	
 	@RequestMapping("/blockListForManager")
 	public String showBlockListM(CriteriaDTO cri, Model model) {
-		System.out.println("blockList요청 For Manager");
+//		System.out.println("blockList요청 For Manager");
 		PageDTO page = new PageDTO(cri, service.getTotalCount());
 		model.addAttribute("pageMaker", page);
 		model.addAttribute("blockList", service.pagingList(cri));
@@ -47,7 +45,7 @@ public class BlockController {
 	
 	@RequestMapping("/blockListForUser")
 	public String showBlockListU(CriteriaDTO cri, Model model, Principal principal) {
-		System.out.println("blockList요청 For User");
+//		System.out.println("blockList요청 For User");
 		//기본
 //		List<BlockStatusVO> blockList = service.blockGetAllById(memId);
 //		model.addAttribute("blockList", blockList);
@@ -64,7 +62,7 @@ public class BlockController {
 	@RequestMapping(value="form", method=RequestMethod.POST)
 	public String showBlockForm(String blockMemId, String category, String boardNum, String replyNum, String boardTitle, Model model) {
 		//게시판_상세보기에서 신고버튼 클릭
-		System.out.println("신고 팝업 요청");
+//		System.out.println("신고 팝업 요청");
 //		Map<String, Object> params = new HashMap<String, Object>();
 //		params.put("category", category);
 		model.addAttribute("blockMemId", blockMemId);
@@ -85,16 +83,10 @@ public class BlockController {
 		return service.blockRegister(block);
 	}
 	
-	@RequestMapping(value="/blockModify", method=RequestMethod.GET)
-	public String showBlockModify(int num, Model model) {
-		model.addAttribute("block", service.blockGetOne(num));
-		return "manager/block/blockModify";
-	}
-	
 //	@ResponseBody
 	@RequestMapping(value="replyModify", method=RequestMethod.POST)
 	public String doReplyModify(@RequestParam("num")int num, @RequestParam("reply")String reply, Model model) {
-		System.out.println("replyModify 요청 들어옴");
+//		System.out.println("replyModify 요청 들어옴");
 		String msg = "처리에 실패하였습니다.";
 		String url = "/block/blockListForManager";
 		if(reply.contains("삭제")) {
@@ -102,10 +94,10 @@ public class BlockController {
 			String id = service.blockGetOne(num).getBlockMemId();
 			if(memService.memberGetOne(id) != null) {
 				if(memService.doMemberCountBlock(id)) {
-					System.out.println("Member Report Count up!");
+//					System.out.println("Member Report Count up!");
 				}
 			}else{
-				System.out.println("해당하는 id의 멤버가 없습니다.");
+//				System.out.println("해당하는 id의 멤버가 없습니다.");
 			}
 			if(service.replyModify(reply, num)) {
 				msg = "신고 처리가 완료되었습니다.";
@@ -121,11 +113,11 @@ public class BlockController {
 	//blockView 설정**
 	@RequestMapping("blockView")
 	public String showBlockView(int num, Model model, Principal principal) {
-		System.out.println("blockView 요청 들어옴");
+//		System.out.println("blockView 요청 들어옴");
 //		String id = principal.getName();
 //		BlockStatusVO block = service.blockGetOne(num);
 		Map<String, Object> maps = service.doCheckBlock(num);
-		System.out.println(maps.toString());
+//		System.out.println(maps.toString());
 		model.addAllAttributes(service.doCheckBlock(num));
 		return "manager/block/blockView";
 		
@@ -134,7 +126,7 @@ public class BlockController {
 	
 	@RequestMapping(value="/checkPw", method=RequestMethod.POST)
 	public String doCheckPw(int num, String type, String password, Model model, Principal principal) {
-		System.out.println("checkPw요청들어옴 ");
+//		System.out.println("checkPw요청들어옴 ");
 		String id = principal.getName();
 		String originPw = memService.memberGetOne(id).getMember_password();
 		String url = "blockListForUser?memId="+id;
@@ -146,22 +138,22 @@ public class BlockController {
 				// 삭제요청
 				if(service.blockRemove(num)) {
 					//삭제 성공(파일 삭제) >> 이동할 화면
-					System.out.println("Block삭제 성공");
+//					System.out.println("Block삭제 성공");
 					msg = "Block가 삭제되었습니다";
 				}else {
 					//삭제실패
 					url = "blockView?num="+num;
 					msg = "Block삭제에 실패하였습니다.";
-					System.out.println("Block삭제 실패");
+//					System.out.println("Block삭제 실패");
 				}
 			}else if(type.equals("modify")) {
 				//수정요청 (수정폼 불러오기)
-				System.out.println("수정요청");
+//				System.out.println("수정요청");
 				return "redirect:blockModify?num="+num;
 			}
 		}else {
 			//비밀번호 불일치
-			System.out.println("비밀번호가 틀렸습니다.");
+//			System.out.println("비밀번호가 틀렸습니다.");
 			msg = "비밀번호를 다시 확인하세요.";
 			url = "blockView?num="+num;
 		}
@@ -182,22 +174,22 @@ public class BlockController {
 			MemberAuthVO ma = new MemberAuthVO();
 			ma.setMember_id(id);
 			ma.setMember_auth("ROLE_USER");
-			System.out.println(ma);
+//			System.out.println(ma);
 			if(memAuthService.memberauthRemove(ma)) {
 				if(memService.doMemberStatusBlock(id)) {
 					msg = id+"님의 활동정지가 설정되었습니다.";
 				}else {
 					// disabled 설정에 실패
-					System.out.println("활동 정지 실패(disabled실패)");
+//					System.out.println("활동 정지 실패(disabled실패)");
 				}
 			}else {
 				// 'ROLE_USER' 권한 빼기 실패(이미 없는 경우)
-				System.out.println("권한빼기 실패(role_user)");
+//				System.out.println("권한빼기 실패(role_user)");
 				msg = "이미 활동 정지 처리된 아이디 입니다.";
 			}
 		}else {
 			//해당하는 아이디 찾을수 없음
-			System.out.println("해당하는 아이디의 멤버 없음");
+//			System.out.println("해당하는 아이디의 멤버 없음");
 			msg = "해당하는 아이디의 Member가 없습니다";
 		}
 		model.addAttribute("url", url);

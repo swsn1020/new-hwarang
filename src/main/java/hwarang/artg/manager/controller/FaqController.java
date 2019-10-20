@@ -8,8 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import hwarang.artg.common.model.CriteriaDTO;
 import hwarang.artg.common.model.PageDTO;
@@ -73,16 +71,16 @@ public class FaqController {
 	
 	@RequestMapping(value="/faqModify", method=RequestMethod.POST)
 	public String doFaqModify(FAQVO faq, Model model) {
-		System.out.println("질문:"+ faq.getQuestion());
-		System.out.println("답:"+ faq.getAnswer());
-		System.out.println("카테고리:"+ faq.getCategory());
+//		System.out.println("질문:"+ faq.getQuestion());
+//		System.out.println("답:"+ faq.getAnswer());
+//		System.out.println("카테고리:"+ faq.getCategory());
 		int num = faq.getNum();
 		String url = "faqListForManager";
 		String msg = "FAQ 수정 실패";
 		if(service.faqModify(faq)) {
 			msg = "FAQ 수정 성공";
 		}else {
-			System.out.println("faq 수정실패 다시시도");
+//			System.out.println("faq 수정실패 다시시도");
 			url = "faqModify?num?"+num;
 		}
 		model.addAttribute("msg", msg);

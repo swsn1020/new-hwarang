@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ include file="../layout/menu.jsp" %>
+<%@include file="../layout/rightUser.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -78,7 +79,7 @@ function goLogin(){
 </script>
 </head>
 <body>
-	<div class="container" style="background: #f8fafc; padding: 10px;">
+	<div class="container" style="background: #f8fafc; padding: 10px; ">
 
 		<h1 align="center" style="margin-top: 20px;">로그인</h1>
 <!-- 		<div style="border: 1px solid black;"></div> -->

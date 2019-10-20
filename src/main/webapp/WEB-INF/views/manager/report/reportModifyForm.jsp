@@ -104,7 +104,7 @@ function removeAll(e){
 					</tr>
 					<tr>
 						<td colspan="2">
-							<textarea class="form-control" rows="15" name="content" style="resize: none;">${report.content }</textarea>
+							<pre><textarea class="form-control" rows="15" name="content" style="resize: none;">${report.content }</textarea></pre>
 						</td>
 					</tr>
 					<tr>
@@ -113,7 +113,7 @@ function removeAll(e){
 							<c:forEach items="${reportImgList }" var="reportImg">
 								<div>
 									${reportImg.originName }
-									<a href="#this" name="fileDeleteBtn" class="btn" data-uuid="${reportImg.uuid }">삭제</a>
+									<a href="#this" name="fileDeleteBtn" class="btn btn-link" data-uuid="${reportImg.uuid }" style="color: red;">삭제</a>
 								</div>
 							</c:forEach>
 							<p style="margin: 5px;"><input type="file" name="file" multiple="multiple"></p>
@@ -130,4 +130,3 @@ function removeAll(e){
 		</div>
 		
 	</div>
-<%@ include file="../../layout/bottom.jsp"%>

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <title>화랑-나의 질문내역</title>
 <%@ include file="../../layout/menu.jsp" %>
+<%@include file="../../layout/rightUser.jsp"%>
 <script>
 $(function(){
 	$(".btn").click(function(){
@@ -39,13 +40,13 @@ $(function(){
 			<tr>
 				<th style="width: 17%;">문의분류</th>
 				<td colspan="3">
-					<select id="category" name="category" class="form-control col-md-3" disabled="disabled" style="display: inline-block;">
+					<select id="category" name="category" class="col-md-3" disabled="disabled" style="display: inline-block;">
 						<option value="info">고객정보</option>
 						<option value="order">주문</option>
 						<option value="Board">게시판</option>
 						<option value="other">기타</option>
 					</select>
-					<select id="subCategory" name="subCategory" class="form-control col-md-3" disabled="disabled" style="display: inline-block;">
+					<select id="subCategory" name="subCategory" class="col-md-3" disabled="disabled" style="display: inline-block;">
 						<option value="modiInfo">정보수정</option>
 						<option value="delInfo">회원탈퇴</option>
 						<option value="pay">결제</option>
@@ -68,9 +69,9 @@ $(function(){
 				<td colspan="3">${qna.title }</td>
 			</tr>
 			<tr>
-				<td colspan="3" style="width: 90%;">
-					<div style="display: inline-block;">작성자&nbsp; ${qna.memId } </div>&nbsp;
-					<div id="readCnt" style="display: inline-block;">작성일&nbsp; ${regDate}</div>
+				<td><strong>작성자</strong>&nbsp; ${qna.memId } </td>
+				<td colspan="2" style="width: 70%;;">
+					<strong>작성일</strong>&nbsp; ${regDate}
 				</td>
 				<td>
 					<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')">
@@ -107,11 +108,11 @@ $(function(){
 		<table class="table">
 			<tr>
 				<th style="width: 17%; border-top: none;" rowspan="3">답변 내용</th>
-				<td colspan="3" rowspan="3" style="border-top: none;">${qna.reply }</td>
+				<td colspan="3" rowspan="3" style="border-top: none; ">${qna.reply }</td>
 			</tr>
 			<tr>
 				<!-- 답변등록Form -->
-				<td colspan="4">
+				<td colspan="4" style="border-top: none;">
 					<div class="form-group collapse" id="replyForm" style="text-align: center;">
 						<form action="replyModify" method="post">
 							<input type="hidden" name="num" value="${qna.num }">
@@ -165,4 +166,3 @@ $(function(){
 		  
 	
 	
-<%@ include file="../../layout/bottom.jsp"%>

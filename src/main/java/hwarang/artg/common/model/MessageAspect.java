@@ -80,7 +80,7 @@ public class MessageAspect{
 		}
 		if(params[0] instanceof BlockStatusVO) {
 			BlockStatusVO block = (BlockStatusVO)params[0];
-			alarm.setBoardCategory("Block_Board");
+			alarm.setBoardCategory("Block_Status");
 			alarm.setBoardNum(block.getNum());
 		}
 		if(params[0] instanceof FreeBoardVO) {

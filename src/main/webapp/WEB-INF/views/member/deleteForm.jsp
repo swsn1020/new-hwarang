@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ include file="../layout/menu.jsp" %>
+    <%@include file="../layout/rightUser.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,7 +14,7 @@
 <title>화랑 - 탈퇴</title>
 <script type="text/javascript">
 	$(function(){
-		var id = '${param.id}';
+		var id = '${id}';
 		if(id.match(".*(naver).*")){
 			$("input[name='member_id']").val("네이버 간편 로그인");
 			$("input[name='snsId']").val(id);
