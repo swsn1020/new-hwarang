@@ -7,6 +7,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ include file="../layout/menu.jsp"%>
+<%@ include file="../layout/rightUser.jsp"%>
 <%
 	String order_qty = request.getParameter("order_qty");
 	String order_price = request.getParameter("order_price");

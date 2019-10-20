@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 	<title>[화랑펀딩] ${funding.funding_subject}</title>
 <%@include file="../layout/menu.jsp"%>
+<%@ include file="../layout/rightUser.jsp"%>
 <script type="text/javascript">
 	//디데이 종료 일자 설정
 	var countDownDate = new Date("October 22, 2019 06:00:00").getTime(); 

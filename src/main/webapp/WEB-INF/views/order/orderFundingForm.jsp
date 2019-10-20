@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ include file="../layout/menu.jsp"%>
+<%@ include file="../layout/rightUser.jsp"%>
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!-- 주문자 휴대폰 번호 -->

@@ -3,6 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <%@ include file="../layout/menu.jsp"%>
+<%@ include file="../layout/rightUser.jsp"%>
 
 <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"/>
@@ -24,7 +25,7 @@
     <div class="col-lg-12">
         <div class="panel panel-default">
         
-            <div class="panel-heading">Crowdfunding Register</div>
+            <div class="panel-heading">자신만의 펀딩을 등록해주세요</div>
             <!-- /.panel-heading -->
             <div class="panel-body">
             
