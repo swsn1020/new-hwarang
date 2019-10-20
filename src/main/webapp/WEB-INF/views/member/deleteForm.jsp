@@ -15,6 +15,7 @@
 <script type="text/javascript">
 	$(function(){
 		var id = '${id}';
+		
 		if(id.match(".*(naver).*")){
 			$("input[name='member_id']").val("네이버 간편 로그인");
 			$("input[name='snsId']").val(id);
@@ -48,7 +49,7 @@
 		<div align="center">
 			<h3 style="font-weight: bold;">탈 퇴</h3>
 		</div>
-			<div class="div" id="containers" style="width: 720px; margin: 0 auto;" align="center">
+		<div class="div" id="containers" style="width: 720px; margin: 0 auto;" align="center">
 				<form action="/member/delete" onsubmit="doSubmit(this);return false;">
 					<input class="deleteForm" type="hidden" name="snsId" id="snsId">
 					<table class="table"> 
@@ -84,7 +85,7 @@
 				</form>
 				
 			</div>
-</div>
+		</div>
 <%@ include file="../layout/bottom.jsp"%>
 </body>
 </html>

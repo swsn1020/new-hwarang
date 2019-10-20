@@ -170,7 +170,7 @@ function noSpacePw(obj){
 						<th>아이디</th>
 						<td>
 							<div class="form-inline" id="dataId">
-								<input type="text" id="inputId" noNameCheck(obj) class="form-control" name="id" style="width: 40%;">
+								<input type="text" id="inputId" onkeyup="noSpaceForm(this);" onchange="noSpaceForm(this);" class="form-control" name="id" style="width: 40%;">
 								<!-- 아이디 중복 확인 -->
 							</div>
 							<small><span id="msgId"></span></small>

@@ -10,7 +10,6 @@ h1,h2,h3,h4,h5{
 	font-weight: bold;
 }
 </style>
-
 		<div align="center" style="margin-top: 10px;">
 			<h3 style="font-weight: bold;">나의 페이지</h3>
 		</div>
@@ -126,5 +125,27 @@ h1,h2,h3,h4,h5{
 			</div>
 			<div style="border-top: 2px solid black;"></div>
 		</div>
-
+		
+		  <!-- checkPw Modal -->
+		  <div class="modal fade" id="delModal" style="text-align: center;">
+		    <div class="modal-dialog modal-dialog-centered">
+		      <div class="modal-content">
+		        <!-- Modal Header -->
+		        <div class="modal-header">
+		          <h4 class="modal-title">비밀번호 확인</h4>
+		          <button type="button" class="close" data-dismiss="modal">&times;</button>
+		        </div>
+		        <!-- Modal body -->
+		        <div class="modal-body">
+		          <form action="checkPw" method="post">
+		          	<p>비밀번호를 입력하세요 </p>
+		          	<input type="password" name="password"> <br><br>
+		          	<input type="submit" class="btn btn-outline-primary btn-sm" value="확인">
+		          	<button type="button" class="btn btn-outline-secondary btn-sm" data-dismiss="modal">닫기</button>
+		          </form>
+		        </div>
+		      </div>
+		    </div>
+		  </div>
+		  <!-- Modal End -->
 <%@ include file="../layout/bottom.jsp"%>
