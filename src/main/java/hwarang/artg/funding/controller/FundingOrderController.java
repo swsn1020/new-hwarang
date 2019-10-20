@@ -36,6 +36,9 @@ public class FundingOrderController {
 	@Autowired
 	CrowdfundingService cService;
 	
+	@Autowired
+	FundingOrderService oService;
+	
 	@GetMapping("/orderGoodsForm")
 	public void orderEachGoods(@ModelAttribute("orderVO") OrderVO orderVO, Model model, int seq, Principal principal) throws Exception {
 		String id = principal.getName();
@@ -49,6 +52,12 @@ public class FundingOrderController {
 		model.addAttribute("member",mService.memberGetOne(id));
 		model.addAttribute("orderFundingForm",crowdfundingVO);
 		model.addAttribute("funding",cService.fundingGetOne(funding_num));
-		
 	}
+	@RequestMapping("/orderResult")
+	public void orderResult(CrowdfundingVO funding,OrderVO order,Model model,Principal principal)throws Exception  {
+		String id = principal.getName();
+		model.addAttribute("member",mService.memberGetOne(id));
+		model.addAttribute("order", oService.insertOrder(order));
+	}
+
 }

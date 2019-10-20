@@ -6,26 +6,27 @@
 <mapper namespace="hwarang.artg.mapper.FundingOrderMapper">
 
 	<select id="selectOne" resultType="hwarang.artg.funding.model.OrderVO">
-		select * from funding_order 
+		select * from orderInfo 
 		where order_seq_num = #{order_seq_num}
 	</select>
 	
 	<select id="selectAll" resultType="hwarang.artg.funding.model.OrderVO">
-		select * from funding_order
+		select * from orderInfo oi ,member m
+				where m.member_id = oi.member_id
+				and m.member_id = #{member_id}
 	</select>
 
 	<select id="getFunding">
 		select * from crowdfunding
 	</select>
-	<insert id="insertOrder">
+	<insert id="insertOrder" parameterType="hwarang.artg.funding.model.OrderVO">
 		<selectKey keyProperty="order_seq_num" order="BEFORE" resultType="int">
 			SELECT order_seq_num.nextVal
             FROM dual
 		</selectKey>
-		INSERT INTO funding_order (order_seq_num,order_name,order_price,order_id,member_id,order_rec,member_address,order_phone,amount,order_date)
+		INSERT INTO orderInfo (member_id,order_seq_num,order_title,order_image,order_qty,order_price)
 		VALUES
-		(order_seq_num.nextval, #{order_seq_num},#{order_name},#{order_price},#{order_id},#{member_id}
-		,#{order_rec},#{member_address},#{order_phone},#{amount},#{order_date})
+		(#{member_id},#{order_seq_num}, #{order_title},#{order_image},#{order_qty},#{order_price})
 	</insert>
 	
 </mapper>

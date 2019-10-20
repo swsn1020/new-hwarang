@@ -52,6 +52,19 @@
 	z-index: 4;
 	float: right;
 }
+#myTable{
+	 background-color: #ccffff;
+	 width: 80%;
+	 padding: 30px;
+	 height: 100px;
+	 table-layout: fixed;
+	 font-size: 17px;
+}
+#list_view{
+	 width: 50%;
+	 padding: 50xp;
+	 table-layout: fixed;
+}
 </style>
 
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
@@ -104,21 +117,6 @@
 					}
 				}).open();
 	}
-	window.onload = function() {
-		init();
-	}
-	function init() {
-		
-		var form_order = document.form_order;
-		var h_tel1 = form_order.h_tel1;
-		var h_hp1 = form_order.h_hp1;
-		var tel1 = h_tel1.value;
-		var hp1 = h_hp1.value;
-		var select_tel1 = form_order.tel1;
-		var select_hp1 = form_order.hp1;
-		select_tel1.value = tel1;
-		select_hp1.value = hp1;
-	}
 	
 	var IMP = window.IMP; // 생략해도 괜찮습니다.
 	IMP.init("imp88213691"); // "imp00000000" 대신 발급받은 "가맹점 식별코드"를 사용합니다.
@@ -144,23 +142,47 @@
 			}
 		});
 	}
-</script>
-</head><title>결제페이지</title>
 
-	<form name="form_order" style="padding-right: 15%; padding-left: 15%;">
+
+	$(document).ready(function(){
+
+	    update_amounts();
+	    $('.qty').change(function() {
+	        update_amounts();
+	    });
+	    
+	function update_amounts()
+	{
+	    var sum = 0.0;
+	    $('#myTable > tbody  > tr:not(:last)').each(function() {
+	        var qty = parseFloat($(this).find('.qty').val() || 0,10);
+	        var price = parseFloat($(this).find('.price').val() || 0,10);
+	        var amount = (qty*price)
+	        sum+=amount;
+	        $(this).find('.amount').text(''+amount);
+	    });
+	    //just update the total to sum  
+	    $('input.total').val(sum);
+	}
+	});//]]> 
+</script>
+</head>
+<title>결제페이지</title>
+
+	<form action="orderResult" method="post" name="order" id="order" style="padding-right: 15%; padding-left: 15%;   ">
 	<H1>1.펀딩정보</H1>
-		<table class="list_view">
+		<table class="list_view" id="list_view">
 			<tbody align=center >
 				<tr style="background: #33ff00">
-					<td colspan=2 class="fixed">주문상품명</td>
+					<td colspan=2 class="fixed">주문상품</td>
 					<td>수량</td>
 					<td>상품 가격</td>
 					<td>합계</td>
 				</tr>
 				<tr>
 						<td class="funding_image"><a href="${contextPath}/funding/fundingView?funding_num=${funding.funding_num}">
-						<img width="75" alt="" src="${funding.funding_image }">
-						<input type="hidden" id="member_id" name="member_id" value="${order.member_id }" /> 
+						<img width="200" alt="" src="${funding.funding_image }">
+						<input type="hidden" id="order_image" name="order_image" value="${funding.funding_image}" /> 
 						</a></td>
 						<td>
 							<h2>
@@ -172,9 +194,10 @@
 							<h2>1개<h2>
 							<input type="hidden" id="order_rec" name="order_rec" value="${order.order_rec}" />
 						</td>
-						<td><h2>${funding.funding_price}(원)</h2><input type="hidden" id="order_price" name="order_price" value="${order.order_price}" /></td>
+						<td><h2>${funding.funding_price}(원)</h2>
+						<input type="hidden" id="order_price" name="order_price" value="${funding.funding_price}" /></td>
 						<td>
-							<h2>${1 * exhibition.exh_value}원</h2> 
+							<h2> ${1 * funding.funding_price}원</h2> 
 							<input type="hidden" id="order_price" name="order_price" value="${order.order_qty * order.order_price}" />
 						</td>
 				</tr>
@@ -185,14 +208,13 @@
 		<br> <br>
 		<H1>2.배송지 정보</H1>
 		<DIV class="detail_table">
-
 			<table>
 				<tbody>
 					<tr class="dot_line">
 						<td class="fixed_join">배송방법</td>
 						<td><input type="radio" id="delivery_method" name="delivery_method" value="핸드폰" checked>핸드폰&nbsp;&nbsp;&nbsp; 
+							<input type="radio" id="delivery_method" name="delivery_method" value="카카오톡">카카오톡&nbsp;&nbsp;&nbsp; 
 							<input type="radio" id="delivery_method" name="delivery_method" value="이메일">이메일&nbsp;&nbsp;&nbsp; 
-							<input type="radio" id="delivery_method" name="delivery_method" value="기프티콘">기프티콘&nbsp;&nbsp;&nbsp; 
 					</tr>
 					<tr class="dot_line">
 						<td class="fixed_join">배송지 선택</td>
@@ -201,9 +223,9 @@
 						<input type="radio" name="delivery_place" value="최근배송지">최근배송지 &nbsp;&nbsp;&nbsp;</td>
 					</tr>
 					<tr class="dot_line">
-						<td class="fixed_join">받으실 분</td>
-						<td><input id="receiver_name" name="receiver_name" type="text" size="40" value="${member.member_name }"/> 
-						<input type="hidden" id="h_orderer_name" name="h_orderer_name" value="${orderer.member_name }" /> 
+						<td class="fixed_join">받으실 분${member.member_id}</td>
+						<td><input id="receiver_name" name="receiver_name" type="text" size="40" value="${member.member_name}"/> 
+						<input type="hidden" id="member_id" name="member_id" value="${member.member_id}" /> 
 						<input type="hidden" id="h_receiver_name" name="h_receiver_name" value="${orderer.member_name }" /></td>
 					</tr>
 					<tr class="dot_line">
@@ -281,48 +303,48 @@
 		
 		<div class="clear"></div>
 		<br>
-		<table width=80% class="list_view" style="background: #ccffff">
-			<tbody>
-				<tr align=center class="fixed">
-					<td class="fixed">총 상품수</td>
-					<td>총 상품금액</td>
-					<td>최종 결제금액</td>
-					<td></td>
-				</tr>
-				<tr cellpadding=40 align=center>
-					<td valgn="qty">
-						<select name="qty" id="qty" onchange="changeQty()">
-							<option value="1" selected>1</option>
-							<option value="2">2</option>
-							<option value="3">3</option>
-							<option value="4">4</option>
-							<option value="5">5</option>
-						</select>
-					</td>
-					<td id="">
-						<p id="p_totalNum">${total_order_goods_qty}개</p>
-						<input id="h_total_order_goods_qty" type="hidden" value="${total_order_goods_qty}" />
-					</td>
-					<td>
-						<p id="p_totalPrice">${exhibition.exh_value }원</p> 
-						<input id="h_totalPrice" type="hidden" value="${total_order_price}" />
-					</td>
-					<td>
-						<p id="p_final_totalPrice">
-							<font size="15">${final_total_order_price }원 </font>
-						</p> <input id="h_final_total_Price" type="hidden"
-						value="${final_total_order_price}" />
-					</td>
-				</tr>
-			</tbody>
-		</table>
-		<div class="clear"></div>
+		
+		
+<!-- 총주문금액계산 -->
+	<table id="myTable">
+		<thead>
+			<tr>
+				<th>아이디</th>
+				<th>상품명</th>
+				<th>수량</th>
+				<th>가격</th>
+				<th align="center"><span id="amount" class="amount">총 금액</span>
+				</th>
+			</tr>
+		</thead>
+		<tfoot>
+			<tr>
+				<td colspan="2"></td>
+				<td align="right"><span id="total" class="total"></span></td>
+			</tr>
+		</tfoot>
+		<tbody>
+			<tr>
+				<td>${member.member_id}<input type="hidden" name="member_id" id="member_id" value="${member.member_id}"></td>
+				<td>${funding.funding_subject}<input type="hidden" name="order_title" value="${funding.funding_subject}"></td>
+				<td><input type="number" min="1" max="100" class="qty" name="order_qty"></td>
+				<td>${funding.funding_price }<input type="hidden" value="${funding.funding_price }" class="price" name="order_price"></td>
+				<td><span id="amount" class="amount">0</span></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+		</tbody>
+	</table>
+	<input type="submit" value="테스트">
+</form>
+	
 		<br> <br> <br>
-		<button onclick="requestPay()" class="btn btn-primary text-right">결제하기</button>
-		 <a href="${contextPath}/exhibition/favoriteList"
-			class="btn btn-primary text-right">돌아가기 </a>
-	</form>
-	<div class="clear"></div>
-
+		<div style="padding-right: 15%;padding-left: 15%;">
+			<button onclick="requestPay()" class="btn btn-primary text-right">결제하기</button>
+		 <a href="${contextPath}/funding/fundingList"
+			class="btn btn-primary text-right">결제취소 </a></div>
 
 <%@include file="../layout/bottom.jsp"%>

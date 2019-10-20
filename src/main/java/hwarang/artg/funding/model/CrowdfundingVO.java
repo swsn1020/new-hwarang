@@ -33,10 +33,7 @@ public class CrowdfundingVO {
 	private String maker_logo;
 	private String maker_homepage;
 	
-	
-	
 	private int replyCnt;
 	
-	private List<FundingAttachVO> attachList;
 	
 }

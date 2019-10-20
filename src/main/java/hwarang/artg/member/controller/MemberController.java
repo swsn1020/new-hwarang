@@ -36,6 +36,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import hwarang.artg.common.model.EmailDTO;
 import hwarang.artg.common.model.EmailSender;
 import hwarang.artg.community.service.FreeBoardService;
+import hwarang.artg.funding.model.OrderVO;
+import hwarang.artg.funding.service.FundingOrderService;
 import hwarang.artg.manager.service.ReportService;
 import hwarang.artg.member.model.MemberAuthVO;
 import hwarang.artg.member.model.MemberVO;
@@ -72,7 +74,8 @@ public class MemberController {
 	private FreeBoardService freeservice;
 	@Autowired
 	private ReportService reportservice;
-	
+	@Autowired
+	private FundingOrderService orderService;
 	
 	@Autowired
 	@Qualifier("authenticationManager")
@@ -380,13 +383,14 @@ public class MemberController {
 		return "/member/result";
 	}
 	@RequestMapping("/myPage")
-	public String showMyPage(Principal principal,Model model) {
+	public String showMyPage(Principal principal,Model model,OrderVO order) {
 		String id = principal.getName();
 		model.addAttribute("member", service.memberGetOne(id));
 		model.addAttribute("points", pservice.pointGetOne(id));
 		model.addAttribute("review", reviewservice.reviewboardGetIdAll(id));
 		model.addAttribute("recommend", recommendservice.recommendboardGetAll_Id(id));
 		model.addAttribute("free", freeservice.freeboardGetAllId(id));
+		model.addAttribute("order", orderService.selectAll());
 		return "/member/myPage";
 	}
 	
