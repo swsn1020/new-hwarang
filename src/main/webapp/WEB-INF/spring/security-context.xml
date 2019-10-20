@@ -45,6 +45,10 @@
 		<security:intercept-url pattern="/block/replyModify" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')" />
 		<security:intercept-url pattern="/block/blockMember" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')" />
 		
+		<security:intercept-url pattern="/board/freeboardRegister" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')" />
+		<security:intercept-url pattern="/board/freemodifyForm" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')" />
+		<security:intercept-url pattern="/board/freeboardView" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')" />
+		
 		<security:form-login login-page="/member/loginForm"/>
 <!-- 		 authentication-success-handler-ref="customLoginSuccess" -->
 		<security:logout logout-url="/logout" invalidate-session="true" delete-cookies="remember-me,JSESSION_ID" logout-success-url="/" />

@@ -19,7 +19,6 @@
 				<th>작성자</th>
 				<th>작성일</th>
 				<th>조회수</th>
-				<th>추천</th>
 			</tr>
 			<c:forEach items="${freeboard}" var="fboard">
 					<fmt:formatDate value="${fboard.regDate }" var="regDate" pattern="yyyy-MM-dd" />
@@ -31,7 +30,6 @@
 					<td>${fboard.userid}</td>
 					<td>${regDate}</td>
 					<td>${fboard.readCount}</td>
-					<td>${fboard.recommCount}</td>
 				</tr>
 			</c:forEach>
 				<tr>

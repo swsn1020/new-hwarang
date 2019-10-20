@@ -94,6 +94,62 @@
 							</tr>
 						</c:forEach>										
 					</div>
+					<div class="hr-line-dashed"></div>
+					<div class="search-result">
+						<c:forEach items="${faqboard}" var="faq">
+							<fmt:formatDate value="${faq.regDate }" var="regDate" pattern="yyyy-MM-dd" />
+						<tr>							
+							<td>${faq.category }</td>
+								<td>
+									<div id="accordion">
+										<div><a data-toggle="collapse" href="#content${vs.index }">Q.&nbsp;${faq.question }</a></div><br>
+											<div id="content${vs.index }" class="collapse"  data-parent="#accordion">A.&nbsp;&nbsp;${faq.answer }</div>
+											</div>
+							</td>
+						</tr>
+						</c:forEach>										
+					</div>
+					
+					<div class="hr-line-dashed"></div>
+					<div class="search-result">
+						<c:forEach items="${noticeboard}" var="notice">
+							<fmt:formatDate value="${notice.regDate }" var="regDate" pattern="yyyy-MM-dd" />
+							<tr>
+								<td>
+									<h3>
+										 <a href="/notice/noticeView?num=${notice.num}">${notice.title }
+											<span class="badge bg-teal"><i class="fa fa-comment-o"></i>${notice.replyCnt}</span>
+										</a>
+									</h3>
+								</td>
+								<td>${notice.num}</td>
+								<td>[게시판] : 공지사항 </td>
+								<td>${regDate}</td>
+								<td>${reboard.recomm_read_count}</td>
+							</tr>
+						</c:forEach>										
+					</div>
+					
+						<div class="search-result">
+						<c:forEach items="${exhibition}" var="ex">
+							<tr>
+								<td>
+									<h3>
+										<a href="/exhibition/view?seq=${ex.exh_seq}">${ex.exh_title}</a>
+									</h3>
+								</td>
+								<td>${reboard.recomm_num} </td>
+								<td>공연·전시</td>
+								<td>
+									<p class="card-text">${fn:substring(ex.exh_startDate, 0, 10)} ~ ${fn:substring(ex.exh_endDate, 0, 10)}<br>${ex.exh_area}&nbsp;/&nbsp;${ex.exh_place}</p>
+								</td>
+								<td>${reboard.member_id}</td>
+								<td>${reboard.recomm_content}</td>
+								<td>${regDate}</td>
+								<td>${reboard.recomm_read_count}</td>
+							</tr>
+						</c:forEach>										
+					</div>
 				</div>
 			</div>
 		</div>
