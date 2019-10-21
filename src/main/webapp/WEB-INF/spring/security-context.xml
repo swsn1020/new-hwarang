@@ -46,7 +46,7 @@
 		
 		<security:intercept-url pattern="/board/freeboardRegister" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')" />
 		<security:intercept-url pattern="/board/freemodifyForm" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')" />
-		<security:intercept-url pattern="/board/freeboardView" access="hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')" />
+		<security:intercept-url pattern="/board/freeboardView" access="hasAnyRole('ROLE_USER', 'ROLE_MANAGER')" />
 		<security:intercept-url pattern="/block/blockListForManager" access="hasAnyRole('ROLE_ADMIN')" />
 		<security:intercept-url pattern="/block/replyModify" access="hasAnyRole('ROLE_ADMIN')" />
 		<security:intercept-url pattern="/block/blockMember" access="hasAnyRole('ROLE_ADMIN')" />

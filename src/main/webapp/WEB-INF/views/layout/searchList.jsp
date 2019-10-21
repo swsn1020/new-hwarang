@@ -25,7 +25,7 @@
 		<div class="col-lg-12">
 			<div class="ibox float-e-margins">
 				<div class="ibox-content">
-
+	
 					<div class="hr-line-dashed"></div>
 					<div class="search-result">
 						<c:forEach items="${reviewboard}" var="rboard">
@@ -46,7 +46,7 @@
 								<td>${rboard.review_content}</td>
 								<td>${regDate}</td>
 								<td>${rboard.review_read_count}</td>
-							</tr>
+							</tr>					
 						</c:forEach>
 					</div>
 
@@ -68,10 +68,9 @@
 								<td>${fboard.userid}</td>
 								<td>${fboard.content}</td>
 								<td>${regDate}</td>
-								<td>${fboard.readCount}</td>
+								<td>${fboard.readCount}</td>	
 							</tr>
 						</c:forEach>
-
 					</div>
 					<div class="hr-line-dashed"></div>
 					<div class="search-result">
@@ -145,7 +144,6 @@
 								</td>
 								<td>${reboard.member_id}</td>
 								<td>${reboard.recomm_content}</td>
-								<td>${regDate}</td>
 								<td>${reboard.recomm_read_count}</td>
 							</tr>
 						</c:forEach>										

@@ -163,7 +163,15 @@ function replyList(num){
 				if(rPager.curPage == rPager.totalPage){
 					$("#right").attr("class", "page-item disabled");
 				}
-
+				
+				for(var i = 0; i<= rPager.totalPage; i++){
+					if(i == num){
+						$("#curNum"+i).attr("class", "active");
+					}else {
+						$("#curNum"+i).attr("class", "page-item");
+					}
+				}
+				
 				for(var i in data.replyTable){
 				//등록일자 얻어오기
 				var upDateDate = new Date(data.replyTable[i].upDateDate);
@@ -396,7 +404,7 @@ $('#btnSend').on('click',function(evt){
 				</td>
 			</tr>
 			<tr>
-				<th></th>
+				<th>내용</th>
 				<td>
 					<c:choose>
 						<c:when test="${fboard.block eq true}">
@@ -445,14 +453,14 @@ $('#btnSend').on('click',function(evt){
 		</table>
 	</div>
 	<!-- 페이징 -->
-	<div class="container">
+	<div class="notice-div container">
 		<ul class="pagination justify-content-center">
 			<li id="left" class="page-item disabled">
 				<a class="page-link" href="javascript:replyList(1))">&laquo;</a>
 			</li>
-			<c:forEach var="num" begin="${rPager.blockBegin }" end="${rPager.totalPage}">
-				<li class='${rPager.curPage == num ? "page-item active" : "page-item"}'>
-					<a class="page-link" href="javascript:replyList(${num})">[${num}]</a>
+			<c:forEach var="num" begin="${rPager.blockBegin }" end="${rPager.totalPage}" varStatus="vs">
+				<li id="curNum${vs.index }">
+					<a class="page-link" href="javascript:replyList(${num})">${num}</a>
 				</li>
 			</c:forEach>
 			<li id="right" class="page-item">
