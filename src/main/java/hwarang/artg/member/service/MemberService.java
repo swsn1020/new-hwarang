@@ -49,8 +49,8 @@ public class MemberService {
 	}
 	public boolean memberRemove(String id) {
 		if(membermapper.deleteMember(id) > 0) {
-			MemberAuthVO auth = maMapper.selectMember_Auth(id);
-			maMapper.deleteMember_Auth(auth);
+//			MemberAuthVO auth = maMapper.selectMember_Auth(id);
+//			maMapper.deleteMember_Auth(auth);
 			return true;
 		}
 		return false;

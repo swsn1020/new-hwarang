@@ -12,6 +12,7 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import hwarang.artg.common.model.CriteriaDTO;
 import hwarang.artg.common.model.PageDTO;
@@ -90,7 +91,7 @@ public class ManagerMainController {
 		return "manager/member/memberSettings";
 	}
 	
-	@RequestMapping("/delMember")
+	@RequestMapping(value="/delMember", method = RequestMethod.POST)
 	public String deleteAccount(String member_id, Model model) {
 //		System.out.println("delMember 요청 들어옴");
 		String msg = "탈퇴 처리에 실패하였습니다.";
