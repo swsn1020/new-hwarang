@@ -162,7 +162,7 @@ $(document).ready(function(){
                 <li><span>화랑</span>
                     <ul class="dept01">
                         <li id="nop"><a href="/exhibition">공연·전시</a></li>
-                        <li id="nop"><a href="/exhibition/mapList">네비게이션</a></li>
+                        <li id="nop"><a href="/exhibition/mapList">공연 위치지도</a></li>
                         <li id="nop">&nbsp;</li>
                     </ul>
                 </li>

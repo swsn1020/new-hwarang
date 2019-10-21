@@ -18,6 +18,6 @@ public interface FavoriteMarkMapper {
 	public List<String> getGroup(String member_id);
 	public int getSeq(FavoriteMarkVO fav);
 	public int getTotalCount(String favorite_group);
-	public int getTotalCountById(String member_id);
+	public int getTotalCountById(@Param("favorite_group")String favorite_group, @Param("member_id")String member_id);
 
 }

@@ -183,7 +183,7 @@ public class ExhibitionController {
 			model.addAttribute("pGroup",group);
 		}
 		cri.setAmount(5);
-		PageDTO page = new PageDTO(cri, fService.getTotalCount(fav.getFavorite_group()));
+		PageDTO page = new PageDTO(cri, fService.getTotalCountById(fav.getFavorite_group(),id));
 		model.addAttribute("pageMaker", page);
 		model.addAttribute("group",fService.getGroup(id));
 		model.addAttribute("fList",fService.paigingFavoriteList(fav, cri));

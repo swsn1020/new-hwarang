@@ -11,15 +11,15 @@
 		from exhibition_reply where exh_seq = #{exh_seq} order by reply_num asc
 	</select>
 	<insert id="insert" parameterType="hwarang.artg.exhibition.model.ExhibitionReplyVO">
-		insert into exhibition_reply (reply_num, exh_seq, reply_content, member_id)
-		values(seq_exhibition_reply.nextval,#{exh_seq}, #{reply_content}, #{member_id})
+		insert into exhibition_reply (reply_num, exh_seq, reply_content, member_id, reply_reg_date)
+		values(seq_exhibition_reply.nextval,#{exh_seq}, #{reply_content}, #{member_id}, sysdate + 9/24)
 	</insert>
 	<delete id="delete">
 		delete from exhibition_reply where reply_num = #{reply_num}
 	</delete>
 	<update id="update" parameterType="hwarang.artg.exhibition.model.ExhibitionReplyVO">
 		update exhibition_reply set reply_content = #{reply_content},
-		reply_update_date = sysdate where reply_num = #{reply_num}
+		reply_update_date = sysdate + 9/24 where reply_num = #{reply_num}
 	</update>
 		<update id="replyCnt">
 		select COUNT(*) FROM exhibition_reply where exh_seq = #{exh_seq}

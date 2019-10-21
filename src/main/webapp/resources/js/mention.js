@@ -1,37 +1,37 @@
-console.log("모듈켜짐");
+console.log("한줄평모듈켜짐");
 
-var replyService = (function() {
-	//댓글 등록 로직
-	function add(reply, callback, error) {
+var mentionService = (function() {
+	//한줄평 등록 로직
+	function add(mention, callback, error) {
 		console.log("등록중");
 		$.ajax({
 			type : 'post',
-			url: "/exhReplies/new",
-			data : JSON.stringify(reply),
+			url: "/exhMention/new",
+			data : JSON.stringify(mention),
 			contentType : "application/json; charset=utf-8",
 			success : function(result, status, xhr) {
 				if (callback) {
-					console.log("add reply..........su");
+					console.log("add mention..........su");
 					callback(result);
 				}
 			},
 			error : function(xhr, status, er) {
 				if (error) {
-					console.log("add reply..........error");
+					console.log("add mention..........error");
 					error(er);
 				}
 			}
 	
 		});
 	}
-	//댓글 리스트 조회 로직
+	//한줄평 리스트 조회 로직
 	function getList(param, callback, error) {
 		console.log("가져오는중");
 		var seq = param.seq;
 		var page = param.page || 1;
-		$.getJSON("/exhReplies/view/"+seq+"/"+page+".json", function(data) {
+		$.getJSON("/exhMention/view/"+seq+"/"+page+".json", function(data) {
 			if(callback){
-				callback(data);
+				callback(data.mentionCnt, data.list);
 			}
 		}).fail(function(xhr, status, err) {
 			if(error){
@@ -39,11 +39,12 @@ var replyService = (function() {
 			}
 		});
 	}
-	//댓글 삭제 로직
-	function remove(reply_num, callback, error) {
+
+	//한줄평 삭제 로직
+	function remove(mention_no, callback, error) {
 		$.ajax({
 			type : 'delete',
-			url : '/exhReplies/'+reply_num,
+			url : '/exhMention/'+mention_no,
 			success : function(deleteResult, status, xhr) {
 				if(callback){
 					callback(deleteResult);
@@ -56,13 +57,13 @@ var replyService = (function() {
 			}
 		});
 	}
-	//댓글 수정 로직
-	function update(reply, callback, error) {
-		console.log("UpdateRNO : "+reply.reply_num);
+	//한줄평 수정 로직
+	function update(mention, callback, error) {
+		console.log("UpdateMNO : "+mention.mention_no);
 		$.ajax({
 			type : 'put',
-			url : '/exhReplies/' + reply.reply_num,
-			data : JSON.stringify(reply),
+			url : '/exhMention/' + mention.mention_no,
+			data : JSON.stringify(mention),
 			contentType : "application/json; charset=utf-8",
 			success : function(result, status, xhr) {
 				if(callback){
@@ -76,9 +77,9 @@ var replyService = (function() {
 			}
 		});
 	}
-	//단일 댓글 조회 로직
-	function get(rno, callback, error) {
-		$.get("/exhReplies/"+rno+".json", function(result) {
+	//단일 한줄평 조회 로직
+	function get(mention_no, callback, error) {
+		$.get("/exhMention/"+mention_no+".json", function(result) {
 			if(callback){
 				callback(result);
 			}
@@ -88,6 +89,7 @@ var replyService = (function() {
 			}
 		});
 	}
+
 	function displayTime(timeValue) {
 		var today = new Date();
 		var gap = today.getTime() - timeValue;
@@ -107,6 +109,7 @@ var replyService = (function() {
 			return [yy, '/', (mm > 9 ? '' : '0')+mm, '/',(dd>9?'':'0') + dd].join('');		
 		}
 	};
+	
 	
 	return {
 		add : add,

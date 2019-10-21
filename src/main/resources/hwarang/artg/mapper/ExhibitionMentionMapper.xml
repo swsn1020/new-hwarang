@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hwarang.artg.mapper.ExhibitionMentionMapper">
+
+	<insert id="insert">
+		insert into exhibition_mention (mention_no, exh_seq, member_id, mention_content, mention_score, mention_regdate)
+		values (seq_exhibition_mention.nextval,#{exh_seq}, #{member_id},#{mention_content},#{mention_score}, sysdate + 9/24)
+	</insert>
+	
+	<update id="update">
+		update exhibition_mention set mention_content = #{mention_content} where mention_no = #{mention_no}
+	</update>
+	
+	<delete id="delete">
+		delete exhibition_mention where mention_no = #{mention_no}
+	</delete>
+	
+	<select id="select" resultType="hwarang.artg.exhibition.model.ExhibitionMentionVO">
+		select * from exhibition_mention where mention_no = #{mention_no}
+	</select>
+
+	<select id="selectAll" resultType="hwarang.artg.exhibition.model.ExhibitionMentionVO">
+		select * from exhibition_mention 
+	</select>
+	
+	<select id="selectListBySeq" resultType="hwarang.artg.exhibition.model.ExhibitionMentionVO" >
+	<![CDATA[
+		select mention_no,exh_seq,member_id,mention_content,mention_score,mention_regdate
+		from(select /*+INDEX_DESC(m index_mention_no) */ rownum rn,  mention_no,exh_seq,member_id,mention_content,mention_score,mention_regdate  from exhibition_mention m where exh_seq = #{exh_seq} 
+		and rownum <= #{cri.pageNum} * #{cri.amount}) where rn > (#{cri.pageNum} -1) * #{cri.amount}	
+	]]>
+	</select>
+
+	<select id="getTotalCount" resultType="int">
+		select count(*) from exhibition_mention where exh_seq = #{exh_seq}
+	</select>
+	
+	<select id="getMentionStatus" resultType="int">
+		select count(*) from exhibition_mention where exh_seq=#{exh_seq} and member_id= #{member_id}
+	</select>
+</mapper>

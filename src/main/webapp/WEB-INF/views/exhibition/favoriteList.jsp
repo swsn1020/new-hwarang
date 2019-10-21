@@ -93,10 +93,10 @@ function removeFavorite(seq,id) {
 					<td>
 						<ul class="nav ">
 							<li class="nav-item col-sm-12" id="side_item">
-								<h5 style="font-weight: bold;"><a class="nav-link" style="padding: 0px;" href="/exhibition/view?seq=${f.exh_seq}">${f.exh_title}<span class="badge badge-primary">${f.exh_realmName}</span></a></h5></li>
-							<li class="nav-item col-sm-12" id="side_item">${f.exh_place}</li>
-							<li class="nav-item col-sm-12" id="side_item">${f.exh_price}</li>
-							<li class="nav-item col-sm-12" id="side_item"><fmt:formatDate pattern="yyyy-MM-dd" value="${f.exh_startDate}" timeZone="Asia/Seoul"/> ~ <fmt:formatDate pattern="yyyy-MM-dd" value="${f.exh_endDate}" timeZone="Asia/Seoul"/></li>	
+								<h5 style="font-weight: bold;"><a class="nav-link" style="padding: 0px;" href="/exhibition/view?seq=${f.exh_seq}">${f.exh_title}<span class="badge badge-primary">${f.exh_realmName}</span></a></h5><br><br></li>
+							<li class="nav-item col-sm-12" id="side_item">장소&nbsp;:&nbsp;${f.exh_place}<br><br></li>
+							<li class="nav-item col-sm-12" id="side_item">가격&nbsp;:&nbsp;${f.exh_price}<br><br></li>
+							<li class="nav-item col-sm-12" id="side_item">기간&nbsp;:&nbsp;<fmt:formatDate pattern="yyyy-MM-dd" value="${f.exh_startDate}" timeZone="Asia/Seoul"/> ~ <fmt:formatDate pattern="yyyy-MM-dd" value="${f.exh_endDate}" timeZone="Asia/Seoul"/><br><br><br><br></li>	
 						</ul>
 							<a class="btn btn-outline-dark" style="float: right;" href="/order/orderGoodsForm?seq=${f.exh_seq}">결제</a>
 							<a class="btn btn-outline-dark" style="float: right;" onclick="removeFavorite(${f.exh_seq},'${id}')">삭제</a>
