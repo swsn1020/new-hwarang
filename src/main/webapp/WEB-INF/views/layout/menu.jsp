@@ -61,10 +61,12 @@ $(document).ready(function(){
 });
 </script>
 <style>
-@font-face { font-family: 'GyeonggiBatang'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/GyeonggiBatang.woff') format('woff'); font-weight: normal; font-style: normal; }
+
+@font-face { font-family: 'Arita-dotum-Medium'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/Arita-dotum-Medium.woff') format('woff'); font-weight: normal;}
+/* font-family: 'GyeonggiBatang'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/GyeonggiBatang.woff') format('woff'); font-weight: normal; font-style: normal; } */
 *{
-	/* font-family: 'Arita-dotum-Medium'; */
-	font-family: 'GyeonggiBatang';
+	 font-family: 'Arita-dotum-Medium'; 
+/* 	font-family: 'GyeonggiBatang'; */
 }
 .topMenu {width: 100%; margin-bottom: 20px; text-align: center; height: 40px; z-index: 8; margin-left: 30%;}
 .topMenu:after {content: ""; display: block; clear: both; }

@@ -47,11 +47,8 @@ $(function(){
 		});
 		$("#show-sidebar").click(function() {
 			$(".page-wrapper").addClass("toggled");
-<<<<<<< HEAD
+
 		});
-=======
-		});
->>>>>>> refs/remotes/origin/hyeji2
 		
 		//차단 개수 가져오기
 		$.ajax({
@@ -105,15 +102,8 @@ $(function(){
 			error: function(){
 				alert("알람리스트 불러오기 ajax 에러");
 			}
-<<<<<<< HEAD
-		});
-		
-		//알람 붙이기
 
-		
-=======
 		});
->>>>>>> refs/remotes/origin/hyeji2
 	}); //onload() End
 	
 	var sock;
